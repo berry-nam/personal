@@ -178,6 +178,14 @@
         <div class="market-detail">RECENT ENTRY · ASEAN EXPANSION</div>
       </div>
     </div>
+
+    <!-- Interactive Asia Map -->
+    <div data-animate="scale-in">
+      <div style="background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 2rem; margin: 2.5rem 0; position: relative;">
+        <div id="asia-market-map"></div>
+        <div style="text-align: center; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--smoke); margin-top: 1rem;">Interactive map &mdash; hover over markets for details</div>
+      </div>
+    </div>
   </section>
 
   <div class="divider"></div>
@@ -348,5 +356,11 @@
 <script src="../js/chapters.js"></script>
 <script src="../js/nav.js"></script>
 <script src="../js/scroll-engine.js"></script>
+<script src="../js/viz/asia-map.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  createAsiaMap('asia-market-map');
+});
+</script>
 </body>
 </html>

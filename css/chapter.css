@@ -24,7 +24,7 @@
 
 .chapter-hero__label {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--champagne);
@@ -45,9 +45,9 @@
 .chapter-hero__title em { color: var(--champagne); }
 
 .chapter-hero__subtitle {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   color: var(--smoke);
-  max-width: 560px;
+  max-width: 600px;
   line-height: 1.7;
   margin-bottom: 2rem;
   opacity: 0; animation: fadeUp 1s 0.9s forwards;
@@ -127,7 +127,7 @@
 .next-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--smoke);
@@ -138,7 +138,7 @@
 .next-num {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--champagne);
@@ -149,7 +149,7 @@
 .next-name {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.75rem;
   font-style: italic;
   font-weight: 400;
   position: relative;
@@ -194,8 +194,8 @@
 .closing-title em { font-style: italic; color: var(--champagne); }
 
 .closing-body {
-  font-size: 1.1rem; color: var(--smoke);
-  max-width: 640px; margin: 0 auto;
+  font-size: 1.2rem; color: var(--smoke);
+  max-width: 680px; margin: 0 auto;
   line-height: var(--lh-body);
 }
 

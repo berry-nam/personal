@@ -61,6 +61,61 @@
     margin: 2rem auto 0;
     line-height: 1.7;
   }
+
+  .meeting-flow-visual {
+    display: flex; overflow-x: auto; gap: 0;
+    margin: 3rem 0;
+    padding: 1rem 0;
+  }
+  .flow-segment {
+    flex: 0 0 auto;
+    min-width: 150px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    position: relative;
+    border-right: 1px solid rgba(244, 242, 237, 0.06);
+  }
+  .flow-segment:last-child { border-right: none; }
+  .flow-segment::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--champagne);
+    opacity: 0.15;
+    transition: opacity 0.3s;
+  }
+  .flow-segment:hover::before { opacity: 0.5; }
+  .flow-segment:hover { background: rgba(201, 169, 110, 0.03); }
+  .flow-time {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--champagne);
+    margin-bottom: 0.5rem;
+  }
+  .flow-name {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .flow-tip {
+    font-size: 0.78rem;
+    color: var(--smoke);
+    line-height: 1.5;
+  }
+
+  .winning-message {
+    margin-top: 3rem;
+    padding: 3rem;
+    background: var(--ink-card);
+    border: 1px solid rgba(201, 169, 110, 0.15);
+    border-radius: var(--radius-card);
+    text-align: center;
+  }
+  .winning-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
 </style>
 </head>
 <body data-chapter="8">
@@ -116,6 +171,39 @@
     <div data-animate="fade-up">
       <div class="section-label">Presentation Flow</div>
       <h2 class="section-title">The <em>100 minutes</em></h2>
+    </div>
+
+    <div class="meeting-flow-visual" data-animate="fade-up">
+      <div class="flow-segment">
+        <div class="flow-time">5 MIN</div>
+        <div class="flow-name">Welcome</div>
+        <div class="flow-tip">Honor the legacy</div>
+      </div>
+      <div class="flow-segment">
+        <div class="flow-time">20 MIN</div>
+        <div class="flow-name">WEFUN Story</div>
+        <div class="flow-tip">Lead with narrative</div>
+      </div>
+      <div class="flow-segment">
+        <div class="flow-time">20 MIN</div>
+        <div class="flow-name">M&A Track</div>
+        <div class="flow-tip">Prove capability</div>
+      </div>
+      <div class="flow-segment">
+        <div class="flow-time">15 MIN</div>
+        <div class="flow-name">Vision</div>
+        <div class="flow-tip">Combined entity</div>
+      </div>
+      <div class="flow-segment">
+        <div class="flow-time">10 MIN</div>
+        <div class="flow-name">Values</div>
+        <div class="flow-tip">PERA alignment</div>
+      </div>
+      <div class="flow-segment" style="min-width: 180px;">
+        <div class="flow-time">30+ MIN</div>
+        <div class="flow-name">Open Discussion</div>
+        <div class="flow-tip">Most important</div>
+      </div>
     </div>
 
     <div class="timeline" data-stagger-group>
@@ -294,6 +382,10 @@
       <div class="closing-body">
         <p>WEFUN's strongest card is not a financial model or a revenue projection. It is a shared belief — that great workplaces create great work. WEFUN is not a hostile corporate raider optimizing for quarterly returns. WEFUN lives workplace welfare. It is the company's founding purpose, its daily practice, and its growth engine.</p>
         <p>The argument to Helen and Eric is simple: nobody in Asia is better positioned to carry this forward. Nobody cares more about the mission Lyreco built.</p>
+      </div>
+      <div class="winning-message" data-animate="scale-in" data-delay="0.3">
+        <div class="winning-icon">🤝</div>
+        <p style="font-family: var(--font-display); font-size: 1.3rem; font-style: italic; color: var(--pearl); line-height: 1.6;">The goal is not a signed deal on February 26.<br>The goal is a second meeting.</p>
       </div>
       <p class="closing-champagne">"The Asian employees and operations aren't being sold. They're being given a more powerful platform to fulfill their original purpose."</p>
     </div>

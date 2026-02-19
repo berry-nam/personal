@@ -104,6 +104,48 @@
   .insight-block p {
     font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
   }
+
+  /* ─── NETWORK GRAPH ─── */
+  .network-graph-container {
+    position: relative;
+    margin: 2.5rem 0;
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 1.5rem;
+    min-height: 500px;
+  }
+  .network-graph-container svg { display: block; }
+  .network-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--smoke);
+    margin-top: 1rem;
+  }
+
+  /* ─── FULL STRUCTURE DIAGRAM ─── */
+  .structure-diagram-container {
+    margin: 2.5rem 0;
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+  }
+
+  /* ─── PHOTO PLACEHOLDER (initials avatar) ─── */
+  .person-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.2rem; font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .person-avatar.lyreco-avatar { background: rgba(230, 57, 70, 0.15); color: var(--lyreco-red); border: 1.5px solid rgba(230, 57, 70, 0.3); }
+  .person-avatar.wefun-avatar { background: rgba(74, 114, 255, 0.15); color: var(--wefun-blue); border: 1.5px solid rgba(74, 114, 255, 0.3); }
+  .person-avatar.family-avatar { background: rgba(201, 169, 110, 0.15); color: var(--champagne); border: 1.5px solid rgba(201, 169, 110, 0.3); }
 </style>
 </head>
 <body data-chapter="2">
@@ -153,16 +195,19 @@
 
     <div class="stat-grid" data-stagger-group>
       <div class="stat-card" data-stagger-child>
+        <div class="person-avatar family-avatar">GG</div>
         <div class="stat-number">Georges Gaspard</div>
         <div class="stat-label">President of Corely SAS</div>
         <div class="stat-sub">3rd generation patriarch</div>
       </div>
       <div class="stat-card" data-stagger-child>
+        <div class="person-avatar family-avatar">CG</div>
         <div class="stat-number">Caroline Gaspard</div>
         <div class="stat-label">Deputy Director-General</div>
         <div class="stat-sub">4th generation</div>
       </div>
       <div class="stat-card" data-stagger-child>
+        <div class="person-avatar family-avatar">NG</div>
         <div class="stat-number">Nathalie Gaspard</div>
         <div class="stat-label">Deputy Director-General</div>
         <div class="stat-sub">4th generation</div>
@@ -210,6 +255,30 @@
       <div class="section-body">
         <p>Note the dual roles: Nathalie Gaspard serves as President of Lyreco SAS (the operating entity), while Georges Gaspard is Director-General. This is not ceremonial. The family is directly involved in operational governance, not merely passive shareholders. When you negotiate with Lyreco, you are negotiating with the Gaspards.</p>
       </div>
+    </div>
+
+    <!-- Full Corporate Structure Wireframe -->
+    <div data-animate="fade-up">
+      <div class="structure-diagram-container" id="corely-structure"></div>
+      <div class="network-caption">Full corporate ownership chain &mdash; Gaspard family &rarr; Corely SAS &rarr; Lyreco SAS &rarr; Global subsidiaries</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── ENTITY NETWORK ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Entity Network</div>
+      <h2 class="section-title">The Gaspard <em>web of entities</em></h2>
+      <div class="section-body">
+        <p>The Gaspard family's corporate footprint extends far beyond Lyreco. This interactive network map shows the full web of entities, investment vehicles, and personal connections. Drag nodes to explore. Hover for details.</p>
+      </div>
+    </div>
+
+    <div data-animate="scale-in">
+      <div class="network-graph-container" id="gaspard-network"></div>
+      <div class="network-caption">Interactive force-directed graph &mdash; drag nodes to explore connections</div>
     </div>
   </section>
 
@@ -336,5 +405,94 @@
 <script src="../js/chapters.js"></script>
 <script src="../js/nav.js"></script>
 <script src="../js/scroll-engine.js"></script>
+<script src="../js/viz/network-graph.js"></script>
+<script src="../js/viz/structure-diagram.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // ── Full Corporate Structure Diagram ──
+  createStructureDiagram('corely-structure', {
+    title: 'Lyreco Corporate Ownership Structure',
+    tiers: [
+      {
+        label: 'Family',
+        nodes: [
+          { id: 'gg', label: 'Georges Gaspard', sublabel: '3rd Gen · President', color: '#C9A96E', wide: true },
+          { id: 'cg', label: 'Caroline Gaspard', sublabel: '4th Gen · Deputy DG', color: '#C9A96E' },
+          { id: 'ng', label: 'Nathalie Gaspard', sublabel: '4th Gen · Deputy DG', color: '#C9A96E' }
+        ]
+      },
+      {
+        label: 'Holding',
+        nodes: [
+          { id: 'corely', label: 'Corely SAS', sublabel: 'Onnaing · ~84% ownership', color: '#E63946', badge: '84%', wide: true }
+        ]
+      },
+      {
+        label: 'Operating',
+        nodes: [
+          { id: 'lyreco', label: 'Lyreco SAS', sublabel: 'Marly · €64.7M capital · €2.2B rev', color: '#4A72FF', badge: '€2.2B', wide: true }
+        ]
+      },
+      {
+        label: 'Subsidiaries',
+        nodes: [
+          { id: 'europe', label: 'Europe (15+)', sublabel: 'FR, UK, DE, BE, NL...', color: '#A0A0AC' },
+          { id: 'asia', label: 'Asia-Pacific (5)', sublabel: 'HK, KR, SG, MY, TH', color: '#4A72FF' },
+          { id: 'other', label: 'Other Markets', sublabel: 'ME, Oceania', color: '#A0A0AC' }
+        ]
+      }
+    ],
+    connections: [
+      { from: 'gg', to: 'corely', label: 'President' },
+      { from: 'cg', to: 'corely', label: 'Deputy DG' },
+      { from: 'ng', to: 'corely', label: 'Deputy DG' },
+      { from: 'corely', to: 'lyreco', label: '~84%' },
+      { from: 'lyreco', to: 'europe' },
+      { from: 'lyreco', to: 'asia' },
+      { from: 'lyreco', to: 'other' }
+    ]
+  });
+
+  // ── Network Graph: Gaspard Entity Web ──
+  var nodes = [
+    { id: 'gg', label: 'Georges Gaspard', type: 'person', icon: 'GG', detail: '3rd generation patriarch. President of Corely SAS. Director-General of Lyreco SAS. Connected to multiple investment entities.' },
+    { id: 'cg', label: 'Caroline Gaspard', type: 'person', icon: 'CG', detail: '4th generation. Deputy Director-General of Corely SAS.' },
+    { id: 'ng', label: 'Nathalie Gaspard', type: 'person', icon: 'NG', detail: '4th generation. Deputy Director-General of Corely. President of Lyreco SAS.' },
+    { id: 'corely', label: 'Corely SAS', type: 'holding', icon: '🏛', sublabel: 'Onnaing', detail: 'Family holding company. ~84% ownership of Lyreco. Registered in Onnaing, Nord.' },
+    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '€2.2B', detail: 'Operating company. €64.7M share capital. 25+ country subsidiaries. €2.2B consolidated revenue.' },
+    { id: 'corely-be', label: 'Corely Belgium', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment vehicle (SPRL). Managed by David Coti since 2015.' },
+    { id: 'bratya', label: 'Bratya SPRL', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment entity. CARMAT investments alongside Corely Belgium.' },
+    { id: 'carmat', label: 'CARMAT', type: 'company', icon: '❤️', detail: 'French artificial heart company. Gaspard entities invested €15M + €3.6M. High-risk, visionary venture.' },
+    { id: 'coti', label: 'David Coti', type: 'person', icon: 'DC', detail: 'Manager of Corely Belgium & Bratya SPRL. ESSEC & Plekhanov University graduate.' },
+    { id: 'erypharm', label: 'Erypharm SAS', type: 'entity', icon: '💊', detail: 'Pharmaceutical entity connected to Georges Gaspard.' },
+    { id: 'nataline', label: 'Nataline SC', type: 'entity', icon: '🏘', detail: 'Civil company connected to Georges Gaspard.' },
+    { id: 'villa', label: 'Villa Geoanne', type: 'entity', icon: '🏡', detail: 'Real estate entity in Onnaing. Villa Geoanne du Cap Martin.' },
+    { id: 'pwc', label: 'PwC', type: 'company', icon: '📊', sublabel: 'Auditors', detail: 'Statutory auditors of Lyreco. Previously KPMG. Big Four signal of institutional governance.' },
+    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets', detail: 'Hong Kong (1996), Korea (2004), Singapore (2019), Malaysia, Thailand.' }
+  ];
+
+  var links = [
+    { source: 'gg', target: 'corely', label: 'President', distance: 80, strength: 2.5 },
+    { source: 'cg', target: 'corely', label: 'Deputy DG', distance: 100 },
+    { source: 'ng', target: 'corely', label: 'Deputy DG', distance: 100 },
+    { source: 'ng', target: 'lyreco', label: 'President', distance: 100 },
+    { source: 'gg', target: 'lyreco', label: 'Dir-General', distance: 120 },
+    { source: 'corely', target: 'lyreco', label: '~84%', distance: 90, strength: 3 },
+    { source: 'gg', target: 'erypharm', distance: 140 },
+    { source: 'gg', target: 'nataline', distance: 140 },
+    { source: 'gg', target: 'villa', distance: 140 },
+    { source: 'corely', target: 'corely-be', distance: 130 },
+    { source: 'corely', target: 'bratya', distance: 130 },
+    { source: 'coti', target: 'corely-be', label: 'Manager', distance: 80 },
+    { source: 'coti', target: 'bratya', label: 'Manager', distance: 80 },
+    { source: 'corely-be', target: 'carmat', label: '€15M', distance: 100 },
+    { source: 'bratya', target: 'carmat', label: '€3.6M', distance: 100 },
+    { source: 'lyreco', target: 'asia-ops', distance: 100 },
+    { source: 'lyreco', target: 'pwc', label: 'Audits', distance: 130 }
+  ];
+
+  createNetworkGraph('gaspard-network', nodes, links);
+});
+</script>
 </body>
 </html>

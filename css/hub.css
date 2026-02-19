@@ -45,7 +45,7 @@
 
 .hub-subtitle {
   font-family: var(--font-display);
-  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-size: clamp(1.1rem, 2.5vw, 1.75rem);
   font-weight: 400; font-style: italic;
   color: var(--smoke);
   margin-bottom: 3rem;
@@ -80,7 +80,7 @@
 }
 
 .hub-intro p {
-  font-size: 1.1rem; color: var(--pearl-muted);
+  font-size: 1.2rem; color: var(--pearl-muted);
   line-height: var(--lh-body);
 }
 
@@ -127,7 +127,7 @@
 
 .card-num {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--champagne);
@@ -136,7 +136,7 @@
 
 .card-title {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
   font-style: italic;
   margin-bottom: 0.6rem;
@@ -144,9 +144,9 @@
 }
 
 .card-teaser {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--smoke);
-  line-height: 1.6;
+  line-height: 1.65;
   flex-grow: 1;
 }
 
@@ -154,7 +154,7 @@
   margin-top: 1.2rem;
   display: flex; align-items: center; gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--smoke);

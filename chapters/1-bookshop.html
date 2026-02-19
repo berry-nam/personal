@@ -58,6 +58,42 @@
     font-size: 0.8rem;
     color: var(--champagne-light);
   }
+
+  .france-map-container {
+    display: flex; justify-content: center;
+    margin: 3rem 0;
+  }
+
+  .centenary-badge {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.8rem 1.6rem;
+    border: 1px solid rgba(201, 169, 110, 0.3);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin: 2rem 0;
+  }
+  .centenary-badge::before {
+    content: ''; width: 8px; height: 8px;
+    border-radius: 50%; background: var(--champagne);
+    animation: pulse 1.5s infinite;
+  }
+
+  .year-counter {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 12vw, 10rem);
+    font-weight: 700;
+    color: rgba(201, 169, 110, 0.08);
+    text-align: center;
+    line-height: 1;
+    margin: -2rem 0 -1rem;
+    pointer-events: none;
+    position: relative;
+    z-index: 0;
+  }
 </style>
 </head>
 <body data-chapter="1">
@@ -106,12 +142,37 @@
     </div>
   </section>
 
+  <div class="france-map-container" data-animate="fade-up">
+    <svg viewBox="0 0 500 400" style="max-width:400px;width:100%;" xmlns="http://www.w3.org/2000/svg">
+      <!-- Simplified Northern France outline -->
+      <path d="M80,350 L60,280 L40,220 L60,180 L100,140 L160,100 L220,80 L300,70 L360,80 L420,120 L460,180 L480,250 L460,320 L400,360 L320,380 L240,370 L160,360 Z" fill="rgba(244,242,237,0.03)" stroke="rgba(244,242,237,0.1)" stroke-width="1.5"/>
+      <!-- Belgium border region -->
+      <path d="M300,70 L320,50 L380,40 L440,60 L460,90 L420,120" fill="none" stroke="rgba(244,242,237,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+      <text x="400" y="50" font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(160,160,172,0.5)" letter-spacing="0.1em">BELGIUM</text>
+      <!-- Paris dot -->
+      <circle cx="240" cy="240" r="4" fill="rgba(244,242,237,0.2)" stroke="rgba(244,242,237,0.3)" stroke-width="1"/>
+      <text x="255" y="244" font-family="'DM Sans', sans-serif" font-size="11" fill="rgba(244,242,237,0.4)">Paris</text>
+      <!-- Valenciennes dot (pulsing) -->
+      <circle cx="310" cy="100" r="12" fill="rgba(201,169,110,0.1)" stroke="none">
+        <animate attributeName="r" values="12;18;12" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.3;0.1;0.3" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="310" cy="100" r="5" fill="#C9A96E" stroke="#C9A96E" stroke-width="1"/>
+      <text x="310" y="85" font-family="'DM Sans', sans-serif" font-size="12" font-weight="600" fill="#C9A96E" text-anchor="middle">Valenciennes</text>
+      <text x="310" y="125" font-family="'JetBrains Mono', monospace" font-size="8" fill="#A0A0AC" text-anchor="middle" letter-spacing="0.1em">EST. 1926</text>
+      <!-- Marly (HQ) -->
+      <circle cx="300" cy="110" r="3" fill="rgba(201,169,110,0.4)"/>
+      <text x="280" y="138" font-family="'JetBrains Mono', monospace" font-size="7" fill="rgba(160,160,172,0.5)" text-anchor="middle">MARLY (HQ)</text>
+    </svg>
+  </div>
+
   <div class="divider"></div>
 
   <!-- ── 1926 ── -->
   <section class="section">
     <div data-animate="fade-up">
       <div class="section-label">1926</div>
+      <div class="year-counter" data-animate="fade">1926</div>
       <h2 class="section-title">A bookshop opens<br>on a <em>quiet street</em></h2>
       <div class="section-body">
         <p>In this modest northern French town, Georges-Gaston Gaspard opened a bookshop. From that storefront, he began distributing office supplies to local businesses. Paper, pens, ledgers — the basic tools of commerce.</p>
@@ -185,6 +246,7 @@
     <div data-animate="fade-up">
       <div class="section-label">The Centenary</div>
       <h2 class="section-title">The 100th <em>Anniversary</em></h2>
+      <div class="centenary-badge">100 Years · 1926–2026</div>
       <div class="section-body">
         <p>This year, 2026, Lyreco celebrates its centenary. One hundred years from a bookshop in Valenciennes to a continent-spanning enterprise. Very few companies reach this milestone. Even fewer reach it while still under the control of the founding family.</p>
         <p>The Gaspard family still controls approximately 84% of equity through Corely SAS, their investment holding vehicle. Nathalie Gaspard serves as President. This is not a public corporation optimizing quarterly earnings — this is a family's century-long legacy.</p>

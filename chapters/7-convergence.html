@@ -38,6 +38,71 @@
     line-height: 1.6;
   }
   .benchmark-note strong { color: var(--champagne-light); font-weight: 500; }
+
+  .venn-container {
+    display: flex; justify-content: center; align-items: center;
+    margin: 4rem 0;
+    min-height: 350px;
+  }
+  .venn-svg { max-width: 600px; width: 100%; }
+  .venn-svg .venn-circle {
+    fill-opacity: 0.12;
+    stroke-width: 2;
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .venn-svg .venn-label {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    fill: var(--pearl);
+  }
+  .venn-svg .venn-sublabel {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: var(--smoke);
+    letter-spacing: 0.1em;
+  }
+  .venn-svg .overlap-label {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    font-style: italic;
+    fill: var(--champagne);
+    opacity: 0;
+    transition: opacity 0.8s 0.5s;
+  }
+  .venn-svg.converged .overlap-label { opacity: 1; }
+
+  .progress-bar-visual {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-small);
+  }
+  .progress-bar-label {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--smoke);
+    margin-bottom: 0.5rem;
+  }
+  .progress-bar-track {
+    height: 8px;
+    background: rgba(244, 242, 237, 0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--wefun-blue), var(--champagne));
+    width: 0%;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .progress-bar-fill.animated { width: var(--target-width); }
 </style>
 </head>
 <body data-chapter="7">
@@ -85,6 +150,22 @@
       </div>
     </div>
   </section>
+
+  <div class="venn-container" data-animate="fade-up">
+    <svg class="venn-svg" id="venn-diagram" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+      <circle class="venn-circle" id="venn-wefun" cx="220" cy="175" r="130" fill="#4A72FF" stroke="#4A72FF"/>
+      <circle class="venn-circle" id="venn-lyreco" cx="380" cy="175" r="130" fill="#E63946" stroke="#E63946"/>
+      <text class="venn-label" x="180" y="170" text-anchor="middle">WEFUN</text>
+      <text class="venn-sublabel" x="180" y="190" text-anchor="middle">EMPLOYEE WELFARE</text>
+      <text class="venn-sublabel" x="180" y="204" text-anchor="middle">TECH PLATFORM</text>
+      <text class="venn-label" x="420" y="170" text-anchor="middle">Lyreco</text>
+      <text class="venn-sublabel" x="420" y="190" text-anchor="middle">OFFICE SUPPLIES</text>
+      <text class="venn-sublabel" x="420" y="204" text-anchor="middle">DISTRIBUTION</text>
+      <text class="overlap-label" id="overlap-text" x="300" y="168" text-anchor="middle">Total</text>
+      <text class="overlap-label" id="overlap-text2" x="300" y="188" text-anchor="middle">Workplace</text>
+      <text class="overlap-label" id="overlap-text3" x="300" y="208" text-anchor="middle">Platform</text>
+    </svg>
+  </div>
 
   <div class="divider"></div>
 
@@ -143,6 +224,16 @@
     <div data-animate="fade-up">
       <div class="section-body">
         <p>This is the insight that makes the deal work. WEFUN already sells snacks, coffee, and corporate gifts to the same office managers who buy supplies, furniture, and PPE from Lyreco. The customer overlap is not coincidental — it's structural. The 총무팀 manages the entire workplace. Combining both catalogs under one platform eliminates procurement friction and dramatically increases wallet share per client.</p>
+      </div>
+    </div>
+
+    <div class="progress-bar-visual" data-animate="fade-up">
+      <div class="progress-bar-label">
+        <span>CROSS-SELL RATIO</span>
+        <span>18% → 50% TARGET</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="crosssell-bar" style="--target-width: 50%;"></div>
       </div>
     </div>
   </section>
@@ -235,5 +326,38 @@
 <script src="../js/chapters.js"></script>
 <script src="../js/nav.js"></script>
 <script src="../js/scroll-engine.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Venn diagram converge animation
+  var venn = document.getElementById('venn-diagram');
+  if (venn && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.to('#venn-wefun', {
+      attr: { cx: 250 },
+      scrollTrigger: { trigger: venn, start: 'top 70%', toggleActions: 'play none none none' },
+      duration: 1.2, ease: 'power3.out',
+      onComplete: function() { venn.classList.add('converged'); }
+    });
+    gsap.to('#venn-lyreco', {
+      attr: { cx: 350 },
+      scrollTrigger: { trigger: venn, start: 'top 70%', toggleActions: 'play none none none' },
+      duration: 1.2, ease: 'power3.out'
+    });
+  }
+
+  // Cross-sell progress bar animation
+  var bar = document.getElementById('crosssell-bar');
+  if (bar && typeof IntersectionObserver !== 'undefined') {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          bar.classList.add('animated');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(bar);
+  }
+});
+</script>
 </body>
 </html>

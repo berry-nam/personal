@@ -120,6 +120,82 @@
     background: linear-gradient(90deg, transparent, var(--champagne-dim), transparent);
     margin: 5rem 0;
   }
+
+  .person-avatar {
+    width: 80px; height: 80px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.8rem; font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+  .person-avatar.lyreco-avatar {
+    background: rgba(230, 57, 70, 0.15);
+    color: var(--lyreco-red);
+    border: 2px solid rgba(230, 57, 70, 0.3);
+  }
+  .person-avatar.wefun-avatar {
+    background: rgba(74, 114, 255, 0.15);
+    color: var(--wefun-blue);
+    border: 2px solid rgba(74, 114, 255, 0.3);
+  }
+  .person-avatar.neutral-avatar {
+    background: rgba(201, 169, 110, 0.15);
+    color: var(--champagne);
+    border: 2px solid rgba(201, 169, 110, 0.3);
+  }
+
+  .meeting-network-container {
+    position: relative;
+    margin: 3rem 0;
+    min-height: 450px;
+  }
+
+  .language-badges {
+    display: flex; gap: 0.4rem; margin-top: 0.8rem; flex-wrap: wrap;
+  }
+  .lang-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(244, 242, 237, 0.06);
+    border: 1px solid rgba(244, 242, 237, 0.1);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    color: var(--smoke);
+  }
+  .lang-badge.primary {
+    background: rgba(201, 169, 110, 0.12);
+    border-color: rgba(201, 169, 110, 0.2);
+    color: var(--champagne);
+  }
+
+  .cycling-stat {
+    display: flex; gap: 2rem; margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-small);
+  }
+  .cycling-stat-item {
+    text-align: center;
+  }
+  .cycling-stat-num {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 600;
+    color: var(--champagne);
+  }
+  .cycling-stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 768px) {
+    .cycling-stat { flex-direction: column; gap: 1rem; }
+  }
 </style>
 </head>
 <body data-chapter="6">
@@ -175,6 +251,7 @@
       <div class="section-label">Profile I</div>
       <h2 class="section-title">Helen Riley</h2>
       <p style="font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--smoke); margin-bottom: 2rem;">Group Development Director — M&A, Divestments & Partnerships</p>
+      <div class="person-avatar lyreco-avatar">HR</div>
     </div>
 
     <!-- Meta grid -->
@@ -202,6 +279,15 @@
       <div class="profile-meta-item" data-stagger-child>
         <div class="profile-meta-label">Mandate</div>
         <div class="profile-meta-value">M&A + Divestments</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="language-badges">
+        <span class="lang-badge primary">English (Native)</span>
+        <span class="lang-badge">French (Fluent)</span>
+        <span class="lang-badge">Spanish (Fluent)</span>
+        <span class="lang-badge">Italian (Fluent)</span>
       </div>
     </div>
 
@@ -319,6 +405,21 @@
       </div>
     </div>
 
+    <div class="cycling-stat" data-animate="fade-up">
+      <div class="cycling-stat-item">
+        <div class="cycling-stat-num">216 km</div>
+        <div class="cycling-stat-label">Distance</div>
+      </div>
+      <div class="cycling-stat-item">
+        <div class="cycling-stat-num">4,420 m</div>
+        <div class="cycling-stat-label">Elevation Gain</div>
+      </div>
+      <div class="cycling-stat-item">
+        <div class="cycling-stat-num">9</div>
+        <div class="cycling-stat-label">Colleagues</div>
+      </div>
+    </div>
+
     <!-- Radar Chart -->
     <div data-animate="fade-up">
       <h3 class="sub-heading">Assessment Radar</h3>
@@ -368,6 +469,7 @@
       <div class="section-label">Profile II</div>
       <h2 class="section-title">Eric Bigeard</h2>
       <p style="font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--smoke); margin-bottom: 2rem;">Former CEO (1988–2010) · Supervisory Board Member · Guardian of the Legacy</p>
+      <div class="person-avatar lyreco-avatar">EB</div>
     </div>
 
     <!-- Meta grid -->
@@ -524,12 +626,14 @@
     <div class="person-grid" data-stagger-group>
       <div class="person-card wefun" data-stagger-child>
         <div class="person-role">CFO & Chief Strategy Officer</div>
+        <div class="person-avatar wefun-avatar">HM</div>
         <div class="person-name">Hwang Minjae (황민재)</div>
         <div class="person-bio">VP-level executive and the public face of WEFUN's M&A strategy. Architected the holding company vision and led all six acquisitions. Will present the WEFUN company introduction and M&A track record. His English name is Joshua. Key objective: demonstrate WEFUN's financial discipline and integration capability.</div>
         <div class="person-tag key">Lead Presenter</div>
       </div>
       <div class="person-card wefun" data-stagger-child>
         <div class="person-role">Head of Business Development</div>
+        <div class="person-avatar wefun-avatar">JH</div>
         <div class="person-name">Jo Hwa-young (조화영)</div>
         <div class="person-bio">Leads business development initiatives including cross-sell strategy and new market entry. Will support the meeting with operational detail and client success stories. Responsible for demonstrating real-world platform capability.</div>
         <div class="person-tag key">Operational Detail</div>
@@ -542,6 +646,18 @@
         <p><strong style="color: var(--champagne);">The Intermediary:</strong> Seungoh Nam bridges the two teams. His role is critical for cultural translation, meeting facilitation, and ensuring both sides feel heard. The chemistry between all parties will define whether a second meeting happens.</p>
       </div>
     </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════ MEETING DYNAMICS MAP ═══════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Connections</div>
+      <h2 class="section-title">Meeting Dynamics <em>Map</em></h2>
+      <p style="font-size: 0.9rem; color: var(--smoke); margin-bottom: 1rem;">Interactive visualization of relationships and power dynamics — drag to explore</p>
+    </div>
+    <div class="meeting-network-container" id="meeting-dynamics" data-animate="scale-in"></div>
   </section>
 
   <div class="divider"></div>
@@ -586,6 +702,7 @@
 <script src="../js/nav.js"></script>
 <script src="../js/scroll-engine.js"></script>
 <script src="../js/viz/radar-chart.js"></script>
+<script src="../js/viz/network-graph.js"></script>
 <script src="../js/interactions/tabs.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -598,6 +715,31 @@ document.addEventListener('DOMContentLoaded', () => {
     { axis: 'Relationship', value: 7.5 },
     { axis: 'Strategic', value: 8 },
   ]);
+
+  // ─── Meeting Dynamics Network ───
+  createNetworkGraph('meeting-dynamics', [
+    { id: 'helen', label: 'Helen Riley', type: 'holding', icon: '👩‍💼', detail: 'Group Development Director M&A · 20+ years at Lyreco · Process authority' },
+    { id: 'eric', label: 'Eric Bigeard', type: 'holding', icon: '👨‍💼', detail: 'Former CEO (1988-2010) · Supervisory Board · Moral authority · Family\'s eyes' },
+    { id: 'gaspard', label: 'Gaspard Family', type: 'holding', icon: '👑', detail: '84% ownership via Corely SAS · 100-year dynasty · Ultimate decision maker' },
+    { id: 'lienard', label: 'Gregory Liénard', type: 'entity', icon: '🏢', detail: 'Current CEO · Built Asian operations · Endorsed by Bigeard' },
+    { id: 'minjae', label: 'Hwang Minjae', type: 'company', icon: '📊', detail: 'CFO & CSO · Lead presenter · M&A strategist · English name: Joshua' },
+    { id: 'hwayoung', label: 'Jo Hwa-young', type: 'company', icon: '🤝', detail: 'Head of BD · Operational detail · Client success stories' },
+    { id: 'seungoh', label: 'Seungoh Nam', type: 'person', icon: '🌉', detail: 'Intermediary · Cultural bridge · Meeting facilitator' },
+    { id: 'kimheon', label: 'Kim Heon', type: 'company', icon: '🚀', detail: 'WEFUN CEO & Founder · Christmas Eve 2018 · The vision holder' }
+  ], [
+    { source: 'gaspard', target: 'eric', label: 'Trusted advisor', strength: 3 },
+    { source: 'gaspard', target: 'helen', label: 'Mandated', strength: 2.5 },
+    { source: 'gaspard', target: 'lienard', label: 'Appointed CEO', strength: 2 },
+    { source: 'eric', target: 'lienard', label: 'Supports since 2021', strength: 2 },
+    { source: 'helen', target: 'eric', label: 'Delegation partners', strength: 2.5 },
+    { source: 'helen', target: 'minjae', label: 'Finance counterpart', strength: 2, distance: 150 },
+    { source: 'eric', target: 'minjae', label: 'Character assessment', strength: 1.5, distance: 160 },
+    { source: 'minjae', target: 'hwayoung', label: 'WEFUN team', strength: 2 },
+    { source: 'minjae', target: 'kimheon', label: 'Reports to', strength: 2 },
+    { source: 'seungoh', target: 'helen', label: 'Facilitates', strength: 1.5 },
+    { source: 'seungoh', target: 'minjae', label: 'Facilitates', strength: 1.5 },
+    { source: 'seungoh', target: 'eric', label: 'Cultural bridge', strength: 1.5 }
+  ], { height: 450 });
 });
 </script>
 </body>

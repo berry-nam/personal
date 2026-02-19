@@ -121,6 +121,59 @@
   @media (max-width: 768px) {
     .funding-round::after { display: none; }
   }
+
+  .structure-diagram-container {
+    position: relative;
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+
+  .ma-network-container {
+    position: relative;
+    margin: 3rem 0;
+    min-height: 500px;
+  }
+
+  .platform-visual {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin: 2rem 0;
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+  .platform-pillar {
+    padding: 1.5rem;
+    text-align: center;
+    border-right: var(--border-subtle);
+    position: relative;
+  }
+  .platform-pillar:last-child { border-right: none; }
+  .platform-pillar::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .platform-pillar:nth-child(1)::before { background: var(--wefun-blue); }
+  .platform-pillar:nth-child(2)::before { background: var(--champagne); }
+  .platform-pillar:nth-child(3)::before { background: var(--lyreco-red); }
+  .platform-pillar:nth-child(4)::before { background: var(--success); }
+  .pillar-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .pillar-name {
+    font-family: var(--font-display);
+    font-size: 0.95rem; font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .pillar-count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem; color: var(--smoke);
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 768px) {
+    .platform-visual { grid-template-columns: repeat(2, 1fr); }
+    .platform-pillar:nth-child(2) { border-right: none; }
+  }
 </style>
 </head>
 <body data-chapter="5">
@@ -267,6 +320,20 @@
       <div class="quote-text">"WeFun is pursuing business expansion under the vision of becoming a business-type holding company operating B2B solutions and SaaS."</div>
       <div class="quote-attr">Hwang Minjae — CFO & CSO, WEFUN</div>
     </div>
+
+    <!-- WEFUN Corporate Structure -->
+    <div data-animate="fade-up" style="margin-top: 4rem;">
+      <h3 class="sub-heading">WEFUN Corporate Structure</h3>
+      <p style="font-size: 0.9rem; color: var(--smoke); margin-bottom: 1rem;">The complete holding company structure including all acquisitions</p>
+    </div>
+    <div class="structure-diagram-container" id="wefun-structure" data-animate="scale-in"></div>
+
+    <!-- M&A Network Graph -->
+    <div data-animate="fade-up" style="margin-top: 4rem;">
+      <h3 class="sub-heading">Acquisition Network</h3>
+      <p style="font-size: 0.9rem; color: var(--smoke); margin-bottom: 1rem;">Interactive map of WEFUN's M&A ecosystem — drag nodes to explore connections</p>
+    </div>
+    <div class="ma-network-container" id="wefun-ma-network" data-animate="scale-in"></div>
   </section>
 
   <div class="divider"></div>
@@ -278,6 +345,29 @@
       <h2 class="section-title">~100 modular services<br>across <em>four pillars</em></h2>
       <div class="section-body">
         <p>What started as snack delivery now spans the entire workplace experience. WEFUN operates roughly 100 modular services organized into four strategic pillars:</p>
+      </div>
+    </div>
+
+    <div class="platform-visual" data-animate="fade-up">
+      <div class="platform-pillar">
+        <div class="pillar-icon">🍎</div>
+        <div class="pillar-name">Employee Welfare</div>
+        <div class="pillar-count">Snack24 · Coffee24 · Lunch24</div>
+      </div>
+      <div class="platform-pillar">
+        <div class="pillar-icon">🎁</div>
+        <div class="pillar-name">Corporate Gifting</div>
+        <div class="pillar-count">Gift24 · 설날 · 추석</div>
+      </div>
+      <div class="platform-pillar">
+        <div class="pillar-icon">🏢</div>
+        <div class="pillar-name">Office Operations</div>
+        <div class="pillar-count">Supplies · Cleaning · Safety</div>
+      </div>
+      <div class="platform-pillar">
+        <div class="pillar-icon">📐</div>
+        <div class="pillar-name">Space Management</div>
+        <div class="pillar-count">Design · Signage · Reno</div>
       </div>
     </div>
 
@@ -479,6 +569,8 @@
 <script src="../js/nav.js"></script>
 <script src="../js/scroll-engine.js"></script>
 <script src="../js/viz/revenue-chart.js"></script>
+<script src="../js/viz/structure-diagram.js"></script>
+<script src="../js/viz/network-graph.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // ─── Snowfall effect ───
@@ -508,6 +600,80 @@ document.addEventListener('DOMContentLoaded', () => {
     prefix: '₩',
     suffix: 'B',
   });
+
+  // ─── WEFUN Corporate Structure ───
+  createStructureDiagram('wefun-structure', {
+    title: 'WEFUN Holdings Structure',
+    width: 960,
+    tiers: [
+      { label: 'Founder / CEO', nodes: [
+        { id: 'kimheon', label: 'Kim Heon (김헌)', sublabel: 'CEO & Founder', color: '#4A72FF', wide: true }
+      ]},
+      { label: 'Holding', nodes: [
+        { id: 'wefun', label: 'WEFUN Inc.', sublabel: '₩143.1B Rev · 252 Employees', color: '#4A72FF', wide: true, badge: 'HQ' }
+      ]},
+      { label: 'Subsidiaries', nodes: [
+        { id: 'fulfillment', label: 'WEFUN Fulfillment', sublabel: 'Logistics backbone', color: '#4A72FF' },
+        { id: 'realestate', label: 'WEFUN Real Estate', sublabel: 'Space management', color: '#4A72FF' },
+        { id: 'humanfood', label: 'Human Food', sublabel: '~₩47B · 220 sites', color: '#C9A96E' }
+      ]},
+      { label: 'Acquired Entities', nodes: [
+        { id: 'woolin', label: 'Woolin (우린)', sublabel: '1,500+ stores', color: '#A0A0AC' },
+        { id: 'nextcnc', label: 'Next C&C', sublabel: 'Coffee24', color: '#A0A0AC' },
+        { id: 'ilhwa', label: 'Ilhwa Logis', sublabel: 'Cold-chain', color: '#A0A0AC' },
+        { id: 'pudding', label: 'Pudding', sublabel: 'Lunch24', color: '#A0A0AC' },
+        { id: 'snackfor', label: 'Snackfor', sublabel: '#2 → merged', color: '#A0A0AC' }
+      ]}
+    ],
+    connections: [
+      { from: 'kimheon', to: 'wefun', label: 'Founder' },
+      { from: 'wefun', to: 'fulfillment', label: '100%' },
+      { from: 'wefun', to: 'realestate', label: '100%' },
+      { from: 'wefun', to: 'humanfood', label: 'Acquired Jan 2026' },
+      { from: 'fulfillment', to: 'woolin', label: 'Renamed' },
+      { from: 'fulfillment', to: 'ilhwa', label: 'Merged' },
+      { from: 'wefun', to: 'nextcnc', label: 'Apr 2024' },
+      { from: 'wefun', to: 'pudding', label: 'Aug 2025' },
+      { from: 'wefun', to: 'snackfor', label: 'Nov 2025' }
+    ]
+  });
+
+  // ─── M&A Network Graph ───
+  createNetworkGraph('wefun-ma-network', [
+    { id: 'wefun', label: 'WEFUN', type: 'company', icon: '🏢', detail: 'Parent company · ₩143.1B revenue · 252 employees' },
+    { id: 'snack24', label: 'Snack24', type: 'company', icon: '🍿', detail: 'Original product · Office snack subscription' },
+    { id: 'coffee24', label: 'Coffee24', type: 'company', icon: '☕', detail: 'In-office café service · +104% growth in 2024' },
+    { id: 'gift24', label: 'Gift24', type: 'company', icon: '🎁', detail: 'Corporate gifting SaaS platform' },
+    { id: 'lunch24', label: 'Lunch24', type: 'company', icon: '🍱', detail: 'B2B lunch subscription via Pudding acquisition' },
+    { id: 'woolin', label: 'Woolin (우린)', type: 'entity', icon: '📦', detail: '#1 convenience store logistics · 1,500+ stores · Renamed WEFUN Fulfillment' },
+    { id: 'nextcnc', label: 'Next C&C', type: 'entity', icon: '☕', detail: '#1 in-office café operator · Acquired Apr 2024' },
+    { id: 'ilhwa', label: 'Ilhwa Logis', type: 'entity', icon: '🚛', detail: 'Food logistics specialist · Merged with Fulfillment' },
+    { id: 'pudding', label: 'Pudding', type: 'entity', icon: '🍽️', detail: 'Foodtech B2B lunch platform · Acquired Aug 2025' },
+    { id: 'snackfor', label: 'Snackfor', type: 'entity', icon: '🍫', detail: '#2 snack subscription · Kakao & HDC clients · Nov 2025' },
+    { id: 'humanfood', label: 'Human Food', type: 'holding', icon: '🏭', detail: '220 workplaces · ~₩47B revenue · Jan 2026 PE deal' },
+    { id: 'epic', label: 'Epic Platform', type: 'entity', icon: '💼', detail: 'PE partner in Human Food deal' },
+    { id: 'hana', label: 'Hana Securities', type: 'entity', icon: '🏦', detail: 'IPO lead underwriter · PE partner (Hana S&B)' },
+    { id: 'fulfillment', label: 'WEFUN Fulfillment', type: 'company', icon: '📦', detail: 'Logistics subsidiary · Woolin + Ilhwa merged' },
+    { id: 'clients', label: '10,000+ Clients', type: 'entity', icon: '👥', detail: 'B2B client base · 97% retention · 800K daily touchpoints' }
+  ], [
+    { source: 'wefun', target: 'snack24', label: 'Original', strength: 2 },
+    { source: 'wefun', target: 'coffee24', label: 'Service', strength: 2 },
+    { source: 'wefun', target: 'gift24', label: 'Service', strength: 2 },
+    { source: 'wefun', target: 'lunch24', label: 'Service', strength: 2 },
+    { source: 'wefun', target: 'fulfillment', label: '100%', strength: 2.5 },
+    { source: 'fulfillment', target: 'woolin', label: 'Renamed' },
+    { source: 'fulfillment', target: 'ilhwa', label: 'Merged' },
+    { source: 'wefun', target: 'nextcnc', label: 'Acquired' },
+    { source: 'nextcnc', target: 'coffee24', label: 'Enabled' },
+    { source: 'wefun', target: 'pudding', label: 'Acquired' },
+    { source: 'pudding', target: 'lunch24', label: 'Enabled' },
+    { source: 'wefun', target: 'snackfor', label: 'Acquired' },
+    { source: 'wefun', target: 'humanfood', label: 'PE Deal', strength: 2 },
+    { source: 'humanfood', target: 'epic', label: 'Partner' },
+    { source: 'humanfood', target: 'hana', label: 'Partner' },
+    { source: 'wefun', target: 'clients', label: 'Serves', strength: 2 },
+    { source: 'hana', target: 'wefun', label: 'IPO Lead', distance: 180 }
+  ]);
 });
 </script>
 </body>
