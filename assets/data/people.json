@@ -1,0 +1,77 @@
+{
+  "lyreco": [
+    {
+      "id": "helen-riley",
+      "name": "Helen Riley",
+      "role": "Group Development Director — M&A, Divestments & Partnerships",
+      "team": "lyreco",
+      "tag": { "label": "Process Owner", "type": "critical" },
+      "joinedYear": 2004,
+      "tenure": "20+ years",
+      "education": [
+        { "years": "2000-2003", "degree": "Licence — English/Spanish/Italian Applied to Business", "school": "Université Catholique de Lille" },
+        { "years": "2003-2005", "degree": "Master's in Administration & Finance", "school": "SKEMA Business School, Lille" },
+        { "years": "2020-2022", "degree": "Executive MBA", "school": "EDHEC Business School" }
+      ],
+      "career": [
+        { "years": "2004", "title": "Group Finance Trainee", "org": "Lyreco Group" },
+        { "years": "~2005-2008", "title": "Group Business Analyst", "org": "Lyreco Group HQ" },
+        { "years": "~2008-2011", "title": "Group Credit Management & Tax Project Leader", "org": "Lyreco Group HQ" },
+        { "years": "~2011-2013", "title": "Credit Manager", "org": "Lyreco Italia" },
+        { "years": "2013-2017", "title": "Chief Accountant — Spain & Portugal", "org": "Lyreco Iberia" },
+        { "years": "~2017-2022", "title": "Group Finance (returned)", "org": "Lyreco Group HQ" },
+        { "years": "~2022-2025", "title": "Group Finance Operations & Transformation Director", "org": "Lyreco Group HQ" },
+        { "years": "Sept 2025", "title": "Group Development Director — M&A", "org": "Lyreco Group (newly created role)" }
+      ],
+      "languages": ["English", "French", "Spanish", "Italian"],
+      "personality": ["Go getter", "Can do attitude", "Bubbly personality", "Very knowledgeable", "SAP expert", "Accessible", "Professional"],
+      "personal": "Avid cyclist — 216km ride with 4,420m elevation with 9 colleagues. Enjoys cooking, yoga, trekking, discovering new cultures.",
+      "radar": [
+        { "axis": "Analytical", "value": 9 },
+        { "axis": "Deal Exp.", "value": 7 },
+        { "axis": "Cultural", "value": 8.5 },
+        { "axis": "Process", "value": 9 },
+        { "axis": "Relationship", "value": 7.5 },
+        { "axis": "Strategic", "value": 8 }
+      ]
+    },
+    {
+      "id": "eric-bigeard",
+      "name": "Eric Bigeard",
+      "fullName": "Eric Jacques Pierre Bigeard",
+      "role": "Former CEO (1988-2010) / Supervisory Board Member",
+      "team": "lyreco",
+      "tag": { "label": "Guardian of Legacy", "type": "vip" },
+      "born": "~1955",
+      "ceoTenure": "22 years (1988-2010)",
+      "revenueGrowth": "€15M → €2B+",
+      "countriesGrown": "1 → 29",
+      "greatestAchievement": "The creation of a solid and stable team",
+      "departureQuote": "Too many CEOs hold on to their jobs too long. I didn't want to be one of those that end up getting fired from the company I love!",
+      "postCEO": "Angel investor (Getyoo €600K), Supervisory Board at Georges Gaspard's request, 2021 returned 'in support' of CEO Liénard"
+    }
+  ],
+  "wefun": [
+    {
+      "id": "hwang-minjae",
+      "name": "Hwang Minjae (황민재)",
+      "englishName": "Joshua",
+      "role": "CFO & Chief Strategy Officer",
+      "team": "wefun",
+      "tag": { "label": "Lead Presenter", "type": "key" },
+      "bio": "VP-level executive and the public face of WEFUN's M&A strategy. Architected the holding company vision and led all six acquisitions."
+    },
+    {
+      "id": "jo-hwa-young",
+      "name": "Jo Hwa-young (조화영)",
+      "role": "Head of Business Development",
+      "team": "wefun",
+      "tag": { "label": "Operational Detail", "type": "key" },
+      "bio": "Leads business development initiatives including cross-sell strategy and new market entry."
+    }
+  ],
+  "intermediary": {
+    "name": "Seungoh Nam",
+    "role": "Intermediary — Cultural bridge and meeting facilitator"
+  }
+}

@@ -1,0 +1,176 @@
+/* ═══════════════════════════════════════════════
+   Hub Page — Landing & Chapter Grid
+   ═══════════════════════════════════════════════ */
+
+/* ─── HERO ─── */
+.hub-hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  position: relative; padding: 4rem 2rem;
+}
+
+.hub-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(201, 169, 110, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 70% 60%, rgba(46, 91, 255, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hub-hero > * { position: relative; }
+
+.hub-hero .conf-badge { margin-bottom: 2rem; }
+
+.hub-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-label);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--champagne);
+  margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s 0.3s forwards;
+}
+
+.hub-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-weight: 400; line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 1s 0.6s forwards;
+}
+.hub-title em { font-style: italic; color: var(--champagne); }
+
+.hub-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 400; font-style: italic;
+  color: var(--smoke);
+  margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s 0.9s forwards;
+}
+
+.hub-details {
+  display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-nav);
+  letter-spacing: 0.1em;
+  color: var(--smoke); text-transform: uppercase;
+  opacity: 0; animation: fadeUp 1s 1.2s forwards;
+}
+.hub-details span { display: flex; align-items: center; gap: 0.5rem; }
+.hub-details .dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--champagne);
+}
+
+.hub-scroll-cue {
+  position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+  opacity: 0; animation: fadeUp 1s 1.6s forwards;
+}
+
+/* ─── CHAPTER INTRO TEXT ─── */
+.hub-intro {
+  max-width: 680px; margin: 0 auto;
+  text-align: center;
+  padding: var(--space-section) 2rem;
+}
+
+.hub-intro p {
+  font-size: 1.1rem; color: var(--pearl-muted);
+  line-height: var(--lh-body);
+}
+
+/* ─── CHAPTER GRID ─── */
+.chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem 8rem;
+}
+
+.chapter-card {
+  background: var(--ink-card);
+  border: var(--border-subtle);
+  border-radius: 20px;
+  padding: 2.5rem 2.5rem 2rem;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--dur-medium), transform 0.4s var(--ease-out);
+  display: flex; flex-direction: column;
+}
+
+.chapter-card:hover {
+  border-color: rgba(201, 169, 110, 0.25);
+  transform: translateY(-4px);
+}
+
+.chapter-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    rgba(201, 169, 110, 0.04) 0%, transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-medium);
+  pointer-events: none;
+}
+.chapter-card:hover::after { opacity: 1; }
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--champagne);
+  margin-bottom: 0.8rem;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  font-style: italic;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.card-teaser {
+  font-size: 0.85rem;
+  color: var(--smoke);
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.card-progress {
+  margin-top: 1.2rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--smoke);
+}
+
+.card-progress .dot-visited {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--success);
+}
+
+.card-progress .dot-unvisited {
+  width: 6px; height: 6px; border-radius: 50%;
+  border: 1px solid rgba(242, 240, 235, 0.15);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .chapter-grid { grid-template-columns: 1fr; }
+  .hub-details { gap: 1.5rem; }
+}

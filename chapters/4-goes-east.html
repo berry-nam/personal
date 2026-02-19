@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter IV — Lyreco Goes East | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 4 SPECIFIC ─── */
+  .market-detail {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--champagne);
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .mirror-highlight {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(201, 169, 110, 0.12);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--champagne);
+    font-weight: 500;
+  }
+
+  .convergence-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .convergence-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--wefun-blue);
+  }
+  .convergence-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--pearl);
+  }
+  .convergence-card p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+
+  .mirror-keywords {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0;
+  }
+  .mirror-keyword {
+    padding: 0.35rem 0.9rem;
+    background: var(--wefun-blue-dim);
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    color: var(--wefun-blue);
+  }
+
+  .strategy-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--champagne);
+  }
+  .strategy-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--champagne-light);
+  }
+  .strategy-card p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+</style>
+</head>
+<body data-chapter="4">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter IV</span>
+    <span class="nav-chapter-title">Lyreco Goes East</span>
+  </div>
+  <div class="nav-controls">
+    <a href="3-bigeard.html" class="nav-arrow prev" aria-label="Previous">←</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <a href="5-christmas-eve.html" class="nav-arrow next" aria-label="Next">→</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter IV</div>
+  <h1 class="chapter-hero__title">Lyreco Goes <em>East</em></h1>
+  <p class="chapter-hero__subtitle">Hong Kong, Korea, Singapore — the Asian expansion that created an opportunity</p>
+  <div class="chapter-hero__meta">Reading time · ~8 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ── INTRO / ZONE HQ ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Asia Zone</div>
+      <h2 class="section-title">Hong Kong is the <em>nerve center</em></h2>
+      <div class="section-body">
+        <p>Lyreco's Asia Zone headquarters is in Hong Kong. The zone is led by Jones Leung, who joined Lyreco in 2019 as Managing Director of Hong Kong and was subsequently promoted to Zone Managing Director for all of Asia.</p>
+        <p>Leung holds a degree from the Chinese University of Hong Kong and brings both B2C and B2B experience to the role. He is active on LinkedIn, regularly posting about wellness showcases, employee experience awards, and corporate culture initiatives — a signal that Lyreco Asia is leaning heavily into the same workplace wellness positioning that defines WEFUN.</p>
+        <p>Understanding who runs the zone matters. If this deal proceeds, Jones Leung and his team are the people WEFUN would inherit. Their culture, their client relationships, their operational knowledge — all of it transfers.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE FIVE MARKETS ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Markets</div>
+      <h2 class="section-title">Five countries.<br>One <em>strategic arc.</em></h2>
+      <div class="section-body">
+        <p>Lyreco's Asian footprint spans five markets, built over nearly three decades through a combination of organic expansion and targeted acquisition. Each market occupies a distinct stage of maturity.</p>
+      </div>
+    </div>
+
+    <div class="card-grid" data-stagger-group>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🇭🇰</div>
+        <div class="play-title">Hong Kong</div>
+        <div class="play-desc">Established 1996/1997. The oldest Asian operation and current zone headquarters. ~930 LinkedIn followers. ISO 9001 & 14001 certified. Over 5,500 products available. Strong pivot toward wellness and employee engagement positioning.</div>
+        <div class="market-detail">EST. 1996 · ZONE HQ · ISO CERTIFIED</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🇰🇷</div>
+        <div class="play-title">Korea</div>
+        <div class="play-desc">Established April 26, 2004. Revenue ~₩26.87B (~$20M) in 2023. Headquartered in Gangnam-gu, Seoul (Teheran-ro). Operates "Lounge Service" (lyrecoloungeservice.com) — a B2B total wellness/welfare offering including food, snacks, office ops, safety, and corporate gifting. Directly mirrors WEFUN.</div>
+        <div class="market-detail">EST. 2004 · ~₩26.87B REV · GANGNAM-GU HQ</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🇸🇬</div>
+        <div class="play-title">Singapore</div>
+        <div class="play-desc">Expanded in 2019 via the Deskright acquisition. Positioned as the ideal partner for international companies seeking a single B2B workplace solutions provider across Southeast Asia. Gateway to the ASEAN market.</div>
+        <div class="market-detail">EST. 2019 · DESKRIGHT ACQUISITION · ASEAN GATEWAY</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🇲🇾</div>
+        <div class="play-title">Malaysia</div>
+        <div class="play-desc">Expanded after Singapore as part of the ASEAN growth strategy. A recent market entry leveraging the Singapore platform for regional distribution and client relationships.</div>
+        <div class="market-detail">RECENT ENTRY · SG PLATFORM EXTENSION</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🇹🇭</div>
+        <div class="play-title">Thailand</div>
+        <div class="play-desc">Expanded after Singapore as the second ASEAN extension market. Early-stage operations building on the Deskright-enabled Southeast Asian infrastructure.</div>
+        <div class="market-detail">RECENT ENTRY · ASEAN EXPANSION</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── STAT GRID ── -->
+  <section class="section">
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">~700</div>
+        <div class="stat-label">Employees</div>
+        <div class="stat-sub">Across all Asian operations</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="5" data-suffix="">0</div>
+        <div class="stat-label">Countries</div>
+        <div class="stat-sub">HK · KR · SG · MY · TH</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">&lt;10%</div>
+        <div class="stat-label">Of Group Revenue</div>
+        <div class="stat-sub">Small relative to the whole</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">₩26.87B</div>
+        <div class="stat-label">Korea Revenue</div>
+        <div class="stat-sub">~$20M in 2023</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── GREGORY LIENARD'S LEGACY ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Architect</div>
+      <h2 class="section-title">Gregory Lienard's <em>Legacy</em></h2>
+      <div class="section-body">
+        <p>The current CEO, Gregory Lienard, personally built Lyreco's Asian operations. Before ascending to the top role in 2019, Lienard was posted across Canada, France, and Singapore — each assignment deepening his understanding of how to operate across cultures and markets.</p>
+        <p>His Asian expansion strategy followed a deliberate sequence: <span class="mirror-highlight">Hong Kong</span> as the beachhead, <span class="mirror-highlight">Korea</span> as the second anchor, then <span class="mirror-highlight">Singapore</span> via the Deskright acquisition in 2019, which served as the launchpad for <span class="mirror-highlight">Malaysia</span> and <span class="mirror-highlight">Thailand</span>.</p>
+        <p>This matters because when WEFUN approaches Lyreco about the Asian operations, you are approaching something the CEO built with his own hands. Lienard has personal attachment to these markets. The conversation must honor that — and demonstrate that WEFUN will grow what he planted, not uproot it.</p>
+      </div>
+    </div>
+
+    <div class="timeline" data-stagger-group>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">1996/1997</div>
+        <div class="timeline-title">Hong Kong</div>
+        <div class="timeline-desc">First Asian market entry. Became the zone headquarters and operational foundation for the entire region.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">April 2004</div>
+        <div class="timeline-title">Korea</div>
+        <div class="timeline-desc">Second Asian market. Grew steadily to ~₩26.87B revenue. Developed the "Lounge Service" brand — a B2B wellness/welfare offering.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">2019</div>
+        <div class="timeline-title">Singapore (Deskright Acquisition)</div>
+        <div class="timeline-desc">Strategic acquisition of Deskright to enter Singapore. Positioned as ASEAN launchpad for international corporate clients.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">Post-2019</div>
+        <div class="timeline-title">Malaysia & Thailand</div>
+        <div class="timeline-desc">Sequential ASEAN expansion leveraging the Singapore platform. Early-stage markets with significant growth potential.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE KOREA OPERATION — A MIRROR ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Mirror</div>
+      <h2 class="section-title">The Korea Operation<br><em>— A Mirror</em></h2>
+      <div class="section-body">
+        <p>This is where the story becomes extraordinary. Lyreco Korea operates a brand called <strong style="color: var(--pearl);">"Lounge Service"</strong> (lyrecoloungeservice.com) — a B2B total wellness and welfare platform that directly mirrors WEFUN's core offering.</p>
+      </div>
+    </div>
+
+    <div class="mirror-keywords" data-animate="fade-up" data-delay="0.2">
+      <span class="mirror-keyword">Food & Snacks</span>
+      <span class="mirror-keyword">Office Operations</span>
+      <span class="mirror-keyword">Safety Equipment</span>
+      <span class="mirror-keyword">Corporate Gifting</span>
+      <span class="mirror-keyword">Workplace Wellness</span>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>The overlap is stunning. Lounge Service offers food and snack subscriptions, office operations support, safety products, and corporate gifting — the exact same service categories that define WEFUN's platform. And Lyreco Korea is headquartered in <strong style="color: var(--pearl);">Gangnam-gu, Seoul (Teheran-ro)</strong> — literally the same neighborhood as WEFUN.</p>
+        <p>This isn't coincidence — it's convergence. Two companies, operating in the same city, in the same neighborhood, serving the same customer need, arrived at the same product-market conclusion independently. One from Europe moving east, one from Korea expanding outward. They are mirror images.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="convergence-card">
+        <h4>Lounge Service = WEFUN's Proof of Concept</h4>
+        <p>The fact that Lyreco independently developed a welfare/wellness B2B offering in Korea validates WEFUN's entire thesis. If a century-old European distributor reached the same conclusion about what Korean offices need, then WEFUN's platform isn't just a local trend — it's a universal insight about the future of workplace services.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="convergence-card">
+        <h4>Same Neighborhood, Different Scale</h4>
+        <p>Lyreco Korea in Gangnam-gu generates ~₩26.87B. WEFUN, also rooted in Gangnam/Seoul, generates ₩143.1B and growing at 87% YoY. The acquisition would combine local knowledge with platform velocity. Lyreco Korea's client relationships plus WEFUN's technology and operational machine creates immediate synergy.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="convergence-card">
+        <h4>Integration, Not Disruption</h4>
+        <p>Because the product offerings already overlap, integration becomes natural rather than forced. WEFUN wouldn't be imposing a foreign model on Lyreco Korea's clients — it would be enhancing an existing service with deeper technology, better logistics, and a broader product catalog. The Lounge Service brand could evolve seamlessly into the WEFUN platform.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── QUOTE ── -->
+  <section class="section">
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"The Korea and Singapore operations are embryonic versions of what WEFUN has already perfected. This isn't just a distribution acquisition — it's a market convergence."</div>
+      <div class="quote-attr">Strategic Assessment</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── KEY INSIGHT ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Key Insight</div>
+      <h2 class="section-title">Small today. <em>Strategic forever.</em></h2>
+      <div class="section-body">
+        <p>The Asian operations are small relative to the Lyreco group — less than 10% of total revenue. For a €2.2 billion enterprise focused on its European heartland and approaching its centenary, Asia may feel like a distraction. The operations require attention, investment, and local expertise that a French headquarters 9,000 kilometers away struggles to provide effectively.</p>
+        <p>But for WEFUN, these same operations are transformational. Five established markets with existing client relationships, proven infrastructure, and regulatory compliance already in place. Under WEFUN's stewardship, with the full platform toolkit — Snack24, Coffee24, Lunch24, Gift24, the logistics backbone, the technology stack — these embryonic operations could grow dramatically.</p>
+        <p><strong style="color: var(--pearl);">What is peripheral to Lyreco is central to WEFUN.</strong> That asymmetry is what makes this deal logical for both sides. Lyreco focuses on its European centenary strength. WEFUN builds the Asian workplace solutions platform that Lyreco started but couldn't complete from 9,000 kilometers away.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card">
+        <h4>The narrative for Lyreco</h4>
+        <p>Your Asian operations deserve a partner who lives in the market, speaks the language, and has already built the platform you were trying to build. We're not acquiring distressed assets — we're completing the vision you started.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
+<div class="chapter-footer">
+  <a href="5-christmas-eve.html" class="next-chapter-cta">
+    <span class="next-label">Next Chapter</span>
+    <span class="next-num">Chapter V</span>
+    <span class="next-name">Christmas Eve 2018</span>
+    <span class="next-arrow">→</span>
+  </a>
+</div>
+
+<footer class="site-footer">
+  Confidential — Prepared for WEFUN Management — February 2026
+</footer>
+
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/scroll-engine.js"></script>
+</body>
+</html>

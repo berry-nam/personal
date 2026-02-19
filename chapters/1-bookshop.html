@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter I — A Bookshop in Valenciennes | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 1 SPECIFIC ─── */
+  .origin-highlight {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(201, 169, 110, 0.12);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--champagne);
+    font-weight: 500;
+  }
+
+  .legacy-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .legacy-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--champagne);
+  }
+  .legacy-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--pearl);
+  }
+  .legacy-card p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+
+  .evolution-keywords {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0;
+  }
+  .evolution-keyword {
+    padding: 0.35rem 0.9rem;
+    background: var(--champagne-dim);
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    color: var(--champagne-light);
+  }
+</style>
+</head>
+<body data-chapter="1">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter I</span>
+    <span class="nav-chapter-title">A Bookshop in Valenciennes</span>
+  </div>
+  <div class="nav-controls">
+    <a href="#" class="nav-arrow prev" aria-label="Previous" style="visibility: hidden;">←</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <a href="2-dynasty.html" class="nav-arrow next" aria-label="Next">→</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter I</div>
+  <h1 class="chapter-hero__title">A Bookshop <em>in Valenciennes</em></h1>
+  <p class="chapter-hero__subtitle">Where a family legacy began — a century ago</p>
+  <div class="chapter-hero__meta">Reading time · ~6 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ── THE CITY ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The City</div>
+      <h2 class="section-title">Valenciennes</h2>
+      <div class="section-body">
+        <p>Valenciennes is a city in northern France, in the Hauts-de-France region near the Belgian border. A place shaped by industrial heritage, coal mining, and a culture of hard work and family. The architecture carries the memory of centuries of commerce. The people carry a stubbornness about quality and loyalty that outsiders sometimes mistake for coldness.</p>
+        <p>This is where the Gaspard story begins. Not in Paris. Not in a boardroom. In a modest town where families built things to last, where a handshake still meant something, and where the line between business and family was never drawn at all.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 1926 ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">1926</div>
+      <h2 class="section-title">A bookshop opens<br>on a <em>quiet street</em></h2>
+      <div class="section-body">
+        <p>In this modest northern French town, Georges-Gaston Gaspard opened a bookshop. From that storefront, he began distributing office supplies to local businesses. Paper, pens, ledgers — the basic tools of commerce.</p>
+        <p>The simplest possible beginning for what would become Europe's largest B2B workplace products distributor. No venture capital. No pitch deck. No growth hacking. A man, a shop, a community that needed what he sold.</p>
+        <p>Georges-Gaston understood something that many modern founders forget: <strong style="color: var(--pearl);">you build a great business by solving a real problem for real people, one customer at a time.</strong> The office supplies market in northern France wasn't glamorous. But it was essential. And essentiality, unlike glamour, compounds.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── FROM STOREFRONT TO EMPIRE ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Transformation</div>
+      <h2 class="section-title">From Storefront<br>to <em>Empire</em></h2>
+      <div class="section-body">
+        <p>Four generations later, the bookshop became something its founder could never have imagined. A <span class="origin-highlight">€2.2 billion enterprise</span> operating across <span class="origin-highlight">25 countries</span> with <span class="origin-highlight">12,000 employees</span>.</p>
+        <p>What started as paper and pens evolved into a full workplace solutions company. The product catalog expanded methodically, each new category building on the trust and distribution network that came before.</p>
+      </div>
+    </div>
+
+    <div class="evolution-keywords" data-animate="fade-up" data-delay="0.2">
+      <span class="evolution-keyword">Office Supplies</span>
+      <span class="evolution-keyword">IT Products</span>
+      <span class="evolution-keyword">Furniture</span>
+      <span class="evolution-keyword">PPE & Safety</span>
+      <span class="evolution-keyword">Hygiene</span>
+      <span class="evolution-keyword">Workplace Food & Beverage</span>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>Each category wasn't a random diversification — it was a response to the same customer asking for more. The purchasing manager who ordered paper clips also needed printer ink, then ergonomic chairs, then hand sanitizer, then coffee for the break room. Lyreco followed the customer's needs outward, and the empire grew organically around them.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── STAT GRID ── -->
+  <section class="section">
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">€2.2B+</div>
+        <div class="stat-label">Annual Revenue</div>
+        <div class="stat-sub">Europe's #1 B2B workplace distributor</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="100" data-suffix=" yrs">0</div>
+        <div class="stat-label">In 2026</div>
+        <div class="stat-sub">Centenary anniversary</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="25" data-suffix="">0</div>
+        <div class="stat-label">Countries</div>
+        <div class="stat-sub">Global footprint</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">12,000</div>
+        <div class="stat-label">Employees</div>
+        <div class="stat-sub">Worldwide workforce</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE 100TH ANNIVERSARY ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Centenary</div>
+      <h2 class="section-title">The 100th <em>Anniversary</em></h2>
+      <div class="section-body">
+        <p>This year, 2026, Lyreco celebrates its centenary. One hundred years from a bookshop in Valenciennes to a continent-spanning enterprise. Very few companies reach this milestone. Even fewer reach it while still under the control of the founding family.</p>
+        <p>The Gaspard family still controls approximately 84% of equity through Corely SAS, their investment holding vehicle. Nathalie Gaspard serves as President. This is not a public corporation optimizing quarterly earnings — this is a family's century-long legacy.</p>
+        <p>The centenary is not merely symbolic. It defines how the Gaspard family thinks about every decision they make, including the decision to divest their Asian operations. They are not selling assets — they are entrusting a piece of their history to someone they believe will honor it.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── QUOTE ── -->
+  <section class="section">
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"Every great company begins with a single act of faith. For Lyreco, it was a bookshop in a small French town."</div>
+      <div class="quote-attr">The Origin Story</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── WHY THIS MATTERS ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Why This Matters</div>
+      <h2 class="section-title">Before the <em>meeting</em></h2>
+      <div class="section-body">
+        <p>Understanding Lyreco's origins is essential for the February 26 meeting. When you sit across from Eric Bigeard and Helen Riley, you're sitting across from the living memory of this story. The bookshop in Valenciennes isn't just history — it's identity.</p>
+        <p>Eric Bigeard spent 22 years building Lyreco from €15 million to over €2 billion. Helen Riley has been at the company for over 20 years. These are not mercenaries evaluating a financial transaction. These are custodians of a family's century of work. Every word you choose, every gesture you make, must acknowledge the weight of what they represent.</p>
+        <p>When you propose to acquire Lyreco's Asian operations, you are not buying a business unit. You are asking a family to trust you with a piece of their inheritance. <strong style="color: var(--pearl);">Begin from that understanding, and everything else follows.</strong></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
+<div class="chapter-footer">
+  <a href="2-dynasty.html" class="next-chapter-cta">
+    <span class="next-label">Next Chapter</span>
+    <span class="next-num">Chapter II</span>
+    <span class="next-name">The Gaspard Dynasty</span>
+    <span class="next-arrow">→</span>
+  </a>
+</div>
+
+<footer class="site-footer">
+  Confidential — Prepared for WEFUN Management — February 2026
+</footer>
+
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/scroll-engine.js"></script>
+</body>
+</html>

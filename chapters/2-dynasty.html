@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter II — The Gaspard Dynasty | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 2 SPECIFIC ─── */
+  .org-structure {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+
+  .org-tier {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 1.8rem;
+    text-align: center;
+    position: relative;
+  }
+  .org-tier::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 1rem;
+    background: var(--champagne-dim);
+  }
+  .org-tier:last-child::after { display: none; }
+
+  .org-tier-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--champagne);
+    margin-bottom: 0.4rem;
+  }
+  .org-tier-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--pearl); margin-bottom: 0.3rem;
+  }
+  .org-tier-detail {
+    font-size: 0.85rem; color: var(--smoke); line-height: 1.6;
+  }
+
+  .investment-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--champagne);
+  }
+  .investment-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--champagne-light);
+  }
+  .investment-card p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+
+  .family-role {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(201, 169, 110, 0.12);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--champagne);
+    font-weight: 500;
+    margin-right: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .insight-block {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-top: 2rem;
+    border-left: 3px solid var(--lyreco-red, #c0392b);
+    position: relative;
+  }
+  .insight-block h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--pearl);
+  }
+  .insight-block p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+</style>
+</head>
+<body data-chapter="2">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter II</span>
+    <span class="nav-chapter-title">The Gaspard Dynasty</span>
+  </div>
+  <div class="nav-controls">
+    <a href="1-bookshop.html" class="nav-arrow prev" aria-label="Previous">&larr;</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <a href="3-bigeard.html" class="nav-arrow next" aria-label="Next">&rarr;</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter II</div>
+  <h1 class="chapter-hero__title">The Gaspard <em>Dynasty</em></h1>
+  <p class="chapter-hero__subtitle">Four generations. One hundred years. A single family's iron grip on a &euro;2.2 billion empire &mdash; and what that means for anyone who wants to do business with them.</p>
+  <div class="chapter-hero__meta">Reading time · ~9 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ── THE STRUCTURE ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Structure</div>
+      <h2 class="section-title">Corely SAS<br><em>The family's holding company</em></h2>
+      <div class="section-body">
+        <p>At the apex of the Lyreco empire sits Corely SAS &mdash; the Gaspard family's holding company. Corely controls approximately 84% of Lyreco's ownership, making the family the undisputed masters of the enterprise. This is not a dispersed public shareholding. This is concentrated, generational power.</p>
+        <p>The leadership of Corely tells you everything about the family's structure:</p>
+      </div>
+    </div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">Georges Gaspard</div>
+        <div class="stat-label">President of Corely SAS</div>
+        <div class="stat-sub">3rd generation patriarch</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">Caroline Gaspard</div>
+        <div class="stat-label">Deputy Director-General</div>
+        <div class="stat-sub">4th generation</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">Nathalie Gaspard</div>
+        <div class="stat-label">Deputy Director-General</div>
+        <div class="stat-sub">4th generation</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>The fourth generation is already in position. Caroline and Nathalie Gaspard serve as Deputy Director-Generals of Corely, learning the levers of power while Georges still holds the presidency. This is a family that plans its transitions decades in advance.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CORPORATE STRUCTURE ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Architecture</div>
+      <h2 class="section-title">From Onnaing to <em>25+ countries</em></h2>
+      <div class="section-body">
+        <p>The corporate structure cascades from the family holding company down through Lyreco SAS and into the global subsidiary network:</p>
+      </div>
+    </div>
+
+    <div class="org-structure" data-stagger-group>
+      <div class="org-tier" data-stagger-child>
+        <div class="org-tier-label">Family Holding</div>
+        <div class="org-tier-name">Corely SAS</div>
+        <div class="org-tier-detail">Onnaing, France &middot; ~84% ownership of Lyreco &middot; President: Georges Gaspard</div>
+      </div>
+      <div class="org-tier" data-stagger-child>
+        <div class="org-tier-label">Operating Company</div>
+        <div class="org-tier-name">Lyreco SAS</div>
+        <div class="org-tier-detail">Marly, France &middot; Share capital: &euro;64.7M &middot; President: Nathalie Gaspard &middot; Director-General: Georges Gaspard</div>
+      </div>
+      <div class="org-tier" data-stagger-child>
+        <div class="org-tier-label">Global Operations</div>
+        <div class="org-tier-name">25+ Country Subsidiaries</div>
+        <div class="org-tier-detail">Europe, Asia-Pacific, Middle East &middot; 12,000+ employees &middot; &euro;2.2B consolidated revenue</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>Note the dual roles: Nathalie Gaspard serves as President of Lyreco SAS (the operating entity), while Georges Gaspard is Director-General. This is not ceremonial. The family is directly involved in operational governance, not merely passive shareholders. When you negotiate with Lyreco, you are negotiating with the Gaspards.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── BEYOND LYRECO ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Beyond Lyreco</div>
+      <h2 class="section-title">The family's <em>investment vehicles</em></h2>
+      <div class="section-body">
+        <p>The Gaspard family's interests extend well beyond office supplies. Understanding their broader investment activity reveals the sophistication and ambition of this dynasty.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="investment-card">
+        <h4>Corely Belgium SPRL &amp; Bratya SPRL</h4>
+        <p>Belgian investment vehicles managed by David Coti since 2015. Coti is an ESSEC and Plekhanov University graduate &mdash; signaling the family hires world-class talent to manage its non-Lyreco assets. These entities invested <strong style="color: var(--pearl);">&euro;15 million + &euro;3.6 million in CARMAT</strong> &mdash; the French artificial heart company. This is not a family that plays it safe. They back visionary, high-risk ventures alongside their steady B2B cash cow.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="investment-card">
+        <h4>Georges Gaspard &mdash; Extended Network</h4>
+        <p>Beyond the formal holding structure, Georges Gaspard is connected to multiple entities: <span class="family-role">Erypharm SAS</span> <span class="family-role">Nataline SC</span> <span class="family-role">Villa Geoanne du Cap Martin</span> &mdash; the latter being a real estate entity based in Onnaing. This web of interests paints a picture of a patriarch who is deeply engaged across industries, not merely a figurehead atop a single company.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE AUDITORS ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Auditors</div>
+      <h2 class="section-title">PwC on the books.<br><em>Institutional governance.</em></h2>
+      <div class="section-body">
+        <p>Lyreco's statutory auditors are PricewaterhouseCoopers (previously KPMG). For a family-owned company with no stock market listing, choosing a Big Four auditor is a deliberate signal. It tells banks, partners, and potential counterparties: <em>we run this like a public company, even though we don't have to.</em></p>
+        <p>This matters for the deal. It means Lyreco's financials will be clean, well-documented, and prepared to institutional standards. Due diligence will be rigorous &mdash; but the data will be there.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── KEY STATS ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">By the Numbers</div>
+      <h2 class="section-title">A century <em>of control</em></h2>
+    </div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">~84%</div>
+        <div class="stat-label">Family Ownership</div>
+        <div class="stat-sub">Via Corely SAS</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="4" data-suffix="">0</div>
+        <div class="stat-label">Generations</div>
+        <div class="stat-sub">4th generation now in position</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">&euro;64.7M</div>
+        <div class="stat-label">Lyreco Capital</div>
+        <div class="stat-sub">Share capital of Lyreco SAS</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">100 yrs</div>
+        <div class="stat-label">In 2026</div>
+        <div class="stat-sub">Founded 1926 in Onnaing</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE MEANING ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Meaning</div>
+      <h2 class="section-title">This is not a <em>public corporation</em></h2>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"This is not a public corporation optimizing quarterly earnings. This is a family's century-long legacy. Every decision is measured not in fiscal quarters, but in generations."</div>
+      <div class="quote-attr">Key Insight</div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>The Gaspards don't just own Lyreco. They <em>are</em> Lyreco. The company was founded by their ancestor, expanded by their patriarch, and is now being stewarded by the fourth generation. When you sit across the table from a Lyreco representative, you are not dealing with hired management accountable to anonymous shareholders. You are dealing with a family that has invested a hundred years of its name, its reputation, and its capital into this enterprise.</p>
+        <p>This is why the approach to any acquisition must be fundamentally different from a typical corporate transaction. Price matters &mdash; but it is not enough. The Gaspards need to believe that the buyer will honor the culture, protect the employees, and continue the legacy. A higher bid from a private equity firm that plans to strip and flip would lose to a lower bid from someone the family trusts.</p>
+      </div>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <h4>What This Means for the Deal</h4>
+      <p>The family structure is your biggest obstacle and your biggest opportunity. It is an obstacle because the Gaspards will never sell to someone they do not trust &mdash; no matter the price. It is an opportunity because if you earn that trust, the deal dynamics shift entirely. The Gaspards want a partner who thinks in decades, not quarters. WEFUN's founding story &mdash; built by entrepreneurs, not financial engineers &mdash; is exactly the kind of narrative that resonates with a family dynasty. Lead with that.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
+<div class="chapter-footer">
+  <a href="3-bigeard.html" class="next-chapter-cta">
+    <span class="next-label">Next Chapter</span>
+    <span class="next-num">Chapter III</span>
+    <span class="next-name">The Bigeard Era</span>
+    <span class="next-arrow">&rarr;</span>
+  </a>
+</div>
+
+<footer class="site-footer">
+  Confidential &mdash; Prepared for WEFUN Management &mdash; February 2026
+</footer>
+
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/scroll-engine.js"></script>
+</body>
+</html>

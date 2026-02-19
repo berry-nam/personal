@@ -1,0 +1,38 @@
+{
+  "wefun": {
+    "annual": [
+      { "year": 2019, "value": 3.5, "unit": "₩B" },
+      { "year": 2020, "value": 12.4, "unit": "₩B" },
+      { "year": 2021, "value": 18, "unit": "₩B" },
+      { "year": 2022, "value": 35.2, "unit": "₩B" },
+      { "year": 2023, "value": 76.5, "unit": "₩B" },
+      { "year": 2024, "value": 143.1, "unit": "₩B", "note": "Announced (registered: 89.2B)" }
+    ],
+    "projections": [
+      { "year": 2025, "value": 165.3, "unit": "₩B", "type": "estimate" }
+    ],
+    "cagr_5yr": 1.13,
+    "yoy_2024": 0.87
+  },
+  "bigeard_era": {
+    "annual": [
+      { "year": 1988, "value": 15, "unit": "€M" },
+      { "year": 1992, "value": 90, "unit": "€M" },
+      { "year": 1996, "value": 350, "unit": "€M" },
+      { "year": 2000, "value": 900, "unit": "€M" },
+      { "year": 2005, "value": 1500, "unit": "€M" },
+      { "year": 2010, "value": 2000, "unit": "€M" }
+    ],
+    "growth_multiple": 133,
+    "countries_start": 1,
+    "countries_end": 29
+  },
+  "lyreco_group": {
+    "annual_revenue": "€2.2-2.5B",
+    "employees": "10,000-12,000",
+    "type": "privately held"
+  },
+  "lyreco_korea": {
+    "revenue_2023": { "value": 26.87, "unit": "₩B", "usd_approx": "$20M" }
+  }
+}

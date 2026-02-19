@@ -1,0 +1,119 @@
+/* ═══════════════════════════════════════════════
+   Layout — Grids, Spacing, Responsive
+   ═══════════════════════════════════════════════ */
+
+/* ─── SECTION CONTAINERS ─── */
+.section {
+  padding: var(--space-section) 2rem;
+  max-width: var(--max-content);
+  margin: 0 auto;
+  position: relative;
+}
+
+.section--wide {
+  max-width: var(--max-wide);
+}
+
+.section--narrow {
+  max-width: var(--max-reading);
+}
+
+.section--full {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ─── READING WIDTH ─── */
+.reading-width {
+  max-width: var(--max-reading);
+}
+
+.content-width {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ─── DIVIDER ─── */
+.divider {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--champagne-dim), transparent);
+}
+
+/* ─── SECTION LABELS ─── */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-label);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--champagne);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-label::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--champagne);
+}
+
+.section-label--center {
+  justify-content: center;
+}
+.section-label--center::before { display: none; }
+
+/* ─── SECTION TITLES ─── */
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+  margin-bottom: var(--space-element);
+  letter-spacing: var(--ls-tight);
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--champagne);
+}
+
+/* ─── BODY TEXT ─── */
+.section-body {
+  font-size: var(--fs-body);
+  color: var(--pearl-muted);
+  max-width: var(--max-reading);
+  line-height: var(--lh-body);
+}
+
+.section-body p { margin-bottom: 1.5rem; }
+.section-body p:last-child { margin-bottom: 0; }
+
+.section-body strong { color: var(--pearl); font-weight: 500; }
+.section-body em { color: var(--champagne-light); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  :root {
+    --space-section: 6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --space-section: 4rem;
+  }
+  .section { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .content-width { padding: 0 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-section: 3rem;
+  }
+}

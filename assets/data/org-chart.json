@@ -1,0 +1,41 @@
+{
+  "gaspard_family": {
+    "nodes": [
+      { "id": "corely", "label": "Corely SAS", "sub": "~84% ownership · Onnaing, France", "x": 350, "y": 50, "width": 200, "height": 50, "accent": "#C9A96E" },
+      { "id": "georges", "label": "Georges Gaspard", "sub": "President of Corely SAS", "x": 200, "y": 140, "width": 170, "height": 45 },
+      { "id": "caroline", "label": "Caroline Gaspard", "sub": "Deputy Dir-General", "x": 400, "y": 140, "width": 170, "height": 45 },
+      { "id": "nathalie", "label": "Nathalie Gaspard", "sub": "Deputy Dir-General · President Lyreco SAS", "x": 580, "y": 140, "width": 200, "height": 45 },
+      { "id": "lyreco", "label": "Lyreco SAS", "sub": "Capital €64.7M · Marly, France", "x": 350, "y": 240, "width": 200, "height": 50, "accent": "#E63946" },
+      { "id": "subs", "label": "25+ Country Subsidiaries", "sub": "Europe · Asia", "x": 350, "y": 340, "width": 200, "height": 45, "accent": "rgba(242, 240, 235, 0.15)" }
+    ],
+    "links": [
+      { "from": "corely", "to": "georges" },
+      { "from": "corely", "to": "caroline" },
+      { "from": "corely", "to": "nathalie" },
+      { "from": "corely", "to": "lyreco" },
+      { "from": "lyreco", "to": "subs" }
+    ]
+  },
+  "investment_vehicles": [
+    {
+      "name": "Corely Belgium SPRL",
+      "manager": "David Coti (since 2015, ESSEC/Plekhanov grad)",
+      "investments": ["CARMAT €15M"]
+    },
+    {
+      "name": "Bratya SPRL",
+      "manager": "David Coti",
+      "investments": ["CARMAT €3.6M"]
+    }
+  ],
+  "georges_connections": [
+    "Erypharm SAS",
+    "Nataline SC",
+    "Villa Geoanne du Cap Martin (Onnaing)",
+    "Corely Belgium B.V."
+  ],
+  "auditor": {
+    "current": "PwC",
+    "previous": "KPMG"
+  }
+}

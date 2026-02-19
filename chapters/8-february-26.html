@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter VIII — February 26 | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 8 SPECIFIC ─── */
+  .flow-duration {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    background: rgba(201, 169, 110, 0.12);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--champagne);
+    font-weight: 500;
+    margin-right: 0.5rem;
+  }
+
+  .bridge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem; margin: var(--space-block) 0;
+  }
+
+  .bridge-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    transition: border-color var(--dur-fast), transform var(--dur-fast);
+  }
+  .bridge-card:hover {
+    border-color: rgba(201, 169, 110, 0.15);
+    transform: translateY(-3px);
+  }
+  .bridge-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--champagne-light);
+  }
+  .bridge-card p {
+    font-size: 0.85rem; color: var(--smoke); line-height: 1.7;
+  }
+
+  .closing-champagne {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--champagne-light);
+    max-width: 640px;
+    margin: 2rem auto 0;
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body data-chapter="8">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter VIII</span>
+    <span class="nav-chapter-title">February 26</span>
+  </div>
+  <div class="nav-controls">
+    <a href="7-convergence.html" class="nav-arrow prev" aria-label="Previous">←</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <span class="nav-arrow next" style="visibility: hidden;" aria-hidden="true">→</span>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter VIII</div>
+  <h1 class="chapter-hero__title">February <em>26</em></h1>
+  <p class="chapter-hero__subtitle">The meeting playbook. Every minute choreographed, every word chosen.</p>
+  <div class="chapter-hero__meta">Reading time · ~12 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ── INTRO ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Architecture</div>
+      <h2 class="section-title">70% relationship.<br><em>30% substance.</em></h2>
+      <div class="section-body">
+        <p>This is 70% relationship, 30% substance. The meeting architecture should feel like a conversation between two companies who share a belief, not a pitch deck review.</p>
+        <p>Helen and Eric are not flying to Seoul to read slides. They are coming to judge character, feel chemistry, and decide whether WEFUN is the right steward for 700 employees and 20 years of Asian operations. Every minute must serve that purpose.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── PRESENTATION FLOW ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Presentation Flow</div>
+      <h2 class="section-title">The <em>100 minutes</em></h2>
+    </div>
+
+    <div class="timeline" data-stagger-group>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date"><span class="flow-duration">5 min</span> Welcome & Acknowledgment</div>
+        <div class="timeline-title">Honor the Legacy</div>
+        <div class="timeline-desc">Recognize Lyreco's 100th anniversary. Acknowledge the Gaspard family's century of stewardship. This is not a formality — it sets the emotional tone for the entire meeting. If Eric Bigeard is in the room, address his personal contribution to building Lyreco into a global enterprise.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date"><span class="flow-duration">20 min</span> WEFUN's Story</div>
+        <div class="timeline-title">Founding Narrative, Growth, Vision</div>
+        <div class="timeline-desc">Lead with story, not slides. Christmas Eve 2018. Basement to tower. ₩50M to ₩143B. The 97% retention rate. The 800,000 daily touchpoints. Make them feel the trajectory. Numbers follow narrative — not the other way around.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date"><span class="flow-duration">20 min</span> M&A Philosophy & Track Record</div>
+        <div class="timeline-title">Bolt-On Strategy & Integration Approach</div>
+        <div class="timeline-desc">Six acquisitions in two years. Each preserving the acquired team's identity. The Human Food deal — PE-partnered, multi-party, sophisticated. Emphasize employee retention across every acquisition. This is the proof point that Lyreco's Asian team will be respected, not absorbed.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date"><span class="flow-duration">15 min</span> Vision for Combined Entity</div>
+        <div class="timeline-title">Total Workplace Platform Thesis</div>
+        <div class="timeline-desc">The convergence argument. Cross-sell opportunity (18% to 50%). Asia-wide platform expansion. The identical buyer — the 총무팀. One invoice, one platform, everything the office needs. Paint the picture of what these two companies become together.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date"><span class="flow-duration">10 min</span> Values Alignment</div>
+        <div class="timeline-title">WEFUN Mapped to PERA Framework</div>
+        <div class="timeline-desc">Map WEFUN's values to Lyreco's PERA framework — Passion, Excellence, Respect, Agility. Show that these aren't just words on a wall. WEFUN's employee culture, client retention, and growth trajectory are the living proof of shared values.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date"><span class="flow-duration">30+ min</span> Open Discussion</div>
+        <div class="timeline-title">The Most Important Segment</div>
+        <div class="timeline-desc">This is where the deal is won or lost. Let them ask anything. Answer with transparency — even uncomfortable questions about financing or integration timelines. If they ask something you don't know, say so. Authenticity builds trust faster than polish. Build rapport. Listen more than you speak.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── ICEBREAKERS ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Conversation Design</div>
+      <h2 class="section-title">Icebreakers &<br><em>Dinner Conversation</em></h2>
+      <div class="section-body">
+        <p>These are not throwaway pleasantries. Each opener is designed to unlock a specific emotional register — legacy pride, shared purpose, cultural curiosity. Use them at the dinner, during breaks, or when the formal conversation needs a human moment.</p>
+      </div>
+    </div>
+
+    <div data-stagger-group>
+      <div class="ice-card" data-stagger-child data-animate="fade-up">
+        <div class="ice-header">
+          <div class="ice-opener">"How does it feel to celebrate 100 years?"</div>
+          <div class="ice-toggle">+</div>
+        </div>
+        <div class="ice-detail">Opens the emotional legacy conversation. A century-old family business is extraordinarily rare. This question invites them to reflect on what makes Lyreco special — and positions WEFUN as someone who recognizes that specialness. Let them talk. Listen with genuine interest.</div>
+      </div>
+
+      <div class="ice-card" data-stagger-child data-animate="fade-up">
+        <div class="ice-header">
+          <div class="ice-opener">"The pioneering spirit from a bookshop in Valenciennes to 25 countries mirrors our own journey."</div>
+          <div class="ice-toggle">+</div>
+        </div>
+        <div class="ice-detail">Narrative kinship. Lyreco started as a bookshop in northern France in 1926. WEFUN started in a Gasan basement in 2018. Both are stories of relentless expansion from humble origins. This parallel creates an immediate bond — not as buyer and seller, but as fellow builders.</div>
+      </div>
+
+      <div class="ice-card" data-stagger-child data-animate="fade-up">
+        <div class="ice-header">
+          <div class="ice-opener">"We share the belief that great workplaces create great work."</div>
+          <div class="ice-toggle">+</div>
+        </div>
+        <div class="ice-detail">Shared purpose. This is WEFUN's core thesis and Lyreco's tagline territory. It positions the deal not as a financial transaction but as a meeting of philosophies. Two companies that believe the same thing, joining forces to serve that belief at continental scale.</div>
+      </div>
+
+      <div class="ice-card" data-stagger-child data-animate="fade-up">
+        <div class="ice-header">
+          <div class="ice-opener">"Is this your first time in Korea?"</div>
+          <div class="ice-toggle">+</div>
+        </div>
+        <div class="ice-detail">Hospitality. Helen's interests include cooking and exploring cultures. If it's her first visit, offer restaurant recommendations, talk about Korean food culture, suggest a market visit. If she's been before, ask what she enjoyed. This signals warmth and personal attention beyond the transaction.</div>
+      </div>
+
+      <div class="ice-card" data-stagger-child data-animate="fade-up">
+        <div class="ice-header">
+          <div class="ice-opener">"If Eric Bigeard is in the room..."</div>
+          <div class="ice-toggle">+</div>
+        </div>
+        <div class="ice-detail">Address with deference. Acknowledge his extraordinary achievement — growing Lyreco from 15M to 2B over 22 years. Ask about his vision for the legacy. What does he hope for the Asian operations in the next decade? This makes him feel seen, respected, and consulted — not sidelined as a retired figurehead.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── FIVE THINGS TO AVOID ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Red Lines</div>
+      <h2 class="section-title">Five things <em>to avoid</em></h2>
+      <div class="section-body">
+        <p>These are conversation landmines. Each one can damage trust in ways that are difficult to repair. Know them. Avoid them.</p>
+      </div>
+    </div>
+
+    <div class="avoid-grid" data-stagger-group>
+      <div class="avoid-item" data-stagger-child>
+        <div class="avoid-label">Avoid #1</div>
+        <h4 style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">No valuation talk</h4>
+        <p>This is a first meeting. Discussing price signals that WEFUN sees this as a transaction, not a relationship. Let Helen raise numbers if she wants to — but don't initiate. The goal today is chemistry, not commerce.</p>
+      </div>
+      <div class="avoid-item" data-stagger-child>
+        <div class="avoid-label">Avoid #2</div>
+        <h4 style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">No "synergies through cost-cutting"</h4>
+        <p>Never use the word "synergy" in the context of reducing headcount. For a family business selling operations with 700 employees, the fear is that the buyer will strip costs and gut teams. Frame all synergies as growth — cross-sell, new markets, expanded capability.</p>
+      </div>
+      <div class="avoid-item" data-stagger-child>
+        <div class="avoid-label">Avoid #3</div>
+        <h4 style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Don't rush</h4>
+        <p>The 30+ minutes of open discussion is the most important segment. If the conversation is flowing, let it flow. Cutting short a genuine exchange to "get through the deck" is a critical error. People remember how you made them feel, not what you presented.</p>
+      </div>
+      <div class="avoid-item" data-stagger-child>
+        <div class="avoid-label">Avoid #4</div>
+        <h4 style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">No vague promises on employees</h4>
+        <p>If asked about employee retention, be specific. Don't say "we value people." Say "across six acquisitions, we retained 95%+ of employees. Here's how we did it." Vague platitudes from an acquirer are the fastest way to lose a family business seller's trust.</p>
+      </div>
+      <div class="avoid-item" data-stagger-child>
+        <div class="avoid-label">Avoid #5</div>
+        <h4 style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Don't underestimate the emotion</h4>
+        <p>Lyreco is selling operations they built over 20 years with 700 employees. For Eric Bigeard, this is personal — he opened many of these markets. For Helen, this is her first major deal in a newly created role. Treat the emotional weight with the gravity it deserves.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CULTURAL BRIDGES ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Cultural Intelligence</div>
+      <h2 class="section-title">French-Korean <em>Bridges</em></h2>
+      <div class="section-body">
+        <p>France and Korea share more cultural DNA than most people realize. These bridges can transform the meeting from a cross-cultural negotiation into a conversation between kindred spirits.</p>
+      </div>
+    </div>
+
+    <div class="card-grid" data-stagger-group>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">👨‍👩‍👧‍👦</div>
+        <div class="play-title">Family Centrality</div>
+        <div class="play-desc">Korean chaebols are built on family stewardship across generations. The Gaspard family's 100-year ownership of Lyreco resonates deeply with this Korean value. Frame WEFUN's respect for Lyreco's family legacy through this shared understanding.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🍷</div>
+        <div class="play-title">Food as Bonding</div>
+        <div class="play-desc">French dining culture and Korean 회식 (hweshik — team dining) both treat shared meals as relationship infrastructure, not just sustenance. The dinner is as important as the meeting. Choose the restaurant carefully. Let the meal breathe.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🕰️</div>
+        <div class="play-title">Long-Term Orientation</div>
+        <div class="play-desc">Both cultures think in decades, not quarters. French family businesses plan for the next generation. Korean companies build 100-year visions. This shared long-termism is a powerful foundation for trust — neither side is looking for a quick flip.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🎁</div>
+        <div class="play-title">Etiquette</div>
+        <div class="play-desc">Use "Monsieur" / "Madame" until invited otherwise. Exchange business cards with both hands — a Korean gesture that will register powerfully with guests who understand cross-cultural respect. Consider a thoughtful Korean cultural gift — something that signals effort and attention, not expense.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CLOSING ── -->
+  <section class="closing">
+    <div data-animate="fade-up">
+      <div class="section-label section-label--center">The Winning Message</div>
+      <div class="closing-title">"As Lyreco celebrates 100 years, we want to ensure the next chapter of the Asian operations is its <em>most ambitious yet.</em>"</div>
+      <div class="closing-body">
+        <p>WEFUN's strongest card is not a financial model or a revenue projection. It is a shared belief — that great workplaces create great work. WEFUN is not a hostile corporate raider optimizing for quarterly returns. WEFUN lives workplace welfare. It is the company's founding purpose, its daily practice, and its growth engine.</p>
+        <p>The argument to Helen and Eric is simple: nobody in Asia is better positioned to carry this forward. Nobody cares more about the mission Lyreco built.</p>
+      </div>
+      <p class="closing-champagne">"The Asian employees and operations aren't being sold. They're being given a more powerful platform to fulfill their original purpose."</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  Confidential — Prepared for WEFUN Management — February 2026
+</footer>
+
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/scroll-engine.js"></script>
+<script src="../js/interactions/accordion.js"></script>
+</body>
+</html>

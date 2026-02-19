@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter V — Christmas Eve 2018 | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 5 SPECIFIC ─── */
+  .snowfall {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .snowflake {
+    position: absolute; top: -10px;
+    width: 2px; height: 2px; border-radius: 50%;
+    background: rgba(242, 240, 235, 0.3);
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    to { transform: translateY(100vh) rotate(360deg); }
+  }
+
+  .revenue-chart-container {
+    margin: 3rem 0;
+    padding: 1rem 0;
+  }
+
+  .growth-highlight {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(201, 169, 110, 0.12);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--champagne);
+    font-weight: 500;
+  }
+
+  .persuasion-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .persuasion-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--wefun-blue);
+  }
+  .persuasion-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--pearl);
+  }
+  .persuasion-card .ko-text {
+    font-size: 0.85rem; color: var(--wefun-blue);
+    font-style: italic; margin-bottom: 0.5rem;
+  }
+  .persuasion-card p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+
+  .funding-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin: 2rem 0;
+  }
+  .funding-round {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-small);
+    padding: 1.8rem;
+    text-align: center;
+    position: relative;
+  }
+  .funding-round::after {
+    content: '→';
+    position: absolute; right: -1rem; top: 50%;
+    transform: translateY(-50%);
+    color: var(--champagne-dim);
+    font-size: 1.2rem;
+  }
+  .funding-round:last-child::after { display: none; }
+
+  .funding-series {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--champagne);
+    margin-bottom: 0.3rem;
+  }
+  .funding-amount {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 600;
+    color: var(--pearl); margin-bottom: 0.3rem;
+  }
+  .funding-year {
+    font-size: 0.8rem; color: var(--smoke);
+  }
+
+  .culture-keywords {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0;
+  }
+  .culture-keyword {
+    padding: 0.35rem 0.9rem;
+    background: var(--wefun-blue-dim);
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    color: var(--wefun-blue);
+  }
+
+  @media (max-width: 768px) {
+    .funding-round::after { display: none; }
+  }
+</style>
+</head>
+<body data-chapter="5">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter V</span>
+    <span class="nav-chapter-title">Christmas Eve 2018</span>
+  </div>
+  <div class="nav-controls">
+    <a href="4-goes-east.html" class="nav-arrow prev" aria-label="Previous">←</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <a href="6-people.html" class="nav-arrow next" aria-label="Next">→</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero" style="background: linear-gradient(180deg, rgba(13,13,15,1) 0%, rgba(13,13,15,0.95) 100%);">
+  <!-- Snowfall effect -->
+  <div class="snowfall" id="snowfall"></div>
+  <div class="chapter-hero__label">Chapter V</div>
+  <h1 class="chapter-hero__title">Christmas Eve <em>2018</em></h1>
+  <p class="chapter-hero__subtitle">On a day most people rest, Kim Heon incorporated a company with ₩50 million. Seven years later, it touches 800,000 lives daily.</p>
+  <div class="chapter-hero__meta">Reading time · ~12 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ── THE FOUNDING ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Origin</div>
+      <h2 class="section-title">일할 맛 나는 사무실<br><em>An office worth working in</em></h2>
+      <div class="section-body">
+        <p>December 24, 2018. While Korea celebrated Christmas Eve, Kim Heon filed incorporation papers for a company called WEFUN. Capital: ₩50 million — roughly $45,000. Address: a basement office in Gasan Digital Complex, Seoul's startup district.</p>
+        <p>The co-founders brought 10+ previous startup experiences between them. Serial entrepreneurs who had seen failure enough times to recognize a genuine opportunity. The insight was deceptively simple: <strong style="color: var(--pearl);">Korean offices were broken,</strong> and nobody was fixing them holistically.</p>
+        <p>They started with Snack24 — subscription snack delivery for offices. One box at a time. But the ambition was always bigger: to build the operating system for every workplace in Korea, and eventually Asia.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── GROWTH TRAJECTORY ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Growth</div>
+      <h2 class="section-title">₩3.5 billion to ₩143 billion<br>in <em>five years</em></h2>
+      <div class="section-body">
+        <p>WEFUN reached monthly P&L breakeven in 2019, just months after founding. Then the trajectory went vertical.</p>
+      </div>
+    </div>
+
+    <!-- Revenue chart -->
+    <div class="revenue-chart-container" id="wefun-revenue-chart" data-animate="scale-in"></div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">₩143.1B</div>
+        <div class="stat-label">2024 Revenue</div>
+        <div class="stat-sub">+87% YoY</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="113" data-suffix="%">0%</div>
+        <div class="stat-label">5-Year CAGR</div>
+        <div class="stat-sub">₩3.5B → ₩143.1B</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">10,000+</div>
+        <div class="stat-label">B2B Clients</div>
+        <div class="stat-sub">97% retention rate</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">800K</div>
+        <div class="stat-label">Daily Touchpoints</div>
+        <div class="stat-sub">Office workers served</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>The year-by-year trajectory: <span class="growth-highlight">₩35억 (2019)</span> → <span class="growth-highlight">₩180억 (2022)</span> → <span class="growth-highlight">₩760억 (2023)</span> → <span class="growth-highlight">₩892억 registered / ₩1,431억 announced (2024)</span> → <span class="growth-highlight">₩1,653억 (2025E)</span></p>
+        <p>From a Gasan basement with ₩50M capital to K-Square Gangnam 15F with 252 employees and ₩89.2 billion registered revenue. The registered company capital is now ₩296 million.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE M&A MACHINE ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Acquisitions</div>
+      <h2 class="section-title">M&A 귀재<br><em>The M&A Genius</em></h2>
+      <div class="section-body">
+        <p>WEFUN earned this nickname in Korean business media. Six acquisitions in roughly two years, each targeting the #1 or #2 player in a specific vertical, then integrating them into the platform ecosystem. Every deal was strategic. No vanity acquisitions.</p>
+      </div>
+    </div>
+
+    <div class="timeline" data-stagger-group>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">December 2023</div>
+        <div class="timeline-title">Woolin (우린)</div>
+        <div class="timeline-desc">#1 convenience store logistics operator. 1,500+ stores. Renamed WeFun Fulfillment — became the backbone of last-mile delivery. Gave WEFUN cold-chain and rapid distribution capability.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">April 2024</div>
+        <div class="timeline-title">Next C&C (넥스트씨앤씨)</div>
+        <div class="timeline-desc">#1 in-office café operator. Added barista capability and launched Coffee24. The coffee vertical grew +104% in 2024 alone.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">July 2024</div>
+        <div class="timeline-title">Ilhwa Logis</div>
+        <div class="timeline-desc">Food logistics specialist. Merged with WeFun Fulfillment for enhanced cold-chain capability across the entire supply chain.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">August 2025</div>
+        <div class="timeline-title">Pudding</div>
+        <div class="timeline-desc">Foodtech B2B lunch subscription platform. Launched Lunch24 — expanding beyond snacks into full-service corporate meals.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">November 2025</div>
+        <div class="timeline-title">Snackfor (스낵포)</div>
+        <div class="timeline-desc">#2 snack subscription service. Acquired Kakao and HDC client portfolios. Consolidated market leadership — now undisputed #1.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">January 2026</div>
+        <div class="timeline-title">Human Food + Human Food Service</div>
+        <div class="timeline-desc">220 workplaces, ~₩47B revenue. First PE-partnered deal (Epic Platform + Hana S&B) — demonstrating WEFUN can structure sophisticated multi-party transactions. This is the deal that proves WEFUN is ready for Lyreco-scale acquisitions.</div>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"WeFun is pursuing business expansion under the vision of becoming a business-type holding company operating B2B solutions and SaaS."</div>
+      <div class="quote-attr">Hwang Minjae — CFO & CSO, WEFUN</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE PLATFORM ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Platform</div>
+      <h2 class="section-title">~100 modular services<br>across <em>four pillars</em></h2>
+      <div class="section-body">
+        <p>What started as snack delivery now spans the entire workplace experience. WEFUN operates roughly 100 modular services organized into four strategic pillars:</p>
+      </div>
+    </div>
+
+    <div class="card-grid" data-stagger-group>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🍎</div>
+        <div class="play-title">Employee Welfare</div>
+        <div class="play-desc">Snack24, Coffee24, Lunch24, wellness products. The core that started it all — making daily office life better, one delivery at a time. Over 10,000 B2B clients and 800,000 daily touchpoints.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🎁</div>
+        <div class="play-title">Corporate Gifting SaaS</div>
+        <div class="play-desc">Gift24 platform. Korea's gifting culture (설날, 추석, company milestones) is massive. WEFUN digitized the entire process — catalog, personalization, delivery, reporting.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">🏢</div>
+        <div class="play-title">Office Operations</div>
+        <div class="play-desc">Office supplies, cleaning, maintenance, safety equipment. The overlap zone with Lyreco — the procurement decision-maker (총무팀) is identical for both companies' products.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">📐</div>
+        <div class="play-title">Space Management</div>
+        <div class="play-desc">Office design, renovation, digital signage (1,000+ screens). Acquired Pudding for workspace management. Making physical offices work better, not just the supplies in them.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── FUNDING & IPO ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Capital</div>
+      <h2 class="section-title">₩33 billion raised.<br><em>IPO imminent.</em></h2>
+    </div>
+
+    <div class="funding-timeline" data-stagger-group>
+      <div class="funding-round" data-stagger-child>
+        <div class="funding-series">Series A</div>
+        <div class="funding-amount">₩3B</div>
+        <div class="funding-year">2019</div>
+      </div>
+      <div class="funding-round" data-stagger-child>
+        <div class="funding-series">Series B</div>
+        <div class="funding-amount">₩8.5B</div>
+        <div class="funding-year">2022</div>
+      </div>
+      <div class="funding-round" data-stagger-child>
+        <div class="funding-series">Series C</div>
+        <div class="funding-amount">₩20B</div>
+        <div class="funding-year">2023</div>
+      </div>
+      <div class="funding-round" data-stagger-child>
+        <div class="funding-series">Post-Money Val.</div>
+        <div class="funding-amount">₩110B</div>
+        <div class="funding-year">Series C</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p><strong style="color: var(--champagne);">IPO trajectory:</strong> Hana Securities appointed as lead underwriter (February 2024). Originally targeted H2 2025, now adjusted to 2026 for post-acquisition consolidation. Preliminary KRX examination filing planned for April 2026.</p>
+        <p>IPO expectations are in the <strong style="color: var(--pearl);">₩200-300 billion range</strong>. The Lyreco Asia acquisition would transform the IPO narrative from "Korean platform" to "Asia-wide B2B workplace ecosystem" — a dramatically more compelling story for public market investors.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body" style="margin-top: 2rem;">
+        <p><strong style="color: var(--champagne);">Subsidiaries:</strong> 위펀풀필먼트 (WEFUN Fulfillment — logistics backbone) and 위펀부동산중개법인 (WEFUN Real Estate Brokerage — space management).</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE CULTURE ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Culture</div>
+      <h2 class="section-title">복지 끝판왕<br><em>The Ultimate Welfare Champion</em></h2>
+      <div class="section-body">
+        <p>A company that sells workplace welfare to others had better practice what it preaches. WEFUN does. Here's what employees say on Jobplanet (Korea's Glassdoor):</p>
+      </div>
+    </div>
+
+    <div class="culture-keywords" data-animate="fade-up">
+      <span class="culture-keyword">복지 끝판왕 (Welfare champion)</span>
+      <span class="culture-keyword">수평적인 문화 (Horizontal culture)</span>
+      <span class="culture-keyword">직원 존중은 기본 (Respect is basic)</span>
+      <span class="culture-keyword">인생 최고 동료 (Best colleagues of my life)</span>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>These aren't planted reviews. They're consistent across dozens of employee testimonials. WEFUN practices what it sells — unlimited PTO, employee-first culture, genuine respect. This matters immensely for the Lyreco conversation: when Helen Riley and Eric Bigeard evaluate whether WEFUN will treat Lyreco's 700 Asian employees well, <em>WEFUN's own employee culture is the proof point.</em></p>
+      </div>
+    </div>
+
+    <div class="stat-grid" data-stagger-group style="margin-top: 2rem;">
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">#76</div>
+        <div class="stat-label">FT Asia-Pacific</div>
+        <div class="stat-sub">High-Growth Companies 2025</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="97" data-suffix="%">0%</div>
+        <div class="stat-label">Client Retention</div>
+        <div class="stat-sub">Once in, they almost never leave</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">252</div>
+        <div class="stat-label">Employees</div>
+        <div class="stat-sub">Growing team at K-Square 15F</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── PERSUASION TOOLKIT ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Narrative</div>
+      <h2 class="section-title">Stories to Tell <em>in the Room</em></h2>
+      <div class="section-body">
+        <p>These are the narratives that will resonate with a French family business evaluating a young Korean company. Each one is designed to build trust, demonstrate character, and create emotional connection.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="persuasion-card">
+        <h4>The Christmas Eve Founding</h4>
+        <div class="ko-text">"12월 24일 — 모두가 쉴 때 시작했습니다"</div>
+        <p>WEFUN was incorporated on Christmas Eve 2018. While others rested, Kim Heon was filing papers. This story signals relentless drive — the kind Bigeard will recognize, because he joined Lyreco in his twenties and never stopped pushing.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="persuasion-card">
+        <h4>Basement to Tower</h4>
+        <div class="ko-text">"가산디지털 지하실에서 강남 15층까지"</div>
+        <p>Started at Gasan Digital Complex basement with ₩50M → now at K-Square Gangnam 15F, 252 employees, ₩89.2B revenue. This mirrors Lyreco's own journey from a bookshop to a €2.2B empire. The parallel is powerful.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="persuasion-card">
+        <h4>Speed of Profitability</h4>
+        <div class="ko-text">"창업 수개월 만에 월 흑자"</div>
+        <p>Monthly P&L breakeven in 2019, just months after founding. This isn't a cash-burning tech startup hoping for eventual profitability. WEFUN makes money. This will comfort finance-minded Helen Riley.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="persuasion-card">
+        <h4>The Retention Story</h4>
+        <div class="ko-text">"97% — 한 번 들어오면 떠나지 않습니다"</div>
+        <p>97% client retention. Once WEFUN enters an office, they almost never leave. For Lyreco — a company built on long-term client relationships — this statistic speaks their language perfectly.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="persuasion-card">
+        <h4>The M&A Philosophy</h4>
+        <div class="ko-text">"인수는 통합이 아니라 성장입니다"</div>
+        <p>Six acquisitions, each preserving the acquired team's identity while plugging into the WEFUN platform. The Human Food deal — PE-partnered with Epic Platform + Hana S&B — showed WEFUN can structure sophisticated transactions. Tell this story to prove Lyreco's Asian team will be respected, not absorbed.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.1">
+      <div class="persuasion-card">
+        <h4>800,000 Daily Lives</h4>
+        <div class="ko-text">"매일 80만 명의 직장인 삶에 닿습니다"</div>
+        <p>WEFUN touches 800,000 office workers daily across Korea. This isn't a niche SaaS — it's infrastructure for how Korea works. Scale this across Lyreco's 5 Asian markets and the impact multiplies dramatically.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
+<div class="chapter-footer">
+  <a href="6-people.html" class="next-chapter-cta">
+    <span class="next-label">Next Chapter</span>
+    <span class="next-num">Chapter VI</span>
+    <span class="next-name">The People in the Room</span>
+    <span class="next-arrow">→</span>
+  </a>
+</div>
+
+<footer class="site-footer">
+  Confidential — Prepared for WEFUN Management — February 2026
+</footer>
+
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/scroll-engine.js"></script>
+<script src="../js/viz/revenue-chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ─── Snowfall effect ───
+  const snowfall = document.getElementById('snowfall');
+  if (snowfall) {
+    for (let i = 0; i < 40; i++) {
+      const flake = document.createElement('div');
+      flake.className = 'snowflake';
+      flake.style.left = Math.random() * 100 + '%';
+      flake.style.animationDuration = (4 + Math.random() * 6) + 's';
+      flake.style.animationDelay = Math.random() * 5 + 's';
+      flake.style.opacity = 0.1 + Math.random() * 0.3;
+      flake.style.width = flake.style.height = (1 + Math.random() * 2) + 'px';
+      snowfall.appendChild(flake);
+    }
+  }
+
+  // ─── Revenue chart ───
+  createRevenueChart('#wefun-revenue-chart', [
+    { year: 2019, value: 3.5 },
+    { year: 2020, value: 12.4 },
+    { year: 2021, value: 18 },
+    { year: 2022, value: 35.2 },
+    { year: 2023, value: 76.5 },
+    { year: 2024, value: 143.1 },
+  ], {
+    prefix: '₩',
+    suffix: 'B',
+  });
+});
+</script>
+</body>
+</html>

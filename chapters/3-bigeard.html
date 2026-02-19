@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter III — The Bigeard Era | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 3 SPECIFIC ─── */
+  .revenue-chart-container {
+    margin: 3rem 0;
+    padding: 1rem 0;
+  }
+
+  .succession-note {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--champagne);
+  }
+  .succession-note h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--champagne-light);
+  }
+  .succession-note p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+
+  .growth-highlight {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(201, 169, 110, 0.12);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--champagne);
+    font-weight: 500;
+  }
+
+  .insight-block {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-top: 2rem;
+    border-left: 3px solid var(--lyreco-red, #c0392b);
+    position: relative;
+  }
+  .insight-block h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--pearl);
+  }
+  .insight-block p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+</style>
+</head>
+<body data-chapter="3">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter III</span>
+    <span class="nav-chapter-title">The Bigeard Era</span>
+  </div>
+  <div class="nav-controls">
+    <a href="2-dynasty.html" class="nav-arrow prev" aria-label="Previous">&larr;</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <a href="4-goes-east.html" class="nav-arrow next" aria-label="Next">&rarr;</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter III</div>
+  <h1 class="chapter-hero__title">The Bigeard <em>Era</em></h1>
+  <p class="chapter-hero__subtitle">One man took a &euro;15 million French company and turned it into a &euro;2 billion global empire in 22 years. Then he walked away on his own terms.</p>
+  <div class="chapter-hero__meta">Reading time · ~10 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ── THE ARRIVAL ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Arrival</div>
+      <h2 class="section-title">A twenty-something <em>walks in</em></h2>
+      <div class="section-body">
+        <p>Eric Jacques Pierre Bigeard joined Lyreco in 1980 as a young man in his twenties. The company was still a modest French office-supplies distributor, firmly regional, firmly traditional. Eight years later, at approximately 33 years old, the Gaspard family handed him the keys to the entire operation.</p>
+        <p>It was an extraordinary bet. Bigeard was not a Gaspard. He was not even a seasoned executive. But the family saw something in him &mdash; a relentless drive, a strategic clarity, and an almost obsessive commitment to building teams. They were right.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── REVENUE GROWTH ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Growth</div>
+      <h2 class="section-title">&euro;15 million to &euro;2 billion<br>in <em>twenty-two years</em></h2>
+      <div class="section-body">
+        <p>What followed Bigeard's appointment as CEO in 1988 was one of the most extraordinary growth stories in European B2B distribution. He called it <em>"the international success story"</em> in office supplies &mdash; and the numbers speak for themselves.</p>
+      </div>
+    </div>
+
+    <!-- Revenue chart -->
+    <div class="revenue-chart-container" id="bigeard-revenue-chart" data-animate="scale-in"></div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>The trajectory: <span class="growth-highlight">&euro;15M (1988)</span> &rarr; <span class="growth-highlight">&euro;90M (1992)</span> &rarr; <span class="growth-highlight">&euro;350M (1996)</span> &rarr; <span class="growth-highlight">&euro;900M (2000)</span> &rarr; <span class="growth-highlight">&euro;1.5B (2005)</span> &rarr; <span class="growth-highlight">&euro;2B (2010)</span></p>
+      </div>
+    </div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="133" data-suffix="&times;">0&times;</div>
+        <div class="stat-label">Revenue Multiplier</div>
+        <div class="stat-sub">&euro;15M &rarr; &euro;2B under his watch</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">1 &rarr; 29</div>
+        <div class="stat-label">Countries</div>
+        <div class="stat-sub">France-only to global presence</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="22" data-suffix=" yrs">0</div>
+        <div class="stat-label">Years as CEO</div>
+        <div class="stat-sub">1988 &ndash; 2010</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE PHILOSOPHY ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Philosophy</div>
+      <h2 class="section-title">Not revenue. <em>People.</em></h2>
+      <div class="section-body">
+        <p>Ask Eric Bigeard about his greatest accomplishment and he will not mention the 133&times; revenue growth. He will not cite the 29-country expansion. His answer is disarmingly human:</p>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"My biggest achievement was the creation of a solid and stable team."</div>
+      <div class="quote-attr">Eric Bigeard</div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>This is not corporate modesty. It is a genuine belief that people are the only durable competitive advantage. Bigeard built a management culture where loyalty was earned, not demanded &mdash; where executives stayed for decades, not quarters. This philosophy permeated every level of Lyreco and remains its cultural DNA to this day.</p>
+        <p>For anyone seeking to acquire a piece of Lyreco, understanding this is non-negotiable. The Gaspard family and Bigeard will evaluate any buyer first and foremost on whether they will honor the team.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE QUOTE ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Exit Philosophy</div>
+      <h2 class="section-title">Knowing when <em>to leave</em></h2>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"Too many CEOs hold on to their jobs too long. I didn't want to be one of those that end up getting fired from the company I love!"</div>
+      <div class="quote-attr">Eric Bigeard &mdash; On planning his departure 10 years in advance</div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>Bigeard did not wait to be pushed. He began planning his exit a full decade before leaving. At age 55, with the company at its peak, he stepped down. It was an act of self-awareness that is extraordinarily rare among founding-era CEOs &mdash; the discipline to leave while you are still wanted, not after you have outstayed your welcome.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE NEAR-MERGER ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Near-Merger</div>
+      <h2 class="section-title">Corporate Express <em>2008</em></h2>
+      <div class="section-body">
+        <p>In 2008, Bigeard came within reach of a deal that would have reshaped the entire office-supplies industry. Lyreco was in advanced negotiations to merge with Corporate Express &mdash; a Dutch-listed global distributor. Bigeard himself would have served as CEO of the combined entity.</p>
+        <p>The deal fell through, but it reveals something critical about the man: <strong style="color: var(--pearl);">Bigeard understands M&A at the highest level.</strong> He is not a stranger to deal dynamics, valuation tension, or the emotional weight of combining two organizations. He knows what a good acquisition looks like &mdash; and what a bad one smells like.</p>
+        <p>When he sits across the table from WEFUN, he will be evaluating not just the numbers, but whether the acquiring team has the sophistication to handle a transaction of this magnitude.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE DEPARTURE ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Departure</div>
+      <h2 class="section-title">End of 2010. <em>Age 55.</em></h2>
+      <div class="section-body">
+        <p>Bigeard left Lyreco at the end of 2010. He was 55 years old. The company was generating over &euro;2 billion in revenue across 29 countries. He had spent 30 years inside the organization &mdash; joining as a young man, leaving as a legend.</p>
+        <p>He did not retire into silence. Georges Gaspard personally asked him to remain on the Supervisory Board, and Bigeard agreed. He became the family's trusted counsel &mdash; the person they call when the stakes are highest.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE SUCCESSION ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Succession</div>
+      <h2 class="section-title">Finding the next <em>Bigeard</em></h2>
+      <div class="section-body">
+        <p>Bigeard planned his departure a decade in advance, but finding his replacement proved agonizing. The succession went through multiple leaders, each grappling with the immense shadow he cast:</p>
+      </div>
+    </div>
+
+    <div class="timeline" data-stagger-group>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">2010</div>
+        <div class="timeline-title">Philippe Martinez</div>
+        <div class="timeline-desc">First successor. Short tenure. The transition from a 22-year CEO was never going to be smooth.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">~2012</div>
+        <div class="timeline-title">Steve Law</div>
+        <div class="timeline-desc">Second CEO post-Bigeard. Continued the search for stable leadership.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">2015 &ndash; 2019</div>
+        <div class="timeline-title">Herv&eacute; Milcent</div>
+        <div class="timeline-desc">Third CEO. Lasted four years before departing. Acknowledged the weight of the legacy publicly.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">2019 &ndash; Present</div>
+        <div class="timeline-title">Gregory Li&eacute;nard</div>
+        <div class="timeline-desc">Current CEO. Built the Asian operations personally. Finally brought stability to the leadership. Bigeard returned in 2021 to support him.</div>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"I underestimated the legacy of Eric Bigeard. Still today, it's very important to keep that legacy alive, because Eric had built this company over the past 25 years."</div>
+      <div class="quote-attr">Herv&eacute; Milcent &mdash; CEO, 2015&ndash;2019</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── THE RETURN ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Return</div>
+      <h2 class="section-title">He never truly <em>left</em></h2>
+      <div class="section-body">
+        <p>In 2021, Eric Bigeard came "back in support" of CEO Gregory Li&eacute;nard to help consolidate Lyreco's European and Asian market position. He remained on the Supervisory Board throughout the succession turbulence, a steady hand when the ship rocked.</p>
+        <p>Beyond Lyreco, Bigeard became an angel investor. He funded Belgian NFC startup Getyoo with &euro;600K &mdash; a modest bet by his standards, but one that signals continued curiosity and engagement with the business world. He did not retreat to a vineyard. He stayed in the arena.</p>
+      </div>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <h4>What His Presence at the February 26 Meeting Signals</h4>
+      <p>Eric Bigeard attending a first meeting with a potential acquirer in Seoul is extraordinary. This is board-level, family-level scrutiny. He is not here for financial due diligence &mdash; Helen Riley handles that. He is here to judge character. To assess whether WEFUN's management team is worthy of inheriting what he spent 30 years building. His approval is likely a prerequisite for the deal proceeding. Win Bigeard, and the path clears.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
+<div class="chapter-footer">
+  <a href="4-goes-east.html" class="next-chapter-cta">
+    <span class="next-label">Next Chapter</span>
+    <span class="next-num">Chapter IV</span>
+    <span class="next-name">Lyreco Goes East</span>
+    <span class="next-arrow">&rarr;</span>
+  </a>
+</div>
+
+<footer class="site-footer">
+  Confidential &mdash; Prepared for WEFUN Management &mdash; February 2026
+</footer>
+
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/scroll-engine.js"></script>
+<script src="../js/viz/revenue-chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ─── Revenue chart ───
+  createRevenueChart('#bigeard-revenue-chart', [
+    { year: 1988, value: 15 },
+    { year: 1992, value: 90 },
+    { year: 1996, value: 350 },
+    { year: 2000, value: 900 },
+    { year: 2005, value: 1500 },
+    { year: 2010, value: 2000 },
+  ], {
+    prefix: '\u20AC',
+    suffix: 'M',
+  });
+});
+</script>
+</body>
+</html>

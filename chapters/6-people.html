@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter VI — The People in the Room | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 6 SPECIFIC ─── */
+  .career-timeline { position: relative; margin: 3rem 0; padding-left: 3rem; }
+  .career-timeline::before {
+    content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--champagne), var(--champagne-dim), transparent);
+  }
+
+  .career-stage {
+    position: relative; margin-bottom: 2.2rem; padding-left: 2rem;
+  }
+  .career-stage::before {
+    content: ''; position: absolute; left: -2.6rem; top: 0.4rem;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--ink); border: 2px solid var(--champagne);
+    transition: background 0.3s, transform 0.3s;
+    z-index: 1;
+  }
+  .career-stage:hover::before {
+    background: var(--champagne);
+    transform: scale(1.4);
+  }
+  .career-stage.milestone::before {
+    background: var(--champagne);
+    width: 12px; height: 12px;
+    left: calc(-2.6rem - 1px);
+  }
+
+  .stage-years {
+    font-family: var(--font-mono);
+    font-size: 0.6rem; letter-spacing: 0.15em;
+    color: var(--champagne); text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  .stage-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .stage-org {
+    font-size: 0.8rem; color: var(--smoke); font-style: italic;
+    margin-bottom: 0.3rem;
+  }
+  .stage-detail {
+    font-size: 0.85rem; color: var(--smoke); line-height: 1.6;
+  }
+
+  .profile-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem; margin: 2rem 0;
+  }
+  .profile-meta-item {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-small);
+    padding: 1.2rem;
+  }
+  .profile-meta-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--champagne);
+    margin-bottom: 0.3rem;
+  }
+  .profile-meta-value {
+    font-size: 0.9rem; color: var(--pearl);
+  }
+
+  .radar-container {
+    display: flex; justify-content: center;
+    margin: 3rem 0;
+  }
+
+  .strategy-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--champagne);
+  }
+  .strategy-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--champagne-light);
+  }
+  .strategy-card p {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+  }
+
+  .personality-keywords {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0;
+  }
+  .personality-keyword {
+    padding: 0.3rem 0.8rem;
+    background: var(--champagne-dim);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.65rem; letter-spacing: 0.05em;
+    color: var(--champagne-light);
+  }
+
+  .profile-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--champagne-dim), transparent);
+    margin: 5rem 0;
+  }
+</style>
+</head>
+<body data-chapter="6">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter VI</span>
+    <span class="nav-chapter-title">The People in the Room</span>
+  </div>
+  <div class="nav-controls">
+    <a href="5-christmas-eve.html" class="nav-arrow prev" aria-label="Previous">←</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <a href="7-convergence.html" class="nav-arrow next" aria-label="Next">→</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter VI</div>
+  <h1 class="chapter-hero__title">The People <em>in the Room</em></h1>
+  <p class="chapter-hero__subtitle">Know who you're speaking with. Each person carries a different mandate, different history, and different criteria for trust.</p>
+  <div class="chapter-hero__meta">Reading time · ~14 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ── INTRO ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Lyreco Delegation</div>
+      <h2 class="section-title">Two people are flying from France.<br>One is the <em>process.</em> The other is the <em>legacy.</em></h2>
+      <div class="section-body">
+        <p>Helen Riley owns the M&A transaction. She will evaluate WEFUN's financials, integration capability, and strategic fit. But Eric Bigeard — if he is indeed the "Eric" attending — represents something far deeper. He is the family's eyes and ears. His approval is likely a prerequisite for the deal proceeding.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════ HELEN RILEY ═══════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Profile I</div>
+      <h2 class="section-title">Helen Riley</h2>
+      <p style="font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--smoke); margin-bottom: 2rem;">Group Development Director — M&A, Divestments & Partnerships</p>
+    </div>
+
+    <!-- Meta grid -->
+    <div class="profile-meta-grid" data-stagger-group>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">At Lyreco Since</div>
+        <div class="profile-meta-value">2004 (20+ years)</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Current Role</div>
+        <div class="profile-meta-value">Since Sept 2025</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Education</div>
+        <div class="profile-meta-value">EDHEC Executive MBA</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Languages</div>
+        <div class="profile-meta-value">EN · FR · ES · IT</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Role Type</div>
+        <div class="profile-meta-value">Newly Created</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Mandate</div>
+        <div class="profile-meta-value">M&A + Divestments</div>
+      </div>
+    </div>
+
+    <!-- Key insight -->
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">She is a Lyreco lifer. Her entire professional identity is this company. This deal is personal to her — she's not an external banker or consultant. She's family.</div>
+      <div class="quote-attr">Key Insight</div>
+    </div>
+
+    <!-- Career Timeline -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">Career Timeline — 20 Years at Lyreco</h3>
+    </div>
+
+    <div class="career-timeline" data-stagger-group>
+      <div class="career-stage" data-stagger-child>
+        <div class="stage-years">2000 – 2003</div>
+        <div class="stage-title">Licence — English/Spanish/Italian Applied to Business</div>
+        <div class="stage-org">Université Catholique de Lille</div>
+        <div class="stage-detail">Foundation in multilingual business communication. Fluent in four languages — a rare asset for cross-border M&A.</div>
+      </div>
+
+      <div class="career-stage" data-stagger-child>
+        <div class="stage-years">2003 – 2005</div>
+        <div class="stage-title">Master's in Administration & Finance</div>
+        <div class="stage-org">SKEMA Business School, Lille</div>
+        <div class="stage-detail">Specialized in corporate finance — the analytical foundation she'd build her career on.</div>
+      </div>
+
+      <div class="career-stage milestone" data-stagger-child>
+        <div class="stage-years">2004</div>
+        <div class="stage-title">Group Finance Trainee</div>
+        <div class="stage-org">Lyreco Group — Marly, France</div>
+        <div class="stage-detail">Joined Lyreco during her studies. The beginning of a 20+ year journey within a single company.</div>
+      </div>
+
+      <div class="career-stage" data-stagger-child>
+        <div class="stage-years">~2005 – 2008</div>
+        <div class="stage-title">Group Business Analyst</div>
+        <div class="stage-org">Lyreco Group HQ</div>
+        <div class="stage-detail">KPI audits, 5-year plan consolidation, internal benchmarks. Built deep knowledge of every subsidiary's financials.</div>
+      </div>
+
+      <div class="career-stage" data-stagger-child>
+        <div class="stage-years">~2008 – 2011</div>
+        <div class="stage-title">Group Credit Management & Tax Project Leader</div>
+        <div class="stage-org">Lyreco Group HQ</div>
+        <div class="stage-detail">Managed group-wide credit risk and tax optimization projects across multiple jurisdictions.</div>
+      </div>
+
+      <div class="career-stage" data-stagger-child>
+        <div class="stage-years">~2011 – 2013</div>
+        <div class="stage-title">Credit Manager</div>
+        <div class="stage-org">Lyreco Italia</div>
+        <div class="stage-detail">First international posting. Managed credit operations in the Italian market — deepening operational experience.</div>
+      </div>
+
+      <div class="career-stage milestone" data-stagger-child>
+        <div class="stage-years">2013 – 2017</div>
+        <div class="stage-title">Chief Accountant — Spain & Portugal</div>
+        <div class="stage-org">Lyreco Iberia</div>
+        <div class="stage-detail">Managed Spanish & Portuguese legal entities. Restructured a team of 10. Responsible for financial statements, tax compliance, and regulatory reporting across two countries. Her most operationally demanding role.</div>
+      </div>
+
+      <div class="career-stage" data-stagger-child>
+        <div class="stage-years">~2017 – 2022</div>
+        <div class="stage-title">Returned to Group Finance</div>
+        <div class="stage-org">Lyreco Group HQ</div>
+        <div class="stage-detail">Brought field experience back to HQ. Transitioned into broader strategic finance responsibilities.</div>
+      </div>
+
+      <div class="career-stage" data-stagger-child>
+        <div class="stage-years">2020 – 2022</div>
+        <div class="stage-title">Executive MBA</div>
+        <div class="stage-org">EDHEC Business School</div>
+        <div class="stage-detail">Pursued executive education while working — signaling ambition for C-suite trajectory. EDHEC is a top-tier French business school.</div>
+      </div>
+
+      <div class="career-stage" data-stagger-child>
+        <div class="stage-years">~2022 – 2025</div>
+        <div class="stage-title">Group Finance Operations & Transformation Director</div>
+        <div class="stage-org">Lyreco Group HQ</div>
+        <div class="stage-detail">Led finance team transformation. Known as a "SAP expert" — mastered the technical backbone of Lyreco's operations.</div>
+      </div>
+
+      <div class="career-stage milestone" data-stagger-child>
+        <div class="stage-years">September 2025</div>
+        <div class="stage-title">Group Development Director — M&A</div>
+        <div class="stage-org">Lyreco Group — Newly Created Role</div>
+        <div class="stage-detail">Appointed to a brand-new role overseeing "strategic ambitions, M&A, divestments, and partnerships." The fact that this role was created specifically for this moment tells you the Gaspard family is getting serious about portfolio optimization.</div>
+      </div>
+    </div>
+
+    <!-- Personality -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">Personality Profile</h3>
+      <div class="section-body">
+        <p>From LinkedIn recommendations and public interactions, Helen emerges as:</p>
+      </div>
+    </div>
+
+    <div class="personality-keywords" data-animate="fade-up" data-delay="0.2">
+      <span class="personality-keyword">Go getter</span>
+      <span class="personality-keyword">Can do attitude</span>
+      <span class="personality-keyword">Bubbly personality</span>
+      <span class="personality-keyword">Very knowledgeable</span>
+      <span class="personality-keyword">SAP expert</span>
+      <span class="personality-keyword">Accessible</span>
+      <span class="personality-keyword">Professional</span>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>She's also an avid cyclist — she completed a 216km ride with 4,420m of elevation gain alongside 9 Lyreco colleagues. This tells you she's physically resilient, team-oriented, and enjoys shared challenges. A dinner conversation about Korean cycling routes or her ride experiences would land well.</p>
+      </div>
+    </div>
+
+    <!-- Radar Chart -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">Assessment Radar</h3>
+      <p style="font-size: 0.85rem; color: var(--smoke); margin-bottom: 1rem;">Editorial assessment based on career trajectory and public profile</p>
+    </div>
+    <div class="radar-container" id="helen-radar" data-animate="scale-in"></div>
+
+    <!-- Strategy Implications -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">What This Means for the Meeting</h3>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card">
+        <h4>She will evaluate with finance-first precision</h4>
+        <p>20 years in finance means she'll spot inconsistencies in your numbers instantly. Your financial presentation must be airtight. Don't round numbers or hand-wave — she'll notice.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card">
+        <h4>She's emotionally invested in the outcome</h4>
+        <p>This isn't a hired gun from Goldman Sachs. She's been at Lyreco since she was 22. Show respect for the company she helped build. Frame the deal as honoring Lyreco's work, not acquiring distressed assets.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card">
+        <h4>Use her multilingual, multicultural background</h4>
+        <p>She's lived in France, Italy, and Spain. She understands what it's like to operate across cultures. Connect WEFUN's expansion ambitions to her own cross-border experience.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card">
+        <h4>Her role was created for this moment</h4>
+        <p>A newly created "Group Development Director" focused on M&A and divestments means the family has decided to actively reshape the portfolio. She has executive backing. She can make things happen.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="profile-divider"></div>
+
+  <!-- ═══════════════ ERIC BIGEARD ═══════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Profile II</div>
+      <h2 class="section-title">Eric Bigeard</h2>
+      <p style="font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--smoke); margin-bottom: 2rem;">Former CEO (1988–2010) · Supervisory Board Member · Guardian of the Legacy</p>
+    </div>
+
+    <!-- Meta grid -->
+    <div class="profile-meta-grid" data-stagger-group>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">CEO Tenure</div>
+        <div class="profile-meta-value">22 years (1988–2010)</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Revenue Growth</div>
+        <div class="profile-meta-value">€15M → €2B+</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Countries</div>
+        <div class="profile-meta-value">1 → 29</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Age as CEO</div>
+        <div class="profile-meta-value">~33 years old</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Current Role</div>
+        <div class="profile-meta-value">Supervisory Board</div>
+      </div>
+      <div class="profile-meta-item" data-stagger-child>
+        <div class="profile-meta-label">Born</div>
+        <div class="profile-meta-value">~1955</div>
+      </div>
+    </div>
+
+    <!-- Key stats -->
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="133" data-suffix="×">0×</div>
+        <div class="stat-label">Revenue Multiplier</div>
+        <div class="stat-sub">€15M → €2B under his watch</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="29" data-suffix="">0</div>
+        <div class="stat-label">Countries Reached</div>
+        <div class="stat-sub">From France-only to global</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="22" data-suffix=" yrs">0</div>
+        <div class="stat-label">Years as CEO</div>
+        <div class="stat-sub">1988 – 2010</div>
+      </div>
+    </div>
+
+    <!-- Narrative -->
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>Eric Jacques Pierre Bigeard joined Lyreco in 1980 as a twenty-something. Eight years later, at approximately 33 years old, he was appointed CEO. What followed was one of the most extraordinary growth stories in European B2B distribution.</p>
+        <p>Over 22 years, Bigeard transformed Lyreco from a €15 million France-only operation into a €2+ billion enterprise spanning 29 countries. He called it <em>"the international success story"</em> in office supplies. His biggest achievement, in his own words? Not the revenue. Not the expansion. <em>"The creation of a solid and stable team."</em></p>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"Too many CEOs hold on to their jobs too long. I didn't want to be one of those that end up getting fired from the company I love!"</div>
+      <div class="quote-attr">Eric Bigeard — On planning his departure 10 years in advance</div>
+    </div>
+
+    <!-- The succession -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">The Succession — "A Bit Painful"</h3>
+      <div class="section-body">
+        <p>Bigeard planned his departure at age 55, a full decade before leaving. But finding his replacement proved agonizing. The succession went through multiple leaders:</p>
+      </div>
+    </div>
+
+    <div class="timeline" data-stagger-group>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">2010</div>
+        <div class="timeline-title">Philippe Martinez</div>
+        <div class="timeline-desc">First successor. Short tenure.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">~2012</div>
+        <div class="timeline-title">Steve Law</div>
+        <div class="timeline-desc">Second CEO post-Bigeard. Transition continued.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">2015 – 2019</div>
+        <div class="timeline-title">Hervé Milcent</div>
+        <div class="timeline-desc">"I underestimated the legacy of Eric Bigeard. Still today, it's very important to keep that legacy alive, because Eric had built this company over the past 25 years."</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">2019 – Present</div>
+        <div class="timeline-title">Gregory Liénard</div>
+        <div class="timeline-desc">Current CEO. Built the Asian operations personally. Finally brought stability to the leadership.</div>
+      </div>
+    </div>
+
+    <!-- Near-merger -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">The Deal That Almost Was — Corporate Express (2008)</h3>
+      <div class="section-body">
+        <p>In 2008, Bigeard nearly merged Lyreco with Corporate Express — he would have been CEO of the combined entity. The deal fell through, but it reveals something critical: <strong style="color: var(--pearl);">Bigeard understands M&A at the highest level.</strong> He's not a stranger to deal dynamics. He knows what a good acquisition looks like — and what a bad one smells like.</p>
+      </div>
+    </div>
+
+    <!-- Post-CEO -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">After the CEO Chair</h3>
+      <div class="section-body">
+        <p>Bigeard stayed on the Supervisory Board at Georges Gaspard's personal request. He became an angel investor — funding Belgian NFC startup Getyoo with €600K. In 2021, he came "back in support" of CEO Gregory Liénard to consolidate European & Asian market position.</p>
+        <p>He never truly left. He is Lyreco's institutional memory.</p>
+      </div>
+    </div>
+
+    <!-- Strategy implications -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">What His Presence Means</h3>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card" style="border-left-color: var(--lyreco-red);">
+        <h4>This is board-level scrutiny</h4>
+        <p>Eric Bigeard attending a first meeting in Seoul means the Gaspard family is taking this seriously. He's not here for due diligence — Helen handles that. He's here to judge character. To assess whether WEFUN's management team is worthy of inheriting what he built.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card" style="border-left-color: var(--lyreco-red);">
+        <h4>He values team-building above all</h4>
+        <p>His proudest achievement was "the creation of a solid and stable team." Ask about the people he worked with. Show that WEFUN values the same thing. Your employee retention stories, your culture, your team — this is what will resonate with him.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card" style="border-left-color: var(--lyreco-red);">
+        <h4>Address him with great deference</h4>
+        <p>He grew the company from €15M to €2B. He's in his early 70s. He's the family's trusted advisor. Use "Monsieur Bigeard" until he says otherwise. Acknowledge his achievement explicitly. A person who spent 30 years building something needs to hear that the buyer respects what was built.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card" style="border-left-color: var(--lyreco-red);">
+        <h4>His approval is likely a prerequisite</h4>
+        <p>If Eric Bigeard leaves Seoul with doubts, the deal may not proceed regardless of financial terms. The family trusts his judgment implicitly. Win him over, and the path clears.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="profile-divider"></div>
+
+  <!-- ═══════════════ WEFUN SIDE ═══════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The WEFUN Delegation</div>
+      <h2 class="section-title">Your Side of the Table</h2>
+    </div>
+
+    <div class="person-grid" data-stagger-group>
+      <div class="person-card wefun" data-stagger-child>
+        <div class="person-role">CFO & Chief Strategy Officer</div>
+        <div class="person-name">Hwang Minjae (황민재)</div>
+        <div class="person-bio">VP-level executive and the public face of WEFUN's M&A strategy. Architected the holding company vision and led all six acquisitions. Will present the WEFUN company introduction and M&A track record. His English name is Joshua. Key objective: demonstrate WEFUN's financial discipline and integration capability.</div>
+        <div class="person-tag key">Lead Presenter</div>
+      </div>
+      <div class="person-card wefun" data-stagger-child>
+        <div class="person-role">Head of Business Development</div>
+        <div class="person-name">Jo Hwa-young (조화영)</div>
+        <div class="person-bio">Leads business development initiatives including cross-sell strategy and new market entry. Will support the meeting with operational detail and client success stories. Responsible for demonstrating real-world platform capability.</div>
+        <div class="person-tag key">Operational Detail</div>
+      </div>
+    </div>
+
+    <!-- Intermediary -->
+    <div data-animate="fade-up" style="margin-top: 3rem;">
+      <div class="section-body">
+        <p><strong style="color: var(--champagne);">The Intermediary:</strong> Seungoh Nam bridges the two teams. His role is critical for cultural translation, meeting facilitation, and ensuring both sides feel heard. The chemistry between all parties will define whether a second meeting happens.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════ ROOM DYNAMICS ═══════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Reading the Room</div>
+      <h2 class="section-title">The Dynamics at Play</h2>
+      <div class="section-body">
+        <p>Understand the invisible power structure. Helen Riley has the <em>process authority</em> — she controls timelines, data room access, and next steps. Eric Bigeard has the <em>moral authority</em> — his opinion carries weight with the family that no financial model can override.</p>
+        <p>Your objective is not to impress them with numbers. It's to make them <em>feel</em> that the Asian operations — the employees, the clients, the culture — will be in safe hands. If they leave Seoul believing that, everything else is negotiable.</p>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"We are excited to welcome the many talented employees. The first hugely important task is to get to know each other."</div>
+      <div class="quote-attr">Gregory Liénard, CEO — Said on every Lyreco acquisition</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
+<div class="chapter-footer">
+  <a href="7-convergence.html" class="next-chapter-cta">
+    <span class="next-label">Next Chapter</span>
+    <span class="next-num">Chapter VII</span>
+    <span class="next-name">Convergence</span>
+    <span class="next-arrow">→</span>
+  </a>
+</div>
+
+<footer class="site-footer">
+  Confidential — Prepared for WEFUN Management — February 2026
+</footer>
+
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/scroll-engine.js"></script>
+<script src="../js/viz/radar-chart.js"></script>
+<script src="../js/interactions/tabs.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Helen Riley radar chart
+  createRadarChart('#helen-radar', [
+    { axis: 'Analytical', value: 9 },
+    { axis: 'Deal Exp.', value: 7 },
+    { axis: 'Cultural', value: 8.5 },
+    { axis: 'Process', value: 9 },
+    { axis: 'Relationship', value: 7.5 },
+    { axis: 'Strategic', value: 8 },
+  ]);
+});
+</script>
+</body>
+</html>
