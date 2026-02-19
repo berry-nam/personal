@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEFUN × Lyreco — Strategic Briefing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --champagne: #C9A96E;
+  --champagne-light: #E8D5A8;
+  --champagne-dim: rgba(201, 169, 110, 0.15);
+  --ink: #0D0D0F;
+  --ink-soft: #1A1A1F;
+  --ink-card: #141418;
+  --smoke: #8A8A94;
+  --pearl: #F2F0EB;
+  --pearl-dim: rgba(242, 240, 235, 0.08);
+  --wefun-blue: #2E5BFF;
+  --lyreco-red: #E63946;
+  --success: #4ADE80;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { 
+  scroll-behavior: smooth; 
+  scrollbar-width: thin; 
+  scrollbar-color: var(--champagne) var(--ink); 
+}
+
+body {
+  background: var(--ink);
+  color: var(--pearl);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--champagne); color: var(--ink); }
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: linear-gradient(90deg, var(--champagne), var(--champagne-light));
+  z-index: 1000; width: 0%; transition: width 0.1s linear;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  padding: 1.2rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(13, 13, 15, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.08);
+  transform: translateY(-100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+nav.visible { transform: translateY(0); }
+
+.nav-brand {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--champagne);
+}
+
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--smoke); text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--champagne); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  position: relative; padding: 4rem 2rem;
+}
+
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: 
+    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(201, 169, 110, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 70% 60%, rgba(46, 91, 255, 0.04) 0%, transparent 70%);
+}
+
+.hero-meta {
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--champagne); margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s 0.3s forwards;
+}
+
+.hero-title {
+  font-family: var(--font-display); font-size: clamp(2.8rem, 7vw, 6rem);
+  font-weight: 400; line-height: 1.1; letter-spacing: -0.02em;
+  margin-bottom: 1rem; position: relative;
+  opacity: 0; animation: fadeUp 1s 0.6s forwards;
+}
+
+.hero-title em {
+  font-style: italic; color: var(--champagne);
+}
+
+.hero-subtitle {
+  font-family: var(--font-display); font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 400; font-style: italic; color: var(--smoke);
+  margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s 0.9s forwards;
+}
+
+.hero-details {
+  display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em;
+  color: var(--smoke); text-transform: uppercase;
+  opacity: 0; animation: fadeUp 1s 1.2s forwards;
+}
+
+.hero-details span { display: flex; align-items: center; gap: 0.5rem; }
+.hero-details .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--champagne); }
+
+.scroll-indicator {
+  position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+  opacity: 0; animation: fadeUp 1s 1.6s forwards;
+}
+
+.scroll-indicator span {
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--smoke);
+}
+
+.scroll-line {
+  width: 1px; height: 40px; background: var(--champagne-dim);
+  position: relative; overflow: hidden;
+}
+.scroll-line::after {
+  content: ''; position: absolute; top: -100%; left: 0;
+  width: 100%; height: 100%; background: var(--champagne);
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse {
+  0% { top: -100%; } 50% { top: 100%; } 100% { top: 100%; }
+}
+
+/* ─── SECTIONS ─── */
+section {
+  padding: 8rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+  position: relative;
+}
+
+.section-label {
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--champagne);
+  margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;
+}
+.section-label::before {
+  content: ''; width: 30px; height: 1px; background: var(--champagne);
+}
+
+.section-title {
+  font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400; line-height: 1.15; margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+}
+
+.section-body {
+  font-size: 1.05rem; color: rgba(242, 240, 235, 0.7);
+  max-width: 720px; line-height: 1.85;
+}
+
+.section-body p { margin-bottom: 1.5rem; }
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+
+/* ─── DIVIDER ─── */
+.divider {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  height: 1px; background: linear-gradient(90deg, transparent, var(--champagne-dim), transparent);
+}
+
+/* ─── STAT GRID ─── */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem; margin: 3rem 0;
+}
+
+.stat-card {
+  background: var(--ink-card);
+  border: 1px solid rgba(242, 240, 235, 0.04);
+  border-radius: 12px; padding: 2rem;
+  transition: border-color 0.4s, transform 0.4s;
+}
+.stat-card:hover {
+  border-color: var(--champagne-dim);
+  transform: translateY(-2px);
+}
+
+.stat-number {
+  font-family: var(--font-display); font-size: 2.2rem;
+  color: var(--champagne); font-weight: 600; margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  font-size: 0.8rem; color: var(--smoke); text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-sub {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  color: var(--success); margin-top: 0.5rem;
+}
+
+/* ─── TIMELINE ─── */
+.timeline { position: relative; margin: 3rem 0; padding-left: 2rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 1px; background: linear-gradient(180deg, var(--champagne), var(--champagne-dim), transparent);
+}
+
+.timeline-item {
+  position: relative; margin-bottom: 2.5rem; padding-left: 2rem;
+}
+.timeline-item::before {
+  content: ''; position: absolute; left: -2.35rem; top: 0.5rem;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ink); border: 1.5px solid var(--champagne);
+}
+
+.timeline-date {
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em;
+  color: var(--champagne); text-transform: uppercase; margin-bottom: 0.3rem;
+}
+
+.timeline-title {
+  font-family: var(--font-display); font-size: 1.15rem; font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.timeline-desc {
+  font-size: 0.9rem; color: var(--smoke); line-height: 1.6;
+}
+
+/* ─── PERSON CARDS ─── */
+.person-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem; margin: 3rem 0;
+}
+
+.person-card {
+  background: var(--ink-card);
+  border: 1px solid rgba(242, 240, 235, 0.04);
+  border-radius: 16px; padding: 2.5rem;
+  position: relative; overflow: hidden;
+  transition: border-color 0.4s;
+}
+.person-card:hover { border-color: rgba(201, 169, 110, 0.2); }
+
+.person-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.person-card.lyreco::before { background: var(--lyreco-red); }
+.person-card.wefun::before { background: var(--wefun-blue); }
+
+.person-role {
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--champagne); margin-bottom: 0.5rem;
+}
+
+.person-name {
+  font-family: var(--font-display); font-size: 1.5rem; font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.person-bio {
+  font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+}
+
+.person-tag {
+  display: inline-block; margin-top: 1rem; padding: 0.3rem 0.8rem;
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em;
+  text-transform: uppercase; border-radius: 100px;
+}
+.person-tag.critical { background: rgba(230, 57, 70, 0.15); color: var(--lyreco-red); }
+.person-tag.key { background: rgba(46, 91, 255, 0.15); color: var(--wefun-blue); }
+.person-tag.vip { background: rgba(201, 169, 110, 0.15); color: var(--champagne); }
+
+/* ─── CONVERGENCE VISUAL ─── */
+.convergence-box {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem;
+  align-items: start; margin: 3rem 0;
+}
+
+.conv-side {
+  background: var(--ink-card); border-radius: 16px; padding: 2.5rem;
+  border: 1px solid rgba(242, 240, 235, 0.04);
+}
+
+.conv-side h3 {
+  font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 1.2rem;
+}
+
+.conv-center {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding-top: 3rem; min-width: 60px;
+}
+
+.conv-arrow {
+  font-size: 1.8rem; color: var(--champagne); animation: pulse 2s infinite;
+  line-height: 1;
+}
+
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+.conv-list { list-style: none; }
+.conv-list li {
+  padding: 0.6rem 0; font-size: 0.9rem; color: var(--smoke);
+  border-bottom: 1px solid rgba(242, 240, 235, 0.04);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.conv-list li::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.conv-side.left .conv-list li::before { background: var(--wefun-blue); }
+.conv-side.right .conv-list li::before { background: var(--lyreco-red); }
+
+/* ─── PLAYBOOK CARDS ─── */
+.playbook-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem; margin: 3rem 0;
+}
+
+.play-card {
+  background: var(--ink-card); border: 1px solid rgba(242, 240, 235, 0.04);
+  border-radius: 16px; padding: 2rem;
+  transition: border-color 0.3s, transform 0.3s;
+  cursor: default;
+}
+.play-card:hover {
+  border-color: rgba(201, 169, 110, 0.15);
+  transform: translateY(-3px);
+}
+
+.play-icon {
+  font-size: 1.8rem; margin-bottom: 1rem;
+}
+
+.play-title {
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.play-desc {
+  font-size: 0.85rem; color: var(--smoke); line-height: 1.7;
+}
+
+/* ─── QUOTE BLOCK ─── */
+.quote-block {
+  border-left: 2px solid var(--champagne);
+  padding: 2rem 2.5rem; margin: 3rem 0;
+  background: var(--champagne-dim); border-radius: 0 12px 12px 0;
+}
+
+.quote-text {
+  font-family: var(--font-display); font-size: 1.3rem;
+  font-style: italic; line-height: 1.6; margin-bottom: 0.8rem;
+}
+
+.quote-attr {
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--champagne);
+}
+
+/* ─── WARNING / AVOID BOX ─── */
+.avoid-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem; margin: 2rem 0;
+}
+
+.avoid-item {
+  background: rgba(230, 57, 70, 0.06);
+  border: 1px solid rgba(230, 57, 70, 0.12);
+  border-radius: 12px; padding: 1.5rem;
+}
+
+.avoid-item .avoid-label {
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--lyreco-red); margin-bottom: 0.5rem;
+}
+
+.avoid-item p {
+  font-size: 0.85rem; color: var(--smoke); line-height: 1.6;
+}
+
+/* ─── ICEBREAKER SECTION ─── */
+.ice-card {
+  background: var(--ink-card); border: 1px solid rgba(242, 240, 235, 0.04);
+  border-radius: 16px; padding: 2rem; margin-bottom: 1.2rem;
+  cursor: pointer; transition: all 0.3s;
+}
+.ice-card:hover {
+  border-color: rgba(201, 169, 110, 0.2);
+}
+
+.ice-header {
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.ice-opener {
+  font-family: var(--font-display); font-size: 1.1rem; font-style: italic;
+  color: var(--champagne-light);
+}
+
+.ice-toggle {
+  font-size: 1.2rem; color: var(--smoke); transition: transform 0.3s;
+}
+.ice-card.open .ice-toggle { transform: rotate(45deg); }
+
+.ice-detail {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s;
+  font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+}
+.ice-card.open .ice-detail {
+  max-height: 300px; padding-top: 1.2rem;
+}
+
+/* ─── CLOSING CTA ─── */
+.closing {
+  text-align: center; padding: 10rem 2rem;
+  position: relative;
+}
+
+.closing::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(201, 169, 110, 0.06), transparent);
+}
+
+.closing-title {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 400; line-height: 1.3; margin-bottom: 2rem;
+  position: relative;
+}
+
+.closing-body {
+  font-size: 1.1rem; color: var(--smoke); max-width: 640px;
+  margin: 0 auto; line-height: 1.85; position: relative;
+}
+
+/* ─── TABS ─── */
+.tabs { margin: 2rem 0; }
+.tab-nav {
+  display: flex; gap: 0; border-bottom: 1px solid rgba(242, 240, 235, 0.06);
+  margin-bottom: 2rem; overflow-x: auto;
+}
+.tab-btn {
+  background: none; border: none; padding: 0.8rem 1.5rem;
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--smoke);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.3s; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--pearl); }
+.tab-btn.active { color: var(--champagne); border-bottom-color: var(--champagne); }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ─── FOOTER ─── */
+footer {
+  text-align: center; padding: 4rem 2rem;
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(138, 138, 148, 0.4);
+  border-top: 1px solid rgba(242, 240, 235, 0.03);
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 5rem 1.5rem; }
+  .convergence-box {
+    grid-template-columns: 1fr;
+  }
+  .conv-center { 
+    flex-direction: row; padding: 0; gap: 0.5rem;
+  }
+  .person-grid { grid-template-columns: 1fr; }
+  .hero-details { gap: 1.5rem; }
+}
+
+/* ─── CONFIDENTIAL BADGE ─── */
+.conf-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 1rem; border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: 100px; font-family: var(--font-mono);
+  font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--lyreco-red); margin-bottom: 2rem;
+}
+.conf-badge::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--lyreco-red); animation: pulse 1.5s infinite;
+}
+
+/* ─── PERA Values ─── */
+.values-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem; margin: 2rem 0;
+}
+.value-card {
+  background: var(--ink-card); border-radius: 12px; padding: 1.8rem;
+  border: 1px solid rgba(242, 240, 235, 0.04);
+  text-align: center;
+}
+.value-letter {
+  font-family: var(--font-display); font-size: 2.5rem; color: var(--champagne);
+  font-weight: 700; margin-bottom: 0.3rem;
+}
+.value-word {
+  font-family: var(--font-display); font-size: 1rem; font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.value-map {
+  font-size: 0.8rem; color: var(--smoke);
+}
+.value-map strong { color: var(--wefun-blue); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-brand">WEFUN × Lyreco</div>
+  <div class="nav-links">
+    <a href="#the-buyer">The Buyer</a>
+    <a href="#the-seller">The Seller</a>
+    <a href="#the-people">The People</a>
+    <a href="#convergence">Convergence</a>
+    <a href="#playbook">Playbook</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <div class="conf-badge">Confidential — Internal Use Only</div>
+  <div class="hero-meta">Strategic Acquisition Briefing</div>
+  <h1 class="hero-title">Where <em>Two Worlds</em><br>Converge</h1>
+  <p class="hero-subtitle">WEFUN's acquisition of Lyreco's Asian operations</p>
+  <div class="hero-details">
+    <span><span class="dot"></span>February 26, 2026</span>
+    <span><span class="dot"></span>10:30 AM KST</span>
+    <span><span class="dot"></span>WEFUN HQ, Gangnam</span>
+    <span><span class="dot"></span>First Encounter</span>
+  </div>
+  <div class="scroll-indicator">
+    <span>Begin</span>
+    <div class="scroll-line"></div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTEXT ═══════════════ -->
+<section>
+  <div class="reveal">
+    <div class="section-label">The Premise</div>
+    <h2 class="section-title">This is not a negotiation.<br>This is a <em>courtship.</em></h2>
+    <div class="section-body">
+      <p>On February 26, two management teams will meet for the first time. One represents a 7-year-old Korean B2B platform growing at 87% annually. The other represents a French family business celebrating its 100th anniversary, whose board member personally grew the company from €15M to €2B.</p>
+      <p>Lyreco's team made one thing clear before agreeing to fly to Seoul: <em>"It is important to meet first and foremost."</em> Before any data room opens, before any price is discussed, they want to look into the eyes of the people who would inherit four generations of the Gaspard family's legacy.</p>
+      <p>This briefing is your preparation for that encounter.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ THE BUYER ═══════════════ -->
+<section id="the-buyer">
+  <div class="reveal">
+    <div class="section-label">Chapter I</div>
+    <h2 class="section-title">The Buyer — WEFUN</h2>
+    <div class="section-body">
+      <p>Founded on Christmas Eve 2018 by Kim Heon, WEFUN began with a simple premise: workplaces in Korea were broken, and someone needed to fix them — one snack box at a time. What started as Snack24, a subscription snack delivery for offices, has evolved into Korea's dominant B2B workplace-as-a-service platform.</p>
+      <p>Today, WEFUN operates roughly 100 modular services across four pillars: employee welfare, corporate gifting SaaS, office operations management, and space management. Over 10,000 B2B clients and 800,000 employee touchpoints trust WEFUN daily. Their client retention rate: 97%.</p>
+    </div>
+  </div>
+
+  <div class="stat-grid reveal reveal-delay-1">
+    <div class="stat-card">
+      <div class="stat-number">₩143.1B</div>
+      <div class="stat-label">2024 Revenue</div>
+      <div class="stat-sub">+87% YoY</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">113%</div>
+      <div class="stat-label">5-Year CAGR</div>
+      <div class="stat-sub">₩3.5B → ₩143.1B</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">10,000+</div>
+      <div class="stat-label">B2B Clients</div>
+      <div class="stat-sub">97% retention rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">#76</div>
+      <div class="stat-label">FT Asia-Pacific</div>
+      <div class="stat-sub">High-Growth 2025</div>
+    </div>
+  </div>
+
+  <div class="reveal reveal-delay-2">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin: 3rem 0 1.5rem;">The M&A Machine</h3>
+    <div class="section-body" style="margin-bottom: 2rem;">
+      <p>WEFUN has earned the nickname "M&A 귀재" — M&A genius — in Korean business media. Six acquisitions in two years, each targeting the #1 or #2 player in a specific vertical, then integrating them into the platform ecosystem.</p>
+    </div>
+  </div>
+
+  <div class="timeline reveal reveal-delay-2">
+    <div class="timeline-item">
+      <div class="timeline-date">December 2023</div>
+      <div class="timeline-title">Woolin (우린)</div>
+      <div class="timeline-desc">#1 convenience store logistics operator. 1,500+ stores. Renamed WeFun Fulfillment — the backbone of last-mile delivery.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">April 2024</div>
+      <div class="timeline-title">Next C&C (넥스트씨앤씨)</div>
+      <div class="timeline-desc">#1 in-office café operator. Added barista capability and launched Coffee24 (+104% growth in 2024).</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">July 2024</div>
+      <div class="timeline-title">Ilhwa Logis</div>
+      <div class="timeline-desc">Food logistics specialist. Merged with WeFun Fulfillment for cold-chain capability.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">August 2025</div>
+      <div class="timeline-title">Pudding</div>
+      <div class="timeline-desc">Foodtech B2B lunch subscription platform. Launched Lunch24 — expanding beyond snacks into full-service meals.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">November 2025</div>
+      <div class="timeline-title">Snackfor (스낵포)</div>
+      <div class="timeline-desc">#2 snack subscription service. Acquired Kakao and HDC client portfolios. Consolidated market leadership.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">January 2026</div>
+      <div class="timeline-title">Human Food + Human Food Service</div>
+      <div class="timeline-desc">220 workplaces, ~₩47B revenue. First PE-partnered deal (Epic Platform + Hana S&B) — demonstrating sophisticated deal structuring capability.</div>
+    </div>
+  </div>
+
+  <div class="quote-block reveal">
+    <div class="quote-text">"WeFun is pursuing business expansion under the vision of becoming a business-type holding company operating B2B solutions and SaaS."</div>
+    <div class="quote-attr">Hwang Minjae — CFO & CSO, WEFUN</div>
+  </div>
+
+  <div class="reveal" style="margin-top: 3rem;">
+    <div class="section-body">
+      <p><strong style="color: var(--champagne);">IPO trajectory:</strong> Hana Securities appointed as lead underwriter (Feb 2024). Originally targeted H2 2025, now pushed to 2026 for post-acquisition consolidation. Plans to file preliminary KRX examination in April 2026. Series C post-valuation was ₩110B; IPO expectations in the ₩200-300B range. The Lyreco Asia acquisition would transform the IPO narrative from "Korean platform" to "Asia-wide B2B workplace ecosystem."</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ THE SELLER ═══════════════ -->
+<section id="the-seller">
+  <div class="reveal">
+    <div class="section-label">Chapter II</div>
+    <h2 class="section-title">The Seller — Lyreco</h2>
+    <div class="section-body">
+      <p>In 1926, in Valenciennes, a small town in northern France, Georges-Gaston Gaspard opened a bookshop. From that modest storefront, four generations of the Gaspard family built Europe's largest B2B workplace products distributor — a €2.2 billion enterprise operating across 25 countries with 12,000 employees.</p>
+      <p>This year, 2026, Lyreco celebrates its 100th anniversary. The family still controls approximately 84% of equity through Corely SAS. Nathalie Gaspard serves as President. This is not a public corporation optimizing quarterly earnings. This is a family's century-long legacy.</p>
+    </div>
+  </div>
+
+  <div class="stat-grid reveal reveal-delay-1">
+    <div class="stat-card">
+      <div class="stat-number">€2.2B+</div>
+      <div class="stat-label">Annual Revenue</div>
+      <div class="stat-sub">Europe's #1 B2B distributor</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">100</div>
+      <div class="stat-label">Years in 2026</div>
+      <div class="stat-sub">4 generations of Gaspard family</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">25</div>
+      <div class="stat-label">Countries</div>
+      <div class="stat-sub">20 European, 5 Asian</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">84%</div>
+      <div class="stat-label">Family Ownership</div>
+      <div class="stat-sub">Via Corely SAS</div>
+    </div>
+  </div>
+
+  <div class="reveal reveal-delay-2">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin: 3rem 0 1.5rem;">Values — The PERA Framework</h3>
+    <p style="font-size: 0.95rem; color: var(--smoke); margin-bottom: 2rem;">Everything at Lyreco flows from four deeply held values. Any buyer will be measured against these.</p>
+  </div>
+
+  <div class="values-grid reveal reveal-delay-2">
+    <div class="value-card">
+      <div class="value-letter">P</div>
+      <div class="value-word">Passion</div>
+      <div class="value-map">WEFUN mirror: <strong>"Making offices a joy to work in"</strong></div>
+    </div>
+    <div class="value-card">
+      <div class="value-letter">E</div>
+      <div class="value-word">Excellence</div>
+      <div class="value-map">WEFUN mirror: <strong>97% client retention, 6 flawless integrations</strong></div>
+    </div>
+    <div class="value-card">
+      <div class="value-letter">R</div>
+      <div class="value-word">Respect</div>
+      <div class="value-map">WEFUN mirror: <strong>Employee-first culture, unlimited PTO</strong></div>
+    </div>
+    <div class="value-card">
+      <div class="value-letter">A</div>
+      <div class="value-word">Agility</div>
+      <div class="value-map">WEFUN mirror: <strong>87% YoY growth, rapid platform expansion</strong></div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top: 3rem;">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem;">Why Divesting Asia Now?</h3>
+    <div class="section-body">
+      <p>No public announcement has been made, but the signals are unmistakable. All recent acquisitions (2019–2024) are European. Helen Riley's newly created role explicitly includes "divestments." A massive executive team refresh in 2025 — new CFO, Chief Growth Officer, Chief People Officer — signals strategic reset. Asia likely represents less than 10% of group revenue with roughly 700 of 12,000 employees. The 100th anniversary is a natural portfolio optimization moment. Precedent exists: Lyreco sold its Australian operations to COS in 2018.</p>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top: 3rem;">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem;">What's Being Acquired</h3>
+    <div class="section-body">
+      <p>Direct operations in five markets: <strong style="color: var(--pearl);">Korea, Hong Kong (zone HQ), Singapore, Malaysia, Thailand.</strong> Approximately 700 employees. Lyreco Korea alone generated ~₩26.87B (~$20M) in 2023 from their Gangnam headquarters. Their product catalog spans office supplies, IT products, furniture, PPE, hygiene, and — crucially — workplace food, snack, coffee, and lounge services that directly mirror WEFUN's core offerings.</p>
+      <p>The "Lounge Service" brand in Korea and "Wellness@Pantry" subscription service in Singapore/Malaysia are embryonic versions of what WEFUN has already perfected. This isn't just a distribution acquisition — it's a market convergence.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ THE PEOPLE ═══════════════ -->
+<section id="the-people">
+  <div class="reveal">
+    <div class="section-label">Chapter III</div>
+    <h2 class="section-title">The People in the Room</h2>
+    <div class="section-body">
+      <p>Know who you're speaking with. Each person in this meeting carries a different mandate, different history, and different criteria for trust.</p>
+    </div>
+  </div>
+
+  <div class="tabs reveal reveal-delay-1">
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="lyreco-team">Lyreco's Side</button>
+      <button class="tab-btn" data-tab="wefun-team">WEFUN's Side</button>
+    </div>
+
+    <div class="tab-panel active" id="lyreco-team">
+      <div class="person-grid">
+        <div class="person-card lyreco">
+          <div class="person-role">Group Development Director — M&A</div>
+          <div class="person-name">Helen Riley</div>
+          <div class="person-bio">Appointed September 2025 to a newly created role overseeing "strategic ambitions, M&A, divestments, and partnerships." 20+ years at Lyreco, started as a Group Finance trainee in 2004. EDHEC executive MBA. Personal interests: yoga, trekking, cooking, "discovering new cultures." She led recent European acquisitions including Nespresso distribution and UK industrial chemical firms. She is the process owner.</div>
+          <div class="person-tag critical">Process Owner</div>
+        </div>
+        <div class="person-card lyreco">
+          <div class="person-role">Former CEO / Supervisory Board</div>
+          <div class="person-name">Eric Bigeard</div>
+          <div class="person-bio">Almost certainly the "Eric" attending. Legendary former CEO (1988–2010) who grew Lyreco from €15M to €2B revenue, France-only to 29 countries, in 22 years. Appointed CEO at age ~33. Stepped down saying: "Too many CEOs hold on to their jobs too long." Remains on Supervisory Board at Georges Gaspard's request. His greatest achievement: "the creation of a solid and stable team." His presence means the family is watching.</div>
+          <div class="person-tag vip">Guardian of Legacy</div>
+        </div>
+      </div>
+
+      <div class="quote-block" style="margin-top: 2rem;">
+        <div class="quote-text">"We are excited to welcome the many talented employees. The first hugely important task is to get to know each other."</div>
+        <div class="quote-attr">Gregory Liénard, CEO — on every Lyreco acquisition</div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="wefun-team">
+      <div class="person-grid">
+        <div class="person-card wefun">
+          <div class="person-role">CFO & Chief Strategy Officer</div>
+          <div class="person-name">Hwang Minjae (황민재)</div>
+          <div class="person-bio">VP-level executive and the public face of WEFUN's M&A strategy. Architected the holding company vision and led all six acquisitions. Will present the WEFUN company introduction and M&A track record. His English name is Joshua. Key objective: demonstrate WEFUN's financial discipline and integration capability.</div>
+          <div class="person-tag key">Lead Presenter</div>
+        </div>
+        <div class="person-card wefun">
+          <div class="person-role">Head of Business Development</div>
+          <div class="person-name">Jo Hwa-young (조화영)</div>
+          <div class="person-bio">Leads business development initiatives including cross-sell strategy and new market entry. Will support the meeting with operational detail and client success stories.</div>
+          <div class="person-tag key">Operational Detail</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ CONVERGENCE ═══════════════ -->
+<section id="convergence">
+  <div class="reveal">
+    <div class="section-label">Chapter IV</div>
+    <h2 class="section-title">The Convergence Thesis</h2>
+    <div class="section-body">
+      <p>This is not a random acquisition. These two companies are converging on the same destination from opposite directions — and the combined entity would create something that doesn't yet exist in Asia.</p>
+    </div>
+  </div>
+
+  <div class="convergence-box reveal reveal-delay-1">
+    <div class="conv-side left">
+      <h3 style="color: var(--wefun-blue);">WEFUN brings</h3>
+      <ul class="conv-list">
+        <li>Technology platform & SaaS infrastructure</li>
+        <li>Subscription revenue model (90%+ recurring)</li>
+        <li>F&B fulfillment network (cold-chain capable)</li>
+        <li>10,000+ Korean B2B client base</li>
+        <li>Digital signage advertising (1,000+ screens)</li>
+        <li>Corporate gifting SaaS (Gift24)</li>
+        <li>Proven M&A integration playbook</li>
+      </ul>
+    </div>
+    <div class="conv-center">
+      <div class="conv-arrow">⟷</div>
+    </div>
+    <div class="conv-side right">
+      <h3 style="color: var(--lyreco-red);">Lyreco Asia brings</h3>
+      <ul class="conv-list">
+        <li>Multi-country distribution infrastructure</li>
+        <li>MNC client relationships (global procurement)</li>
+        <li>Office supplies, furniture, IT, PPE catalog</li>
+        <li>5 Asian market operations (700 employees)</li>
+        <li>ISO 9001 & 14001 certifications</li>
+        <li>20+ years of operational history</li>
+        <li>World-class sustainability credentials</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal reveal-delay-2">
+    <div class="quote-block">
+      <div class="quote-text">The cross-sell multiplier is the financial core of this deal. The procurement decision-maker — the 총무팀 (General Affairs team) — is identical for both companies' products. One invoice. One platform. Everything the office needs.</div>
+      <div class="quote-attr">Strategic Rationale</div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top: 3rem;">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem;">What the Combined Entity Unlocks</h3>
+    <div class="playbook-grid">
+      <div class="play-card">
+        <div class="play-icon">🔄</div>
+        <div class="play-title">Cross-Sell Acceleration</div>
+        <div class="play-desc">WEFUN's 10,000 clients gain access to Lyreco's broad office catalog. Lyreco's MNC clients gain Snack24, Coffee24, Gift24. WEFUN's current cross-sell ratio: 18% (target 50%) — proven playbook ready to deploy.</div>
+      </div>
+      <div class="play-card">
+        <div class="play-icon">🌏</div>
+        <div class="play-title">Asia-Wide Platform</div>
+        <div class="play-desc">WEFUN's services can be deployed across Lyreco's 4 additional Asian markets (HK, SG, MY, TH). Transforms KOSDAQ IPO narrative from "Korean company" to "Asia-wide B2B ecosystem."</div>
+      </div>
+      <div class="play-card">
+        <div class="play-icon">🏢</div>
+        <div class="play-title">MNC Access</div>
+        <div class="play-desc">Lyreco's global corporate clients represent a segment WEFUN currently cannot access as a domestic-only company. These are long-tenure, high-ARPU accounts with multi-year contracts.</div>
+      </div>
+      <div class="play-card">
+        <div class="play-icon">📊</div>
+        <div class="play-title">Valuation Benchmark</div>
+        <div class="play-desc">Kokuyo (Japan) acquired 65% of Vietnam's Thien Long Group for ~$185M at ~2.4x revenue (Dec 2025) — validating the platform + distribution thesis in Asian office markets.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ PLAYBOOK ═══════════════ -->
+<section id="playbook">
+  <div class="reveal">
+    <div class="section-label">Chapter V</div>
+    <h2 class="section-title">The Meeting Playbook</h2>
+    <div class="section-body">
+      <p>This is 70% relationship, 30% substance. The meeting architecture should feel like a conversation between two companies who share a belief, not a pitch deck review.</p>
+    </div>
+  </div>
+
+  <div class="reveal reveal-delay-1">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin: 3rem 0 1.5rem;">Presentation Flow</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">5 minutes</div>
+        <div class="timeline-title">Welcome & Acknowledgment</div>
+        <div class="timeline-desc">Recognize Lyreco's 100th anniversary. Honor the Gaspard family's four-generation legacy. Express what it means to host their management team at WEFUN.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">20 minutes</div>
+        <div class="timeline-title">WEFUN's Story</div>
+        <div class="timeline-desc">The founding narrative, growth journey, vision of "making offices a joy to work in." Service portfolio, client base, culture. Lead with story, not slides.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">20 minutes</div>
+        <div class="timeline-title">M&A Philosophy & Track Record</div>
+        <div class="timeline-desc">Bolt-on strategy. Integration approach. Employee retention in past deals. The Human Food PE-partnership model. Show you know how to honor what you acquire.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">15 minutes</div>
+        <div class="timeline-title">Vision for the Combined Entity</div>
+        <div class="timeline-desc">"Total workplace platform" thesis. Cross-sell opportunity. Asia expansion potential. How Lyreco's Asian operations will flourish with new capabilities.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">10 minutes</div>
+        <div class="timeline-title">Values Alignment</div>
+        <div class="timeline-desc">Map WEFUN's values explicitly to Lyreco's PERA framework. Employee welfare commitment. Sustainability ambitions. Show values convergence is real, not rehearsed.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">30+ minutes</div>
+        <div class="timeline-title">Open Discussion</div>
+        <div class="timeline-desc">The most important segment. Answer Lyreco's questions with transparency. Build rapport. Discuss next steps. Let them lead the conversation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ICEBREAKERS -->
+  <div class="reveal" style="margin-top: 4rem;">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem;">Icebreakers & Dinner Conversation</h3>
+    <p style="font-size: 0.95rem; color: var(--smoke); margin-bottom: 2rem;">Click to expand each conversation opener.</p>
+  </div>
+
+  <div class="reveal reveal-delay-1">
+    <div class="ice-card" onclick="this.classList.toggle('open')">
+      <div class="ice-header">
+        <div class="ice-opener">"How does it feel to celebrate 100 years?"</div>
+        <div class="ice-toggle">+</div>
+      </div>
+      <div class="ice-detail">Opens an emotional, legacy-centered conversation. The Gaspard family has stewarded this company through two world wars, multiple economic crises, and the digital revolution. This question shows you see the human story behind the corporate structure. Let them talk — this tells you everything about what they value.</div>
+    </div>
+
+    <div class="ice-card" onclick="this.classList.toggle('open')">
+      <div class="ice-header">
+        <div class="ice-opener">"The pioneering spirit from a bookshop in Valenciennes to 25 countries mirrors our own journey."</div>
+        <div class="ice-toggle">+</div>
+      </div>
+      <div class="ice-detail">Creates narrative kinship between a century-old European family business and a seven-year-old Korean startup. Both started with a simple idea — a bookshop, a snack box — and built something far larger. This framing tells Lyreco that WEFUN understands entrepreneurial ambition at the deepest level.</div>
+    </div>
+
+    <div class="ice-card" onclick="this.classList.toggle('open')">
+      <div class="ice-header">
+        <div class="ice-opener">"We share the belief that great workplaces create great work."</div>
+        <div class="ice-toggle">+</div>
+      </div>
+      <div class="ice-detail">Directly connects WEFUN's founding mission to Lyreco's: "Deliver sustainably what any workplace needs, so its people can focus on what matters most." This isn't corporate platitude — both companies literally exist to improve daily work life. This shared purpose is the strongest bond you can build.</div>
+    </div>
+
+    <div class="ice-card" onclick="this.classList.toggle('open')">
+      <div class="ice-header">
+        <div class="ice-opener">"Is this your first time in Korea?"</div>
+        <div class="ice-toggle">+</div>
+      </div>
+      <div class="ice-detail">Natural hospitality opener. Recommend restaurants, cultural sites, seasonal highlights (late February weather, early spring atmosphere). Helen's personal interests include cooking and "discovering new cultures" — Korean cuisine's complexity and artistry will be rich conversation material. Host an excellent dinner with quality wine.</div>
+    </div>
+
+    <div class="ice-card" onclick="this.classList.toggle('open')">
+      <div class="ice-header">
+        <div class="ice-opener">If Eric Bigeard is in the room...</div>
+        <div class="ice-toggle">+</div>
+      </div>
+      <div class="ice-detail">His presence changes the dynamic entirely. This is the man who grew Lyreco from €15M to €2B. He identified "the creation of a solid and stable team" as his greatest achievement. He represents the family's conscience and the company's soul. Address him with great deference. Ask about his vision for the company's legacy. Reference his achievement in building Lyreco's global footprint. His approval is likely a prerequisite for the deal proceeding.</div>
+    </div>
+  </div>
+
+  <!-- WHAT TO AVOID -->
+  <div class="reveal" style="margin-top: 4rem;">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem;">Five Things to Avoid</h3>
+  </div>
+
+  <div class="avoid-grid reveal reveal-delay-1">
+    <div class="avoid-item">
+      <div class="avoid-label">⛔ No valuation talk</div>
+      <p>Don't discuss specific deal terms or pricing. This is a relationship meeting, not a negotiation session.</p>
+    </div>
+    <div class="avoid-item">
+      <div class="avoid-label">⛔ No "synergies through cost-cutting"</div>
+      <p>This translates to "layoffs" in a family seller's mind. Frame everything as growth investment, not extraction.</p>
+    </div>
+    <div class="avoid-item">
+      <div class="avoid-label">⛔ Don't rush</div>
+      <p>French family businesses move deliberately. Patience signals respect. Let silences breathe.</p>
+    </div>
+    <div class="avoid-item">
+      <div class="avoid-label">⛔ No vague promises on employees</div>
+      <p>Make concrete, specific commitments. Ideally: guarantee all employees for 18–24 months, preserve compensation and local management.</p>
+    </div>
+    <div class="avoid-item">
+      <div class="avoid-label">⛔ Don't underestimate the emotion</div>
+      <p>For Lyreco, this is about a family legacy — not just a P&L line item. Every word you say about the Asian team will be weighed.</p>
+    </div>
+  </div>
+
+  <!-- CULTURAL BRIDGE -->
+  <div class="reveal" style="margin-top: 4rem;">
+    <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem;">French–Korean Cultural Bridges</h3>
+    <div class="playbook-grid">
+      <div class="play-card">
+        <div class="play-icon">👨‍👩‍👧‍👦</div>
+        <div class="play-title">Family Centrality</div>
+        <div class="play-desc">Korean chaebols are family-founded and multi-generational. The Gaspard family's 100-year stewardship resonates deeply with Korean business values. Acknowledge this shared reverence for family legacy.</div>
+      </div>
+      <div class="play-card">
+        <div class="play-icon">🍷</div>
+        <div class="play-title">Food as Bonding</div>
+        <div class="play-desc">French dining culture and Korean 회식 tradition both recognize that trust is built over shared meals. Host an excellent dinner — either high-end Korean or Korean-French fusion — with quality wine.</div>
+      </div>
+      <div class="play-card">
+        <div class="play-icon">🕰️</div>
+        <div class="play-title">Long-Term Orientation</div>
+        <div class="play-desc">Both cultures think in decades, not quarters. WEFUN's vision of building a generational B2B platform mirrors Lyreco's century-long arc. Emphasize the permanence of your intentions.</div>
+      </div>
+      <div class="play-card">
+        <div class="play-icon">🎁</div>
+        <div class="play-title">Etiquette</div>
+        <div class="play-desc">Address French delegates as Monsieur/Madame plus surname. Exchange cards with both hands. A small, tasteful Korean cultural gift is appropriate — high-quality Korean tea or refined craft item.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ CLOSING ═══════════════ -->
+<section class="closing">
+  <div class="reveal">
+    <div class="section-label" style="justify-content: center;">The Winning Message</div>
+    <h2 class="closing-title">
+      "As Lyreco celebrates 100 years, we want to ensure the next chapter of the Asian operations is its <em>most ambitious yet.</em>"
+    </h2>
+    <div class="closing-body">
+      <p>WEFUN's strongest card is that both companies share the same fundamental belief: great workplaces make great companies.</p>
+      <p>WEFUN's entire business model exists to improve employees' daily work experience. Lyreco's mission is to deliver sustainably what any workplace needs, so its people can focus on what matters most.</p>
+      <p>This is not a hostile corporate raider buying assets. This is a company that lives and breathes workplace welfare, acquiring operations that will become more impactful — not less — under new ownership.</p>
+      <p style="color: var(--champagne); font-family: var(--font-display); font-style: italic; font-size: 1.15rem; margin-top: 2rem;">The Asian employees and operations aren't being sold.<br>They're being given a more powerful platform to fulfill their original purpose.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Confidential — Prepared for WEFUN Management — February 2026
+</footer>
+
+<script>
+// ─── PROGRESS BAR ───
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (scrollTop / docHeight * 100) + '%';
+});
+
+// ─── NAV SHOW/HIDE ───
+const nav = document.getElementById('mainNav');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    nav.classList.add('visible');
+  } else {
+    nav.classList.remove('visible');
+  }
+  lastScroll = window.scrollY;
+});
+
+// ─── NAV ACTIVE STATE ───
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 300) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+
+// ─── REVEAL ON SCROLL ───
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+reveals.forEach(el => revealObserver.observe(el));
+
+// ─── TABS ───
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tabGroup = btn.closest('.tabs');
+    tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    tabGroup.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
