@@ -66,3 +66,12 @@
   opacity: 1;
   transform: none;
 }
+
+/* If GSAP hasn't initialized within 3s, show everything */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate],
+  [data-stagger-group] > [data-stagger-child] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

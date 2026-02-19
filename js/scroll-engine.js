@@ -16,18 +16,19 @@ function initRevealAnimations() {
     const delay = parseFloat(el.dataset.delay || 0);
     const duration = parseFloat(el.dataset.duration || 0.8);
 
-    let fromVars = { opacity: 0, duration, delay, ease: 'power3.out' };
+    let fromVars = { opacity: 0 };
+    let toVars = { opacity: 1, duration, delay, ease: 'power3.out' };
 
     switch (type) {
-      case 'fade-up':    fromVars.y = 30; break;
-      case 'fade-left':  fromVars.x = -40; break;
-      case 'fade-right': fromVars.x = 40; break;
-      case 'scale-in':   fromVars.scale = 0.92; break;
+      case 'fade-up':    fromVars.y = 30; toVars.y = 0; break;
+      case 'fade-left':  fromVars.x = -40; toVars.x = 0; break;
+      case 'fade-right': fromVars.x = 40; toVars.x = 0; break;
+      case 'scale-in':   fromVars.scale = 0.92; toVars.scale = 1; break;
       case 'fade':       break; // opacity only
     }
 
-    gsap.from(el, {
-      ...fromVars,
+    gsap.fromTo(el, fromVars, {
+      ...toVars,
       scrollTrigger: {
         trigger: el,
         start: 'top 85%',
@@ -45,17 +46,20 @@ function initStaggerGroups() {
     const children = group.querySelectorAll('[data-stagger-child]');
     if (children.length === 0) return;
 
-    gsap.from(children, {
-      y: 40,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: group,
-        start: 'top 80%',
-      },
-    });
+    gsap.fromTo(children,
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: group,
+          start: 'top 80%',
+        },
+      }
+    );
   });
 }
 
@@ -152,6 +156,14 @@ function initLineDrawing() {
 
 /* ─── MASTER INIT ─── */
 function initScrollEngine() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    // GSAP not available — force-show all hidden elements
+    document.querySelectorAll('[data-animate], [data-stagger-group] > [data-stagger-child]').forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    return;
+  }
   initRevealAnimations();
   initStaggerGroups();
   initParallax();
