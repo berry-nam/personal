@@ -76,6 +76,7 @@
   max-width: 680px; margin: 0 auto;
   text-align: center;
   padding: var(--space-section) 2rem;
+  opacity: 0; animation: fadeUp 1s 1.8s forwards;
 }
 
 .hub-intro p {

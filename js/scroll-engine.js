@@ -4,35 +4,40 @@
 
 function initScrollEngine() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-    return; // Content is already visible via CSS — no hiding, no problem
+    return; // Content stays visible — no GSAP, no problem
   }
 
   gsap.registerPlugin(ScrollTrigger);
 
   // ─── Reveal Animations ───
+  // Uses gsap.from() so elements start visible (their CSS state).
+  // ScrollTrigger plays the animation when the element enters the viewport,
+  // animating FROM the hidden state TO the element's natural visible state.
   document.querySelectorAll('[data-animate]').forEach(function(el) {
     var type = el.dataset.animate || 'fade-up';
     var delay = parseFloat(el.dataset.delay || 0);
     var duration = parseFloat(el.dataset.duration || 0.8);
 
-    var fromVars = { opacity: 0 };
-    var toVars = { opacity: 1, duration: duration, delay: delay, ease: 'power3.out' };
+    var fromVars = { opacity: 0, immediateRender: false };
 
     switch (type) {
-      case 'fade-up':    fromVars.y = 30; toVars.y = 0; break;
-      case 'fade-left':  fromVars.x = -40; toVars.x = 0; break;
-      case 'fade-right': fromVars.x = 40; toVars.x = 0; break;
-      case 'scale-in':   fromVars.scale = 0.92; toVars.scale = 1; break;
+      case 'fade-up':    fromVars.y = 30; break;
+      case 'fade-left':  fromVars.x = -40; break;
+      case 'fade-right': fromVars.x = 40; break;
+      case 'scale-in':   fromVars.scale = 0.92; break;
       case 'fade':       break;
     }
 
-    toVars.scrollTrigger = {
+    fromVars.duration = duration;
+    fromVars.delay = delay;
+    fromVars.ease = 'power3.out';
+    fromVars.scrollTrigger = {
       trigger: el,
       start: 'top 85%',
       toggleActions: 'play none none none',
     };
 
-    gsap.fromTo(el, fromVars, toVars);
+    gsap.from(el, fromVars);
   });
 
   // ─── Staggered Group Reveals ───
@@ -40,20 +45,18 @@ function initScrollEngine() {
     var children = group.querySelectorAll('[data-stagger-child]');
     if (children.length === 0) return;
 
-    gsap.fromTo(children,
-      { y: 40, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: group,
-          start: 'top 80%',
-        },
-      }
-    );
+    gsap.from(children, {
+      y: 40,
+      opacity: 0,
+      immediateRender: false,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: group,
+        start: 'top 80%',
+      },
+    });
   });
 
   // ─── Parallax Layers ───
