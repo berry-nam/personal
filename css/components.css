@@ -382,6 +382,18 @@
 }
 .value-map strong { color: var(--wefun-blue); font-weight: 500; }
 
+/* ─── SITE FOOTER ─── */
+.site-footer {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(138, 138, 148, 0.4);
+  border-top: 1px solid rgba(242, 240, 235, 0.03);
+}
+
 /* ─── ANIMATIONS ─── */
 @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 @keyframes fadeUp {

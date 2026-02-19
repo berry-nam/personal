@@ -2,18 +2,19 @@
    GSAP Animation State Classes & Helpers
    ═══════════════════════════════════════════════ */
 
-/* Elements with [data-animate] start invisible;
-   GSAP's ScrollTrigger handles the reveal.
-   These provide fallback states if JS fails. */
+/* IMPORTANT: Elements are visible by default.
+   JS adds .gsap-ready to <html> when GSAP loads,
+   which then hides elements so GSAP can reveal them.
+   If GSAP never loads, content stays visible. */
 
-[data-animate] {
+html.gsap-ready [data-animate] {
   opacity: 0;
   will-change: opacity, transform;
 }
 
-/* Stagger groups: children start hidden */
-[data-stagger-group] > [data-stagger-child] {
+html.gsap-ready [data-stagger-group] > [data-stagger-child] {
   opacity: 0;
+  will-change: opacity, transform;
 }
 
 /* Parallax layers */
@@ -67,11 +68,12 @@
   transform: none;
 }
 
-/* If GSAP hasn't initialized within 3s, show everything */
+/* Respect reduced motion: skip all GSAP animations */
 @media (prefers-reduced-motion: reduce) {
   [data-animate],
   [data-stagger-group] > [data-stagger-child] {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
   }
 }
