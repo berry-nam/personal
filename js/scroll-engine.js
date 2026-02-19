@@ -2,8 +2,14 @@
    Scroll Engine — GSAP ScrollTrigger Infrastructure
    ═══════════════════════════════════════════════ */
 
-/* ─── Reveal Animations ─── */
-function initRevealAnimations() {
+function initScrollEngine() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    return; // Content is already visible via CSS — no hiding, no problem
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ─── Reveal Animations ───
   document.querySelectorAll('[data-animate]').forEach(function(el) {
     var type = el.dataset.animate || 'fade-up';
     var delay = parseFloat(el.dataset.delay || 0);
@@ -28,10 +34,8 @@ function initRevealAnimations() {
 
     gsap.fromTo(el, fromVars, toVars);
   });
-}
 
-/* ─── Staggered Group Reveals ─── */
-function initStaggerGroups() {
+  // ─── Staggered Group Reveals ───
   document.querySelectorAll('[data-stagger-group]').forEach(function(group) {
     var children = group.querySelectorAll('[data-stagger-child]');
     if (children.length === 0) return;
@@ -51,10 +55,8 @@ function initStaggerGroups() {
       }
     );
   });
-}
 
-/* ─── Parallax Layers ─── */
-function initParallax() {
+  // ─── Parallax Layers ───
   document.querySelectorAll('[data-parallax]').forEach(function(el) {
     var speed = parseFloat(el.dataset.parallax || 0.3);
     gsap.to(el, {
@@ -66,10 +68,8 @@ function initParallax() {
       },
     });
   });
-}
 
-/* ─── Animated Counters ─── */
-function initCounters() {
+  // ─── Animated Counters ───
   document.querySelectorAll('[data-counter]').forEach(function(el) {
     var target = parseFloat(el.dataset.counter);
     var prefix = el.dataset.prefix || '';
@@ -90,10 +90,8 @@ function initCounters() {
       },
     });
   });
-}
 
-/* ─── Horizontal Scroll Sections ─── */
-function initHorizontalScroll() {
+  // ─── Horizontal Scroll Sections ───
   document.querySelectorAll('.horizontal-scroll-section').forEach(function(section) {
     var track = section.querySelector('.horizontal-scroll-track');
     if (!track) return;
@@ -113,17 +111,11 @@ function initHorizontalScroll() {
       },
     });
   });
-}
 
-/* ─── SVG Line Drawing ─── */
-function initLineDrawing() {
+  // ─── SVG Line Drawing ───
   document.querySelectorAll('[data-draw-line]').forEach(function(path) {
     var length = path.getTotalLength();
-    gsap.set(path, {
-      strokeDasharray: length,
-      strokeDashoffset: length,
-    });
-
+    gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
     gsap.to(path, {
       strokeDashoffset: 0,
       duration: 1.5,
@@ -136,39 +128,4 @@ function initLineDrawing() {
   });
 }
 
-/* ─── MASTER INIT ─── */
-function initScrollEngine() {
-  // Check if GSAP loaded
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-    // GSAP not available — ensure everything is visible
-    // (Without .gsap-ready on html, elements are already visible via CSS)
-    return;
-  }
-
-  // Register the plugin (must happen before any ScrollTrigger usage)
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Mark html so CSS can safely hide elements before GSAP reveals them
-  document.documentElement.classList.add('gsap-ready');
-
-  // Small delay to let the browser apply the .gsap-ready opacity:0 styles
-  // before GSAP starts animating them to opacity:1
-  requestAnimationFrame(function() {
-    requestAnimationFrame(function() {
-      initRevealAnimations();
-      initStaggerGroups();
-      initParallax();
-      initCounters();
-      initHorizontalScroll();
-      initLineDrawing();
-    });
-  });
-}
-
-// Wait for DOM ready, then init
 document.addEventListener('DOMContentLoaded', initScrollEngine);
-
-// Safety net: if DOMContentLoaded already fired (e.g., script loaded very late)
-if (document.readyState !== 'loading') {
-  initScrollEngine();
-}

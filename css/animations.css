@@ -1,26 +1,12 @@
 /* ═══════════════════════════════════════════════
-   GSAP Animation State Classes & Helpers
+   Animation Helpers
    ═══════════════════════════════════════════════ */
 
-/* IMPORTANT: Elements are visible by default.
-   JS adds .gsap-ready to <html> when GSAP loads,
-   which then hides elements so GSAP can reveal them.
-   If GSAP never loads, content stays visible. */
+/* No opacity:0 rules. Everything is visible.
+   GSAP handles hide→show via JS only. */
 
-html.gsap-ready [data-animate] {
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-html.gsap-ready [data-stagger-group] > [data-stagger-child] {
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-/* Parallax layers */
 .parallax-layer { will-change: transform; }
 
-/* SVG line drawing */
 .draw-line {
   stroke-dasharray: var(--line-length);
   stroke-dashoffset: var(--line-length);
@@ -28,7 +14,6 @@ html.gsap-ready [data-stagger-group] > [data-stagger-child] {
 }
 .draw-line.is-drawn { stroke-dashoffset: 0; }
 
-/* Counter formatting */
 .counter-value {
   font-variant-numeric: tabular-nums;
   font-family: var(--font-display);
@@ -38,13 +23,11 @@ html.gsap-ready [data-stagger-group] > [data-stagger-child] {
 .scroll-indicator {
   display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
 }
-
 .scroll-indicator span {
   font-family: var(--font-mono);
   font-size: 0.6rem; letter-spacing: 0.2em;
   text-transform: uppercase; color: var(--smoke);
 }
-
 .scroll-line {
   width: 1px; height: 40px;
   background: var(--champagne-dim);
@@ -56,24 +39,6 @@ html.gsap-ready [data-stagger-group] > [data-stagger-child] {
   background: var(--champagne);
   animation: scrollPulse 2s infinite;
 }
-
 @keyframes scrollPulse {
   0% { top: -100%; } 50% { top: 100%; } 100% { top: 100%; }
-}
-
-/* ─── NO-JS FALLBACK ─── */
-.no-js [data-animate],
-.no-js [data-stagger-group] > [data-stagger-child] {
-  opacity: 1;
-  transform: none;
-}
-
-/* Respect reduced motion: skip all GSAP animations */
-@media (prefers-reduced-motion: reduce) {
-  [data-animate],
-  [data-stagger-group] > [data-stagger-child] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
 }
