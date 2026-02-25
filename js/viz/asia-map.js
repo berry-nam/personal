@@ -11,10 +11,10 @@ function createAsiaMap(containerId) {
   // Market locations (approximate lat/lon → SVG coords)
   var markets = [
     { id: 'hk', label: 'Hong Kong', year: '1996', x: 485, y: 290, detail: 'Zone HQ · Est. 1996/97 · ISO 9001 & 14001', color: '#C9A96E', delay: 0 },
-    { id: 'kr', label: 'Korea', year: '2004', x: 530, y: 210, detail: 'Est. April 2004 · ₩26.87B Revenue · Lounge Service', color: '#4A72FF', delay: 400 },
-    { id: 'sg', label: 'Singapore', year: '2019', x: 440, y: 380, detail: 'Est. 2019 · Deskright Acquisition · ASEAN Gateway', color: '#C9A96E', delay: 800 },
-    { id: 'my', label: 'Malaysia', year: '2020+', x: 410, y: 350, detail: 'Recent entry · SG platform extension', color: '#C9A96E', delay: 1200 },
-    { id: 'th', label: 'Thailand', year: '2020+', x: 380, y: 310, detail: 'Recent entry · ASEAN expansion', color: '#C9A96E', delay: 1600 }
+    { id: 'kr', label: 'Korea', year: '2004', x: 530, y: 210, detail: 'Est. April 2004 · €16M Revenue · Lounge Service', color: '#4A72FF', delay: 400 },
+    { id: 'sg', label: 'Singapore', year: '2005', x: 440, y: 380, detail: 'Est. 2005 · Deskright 2019 · €19M Revenue · ASEAN Hub', color: '#C9A96E', delay: 800 },
+    { id: 'my', label: 'Malaysia', year: '2005', x: 410, y: 350, detail: 'Est. 2005 · €4.5M Revenue · ASEAN Growth', color: '#C9A96E', delay: 1200 },
+    { id: 'th', label: 'Thailand', year: '2002', x: 380, y: 310, detail: 'Est. 2002 · €29.6M Revenue · Largest Asian Market', color: '#C9A96E', delay: 1600 }
   ];
 
   // Connection routes
