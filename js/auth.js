@@ -23,6 +23,12 @@
     return sessionStorage.getItem(AUTH_KEY) === '1';
   }
 
+  /* ── Reveal page content (add .wl-ok to body) ── */
+  function revealPage() {
+    document.documentElement.classList.add('wl-ok');
+    if (document.body) document.body.classList.add('wl-ok');
+  }
+
   /* ── Gate logic for non-index pages: redirect to index ── */
   function guardPage() {
     if (!isAuthed()) {
@@ -33,7 +39,10 @@
       } else {
         window.location.replace('index.html');
       }
+      // Halt script execution while redirecting
+      throw new Error('auth-redirect');
     }
+    revealPage();
   }
 
   /* ── Gate logic for index page: show overlay ── */
@@ -41,6 +50,7 @@
     if (isAuthed()) {
       var gate = document.getElementById('authGate');
       if (gate) gate.classList.add('auth-hidden');
+      revealPage();
       return;
     }
 
@@ -58,6 +68,7 @@
       sha256(pw).then(function (digest) {
         if (digest === HASH) {
           sessionStorage.setItem(AUTH_KEY, '1');
+          revealPage();
           gate.classList.add('auth-fade-out');
           setTimeout(function () { gate.classList.add('auth-hidden'); }, 500);
         } else {
