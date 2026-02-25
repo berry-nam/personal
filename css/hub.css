@@ -14,8 +14,8 @@
 .hub-hero::before {
   content: ''; position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(201, 169, 110, 0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 70% 60%, rgba(46, 91, 255, 0.04) 0%, transparent 70%);
+    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(212, 184, 122, 0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 70% 60%, rgba(91, 138, 255, 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -108,7 +108,7 @@
 }
 
 .chapter-card:hover {
-  border-color: rgba(201, 169, 110, 0.25);
+  border-color: rgba(212, 184, 122, 0.4);
   transform: translateY(-4px);
 }
 
@@ -117,7 +117,7 @@
   position: absolute; inset: 0;
   background: radial-gradient(
     ellipse at 50% 100%,
-    rgba(201, 169, 110, 0.04) 0%, transparent 70%
+    rgba(212, 184, 122, 0.08) 0%, transparent 70%
   );
   opacity: 0;
   transition: opacity var(--dur-medium);
@@ -127,7 +127,8 @@
 
 .card-num {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.88rem;
+  font-weight: 500;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--champagne);
@@ -144,9 +145,9 @@
 }
 
 .card-teaser {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--smoke);
-  line-height: 1.65;
+  line-height: 1.7;
   flex-grow: 1;
 }
 
@@ -154,7 +155,8 @@
   margin-top: 1.2rem;
   display: flex; align-items: center; gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--smoke);
@@ -167,7 +169,7 @@
 
 .card-progress .dot-unvisited {
   width: 6px; height: 6px; border-radius: 50%;
-  border: 1px solid rgba(242, 240, 235, 0.15);
+  border: 1px solid rgba(232, 229, 222, 0.2);
 }
 
 /* ─── RESPONSIVE ─── */

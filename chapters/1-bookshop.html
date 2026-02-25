@@ -16,10 +16,10 @@
   .origin-highlight {
     display: inline-block;
     padding: 0.2rem 0.6rem;
-    background: rgba(201, 169, 110, 0.12);
+    background: rgba(212, 184, 122, 0.2);
     border-radius: 4px;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 1.0rem;
     color: var(--champagne);
     font-weight: 500;
   }
@@ -45,7 +45,7 @@
     color: var(--pearl);
   }
   .legacy-card p {
-    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
   }
 
   .evolution-keywords {
@@ -55,7 +55,8 @@
     padding: 0.35rem 0.9rem;
     background: var(--champagne-dim);
     border-radius: var(--radius-pill);
-    font-size: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 500;
     color: var(--champagne-light);
   }
 
@@ -67,10 +68,11 @@
   .centenary-badge {
     display: inline-flex; align-items: center; gap: 0.6rem;
     padding: 0.8rem 1.6rem;
-    border: 1px solid rgba(201, 169, 110, 0.3);
+    border: 1px solid rgba(212, 184, 122, 0.45);
     border-radius: var(--radius-pill);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.88rem;
+    font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--champagne);
@@ -86,7 +88,7 @@
     font-family: var(--font-display);
     font-size: clamp(5rem, 12vw, 10rem);
     font-weight: 700;
-    color: rgba(201, 169, 110, 0.08);
+    color: rgba(212, 184, 122, 0.15);
     text-align: center;
     line-height: 1;
     margin: -2rem 0 -1rem;
@@ -136,8 +138,26 @@
       <div class="section-label">The City</div>
       <h2 class="section-title">Valenciennes</h2>
       <div class="section-body">
-        <p>Valenciennes is a city in northern France, in the Hauts-de-France region near the Belgian border. A place shaped by industrial heritage, coal mining, and a culture of hard work and family. The architecture carries the memory of centuries of commerce. The people carry a stubbornness about quality and loyalty that outsiders sometimes mistake for coldness.</p>
+        <p>Valenciennes is a city in northern France, in the <a href="https://en.wikipedia.org/wiki/Hauts-de-France" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">Hauts-de-France</a> region near the Belgian border. A place shaped by industrial heritage, coal mining, and a culture of hard work and family. The architecture carries the memory of centuries of commerce. The people carry a stubbornness about quality and loyalty that outsiders sometimes mistake for coldness.</p>
         <p>This is where the Gaspard story begins. Not in Paris. Not in a boardroom. In a modest town where families built things to last, where a handshake still meant something, and where the line between business and family was never drawn at all.</p>
+
+        <!-- ── Valenciennes Info Card ── -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; align-items: start;" data-animate="fade-up">
+          <div style="background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem;">
+            <p style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; color: var(--champagne); text-transform: uppercase; margin-bottom: 0.8rem;">Valenciennes at a Glance</p>
+            <table style="width: 100%; font-size: 0.95rem; color: var(--smoke); line-height: 1.8;">
+              <tr><td style="color: var(--champagne); font-family: var(--font-mono); font-size: 0.85rem; padding-right: 1rem; white-space: nowrap;">Population</td><td>~43,000 (metro: ~350,000)</td></tr>
+              <tr><td style="color: var(--champagne); font-family: var(--font-mono); font-size: 0.85rem; padding-right: 1rem; white-space: nowrap;">Region</td><td>Hauts-de-France (Nord d&eacute;partement)</td></tr>
+              <tr><td style="color: var(--champagne); font-family: var(--font-mono); font-size: 0.85rem; padding-right: 1rem; white-space: nowrap;">Distance</td><td>~200 km north of Paris</td></tr>
+              <tr><td style="color: var(--champagne); font-family: var(--font-mono); font-size: 0.85rem; padding-right: 1rem; white-space: nowrap;">Border</td><td>~10 km from Belgium</td></tr>
+              <tr><td style="color: var(--champagne); font-family: var(--font-mono); font-size: 0.85rem; padding-right: 1rem; white-space: nowrap;">Heritage</td><td>Coal mining, textiles, art (Watteau was born here)</td></tr>
+              <tr><td style="color: var(--champagne); font-family: var(--font-mono); font-size: 0.85rem; padding-right: 1rem; white-space: nowrap;">Lyreco HQ</td><td><a href="https://www.lyreco.com/group/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">Marly</a>, 3 km south</td></tr>
+            </table>
+          </div>
+          <div style="background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; min-height: 240px;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d81022.24!2d3.4599!3d50.3570!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2e6a4c8aa0e23%3A0x40af13e81647a40!2sValenciennes%2C+France!5e0!3m2!1sen!2sfr!4v1708000000000!5m2!1sen!2sfr" width="100%" height="240" style="border:0; filter: grayscale(60%) invert(92%) contrast(90%);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -145,15 +165,15 @@
   <div class="france-map-container" data-animate="fade-up">
     <svg viewBox="0 0 500 400" style="max-width:400px;width:100%;" xmlns="http://www.w3.org/2000/svg">
       <!-- Simplified Northern France outline -->
-      <path d="M80,350 L60,280 L40,220 L60,180 L100,140 L160,100 L220,80 L300,70 L360,80 L420,120 L460,180 L480,250 L460,320 L400,360 L320,380 L240,370 L160,360 Z" fill="rgba(244,242,237,0.03)" stroke="rgba(244,242,237,0.1)" stroke-width="1.5"/>
+      <path d="M80,350 L60,280 L40,220 L60,180 L100,140 L160,100 L220,80 L300,70 L360,80 L420,120 L460,180 L480,250 L460,320 L400,360 L320,380 L240,370 L160,360 Z" fill="rgba(244,242,237,0.03)" stroke="rgba(232,229,222,0.15)" stroke-width="1.5"/>
       <!-- Belgium border region -->
-      <path d="M300,70 L320,50 L380,40 L440,60 L460,90 L420,120" fill="none" stroke="rgba(244,242,237,0.06)" stroke-width="1" stroke-dasharray="4,4"/>
+      <path d="M300,70 L320,50 L380,40 L440,60 L460,90 L420,120" fill="none" stroke="rgba(232,229,222,0.1)" stroke-width="1" stroke-dasharray="4,4"/>
       <text x="400" y="50" font-family="'JetBrains Mono', monospace" font-size="8" fill="rgba(160,160,172,0.5)" letter-spacing="0.1em">BELGIUM</text>
       <!-- Paris dot -->
       <circle cx="240" cy="240" r="4" fill="rgba(244,242,237,0.2)" stroke="rgba(244,242,237,0.3)" stroke-width="1"/>
       <text x="255" y="244" font-family="'DM Sans', sans-serif" font-size="11" fill="rgba(244,242,237,0.4)">Paris</text>
       <!-- Valenciennes dot (pulsing) -->
-      <circle cx="310" cy="100" r="12" fill="rgba(201,169,110,0.1)" stroke="none">
+      <circle cx="310" cy="100" r="12" fill="rgba(212,184,122,0.18)" stroke="none">
         <animate attributeName="r" values="12;18;12" dur="2s" repeatCount="indefinite"/>
         <animate attributeName="opacity" values="0.3;0.1;0.3" dur="2s" repeatCount="indefinite"/>
       </circle>
@@ -164,6 +184,11 @@
       <circle cx="300" cy="110" r="3" fill="rgba(201,169,110,0.4)"/>
       <text x="280" y="138" font-family="'JetBrains Mono', monospace" font-size="7" fill="rgba(160,160,172,0.5)" text-anchor="middle">MARLY (HQ)</text>
     </svg>
+  </div>
+
+  <div class="atmos-img" data-animate="fade-up">
+    <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1400&q=80" alt="Northern French architecture — the kind of town where Lyreco's story began" loading="lazy">
+    <span class="atmos-caption">Valenciennes, Hauts-de-France — where a century-long legacy began</span>
   </div>
 
   <div class="divider"></div>
@@ -178,6 +203,11 @@
         <p>In this modest northern French town, Georges-Gaston Gaspard opened a bookshop. From that storefront, he began distributing office supplies to local businesses. Paper, pens, ledgers — the basic tools of commerce.</p>
         <p>The simplest possible beginning for what would become Europe's largest B2B workplace products distributor. No venture capital. No pitch deck. No growth hacking. A man, a shop, a community that needed what he sold.</p>
         <p>Georges-Gaston understood something that many modern founders forget: <strong style="color: var(--pearl);">you build a great business by solving a real problem for real people, one customer at a time.</strong> The office supplies market in northern France wasn't glamorous. But it was essential. And essentiality, unlike glamour, compounds.</p>
+
+        <figure class="chapter-img" data-animate="fade-up">
+          <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1200&q=80" alt="A vintage European bookshop — evoking the modest origins of what would become Lyreco" loading="lazy">
+          <figcaption>A bookshop like the one Georges-Gaston Gaspard opened in 1926 — the first chapter of a hundred-year story</figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -202,6 +232,11 @@
       <span class="evolution-keyword">PPE & Safety</span>
       <span class="evolution-keyword">Hygiene</span>
       <span class="evolution-keyword">Workplace Food & Beverage</span>
+    </div>
+
+    <div class="chapter-img chapter-img--duo" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1568667256549-094345857637?w=600&q=80" alt="Traditional office supplies — paper, pens, ledgers" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="Modern workplace solutions and office environment" loading="lazy">
     </div>
 
     <div data-animate="fade-up">
@@ -241,6 +276,11 @@
 
   <div class="divider"></div>
 
+  <div class="atmos-img" data-animate="fade-up">
+    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80" alt="Modern corporate tower — representing Lyreco's transformation into a global enterprise" loading="lazy">
+    <span class="atmos-caption">From a bookshop to a &euro;2.2 billion enterprise — Lyreco today</span>
+  </div>
+
   <!-- ── THE 100TH ANNIVERSARY ── -->
   <section class="section">
     <div data-animate="fade-up">
@@ -248,8 +288,40 @@
       <h2 class="section-title">The 100th <em>Anniversary</em></h2>
       <div class="centenary-badge">100 Years · 1926–2026</div>
       <div class="section-body">
-        <p>This year, 2026, Lyreco celebrates its centenary. One hundred years from a bookshop in Valenciennes to a continent-spanning enterprise. Very few companies reach this milestone. Even fewer reach it while still under the control of the founding family.</p>
-        <p>The Gaspard family still controls approximately 84% of equity through Corely SAS, their investment holding vehicle. Nathalie Gaspard serves as President. This is not a public corporation optimizing quarterly earnings — this is a family's century-long legacy.</p>
+        <p>This year, 2026, <a href="https://www.lyreco.com/group/embrace-change/lyreco-celebrates-100-years-delivering-great-working-days" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(201,169,110,0.4);">Lyreco celebrates its centenary</a>. One hundred years from a bookshop in Valenciennes to a continent-spanning enterprise. Very few companies reach this milestone. Even fewer reach it while still under the control of the founding family.</p>
+        <p>The Gaspard family still controls approximately <strong style="color: var(--pearl);">84%</strong> of equity through <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(201,169,110,0.4);">Corely SAS</a>, their investment holding vehicle. The remaining <strong>~16%</strong> is held through <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a> &mdash; a management participation vehicle for senior executives. <a href="https://www.linkedin.com/in/nathalie-gaspard-1388347/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Nathalie Gaspard</a> serves as President. This is not a public corporation optimizing quarterly earnings &mdash; this is a family's century-long legacy.</p>
+
+        <!-- ── Lyreco Centenary Timeline ── -->
+        <div style="margin: 2rem 0; padding: 1.5rem; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card);" data-animate="fade-up">
+          <p style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; color: var(--champagne); text-transform: uppercase; margin-bottom: 1rem;">Key Milestones &middot; 100 Years</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem;">
+            <div style="text-align: center; padding: 0.8rem; border: 1px solid rgba(212,184,122,0.15); border-radius: var(--radius-small);">
+              <div style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--champagne);">1926</div>
+              <div style="font-size: 0.88rem; color: var(--smoke);">Bookshop founded</div>
+            </div>
+            <div style="text-align: center; padding: 0.8rem; border: 1px solid rgba(212,184,122,0.15); border-radius: var(--radius-small);">
+              <div style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--champagne);">1936</div>
+              <div style="font-size: 0.88rem; color: var(--smoke);">First warehouse</div>
+            </div>
+            <div style="text-align: center; padding: 0.8rem; border: 1px solid rgba(212,184,122,0.15); border-radius: var(--radius-small);">
+              <div style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--champagne);">1959</div>
+              <div style="font-size: 0.88rem; color: var(--smoke);">First catalogue</div>
+            </div>
+            <div style="text-align: center; padding: 0.8rem; border: 1px solid rgba(212,184,122,0.15); border-radius: var(--radius-small);">
+              <div style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--champagne);">1989</div>
+              <div style="font-size: 0.88rem; color: var(--smoke);"><a href="https://www.lyreco.com/group/be/fr/pionniers-en-produits-pour-le-lieu-de-travail-depuis-1926" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">Belgium (Vermeire)</a></div>
+            </div>
+            <div style="text-align: center; padding: 0.8rem; border: 1px solid rgba(212,184,122,0.15); border-radius: var(--radius-small);">
+              <div style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--champagne);">2001</div>
+              <div style="font-size: 0.88rem; color: var(--smoke);">Rebranded &ldquo;Lyreco&rdquo;</div>
+            </div>
+            <div style="text-align: center; padding: 0.8rem; border: 1px solid rgba(212,184,122,0.15); border-radius: var(--radius-small);">
+              <div style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--champagne);">2026</div>
+              <div style="font-size: 0.88rem; color: var(--smoke);"><a href="https://www.lyreco.com/group/embrace-change/lyreco-celebrates-100-years-delivering-great-working-days" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">Centenary</a></div>
+            </div>
+          </div>
+          <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.5; margin-top: 0.8rem;"><a href="https://www.lyreco.com/group/about/lyreco-history" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">Source: Lyreco Group History</a></p>
+        </div>
         <p>The centenary is not merely symbolic. It defines how the Gaspard family thinks about every decision they make, including the decision to divest their Asian operations. They are not selling assets — they are entrusting a piece of their history to someone they believe will honor it.</p>
       </div>
     </div>
@@ -261,8 +333,9 @@
   <section class="section">
     <div class="quote-block" data-animate="fade-up">
       <div class="quote-text">"Every great company begins with a single act of faith. For Lyreco, it was a bookshop in a small French town."</div>
-      <div class="quote-attr">The Origin Story</div>
+      <div class="quote-attr">Briefing Note · Editorial</div>
     </div>
+    <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: -1.5rem; margin-bottom: 2rem;">This is editorial framing written for this briefing — not a direct quotation.</p>
   </section>
 
   <div class="divider"></div>
@@ -278,6 +351,106 @@
         <p>When you propose to acquire Lyreco's Asian operations, you are not buying a business unit. You are asking a family to trust you with a piece of their inheritance. <strong style="color: var(--pearl);">Begin from that understanding, and everything else follows.</strong></p>
       </div>
     </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── P&G PARALLEL · ICEBREAKER ── -->
+  <section class="section" style="max-width: var(--max-content);">
+  <div class="pg-compare" data-animate="fade-up" style="max-width: none;">
+    <div class="pg-compare-header">
+      <span class="pg-compare-badge">P&amp;G Parallel &middot; Icebreaker</span>
+    </div>
+    <div class="pg-compare-title">Origin Stories: A Bookshop and a Candle Shop</div>
+    <div class="pg-compare-subtitle">Two humble beginnings &mdash; two global empires</div>
+    <div class="pg-compare-body" style="margin-top: 1.2rem;">
+      <p>In <em>1837</em>, two immigrants in Cincinnati, Ohio &mdash; <strong>William Procter</strong>, a candlemaker from England, and <strong>James Gamble</strong>, a soapmaker from Ireland &mdash; married sisters and decided to start a business together. That candle-and-soap shop became <a href="https://us.pg.com/" target="_blank" rel="noopener" style="color: #5B9BD5; text-decoration: underline; text-decoration-color: rgba(91,155,213,0.4);">Procter &amp; Gamble</a>, today a <strong>~$84 billion</strong> company operating across <strong>~180 countries</strong> with over <strong>107,000 employees</strong> and a brand portfolio touching <strong>5 billion consumers daily</strong>.</p>
+      <p style="margin-top: 0.8rem;">Nearly a century later, in <em>1926</em>, Georges-Gaston Gaspard opened a bookshop in Valenciennes, France. That bookshop became <a href="https://www.lyreco.com/group/" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline; text-decoration-color: rgba(230,57,70,0.4);">Lyreco</a> &mdash; <strong>&euro;2.2B</strong> in revenue, <strong>25 countries</strong>, <strong>12,000 employees</strong>, and Europe&rsquo;s largest B2B workplace distributor.</p>
+      <p style="margin-top: 0.8rem;">Both companies started from the <strong>humblest possible origins</strong>. Both grew into global empires through <strong>patient, methodical expansion</strong>, not overnight disruption. And remarkably, both remained rooted in their founding cities: <em>P&amp;G is still headquartered in Cincinnati</em>. <em>Lyreco is still headquartered near Valenciennes</em>, in Marly.</p>
+    </div>
+
+    <!-- ── SIDE-BY-SIDE COMPARISON ── -->
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="col-pg">&#x1F1FA;&#x1F1F8; Procter &amp; Gamble</th>
+          <th class="col-lyreco">&#x1F1EB;&#x1F1F7; Lyreco</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Founded</td>
+          <td><strong>1837</strong> &mdash; Cincinnati, Ohio</td>
+          <td><strong>1926</strong> &mdash; Valenciennes, France</td>
+        </tr>
+        <tr>
+          <td>Origin</td>
+          <td>Candle &amp; soap shop (two immigrants)</td>
+          <td>Bookshop &amp; paper supply</td>
+        </tr>
+        <tr>
+          <td>Revenue</td>
+          <td><strong>~$84B</strong> (FY 2024)</td>
+          <td><strong>&euro;2.2B</strong> (FY 2024)</td>
+        </tr>
+        <tr>
+          <td>Countries</td>
+          <td><strong>~180</strong> (nearly every market on earth)</td>
+          <td><strong>25</strong> (Europe &amp; Asia-Pacific)</td>
+        </tr>
+        <tr>
+          <td>Employees</td>
+          <td><strong>107,000+</strong></td>
+          <td><strong>12,000+</strong></td>
+        </tr>
+        <tr>
+          <td>Consumers</td>
+          <td><strong>~5 billion daily</strong> (consumer brands)</td>
+          <td><strong>10,000+ B2B clients</strong></td>
+        </tr>
+        <tr>
+          <td>HQ Today</td>
+          <td>Cincinnati, OH <em>(since 1837)</em></td>
+          <td>Marly, nr. Valenciennes <em>(since 1926)</em></td>
+        </tr>
+        <tr>
+          <td>Ownership</td>
+          <td>Public (NYSE: PG) &mdash; $380B+ market cap</td>
+          <td>Private &mdash; <strong>84% Gaspard family</strong></td>
+        </tr>
+        <tr>
+          <td>Age</td>
+          <td><em>189 years</em></td>
+          <td><em>100 years</em> (centenary in 2026)</td>
+        </tr>
+        <tr>
+          <td>Key Brands</td>
+          <td>Tide, Pampers, Gillette, Oral-B, SK-II</td>
+          <td>Workplace solutions: supplies, PPE, F&amp;B</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pg-note-grid">
+      <div class="pg-note">
+        <div class="pg-note-label">Founding Parallel</div>
+        <div class="pg-note-text">Both from humble craft origins &mdash; candles and soap vs. bookshop and paper. Neither founder could have imagined the global empire that would follow.</div>
+      </div>
+      <div class="pg-note">
+        <div class="pg-note-label">Geographic Loyalty</div>
+        <div class="pg-note-text">Both stayed in their founding cities despite becoming global. P&amp;G never left Cincinnati. Lyreco never left Valenciennes. Roots matter.</div>
+      </div>
+      <div class="pg-note">
+        <div class="pg-note-label">Patience Compounds</div>
+        <div class="pg-note-text">P&amp;G: 189 years and counting. Lyreco: 100 years in 2026. Both proving that long-term thinking wins over short-term disruption.</div>
+      </div>
+    </div>
+
+    <div class="pg-talking-point">
+      &ldquo;P&amp;G never left Cincinnati. Lyreco never left Valenciennes. There&rsquo;s something powerful about companies that stay rooted in where they began.&rdquo;
+    </div>
+  </div>
   </section>
 
 </main>

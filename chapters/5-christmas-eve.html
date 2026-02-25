@@ -31,13 +31,29 @@
     padding: 1rem 0;
   }
 
+  .source-note {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    color: var(--smoke);
+    opacity: 0.55;
+    margin-left: 0.35rem;
+    letter-spacing: 0.03em;
+  }
+  .source-note a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232,229,222,0.25);
+  }
+  .source-note a:hover { opacity: 1; color: var(--champagne); }
+
   .growth-highlight {
     display: inline-block;
     padding: 0.2rem 0.6rem;
-    background: rgba(201, 169, 110, 0.12);
+    background: rgba(212, 184, 122, 0.2);
     border-radius: 4px;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 1.0rem;
     color: var(--champagne);
     font-weight: 500;
   }
@@ -63,11 +79,11 @@
     color: var(--pearl);
   }
   .persuasion-card .ko-text {
-    font-size: 0.85rem; color: var(--wefun-blue);
+    font-size: 1.0rem; color: var(--wefun-blue);
     font-style: italic; margin-bottom: 0.5rem;
   }
   .persuasion-card p {
-    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
   }
 
   .funding-timeline {
@@ -94,7 +110,7 @@
 
   .funding-series {
     font-family: var(--font-mono);
-    font-size: 0.6rem; letter-spacing: 0.15em;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.15em;
     text-transform: uppercase; color: var(--champagne);
     margin-bottom: 0.3rem;
   }
@@ -104,7 +120,7 @@
     color: var(--pearl); margin-bottom: 0.3rem;
   }
   .funding-year {
-    font-size: 0.8rem; color: var(--smoke);
+    font-size: 0.95rem; color: var(--smoke);
   }
 
   .culture-keywords {
@@ -114,7 +130,8 @@
     padding: 0.35rem 0.9rem;
     background: var(--wefun-blue-dim);
     border-radius: var(--radius-pill);
-    font-size: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 500;
     color: var(--wefun-blue);
   }
 
@@ -166,7 +183,7 @@
   }
   .pillar-count {
     font-family: var(--font-mono);
-    font-size: 0.7rem; color: var(--smoke);
+    font-size: 0.88rem; font-weight: 500; color: var(--smoke);
     letter-spacing: 0.1em;
   }
 
@@ -225,6 +242,11 @@
     </div>
   </section>
 
+  <div class="atmos-img" data-animate="fade-up">
+    <img src="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?w=1400&q=80" alt="Seoul cityscape on a winter night — atmospheric view evoking the founding moment of WEFUN" loading="lazy">
+    <span class="atmos-caption">Seoul, Christmas Eve 2018 — the night WEFUN was born</span>
+  </div>
+
   <div class="divider"></div>
 
   <!-- ── GROWTH TRAJECTORY ── -->
@@ -269,6 +291,11 @@
         <p>From a Gasan basement with ₩50M capital to K-Square Gangnam 15F with 252 employees and ₩89.2 billion registered revenue. The registered company capital is now ₩296 million.</p>
       </div>
     </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1200&q=80" alt="Modern startup workspace with open floor plan — representing WEFUN's growth from basement to tower" loading="lazy">
+      <figcaption>From a Gasan basement office to K-Square 15F — WEFUN's physical journey mirrors its growth</figcaption>
+    </figure>
   </section>
 
   <div class="divider"></div>
@@ -316,10 +343,16 @@
       </div>
     </div>
 
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1546874177-9e664107314e?w=1200&q=80" alt="Korean business district skyline — representing WEFUN's M&A expansion across Seoul" loading="lazy">
+      <figcaption>Six acquisitions in six years — building Korea's leading workplace platform through M&A</figcaption>
+    </figure>
+
     <div class="quote-block" data-animate="fade-up">
       <div class="quote-text">"WeFun is pursuing business expansion under the vision of becoming a business-type holding company operating B2B solutions and SaaS."</div>
-      <div class="quote-attr">Hwang Minjae — CFO & CSO, WEFUN</div>
+      <div class="quote-attr">Briefing Note · Editorial</div>
     </div>
+    <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: -1.5rem; margin-bottom: 2rem;">This is editorial framing written for this briefing — not a direct quotation.</p>
 
     <!-- WEFUN Corporate Structure -->
     <div data-animate="fade-up" style="margin-top: 4rem;">
@@ -371,6 +404,11 @@
       </div>
     </div>
 
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&q=80" alt="Tech team collaborating on a platform — representing WEFUN's integrated service ecosystem" loading="lazy">
+      <figcaption>One platform, ~100 services — WEFUN's integrated workplace solution</figcaption>
+    </figure>
+
     <div class="card-grid" data-stagger-group>
       <div class="play-card" data-stagger-child>
         <div class="play-icon">🍎</div>
@@ -408,31 +446,36 @@
       <div class="funding-round" data-stagger-child>
         <div class="funding-series">Series A</div>
         <div class="funding-amount">₩3B</div>
-        <div class="funding-year">2019</div>
+        <div class="funding-year">2019 <span class="source-note">~€2.1M</span></div>
       </div>
       <div class="funding-round" data-stagger-child>
         <div class="funding-series">Series B</div>
         <div class="funding-amount">₩8.5B</div>
-        <div class="funding-year">2022</div>
+        <div class="funding-year">2022 <span class="source-note">~€5.9M</span></div>
       </div>
       <div class="funding-round" data-stagger-child>
         <div class="funding-series">Series C</div>
         <div class="funding-amount">₩20B</div>
-        <div class="funding-year">2023</div>
+        <div class="funding-year">Jul 2023 <span class="source-note">~€13.8M · <a href="https://www.kedglobal.com/ipos/newsView/ked202402200014" target="_blank">KED Global</a></span></div>
       </div>
       <div class="funding-round" data-stagger-child>
         <div class="funding-series">Post-Money Val.</div>
         <div class="funding-amount">₩110B</div>
-        <div class="funding-year">Series C</div>
+        <div class="funding-year">Series C <span class="source-note">~€75.9M · <a href="https://www.kedglobal.com/ipos/newsView/ked202402200014" target="_blank">KED Global</a></span></div>
       </div>
     </div>
 
     <div data-animate="fade-up">
       <div class="section-body">
-        <p><strong style="color: var(--champagne);">IPO trajectory:</strong> Hana Securities appointed as lead underwriter (February 2024). Originally targeted H2 2025, now adjusted to 2026 for post-acquisition consolidation. Preliminary KRX examination filing planned for April 2026.</p>
-        <p>IPO expectations are in the <strong style="color: var(--pearl);">₩200-300 billion range</strong>. The Lyreco Asia acquisition would transform the IPO narrative from "Korean platform" to "Asia-wide B2B workplace ecosystem" — a dramatically more compelling story for public market investors.</p>
+        <p><strong style="color: var(--champagne);">IPO trajectory:</strong> Hana Securities appointed as lead underwriter (February 2024) <span class="source-note"><a href="https://byline.network/2024/02/20_wefun/" target="_blank">Byline Network, Feb 2024</a></span>. Originally targeted H2 2025, now adjusted to 2026 for post-acquisition consolidation. Preliminary KRX examination filing planned for April 2026.</p>
+        <p>Preliminary IPO market cap target is in the <strong style="color: var(--pearl);">₩200–300 billion range (~€138–207M)</strong> <span class="source-note">Internal projection — Series C post-money was ₩110B (~€76M), Jul 2023</span>. With ₩143.1B (~€99M) FY2024 revenue <span class="source-note"><a href="https://wowtale.net/2025/04/30/240469/" target="_blank">WOWTale, Apr 2025</a></span> and the Human Food acquisition closing Jan 2026, the IPO narrative shifts from "Korean platform" to "Asia-wide B2B workplace ecosystem" — a dramatically more compelling story for public market investors.</p>
       </div>
     </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80" alt="Stock market data display — representing WEFUN's upcoming IPO milestone" loading="lazy">
+      <figcaption>IPO filing target: April 2026 — Hana Securities as lead underwriter</figcaption>
+    </figure>
 
     <div data-animate="fade-up">
       <div class="section-body" style="margin-top: 2rem;">
@@ -546,6 +589,62 @@
     </div>
   </section>
 
+  <!-- ═══════════════ P&G PARALLEL · ICEBREAKER ═══════════════ -->
+  <section class="section">
+    <div class="pg-compare" data-animate="fade-up">
+      <div class="pg-compare-header">
+        <span class="pg-compare-badge">P&G PARALLEL · ICEBREAKER</span>
+      </div>
+      <div class="pg-compare-title">Startup DNA & the M&A Machine</div>
+      <div class="pg-compare-subtitle">WEFUN's acquisition strategy mirrors P&G's legendary "acquire and integrate" playbook</div>
+
+      <div class="pg-compare-body">
+        <p><em>Procter & Gamble</em> is one of the greatest acquirers in corporate history — <strong>Gillette ($57B, 2005), Wella, Clairol, Iams, Duracell</strong> (later divested to Berkshire Hathaway). Over <strong>100 acquisitions</strong> across its lifetime.</p>
+        <p><strong>WEFUN has done 6 acquisitions in roughly 2 years.</strong> P&G did 6 major acquisitions in 5 years (2001–2005) during the <em>A.G. Lafley era</em>. Both share the same M&A philosophy: <strong>acquire the #1 or #2 player in a category, then integrate into the platform.</strong> P&G calls it <em>"brand portfolio strategy."</em> WEFUN calls it <em>"platform ecosystem."</em></p>
+        <p>P&G's <em>Gillette acquisition ($57B)</em> was transformational — it gave P&G access to the male grooming category and Duracell batteries. WEFUN's <strong>Human Food deal (₩47B entity, PE-partnered)</strong> shows the same ambition at an earlier stage.</p>
+        <p>P&G is also famous for <strong>divestitures</strong> — it sold ~100 brands to <em>Coty for $12.5B in 2016</em> to focus its portfolio. Lyreco considering divesting Asian operations follows this same <strong>"focus the portfolio"</strong> logic.</p>
+      </div>
+
+      <!-- ── M&A Playbook Comparison ── -->
+      <table class="compare-table" style="margin-top: 2rem;">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th class="col-pg">P&amp;G (Lafley Era)</th>
+            <th class="col-wefun">WEFUN (Kim Heon Era)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>M&amp;A Period</td><td>2001&ndash;2005 (5 years)</td><td>2022&ndash;2024 (2 years)</td></tr>
+          <tr><td>Key Deals</td><td>Gillette ($57B), Wella ($7B), Clairol ($5B)</td><td>Woolin, Snackfor, Human Food, 3 others</td></tr>
+          <tr><td>Total Deal Value</td><td>~$70B+ cumulative</td><td>~₩50B+ cumulative</td></tr>
+          <tr><td>Philosophy</td><td>"Acquire #1 or #2 in category"</td><td>"Acquire category leader, integrate into platform"</td></tr>
+          <tr><td>Integration</td><td>Brand portfolio — shared distribution</td><td>Platform ecosystem — shared logistics</td></tr>
+          <tr><td>Divestiture</td><td>100 brands to Coty ($12.5B, 2016)</td><td>—  (growth phase, not yet divesting)</td></tr>
+          <tr><td>Result</td><td>Revenue doubled during Lafley's tenure</td><td>Revenue grew ₩3.5B → ₩143.1B (40×)</td></tr>
+          <tr><td>M&amp;A Team</td><td>Dedicated corporate development VP</td><td>Hwang Minjae (CFO/CSO) leads deals</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pg-note-grid">
+        <div class="pg-note">
+          <div class="pg-note-label">Acquire #1 or #2</div>
+          <div class="pg-note-text">P&G: Gillette, Wella, Clairol. WEFUN: Woolin (#1 CVS logistics), Snackfor (#2 snack). Same playbook — buy the category leader and plug it into the machine.</div>
+        </div>
+        <div class="pg-note">
+          <div class="pg-note-label">Platform Integration</div>
+          <div class="pg-note-text">P&G integrates brands into its global distribution machine. WEFUN integrates acquisitions into its platform ecosystem. Same DNA, different scale.</div>
+        </div>
+        <div class="pg-note">
+          <div class="pg-note-label">Smart Divestitures</div>
+          <div class="pg-note-text">P&G sold 100 brands to Coty ($12.5B) to focus. Lyreco divesting Asia to sharpen its European core follows the exact same portfolio discipline.</div>
+        </div>
+      </div>
+
+      <div class="pg-talking-point">"P&G's greatest strength was knowing what to buy AND what to sell. Lyreco divesting Asia to focus on Europe is the exact same portfolio discipline."</div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
@@ -610,27 +709,27 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'kimheon', label: 'Kim Heon (김헌)', sublabel: 'CEO & Founder', color: '#4A72FF', wide: true }
       ]},
       { label: 'Holding', nodes: [
-        { id: 'wefun', label: 'WEFUN Inc.', sublabel: '₩143.1B Rev · 252 Employees', color: '#4A72FF', wide: true, badge: 'HQ' }
+        { id: 'wefun', label: 'WEFUN Inc.', sublabel: '₩143.1B Rev (~€99M) · 252 Employees', color: '#4A72FF', wide: true, badge: 'HQ' }
       ]},
       { label: 'Subsidiaries', nodes: [
         { id: 'fulfillment', label: 'WEFUN Fulfillment', sublabel: 'Logistics backbone', color: '#4A72FF' },
         { id: 'realestate', label: 'WEFUN Real Estate', sublabel: 'Space management', color: '#4A72FF' },
-        { id: 'humanfood', label: 'Human Food', sublabel: '~₩47B · 220 sites', color: '#C9A96E' }
+        { id: 'humanfood', label: 'Human Food', sublabel: '~₩47B · 220 sites', color: '#C9A96E', badge: 'Jan 2026' }
       ]},
-      { label: 'Acquired Entities', nodes: [
-        { id: 'woolin', label: 'Woolin (우린)', sublabel: '1,500+ stores', color: '#A0A0AC' },
-        { id: 'nextcnc', label: 'Next C&C', sublabel: 'Coffee24', color: '#A0A0AC' },
-        { id: 'ilhwa', label: 'Ilhwa Logis', sublabel: 'Cold-chain', color: '#A0A0AC' },
-        { id: 'pudding', label: 'Pudding', sublabel: 'Lunch24', color: '#A0A0AC' },
-        { id: 'snackfor', label: 'Snackfor', sublabel: '#2 → merged', color: '#A0A0AC' }
+      { label: 'Integrated Brands', nodes: [
+        { id: 'woolin', label: 'Woolin (우린)', sublabel: 'Rebranded → Fulfillment', color: '#5B8AFF' },
+        { id: 'nextcnc', label: 'Next C&C', sublabel: 'Acq. Apr 2024', color: '#5B8AFF' },
+        { id: 'ilhwa', label: 'Ilhwa Logis', sublabel: 'Merged → Fulfillment', color: '#5B8AFF' },
+        { id: 'pudding', label: 'Pudding', sublabel: 'Acq. Aug 2025', color: '#5B8AFF' },
+        { id: 'snackfor', label: 'Snackfor', sublabel: 'Acq. Nov 2025', color: '#5B8AFF' }
       ]}
     ],
     connections: [
       { from: 'kimheon', to: 'wefun', label: 'Founder' },
       { from: 'wefun', to: 'fulfillment', label: '100%' },
       { from: 'wefun', to: 'realestate', label: '100%' },
-      { from: 'wefun', to: 'humanfood', label: 'Acquired Jan 2026' },
-      { from: 'fulfillment', to: 'woolin', label: 'Renamed' },
+      { from: 'wefun', to: 'humanfood', label: 'Jan 2026' },
+      { from: 'fulfillment', to: 'woolin', label: 'Rebranded' },
       { from: 'fulfillment', to: 'ilhwa', label: 'Merged' },
       { from: 'wefun', to: 'nextcnc', label: 'Apr 2024' },
       { from: 'wefun', to: 'pudding', label: 'Aug 2025' },
@@ -640,21 +739,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── M&A Network Graph ───
   createNetworkGraph('wefun-ma-network', [
-    { id: 'wefun', label: 'WEFUN', type: 'company', icon: '🏢', detail: 'Parent company · ₩143.1B revenue · 252 employees' },
+    { id: 'wefun', label: 'WEFUN', type: 'company', icon: '🏢', detail: 'Parent company · ₩143.1B revenue (~€99M) · 252 employees' },
     { id: 'snack24', label: 'Snack24', type: 'company', icon: '🍿', detail: 'Original product · Office snack subscription' },
     { id: 'coffee24', label: 'Coffee24', type: 'company', icon: '☕', detail: 'In-office café service · +104% growth in 2024' },
     { id: 'gift24', label: 'Gift24', type: 'company', icon: '🎁', detail: 'Corporate gifting SaaS platform' },
     { id: 'lunch24', label: 'Lunch24', type: 'company', icon: '🍱', detail: 'B2B lunch subscription via Pudding acquisition' },
-    { id: 'woolin', label: 'Woolin (우린)', type: 'entity', icon: '📦', detail: '#1 convenience store logistics · 1,500+ stores · Renamed WEFUN Fulfillment' },
-    { id: 'nextcnc', label: 'Next C&C', type: 'entity', icon: '☕', detail: '#1 in-office café operator · Acquired Apr 2024' },
-    { id: 'ilhwa', label: 'Ilhwa Logis', type: 'entity', icon: '🚛', detail: 'Food logistics specialist · Merged with Fulfillment' },
-    { id: 'pudding', label: 'Pudding', type: 'entity', icon: '🍽️', detail: 'Foodtech B2B lunch platform · Acquired Aug 2025' },
-    { id: 'snackfor', label: 'Snackfor', type: 'entity', icon: '🍫', detail: '#2 snack subscription · Kakao & HDC clients · Nov 2025' },
-    { id: 'humanfood', label: 'Human Food', type: 'holding', icon: '🏭', detail: '220 workplaces · ~₩47B revenue · Jan 2026 PE deal' },
-    { id: 'epic', label: 'Epic Platform', type: 'entity', icon: '💼', detail: 'PE partner in Human Food deal' },
-    { id: 'hana', label: 'Hana Securities', type: 'entity', icon: '🏦', detail: 'IPO lead underwriter · PE partner (Hana S&B)' },
+    { id: 'woolin', label: 'Woolin (우린)', type: 'company', icon: '📦', detail: '#1 convenience store logistics · 1,500+ stores · Rebranded as WEFUN Fulfillment', url: 'https://www.kedglobal.com/ipos/newsView/ked202402200014' },
+    { id: 'nextcnc', label: 'Next C&C', type: 'company', icon: '☕', detail: '#1 in-office café operator · Acquired Apr 2024', url: 'https://byline.network/2024/02/20_wefun/' },
+    { id: 'ilhwa', label: 'Ilhwa Logis', type: 'company', icon: '🚛', detail: 'Food logistics specialist · Merged with WEFUN Fulfillment' },
+    { id: 'pudding', label: 'Pudding', type: 'company', icon: '🍽️', detail: 'Foodtech B2B lunch platform · Acquired Aug 2025' },
+    { id: 'snackfor', label: 'Snackfor', type: 'company', icon: '🍫', detail: '#2 snack subscription · Kakao & HDC clients · Acquired Nov 2025' },
+    { id: 'humanfood', label: 'Human Food', type: 'company', icon: '🏭', detail: '220 workplaces · ~₩47B revenue (~€32M) · Acquired Jan 2026 (PE deal)', url: 'https://wowtale.net/2025/04/30/240469/' },
+    { id: 'epic', label: 'Epic Platform', type: 'entity', icon: '💼', detail: 'PE partner in Human Food acquisition' },
+    { id: 'hana', label: 'Hana Securities', type: 'entity', icon: '🏦', detail: 'IPO lead underwriter (appointed Feb 2024) · PE partner (Hana S&B)', url: 'https://www.hanaw.com/' },
     { id: 'fulfillment', label: 'WEFUN Fulfillment', type: 'company', icon: '📦', detail: 'Logistics subsidiary · Woolin + Ilhwa merged' },
-    { id: 'clients', label: '10,000+ Clients', type: 'entity', icon: '👥', detail: 'B2B client base · 97% retention · 800K daily touchpoints' }
+    { id: 'clients', label: '9,400+ Clients', type: 'entity', icon: '👥', detail: 'B2B client base · 97% retention · 800K+ daily touchpoints' }
   ], [
     { source: 'wefun', target: 'snack24', label: 'Original', strength: 2 },
     { source: 'wefun', target: 'coffee24', label: 'Service', strength: 2 },

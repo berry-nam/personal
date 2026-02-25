@@ -24,7 +24,7 @@
 
 .chapter-hero__label {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.88rem; font-weight: 500;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--champagne);
@@ -45,7 +45,7 @@
 .chapter-hero__title em { color: var(--champagne); }
 
 .chapter-hero__subtitle {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   color: var(--smoke);
   max-width: 600px;
   line-height: 1.7;
@@ -107,7 +107,7 @@
 }
 
 .next-chapter-cta:hover {
-  border-color: rgba(201, 169, 110, 0.25);
+  border-color: rgba(212, 184, 122, 0.4);
   transform: translateY(-3px);
 }
 
@@ -116,7 +116,7 @@
   position: absolute; inset: 0;
   background: radial-gradient(
     ellipse at 50% 100%,
-    rgba(201, 169, 110, 0.04) 0%, transparent 70%
+    rgba(212, 184, 122, 0.08) 0%, transparent 70%
   );
   opacity: 0;
   transition: opacity var(--dur-medium);
@@ -127,7 +127,7 @@
 .next-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.88rem; font-weight: 500;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--smoke);
@@ -138,7 +138,7 @@
 .next-num {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.88rem; font-weight: 500;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--champagne);
@@ -178,7 +178,7 @@
   content: ''; position: absolute; inset: 0;
   background: radial-gradient(
     ellipse 50% 50% at 50% 50%,
-    rgba(201, 169, 110, 0.06), transparent
+    rgba(212, 184, 122, 0.1), transparent
   );
   pointer-events: none;
 }

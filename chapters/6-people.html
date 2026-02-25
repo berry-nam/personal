@@ -13,6 +13,29 @@
 <link rel="stylesheet" href="../css/chapter.css">
 <style>
   /* ─── CHAPTER 6 SPECIFIC ─── */
+
+  /* Photo placeholder — used when no verified photo is available */
+  .person-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(91, 138, 255, 0.06);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1.2rem;
+    border: 2px solid rgba(91, 138, 255, 0.4);
+    flex-shrink: 0;
+  }
+  .person-initials {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--wefun-blue);
+    letter-spacing: 0.06em;
+    opacity: 0.65;
+  }
+
   .career-timeline { position: relative; margin: 3rem 0; padding-left: 3rem; }
   .career-timeline::before {
     content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
@@ -42,7 +65,7 @@
 
   .stage-years {
     font-family: var(--font-mono);
-    font-size: 0.6rem; letter-spacing: 0.15em;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.15em;
     color: var(--champagne); text-transform: uppercase;
     margin-bottom: 0.2rem;
   }
@@ -52,11 +75,11 @@
     margin-bottom: 0.2rem;
   }
   .stage-org {
-    font-size: 0.8rem; color: var(--smoke); font-style: italic;
+    font-size: 0.95rem; color: var(--smoke); font-style: italic;
     margin-bottom: 0.3rem;
   }
   .stage-detail {
-    font-size: 0.85rem; color: var(--smoke); line-height: 1.6;
+    font-size: 1.0rem; color: var(--smoke); line-height: 1.7;
   }
 
   .profile-meta-grid {
@@ -72,12 +95,12 @@
   }
   .profile-meta-label {
     font-family: var(--font-mono);
-    font-size: 0.55rem; letter-spacing: 0.15em;
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em;
     text-transform: uppercase; color: var(--champagne);
     margin-bottom: 0.3rem;
   }
   .profile-meta-value {
-    font-size: 0.9rem; color: var(--pearl);
+    font-size: 1.05rem; color: var(--pearl);
   }
 
   .radar-container {
@@ -100,7 +123,7 @@
     color: var(--champagne-light);
   }
   .strategy-card p {
-    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
   }
 
   .personality-keywords {
@@ -111,7 +134,7 @@
     background: var(--champagne-dim);
     border-radius: var(--radius-pill);
     font-family: var(--font-mono);
-    font-size: 0.65rem; letter-spacing: 0.05em;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em;
     color: var(--champagne-light);
   }
 
@@ -131,7 +154,7 @@
   .person-avatar.lyreco-avatar {
     background: rgba(230, 57, 70, 0.15);
     color: var(--lyreco-red);
-    border: 2px solid rgba(230, 57, 70, 0.3);
+    border: 2px solid rgba(240, 77, 90, 0.4);
   }
   .person-avatar.wefun-avatar {
     background: rgba(74, 114, 255, 0.15);
@@ -139,9 +162,9 @@
     border: 2px solid rgba(74, 114, 255, 0.3);
   }
   .person-avatar.neutral-avatar {
-    background: rgba(201, 169, 110, 0.15);
+    background: rgba(212, 184, 122, 0.25);
     color: var(--champagne);
-    border: 2px solid rgba(201, 169, 110, 0.3);
+    border: 2px solid rgba(212, 184, 122, 0.45);
   }
 
   .meeting-network-container {
@@ -156,17 +179,18 @@
   .lang-badge {
     display: inline-block;
     padding: 0.2rem 0.6rem;
-    background: rgba(244, 242, 237, 0.06);
-    border: 1px solid rgba(244, 242, 237, 0.1);
+    background: rgba(232, 229, 222, 0.1);
+    border: 1px solid rgba(232, 229, 222, 0.15);
     border-radius: var(--radius-pill);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.85rem;
+    font-weight: 500;
     letter-spacing: 0.05em;
     color: var(--smoke);
   }
   .lang-badge.primary {
-    background: rgba(201, 169, 110, 0.12);
-    border-color: rgba(201, 169, 110, 0.2);
+    background: rgba(212, 184, 122, 0.2);
+    border-color: rgba(212, 184, 122, 0.35);
     color: var(--champagne);
   }
 
@@ -187,7 +211,7 @@
   }
   .cycling-stat-label {
     font-family: var(--font-mono);
-    font-size: 0.65rem; letter-spacing: 0.1em;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--smoke);
     margin-top: 0.2rem;
@@ -195,6 +219,205 @@
 
   @media (max-width: 768px) {
     .cycling-stat { flex-direction: column; gap: 1rem; }
+  }
+
+  /* ─── PERSON CARD POPUP/MODAL ─── */
+  .person-card-clickable {
+    cursor: pointer;
+    position: relative;
+  }
+  .person-card-clickable::after {
+    content: 'Click for full profile →';
+    position: absolute;
+    bottom: 1rem;
+    right: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--champagne-dim);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .person-card-clickable:hover::after {
+    opacity: 1;
+  }
+
+  .person-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  .person-modal-overlay.active {
+    display: flex;
+  }
+
+  .person-modal {
+    background: var(--ink-card);
+    border: 1px solid rgba(212, 184, 122, 0.25);
+    border-radius: var(--radius-card);
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 3rem;
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: 1px solid rgba(232, 229, 222, 0.15);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--smoke);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+  }
+  .modal-close:hover {
+    border-color: var(--champagne);
+    color: var(--champagne);
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(232, 229, 222, 0.1);
+  }
+
+  .modal-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(212, 184, 122, 0.35);
+    flex-shrink: 0;
+  }
+
+  .modal-avatar-initials {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .modal-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .modal-title-text {
+    font-size: 1.0rem;
+    color: var(--smoke);
+    line-height: 1.5;
+  }
+
+  .modal-linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #0A66C2;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .modal-linkedin:hover { text-decoration: underline; }
+
+  .modal-section {
+    margin-bottom: 1.5rem;
+  }
+  .modal-section-label {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 0.6rem;
+  }
+  .modal-section-content {
+    font-size: 1.0rem;
+    color: var(--smoke);
+    line-height: 1.7;
+  }
+  .modal-section-content strong {
+    color: var(--pearl);
+    font-weight: 500;
+  }
+
+  .modal-career-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0.8rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(232, 229, 222, 0.08);
+  }
+  .modal-career-year {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--champagne);
+  }
+  .modal-career-role {
+    font-size: 1.0rem;
+    color: var(--pearl);
+  }
+  .modal-career-org {
+    font-size: 0.92rem;
+    color: var(--smoke);
+    margin-top: 0.15rem;
+  }
+
+  .modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+  .modal-tag {
+    padding: 0.2rem 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-pill);
+    background: rgba(212, 184, 122, 0.15);
+    color: var(--champagne-light);
   }
 </style>
 </head>
@@ -251,7 +474,8 @@
       <div class="section-label">Profile I</div>
       <h2 class="section-title">Helen Riley</h2>
       <p style="font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--smoke); margin-bottom: 2rem;">Group Development Director — M&A, Divestments & Partnerships</p>
-      <div class="person-avatar lyreco-avatar">HR</div>
+      <img class="person-photo lyreco-border" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80" alt="Helen Riley (representative photo)" loading="lazy" style="cursor: pointer;" onclick="document.getElementById('modal-helen').classList.add('active')">
+      <a href="https://www.linkedin.com/in/helen-riley-21a13018/" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; color: #0A66C2; text-decoration: none; text-transform: uppercase; margin-bottom: 1rem;">🔗 LinkedIn Profile</a>
     </div>
 
     <!-- Meta grid -->
@@ -294,8 +518,9 @@
     <!-- Key insight -->
     <div class="quote-block" data-animate="fade-up">
       <div class="quote-text">She is a Lyreco lifer. Her entire professional identity is this company. This deal is personal to her — she's not an external banker or consultant. She's family.</div>
-      <div class="quote-attr">Key Insight</div>
+      <div class="quote-attr">Briefing Note · Editorial</div>
     </div>
+    <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: -1.5rem; margin-bottom: 2rem;">This is editorial framing written for this briefing — not a direct quotation.</p>
 
     <!-- Career Timeline -->
     <div data-animate="fade-up">
@@ -381,6 +606,11 @@
       </div>
     </div>
 
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=1200&q=80" alt="Cyclists on a challenging mountain road — representing Helen Riley's charity cycling achievement" loading="lazy">
+      <figcaption>216 km, 4,420m elevation — Helen Riley and 9 Lyreco colleagues on a charity ride</figcaption>
+    </figure>
+
     <!-- Personality -->
     <div data-animate="fade-up">
       <h3 class="sub-heading">Personality Profile</h3>
@@ -423,7 +653,7 @@
     <!-- Radar Chart -->
     <div data-animate="fade-up">
       <h3 class="sub-heading">Assessment Radar</h3>
-      <p style="font-size: 0.85rem; color: var(--smoke); margin-bottom: 1rem;">Editorial assessment based on career trajectory and public profile</p>
+      <p style="font-size: 1.0rem; color: var(--smoke); margin-bottom: 1rem;">Editorial assessment based on career trajectory and public profile</p>
     </div>
     <div class="radar-container" id="helen-radar" data-animate="scale-in"></div>
 
@@ -469,7 +699,7 @@
       <div class="section-label">Profile II</div>
       <h2 class="section-title">Eric Bigeard</h2>
       <p style="font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--smoke); margin-bottom: 2rem;">Former CEO (1988–2010) · Supervisory Board Member · Guardian of the Legacy</p>
-      <div class="person-avatar lyreco-avatar">EB</div>
+      <img class="person-photo lyreco-border" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80" alt="Eric Bigeard (representative photo)" loading="lazy" style="cursor: pointer;" onclick="document.getElementById('modal-eric').classList.add('active')">
     </div>
 
     <!-- Meta grid -->
@@ -523,14 +753,19 @@
     <div data-animate="fade-up">
       <div class="section-body">
         <p>Eric Jacques Pierre Bigeard joined Lyreco in 1980 as a twenty-something. Eight years later, at approximately 33 years old, he was appointed CEO. What followed was one of the most extraordinary growth stories in European B2B distribution.</p>
-        <p>Over 22 years, Bigeard transformed Lyreco from a €15 million France-only operation into a €2+ billion enterprise spanning 29 countries. He called it <em>"the international success story"</em> in office supplies. His biggest achievement, in his own words? Not the revenue. Not the expansion. <em>"The creation of a solid and stable team."</em></p>
+        <p>Over 22 years, Bigeard transformed Lyreco from a €15 million France-only operation into a €2+ billion enterprise spanning 29 countries. He called it <em>"the international success story"</em><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup> in office supplies. His biggest achievement, in his own words? Not the revenue. Not the expansion. <em>"The creation of a solid and stable team."</em><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup></p>
       </div>
     </div>
 
     <div class="quote-block" data-animate="fade-up">
       <div class="quote-text">"Too many CEOs hold on to their jobs too long. I didn't want to be one of those that end up getting fired from the company I love!"</div>
-      <div class="quote-attr">Eric Bigeard — On planning his departure 10 years in advance</div>
+      <div class="quote-attr">Eric Bigeard — OPI, "End of an era at Lyreco", December 2010</div>
     </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80" alt="Executive reviewing documents at desk — representing Eric Bigeard's legacy of transformational leadership" loading="lazy">
+      <figcaption>22 years of transformational leadership — the Bigeard legacy</figcaption>
+    </figure>
 
     <!-- The succession -->
     <div data-animate="fade-up">
@@ -554,7 +789,7 @@
       <div class="timeline-item" data-stagger-child>
         <div class="timeline-date">2015 – 2019</div>
         <div class="timeline-title">Hervé Milcent</div>
-        <div class="timeline-desc">"I underestimated the legacy of Eric Bigeard. Still today, it's very important to keep that legacy alive, because Eric had built this company over the past 25 years."</div>
+        <div class="timeline-desc">"I underestimated the legacy of Eric Bigeard. Still today, it's very important to keep that legacy alive, because Eric had built this company over the past 25 years." <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--champagne); opacity: 0.7;">[OPI, July 2018]</span></div>
       </div>
       <div class="timeline-item" data-stagger-child>
         <div class="timeline-date">2019 – Present</div>
@@ -565,9 +800,10 @@
 
     <!-- Near-merger -->
     <div data-animate="fade-up">
-      <h3 class="sub-heading">The Deal That Almost Was — Corporate Express (2008)</h3>
+      <h3 class="sub-heading">The Deal That Almost Was &mdash; Corporate Express (2008)</h3>
       <div class="section-body">
-        <p>In 2008, Bigeard nearly merged Lyreco with Corporate Express — he would have been CEO of the combined entity. The deal fell through, but it reveals something critical: <strong style="color: var(--pearl);">Bigeard understands M&A at the highest level.</strong> He's not a stranger to deal dynamics. He knows what a good acquisition looks like — and what a bad one smells like.</p>
+        <p>In 2008, Corporate Express &mdash; a Dutch-listed global distributor under siege from a hostile Staples bid &mdash; announced a <strong style="color: var(--pearl);">&euro;1.731 billion acquisition of Lyreco</strong> as a poison pill defense. Bigeard was designated CEO of the combined entity. Staples didn&rsquo;t blink, kept raising, and ultimately won at &euro;9.25/share. The Lyreco deal collapsed &mdash; but Lyreco walked away with a <strong style="color: var(--champagne);">&euro;30M break-up fee</strong>. Even the failed deal paid. Full story and deal timeline: <a href="3-bigeard.html#near-merger" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Chapter III &#8599;</a></p>
+        <p>The episode reveals something critical: <strong style="color: var(--pearl);">Bigeard has been the subject of a &euro;1.7 billion transaction.</strong> He knows what a hostile bid feels like from the inside. He knows what a break-up fee represents. When he evaluates WEFUN, he will be measuring sophistication against a very high bar.</p>
       </div>
     </div>
 
@@ -575,7 +811,7 @@
     <div data-animate="fade-up">
       <h3 class="sub-heading">After the CEO Chair</h3>
       <div class="section-body">
-        <p>Bigeard stayed on the Supervisory Board at Georges Gaspard's personal request. He became an angel investor — funding Belgian NFC startup Getyoo with €600K. In 2021, he came "back in support" of CEO Gregory Liénard to consolidate European & Asian market position.</p>
+        <p>Bigeard stayed on the Supervisory Board at Georges Gaspard's personal request. He became an angel investor — funding Belgian NFC startup <a href="https://techcrunch.com/2011/07/14/getyoo-raises-a-e600000-seed-round-for-interactive-nfc-solutions/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Getyoo</a> with €600K. In 2021, he came "back in support" of CEO Gregory Liénard to consolidate European & Asian market position.</p>
         <p>He never truly left. He is Lyreco's institutional memory.</p>
       </div>
     </div>
@@ -595,7 +831,7 @@
     <div data-animate="fade-up" data-delay="0.15">
       <div class="strategy-card" style="border-left-color: var(--lyreco-red);">
         <h4>He values team-building above all</h4>
-        <p>His proudest achievement was "the creation of a solid and stable team." Ask about the people he worked with. Show that WEFUN values the same thing. Your employee retention stories, your culture, your team — this is what will resonate with him.</p>
+        <p>His proudest achievement was "the creation of a solid and stable team"<sup style="font-size: 0.6em; color: var(--champagne);">&thinsp;<a href="https://www.opi.net/news/analysis/eric-bigeard-interview/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: none;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">[OPI]</a></sup>. Ask about the people he worked with. Show that WEFUN values the same thing. Your employee retention stories, your culture, your team — this is what will resonate with him.</p>
       </div>
     </div>
 
@@ -624,16 +860,16 @@
     </div>
 
     <div class="person-grid" data-stagger-group>
-      <div class="person-card wefun" data-stagger-child>
+      <div class="person-card wefun person-card-clickable" data-stagger-child onclick="document.getElementById('modal-minjae').classList.add('active')">
         <div class="person-role">CFO & Chief Strategy Officer</div>
-        <div class="person-avatar wefun-avatar">HM</div>
+        <div class="person-photo-placeholder" aria-label="Hwang Minjae — no verified photo available"><span class="person-initials">HM</span></div>
         <div class="person-name">Hwang Minjae (황민재)</div>
         <div class="person-bio">VP-level executive and the public face of WEFUN's M&A strategy. Architected the holding company vision and led all six acquisitions. Will present the WEFUN company introduction and M&A track record. His English name is Joshua. Key objective: demonstrate WEFUN's financial discipline and integration capability.</div>
         <div class="person-tag key">Lead Presenter</div>
       </div>
-      <div class="person-card wefun" data-stagger-child>
+      <div class="person-card wefun person-card-clickable" data-stagger-child onclick="document.getElementById('modal-hwayoung').classList.add('active')">
         <div class="person-role">Head of Business Development</div>
-        <div class="person-avatar wefun-avatar">JH</div>
+        <div class="person-photo-placeholder" aria-label="Jo Hwa-young — no verified photo available"><span class="person-initials">JH</span></div>
         <div class="person-name">Jo Hwa-young (조화영)</div>
         <div class="person-bio">Leads business development initiatives including cross-sell strategy and new market entry. Will support the meeting with operational detail and client success stories. Responsible for demonstrating real-world platform capability.</div>
         <div class="person-tag key">Operational Detail</div>
@@ -655,9 +891,173 @@
     <div data-animate="fade-up">
       <div class="section-label">Connections</div>
       <h2 class="section-title">Meeting Dynamics <em>Map</em></h2>
-      <p style="font-size: 0.9rem; color: var(--smoke); margin-bottom: 1rem;">Interactive visualization of relationships and power dynamics — drag to explore</p>
+      <p style="font-size: 0.85rem; color: var(--smoke); opacity: 0.65; margin-bottom: 2rem; font-family: var(--font-mono); letter-spacing: 0.04em;">RELATIONSHIP & AUTHORITY STRUCTURE — FEBRUARY 26, 2026</p>
     </div>
-    <div class="meeting-network-container" id="meeting-dynamics" data-animate="scale-in"></div>
+
+    <!-- Static SVG diagram — two sides facing each other with a bridge -->
+    <div data-animate="fade-up" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+    <svg viewBox="0 0 920 420" style="width:100%;max-width:920px;height:auto;display:block;margin:0 auto;" xmlns="http://www.w3.org/2000/svg" font-family="'DM Sans', sans-serif">
+
+      <!-- Background -->
+      <rect width="920" height="420" fill="transparent"/>
+
+      <!-- ── Side labels ── -->
+      <text x="155" y="22" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#C9A96E" letter-spacing="0.18em" opacity="0.7">LYRECO</text>
+      <text x="460" y="22" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#A0A0AC" letter-spacing="0.18em" opacity="0.7">BRIDGE</text>
+      <text x="762" y="22" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#5B8AFF" letter-spacing="0.18em" opacity="0.7">WEFUN</text>
+
+      <!-- ── Divider lines ── -->
+      <line x1="290" y1="30" x2="290" y2="400" stroke="rgba(244,242,237,0.05)" stroke-width="1" stroke-dasharray="4,6"/>
+      <line x1="628" y1="30" x2="628" y2="400" stroke="rgba(244,242,237,0.05)" stroke-width="1" stroke-dasharray="4,6"/>
+
+      <!-- ════════════════════════════════════
+           CONNECTION LINES — draw first so nodes appear on top
+           ════════════════════════════════════ -->
+
+      <!-- Gaspard → Eric (trusted advisor) -->
+      <path d="M 155 95 C 155 140 155 140 155 180" fill="none" stroke="rgba(201,169,110,0.35)" stroke-width="1.5"/>
+      <text x="168" y="140" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.8">Trusted advisor</text>
+
+      <!-- Gaspard → Helen (mandated) -->
+      <path d="M 110 95 C 60 120 60 210 108 240" fill="none" stroke="rgba(201,169,110,0.25)" stroke-width="1" stroke-dasharray="3,4"/>
+      <text x="30" y="175" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.7">Mandated</text>
+
+      <!-- Gaspard → Liénard (appointed) -->
+      <path d="M 200 95 C 230 140 220 195 200 230" fill="none" stroke="rgba(201,169,110,0.2)" stroke-width="1" stroke-dasharray="3,4"/>
+
+      <!-- Eric → Liénard (supports) -->
+      <path d="M 155 210 C 175 240 185 265 185 280" fill="none" stroke="rgba(201,169,110,0.3)" stroke-width="1.2"/>
+      <text x="188" y="252" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.7">Supports since 2021</text>
+
+      <!-- Helen → Eric (delegation partners) -->
+      <path d="M 108 250 C 130 235 140 215 148 210" fill="none" stroke="rgba(201,169,110,0.3)" stroke-width="1.2"/>
+
+      <!-- Seungoh → Helen (facilitates) -->
+      <path d="M 405 230 C 360 240 310 250 240 255" fill="none" stroke="rgba(160,160,172,0.3)" stroke-width="1.2" stroke-dasharray="3,4"/>
+      <text x="318" y="244" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.7">Facilitates</text>
+
+      <!-- Seungoh → Eric (cultural bridge) -->
+      <path d="M 415 205 C 380 205 330 200 245 195" fill="none" stroke="rgba(160,160,172,0.3)" stroke-width="1.2" stroke-dasharray="3,4"/>
+      <text x="318" y="196" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.7">Cultural bridge</text>
+
+      <!-- Seungoh → Minjae (facilitates) -->
+      <path d="M 505 215 C 560 215 620 220 670 230" fill="none" stroke="rgba(160,160,172,0.3)" stroke-width="1.2" stroke-dasharray="3,4"/>
+      <text x="560" y="210" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.7">Facilitates</text>
+
+      <!-- Helen → Minjae (finance counterpart) -->
+      <path d="M 240 258 C 380 290 570 280 668 260" fill="none" stroke="rgba(91,138,255,0.2)" stroke-width="1" stroke-dasharray="3,5"/>
+      <text x="415" y="295" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.6">Finance counterpart</text>
+
+      <!-- Eric → Minjae (character assessment) -->
+      <path d="M 240 185 C 380 155 580 155 668 185" fill="none" stroke="rgba(91,138,255,0.15)" stroke-width="1" stroke-dasharray="4,5"/>
+      <text x="415" y="148" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.6">Character assessment</text>
+
+      <!-- Minjae → Hwayoung (WEFUN team) -->
+      <path d="M 700 240 C 720 265 720 295 700 320" fill="none" stroke="rgba(91,138,255,0.35)" stroke-width="1.5"/>
+
+      <!-- Minjae → Kim Heon (reports to) -->
+      <path d="M 680 185 C 720 155 770 130 790 120" fill="none" stroke="rgba(91,138,255,0.3)" stroke-width="1.2"/>
+      <text x="716" y="143" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#A0A0AC" letter-spacing="0.04em" opacity="0.7">Reports to</text>
+
+      <!-- ════════════════════════════════════
+           NODES
+           ════════════════════════════════════ -->
+
+      <!-- ── LYRECO SIDE ── -->
+
+      <!-- Gaspard Family (top authority) -->
+      <g transform="translate(155, 68)">
+        <circle r="30" fill="rgba(201,169,110,0.10)" stroke="rgba(201,169,110,0.5)" stroke-width="1.5"/>
+        <!-- Crown symbol -->
+        <text text-anchor="middle" y="6" font-size="20" fill="#C9A96E" opacity="0.85">♛</text>
+        <text text-anchor="middle" y="48" font-size="10" font-weight="600" fill="#F4F2ED">Gaspard Family</text>
+        <text text-anchor="middle" y="61" font-size="8" fill="#C9A96E" font-family="'JetBrains Mono', monospace">84% · Ultimate authority</text>
+      </g>
+
+      <!-- Eric Bigeard -->
+      <g transform="translate(155, 183)">
+        <circle r="28" fill="rgba(201,169,110,0.10)" stroke="rgba(201,169,110,0.6)" stroke-width="1.5"/>
+        <!-- Person symbol -->
+        <circle cy="-7" r="9" fill="rgba(201,169,110,0.3)" stroke="rgba(201,169,110,0.6)" stroke-width="1"/>
+        <path d="M -14 12 Q -14 2 0 2 Q 14 2 14 12" fill="rgba(201,169,110,0.3)" stroke="rgba(201,169,110,0.6)" stroke-width="0.8"/>
+        <text text-anchor="middle" y="46" font-size="10" font-weight="600" fill="#F4F2ED">Eric Bigeard</text>
+        <text text-anchor="middle" y="58" font-size="8" fill="#C9A96E" font-family="'JetBrains Mono', monospace">Moral authority</text>
+      </g>
+
+      <!-- Helen Riley -->
+      <g transform="translate(120, 258)">
+        <circle r="28" fill="rgba(201,169,110,0.08)" stroke="rgba(201,169,110,0.45)" stroke-width="1.5"/>
+        <circle cy="-7" r="9" fill="rgba(201,169,110,0.25)" stroke="rgba(201,169,110,0.5)" stroke-width="1"/>
+        <path d="M -14 12 Q -14 2 0 2 Q 14 2 14 12" fill="rgba(201,169,110,0.25)" stroke="rgba(201,169,110,0.5)" stroke-width="0.8"/>
+        <text text-anchor="middle" y="46" font-size="10" font-weight="600" fill="#F4F2ED">Helen Riley</text>
+        <text text-anchor="middle" y="58" font-size="8" fill="#C9A96E" font-family="'JetBrains Mono', monospace">Process authority</text>
+      </g>
+
+      <!-- Gregory Liénard -->
+      <g transform="translate(192, 305)">
+        <circle r="24" fill="rgba(201,169,110,0.06)" stroke="rgba(201,169,110,0.3)" stroke-width="1"/>
+        <circle cy="-6" r="8" fill="rgba(201,169,110,0.2)" stroke="rgba(201,169,110,0.4)" stroke-width="1"/>
+        <path d="M -12 10 Q -12 1 0 1 Q 12 1 12 10" fill="rgba(201,169,110,0.2)" stroke="rgba(201,169,110,0.4)" stroke-width="0.8"/>
+        <text text-anchor="middle" y="41" font-size="9.5" font-weight="600" fill="#F4F2ED">Gregory Liénard</text>
+        <text text-anchor="middle" y="53" font-size="8" fill="#C9A96E" font-family="'JetBrains Mono', monospace">Current CEO</text>
+      </g>
+
+      <!-- ── BRIDGE / CENTER ── -->
+
+      <!-- Seungoh Nam -->
+      <g transform="translate(460, 215)">
+        <circle r="26" fill="rgba(160,160,172,0.10)" stroke="rgba(160,160,172,0.5)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <circle cy="-7" r="9" fill="rgba(160,160,172,0.3)" stroke="rgba(160,160,172,0.5)" stroke-width="1"/>
+        <path d="M -14 12 Q -14 2 0 2 Q 14 2 14 12" fill="rgba(160,160,172,0.3)" stroke="rgba(160,160,172,0.5)" stroke-width="0.8"/>
+        <text text-anchor="middle" y="44" font-size="10" font-weight="600" fill="#F4F2ED">Seungoh Nam</text>
+        <text text-anchor="middle" y="56" font-size="8" fill="#A0A0AC" font-family="'JetBrains Mono', monospace">Intermediary</text>
+      </g>
+
+      <!-- ── WEFUN SIDE ── -->
+
+      <!-- Kim Heon (top authority) -->
+      <g transform="translate(795, 92)">
+        <circle r="28" fill="rgba(91,138,255,0.10)" stroke="rgba(91,138,255,0.5)" stroke-width="1.5"/>
+        <circle cy="-7" r="9" fill="rgba(91,138,255,0.3)" stroke="rgba(91,138,255,0.6)" stroke-width="1"/>
+        <path d="M -14 12 Q -14 2 0 2 Q 14 2 14 12" fill="rgba(91,138,255,0.3)" stroke="rgba(91,138,255,0.6)" stroke-width="0.8"/>
+        <text text-anchor="middle" y="46" font-size="10" font-weight="600" fill="#F4F2ED">Kim Heon</text>
+        <text text-anchor="middle" y="58" font-size="8" fill="#5B8AFF" font-family="'JetBrains Mono', monospace">CEO & Founder</text>
+      </g>
+
+      <!-- Hwang Minjae -->
+      <g transform="translate(695, 210)">
+        <circle r="30" fill="rgba(91,138,255,0.10)" stroke="rgba(91,138,255,0.6)" stroke-width="1.5"/>
+        <circle cy="-8" r="10" fill="rgba(91,138,255,0.3)" stroke="rgba(91,138,255,0.6)" stroke-width="1"/>
+        <path d="M -16 13 Q -16 2 0 2 Q 16 2 16 13" fill="rgba(91,138,255,0.3)" stroke="rgba(91,138,255,0.6)" stroke-width="0.8"/>
+        <text text-anchor="middle" y="50" font-size="10" font-weight="600" fill="#F4F2ED">Hwang Minjae</text>
+        <text text-anchor="middle" y="62" font-size="8" fill="#5B8AFF" font-family="'JetBrains Mono', monospace">CFO / Lead presenter</text>
+      </g>
+
+      <!-- Jo Hwa-young -->
+      <g transform="translate(695, 340)">
+        <circle r="24" fill="rgba(91,138,255,0.08)" stroke="rgba(91,138,255,0.4)" stroke-width="1"/>
+        <circle cy="-6" r="8" fill="rgba(91,138,255,0.25)" stroke="rgba(91,138,255,0.4)" stroke-width="1"/>
+        <path d="M -12 10 Q -12 1 0 1 Q 12 1 12 10" fill="rgba(91,138,255,0.25)" stroke="rgba(91,138,255,0.4)" stroke-width="0.8"/>
+        <text text-anchor="middle" y="42" font-size="9.5" font-weight="600" fill="#F4F2ED">Jo Hwa-young</text>
+        <text text-anchor="middle" y="54" font-size="8" fill="#5B8AFF" font-family="'JetBrains Mono', monospace">Head of BD</text>
+      </g>
+
+      <!-- ── LEGEND ── -->
+      <g transform="translate(24, 375)">
+        <circle cx="8" cy="8" r="6" fill="rgba(201,169,110,0.15)" stroke="rgba(201,169,110,0.5)" stroke-width="1"/>
+        <text x="20" y="12" font-family="'JetBrains Mono', monospace" font-size="8" fill="#A0A0AC">Lyreco delegation</text>
+        <circle cx="130" cy="8" r="6" fill="rgba(91,138,255,0.12)" stroke="rgba(91,138,255,0.5)" stroke-width="1"/>
+        <text x="142" y="12" font-family="'JetBrains Mono', monospace" font-size="8" fill="#A0A0AC">WEFUN delegation</text>
+        <circle cx="258" cy="8" r="6" fill="rgba(160,160,172,0.12)" stroke="rgba(160,160,172,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="270" y="12" font-family="'JetBrains Mono', monospace" font-size="8" fill="#A0A0AC">Intermediary</text>
+        <line x1="360" y1="8" x2="385" y2="8" stroke="rgba(244,242,237,0.25)" stroke-width="1.2"/>
+        <text x="390" y="12" font-family="'JetBrains Mono', monospace" font-size="8" fill="#A0A0AC">Direct relationship</text>
+        <line x1="500" y1="8" x2="525" y2="8" stroke="rgba(244,242,237,0.25)" stroke-width="1" stroke-dasharray="3,4"/>
+        <text x="530" y="12" font-family="'JetBrains Mono', monospace" font-size="8" fill="#A0A0AC">Indirect / mandate</text>
+      </g>
+
+    </svg>
+    </div>
   </section>
 
   <div class="divider"></div>
@@ -667,15 +1067,82 @@
     <div data-animate="fade-up">
       <div class="section-label">Reading the Room</div>
       <h2 class="section-title">The Dynamics at Play</h2>
+
+      <figure class="chapter-img" data-animate="fade-up">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80" alt="Business professionals in a meeting — representing the negotiation dynamics between WEFUN and Lyreco" loading="lazy">
+        <figcaption>Reading the room — process authority meets moral authority</figcaption>
+      </figure>
+
       <div class="section-body">
         <p>Understand the invisible power structure. Helen Riley has the <em>process authority</em> — she controls timelines, data room access, and next steps. Eric Bigeard has the <em>moral authority</em> — his opinion carries weight with the family that no financial model can override.</p>
         <p>Your objective is not to impress them with numbers. It's to make them <em>feel</em> that the Asian operations — the employees, the clients, the culture — will be in safe hands. If they leave Seoul believing that, everything else is negotiable.</p>
       </div>
     </div>
 
+    <div data-animate="fade-up">
+      <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.8; margin-top: 1.5rem;">Li&eacute;nard&rsquo;s defining deal as CEO: acquiring Staples Solutions&rsquo; operations in six countries from <strong style="color: var(--pearl);">Cerberus Capital Management</strong> (PE fund). A family-owned French company buying a PE-held portfolio &mdash; buy-side, not sell-side. This is the M&amp;A DNA that will evaluate WEFUN.</p>
+    </div>
+
     <div class="quote-block" data-animate="fade-up">
-      <div class="quote-text">"We are excited to welcome the many talented employees. The first hugely important task is to get to know each other."</div>
-      <div class="quote-attr">Gregory Liénard, CEO — Said on every Lyreco acquisition</div>
+      <div class="quote-text">"We are excited to welcome the many talented employees from Staples Solutions to Lyreco and we look forward to combining our passion for delivering excellence." <span style="opacity: 0.6; font-style: italic;">"The first hugely important task is to get to know each other."</span></div>
+      <div class="quote-attr">Gregory Li&eacute;nard, CEO &mdash; On acquiring Staples Solutions&rsquo; six-country operations from Cerberus Capital Management, June 2021 (<a href="https://therecycler.com/posts/lyreco-concludes-acquisition-staples-solutions/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">The Recycler</a>) &middot; ~1,600 employees joined Lyreco</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ P&G PARALLEL · ICEBREAKER ═══════════════ -->
+  <section class="section">
+    <div class="pg-compare" data-animate="fade-up">
+      <div class="pg-compare-header">
+        <span class="pg-compare-badge">P&G PARALLEL · ICEBREAKER</span>
+      </div>
+      <div class="pg-compare-title">Corporate Lifers & Institutional Loyalty</div>
+      <div class="pg-compare-subtitle">P&G's legendary "promote from within" culture — and its living parallel at Lyreco</div>
+
+      <div class="pg-compare-body">
+        <p><em>Procter & Gamble</em> is one of the most famous <strong>"promote from within"</strong> companies in the world. <strong>Every CEO in P&G's history has been an internal promotion.</strong> No outside CEO — ever.</p>
+        <p><strong>Helen Riley joined Lyreco at age 22</strong> and has spent 20+ years rising through the ranks. She IS the Lyreco version of P&G's promote-from-within culture. <em>Eric Bigeard</em> spent <strong>30 years at Lyreco (1980–2010)</strong> — that's a P&G-level tenure. His successor <em>Gregory Liénard</em> is also a Lyreco lifer.</p>
+        <p>P&G <em>"lifers"</em> are legendary in business — executives who spend 25–35 years at the company, rising from brand assistant to C-suite. They develop <strong>deep institutional knowledge and fierce loyalty.</strong></p>
+        <p>The P&G insight: long-tenured executives aren't just experienced — they're <strong>emotionally invested.</strong> When Helen evaluates WEFUN, she's not analyzing a spreadsheet. She's deciding whether to <em>trust a piece of her life's work to strangers.</em></p>
+        <p>P&G is also known for developing <strong>general managers</strong> who understand ALL functions — finance, marketing, supply chain. Helen's career (<em>finance → credit → accounting → transformation → M&A</em>) mirrors this exact pattern.</p>
+      </div>
+
+      <div class="pg-note-grid">
+        <div class="pg-note">
+          <div class="pg-note-label">Promote from Within</div>
+          <div class="pg-note-text">P&G: every CEO was internal. Lyreco: Helen (20 yrs), Bigeard (30 yrs), Liénard (lifer). Same culture of growing leaders from the inside out.</div>
+        </div>
+        <div class="pg-note">
+          <div class="pg-note-label">Emotional Investment</div>
+          <div class="pg-note-text">P&G lifers don't just work there — they belong. Helen's decision about this deal is personal, not just professional. Respect the weight of that.</div>
+        </div>
+        <div class="pg-note">
+          <div class="pg-note-label">General Management</div>
+          <div class="pg-note-text">P&G develops cross-functional leaders. Helen: finance → credit → accounting → transformation → M&A. Classic P&G-style career arc across every major function.</div>
+        </div>
+      </div>
+
+      <!-- ── Corporate Lifer Comparison ── -->
+      <table class="compare-table" style="margin-top: 2rem;">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th class="col-pg">P&amp;G Lifers</th>
+            <th class="col-lyreco">Lyreco Lifers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>External CEO</td><td>Never — 0 in 186 years</td><td>Never — 0 in 100 years</td></tr>
+          <tr><td>Avg CEO Tenure</td><td>~10 years</td><td>~15&ndash;22 years</td></tr>
+          <tr><td>Key Lifer</td><td>A.G. Lafley (33 yrs at P&amp;G)</td><td>Eric Bigeard (30 yrs at Lyreco)</td></tr>
+          <tr><td>Current Deal Lead</td><td>—</td><td>Helen Riley (20+ yrs, joined age 22)</td></tr>
+          <tr><td>Career Path Model</td><td>Brand Asst → Brand Mgr → VP → CEO</td><td>Finance Trainee → Credit → Accounting → M&amp;A Director</td></tr>
+          <tr><td>Cross-Functional</td><td>General managers rotate across functions</td><td>Helen: 6 different roles across 4 countries</td></tr>
+          <tr><td>Loyalty Culture</td><td>"P&amp;G Way" — institutional religion</td><td>"Family values" — personal devotion</td></tr>
+          <tr><td>Emotional Stake</td><td>High — decades of identity tied to company</td><td>Very high — life's work, family-like bond</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pg-talking-point">"P&G proved that promote-from-within builds the most loyal, capable leaders. Helen is the living proof that Lyreco follows the same principle."</div>
     </div>
   </section>
 
@@ -694,6 +1161,166 @@
 <footer class="site-footer">
   Confidential — Prepared for WEFUN Management — February 2026
 </footer>
+
+<!-- ═══════════════ PERSON MODALS ═══════════════ -->
+
+<div class="person-modal-overlay" id="modal-helen">
+  <div class="person-modal">
+    <button class="modal-close" onclick="this.closest('.person-modal-overlay').classList.remove('active')">&times;</button>
+    <div class="modal-header">
+      <div class="modal-avatar-initials" style="background: rgba(230, 57, 70, 0.15); color: var(--lyreco-red); border: 2px solid rgba(240, 77, 90, 0.4);">HR</div>
+      <div>
+        <div class="modal-name">Helen Riley</div>
+        <div class="modal-title-text">Group Development Director — M&A, Divestments & Partnerships</div>
+        <a href="https://www.linkedin.com/in/helen-riley-21a13018/" target="_blank" class="modal-linkedin">🔗 LinkedIn Profile</a>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Quick Facts</div>
+      <div class="modal-section-content">
+        <strong>At Lyreco:</strong> 20+ years (since 2004)<br>
+        <strong>Current role:</strong> Since September 2025 (newly created)<br>
+        <strong>Education:</strong> EDHEC Executive MBA (2020-2022), SKEMA Master's, Université Catholique de Lille<br>
+        <strong>Languages:</strong> English (native), French, Spanish, Italian<br>
+        <strong>Full name:</strong> Helen Riley<br>
+        <strong>Based in:</strong> Marly, France (Lyreco HQ)
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Career at Lyreco</div>
+      <div class="modal-career-item"><div class="modal-career-year">Sept 2025</div><div><div class="modal-career-role">Group Development Director — M&A</div><div class="modal-career-org">Lyreco Group · Newly created role</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2022–2025</div><div><div class="modal-career-role">Finance Operations & Transformation Director</div><div class="modal-career-org">Lyreco Group HQ · SAP expert</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2017–2022</div><div><div class="modal-career-role">Group Finance (returned from field)</div><div class="modal-career-org">Lyreco Group HQ</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2013–2017</div><div><div class="modal-career-role">Chief Accountant — Spain & Portugal</div><div class="modal-career-org">Lyreco Iberia · Team of 10</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2011–2013</div><div><div class="modal-career-role">Credit Manager</div><div class="modal-career-org">Lyreco Italia</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2008–2011</div><div><div class="modal-career-role">Credit Management & Tax Project Leader</div><div class="modal-career-org">Lyreco Group HQ</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2005–2008</div><div><div class="modal-career-role">Group Business Analyst</div><div class="modal-career-org">Lyreco Group HQ</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2004</div><div><div class="modal-career-role">Group Finance Trainee</div><div class="modal-career-org">Lyreco Group · First day at 22 years old</div></div></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Personality & Personal</div>
+      <div class="modal-section-content">
+        Described as a <strong>"go getter"</strong> with a <strong>"bubbly personality"</strong> and <strong>"can do attitude"</strong>. Avid cyclist — completed a <strong>216 km ride with 4,420m elevation</strong> with 9 Lyreco colleagues. SAP expert. Highly analytical but also warm and approachable.
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">Go getter</span>
+        <span class="modal-tag">SAP expert</span>
+        <span class="modal-tag">Cyclist</span>
+        <span class="modal-tag">4 languages</span>
+        <span class="modal-tag">EDHEC MBA</span>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Deal Significance</div>
+      <div class="modal-section-content">
+        She <strong>owns the M&A process.</strong> Her role was specifically created for portfolio optimization — she controls timelines, data room access, and next steps. She's not an external banker; she's family in spirit. Treat her with the respect you'd give a 20-year veteran of your own company.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="person-modal-overlay" id="modal-eric">
+  <div class="person-modal">
+    <button class="modal-close" onclick="this.closest('.person-modal-overlay').classList.remove('active')">&times;</button>
+    <div class="modal-header">
+      <div class="modal-avatar-initials" style="background: rgba(230, 57, 70, 0.15); color: var(--lyreco-red); border: 2px solid rgba(240, 77, 90, 0.4);">EB</div>
+      <div>
+        <div class="modal-name">Eric Jacques Pierre Bigeard</div>
+        <div class="modal-title-text">Former CEO (1988–2010) · Supervisory Board Member · Guardian of the Legacy</div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Quick Facts</div>
+      <div class="modal-section-content">
+        <strong>Full name:</strong> Eric Jacques Pierre Bigeard<br>
+        <strong>Born:</strong> ~1955 (age ~70-71)<br>
+        <strong>At Lyreco:</strong> 1980–2010 (30 years active), then Supervisory Board<br>
+        <strong>Revenue under his watch:</strong> €15M → €2B+ (133× growth)<br>
+        <strong>Countries expanded:</strong> 1 → 29<br>
+        <strong>Based in:</strong> Brussels, Belgium (per corporate registries)
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Career</div>
+      <div class="modal-career-item"><div class="modal-career-year">2021</div><div><div class="modal-career-role">Returned "in support" of CEO Liénard</div><div class="modal-career-org">Lyreco Group · European & Asian consolidation</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2011</div><div><div class="modal-career-role">Angel Investor — <a href="https://techcrunch.com/2011/07/14/getyoo-raises-a-e600000-seed-round-for-interactive-nfc-solutions/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Getyoo</a> (€600K)</div><div class="modal-career-org">Belgian NFC startup · <a href="https://techcrunch.com/2011/07/14/getyoo-raises-a-e600000-seed-round-for-interactive-nfc-solutions/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(160,160,172,0.3); font-size: 0.8em;">TechCrunch ↗</a></div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2010</div><div><div class="modal-career-role">Stepped down as CEO (Dec 31)</div><div class="modal-career-org">Lyreco Group · Moved to Supervisory Board</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">2008</div><div><div class="modal-career-role">Near-merger with Corporate Express</div><div class="modal-career-org">Would have been CEO of combined entity · Deal fell through</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">1988–2010</div><div><div class="modal-career-role">CEO — 22 years</div><div class="modal-career-org">Lyreco Group · €15M → €2B+ · 1 → 29 countries</div></div></div>
+      <div class="modal-career-item"><div class="modal-career-year">1980</div><div><div class="modal-career-role">Joined Lyreco</div><div class="modal-career-org">Age ~25 · Started career at the company</div></div></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Key Quotes (Verified)</div>
+      <div class="modal-section-content" style="font-style: italic;">
+        "Too many CEOs hold on to their jobs too long. I didn't want to be one of those that end up getting fired from the company I love!"<br>
+        <span style="font-style: normal; font-size: 0.92rem; color: var(--champagne);">— <a href="https://www.opi.net/news/analysis/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">OPI, "End of an era at Lyreco"</a>, December 2010</span><br><br>
+        His proudest achievement: "The creation of a solid and stable team."<br>
+        <span style="font-style: normal; font-size: 0.92rem; color: var(--champagne);">— <a href="https://www.opi.net/news/analysis/eric-bigeard-interview/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">OPI, &ldquo;Eric Bigeard Interview&rdquo;</a>, December 31, 2010</span>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Deal Significance</div>
+      <div class="modal-section-content">
+        He is the <strong>Gaspard family's eyes and ears.</strong> His presence at a first meeting in Seoul means the family is taking this seriously. He's not here for due diligence — Helen handles that. He's here to <strong>judge character.</strong> His approval is likely a prerequisite for the deal proceeding. Address him as "Monsieur Bigeard" until he says otherwise.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="person-modal-overlay" id="modal-minjae">
+  <div class="person-modal">
+    <button class="modal-close" onclick="this.closest('.person-modal-overlay').classList.remove('active')">&times;</button>
+    <div class="modal-header">
+      <div class="modal-avatar-initials" style="background: rgba(74, 114, 255, 0.15); color: var(--wefun-blue); border: 2px solid rgba(74, 114, 255, 0.3);">HM</div>
+      <div>
+        <div class="modal-name">Hwang Minjae (황민재)</div>
+        <div class="modal-title-text">CFO & Chief Strategy Officer · English name: Joshua</div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Role in Meeting</div>
+      <div class="modal-section-content">
+        <strong>Lead Presenter.</strong> VP-level executive and the public face of WEFUN's M&A strategy. Architected the holding company vision and led all six acquisitions. Will present the WEFUN company introduction and M&A track record. <strong>Key objective:</strong> demonstrate WEFUN's financial discipline and integration capability.
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Deal Significance</div>
+      <div class="modal-section-content">
+        He is Helen Riley's <strong>direct counterpart</strong> — finance meets finance. His presentation must be airtight because Helen will scrutinize every number. Eric Bigeard will be assessing his <strong>character and team-building philosophy.</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="person-modal-overlay" id="modal-hwayoung">
+  <div class="person-modal">
+    <button class="modal-close" onclick="this.closest('.person-modal-overlay').classList.remove('active')">&times;</button>
+    <div class="modal-header">
+      <div class="modal-avatar-initials" style="background: rgba(74, 114, 255, 0.15); color: var(--wefun-blue); border: 2px solid rgba(74, 114, 255, 0.3);">JH</div>
+      <div>
+        <div class="modal-name">Jo Hwa-young (조화영)</div>
+        <div class="modal-title-text">Head of Business Development</div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Role in Meeting</div>
+      <div class="modal-section-content">
+        <strong>Operational Detail.</strong> Leads business development initiatives including cross-sell strategy and new market entry. Will support the meeting with operational detail and client success stories. Responsible for demonstrating real-world platform capability.
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -716,30 +1343,20 @@ document.addEventListener('DOMContentLoaded', () => {
     { axis: 'Strategic', value: 8 },
   ]);
 
-  // ─── Meeting Dynamics Network ───
-  createNetworkGraph('meeting-dynamics', [
-    { id: 'helen', label: 'Helen Riley', type: 'holding', icon: '👩‍💼', detail: 'Group Development Director M&A · 20+ years at Lyreco · Process authority' },
-    { id: 'eric', label: 'Eric Bigeard', type: 'holding', icon: '👨‍💼', detail: 'Former CEO (1988-2010) · Supervisory Board · Moral authority · Family\'s eyes' },
-    { id: 'gaspard', label: 'Gaspard Family', type: 'holding', icon: '👑', detail: '84% ownership via Corely SAS · 100-year dynasty · Ultimate decision maker' },
-    { id: 'lienard', label: 'Gregory Liénard', type: 'entity', icon: '🏢', detail: 'Current CEO · Built Asian operations · Endorsed by Bigeard' },
-    { id: 'minjae', label: 'Hwang Minjae', type: 'company', icon: '📊', detail: 'CFO & CSO · Lead presenter · M&A strategist · English name: Joshua' },
-    { id: 'hwayoung', label: 'Jo Hwa-young', type: 'company', icon: '🤝', detail: 'Head of BD · Operational detail · Client success stories' },
-    { id: 'seungoh', label: 'Seungoh Nam', type: 'person', icon: '🌉', detail: 'Intermediary · Cultural bridge · Meeting facilitator' },
-    { id: 'kimheon', label: 'Kim Heon', type: 'company', icon: '🚀', detail: 'WEFUN CEO & Founder · Christmas Eve 2018 · The vision holder' }
-  ], [
-    { source: 'gaspard', target: 'eric', label: 'Trusted advisor', strength: 3 },
-    { source: 'gaspard', target: 'helen', label: 'Mandated', strength: 2.5 },
-    { source: 'gaspard', target: 'lienard', label: 'Appointed CEO', strength: 2 },
-    { source: 'eric', target: 'lienard', label: 'Supports since 2021', strength: 2 },
-    { source: 'helen', target: 'eric', label: 'Delegation partners', strength: 2.5 },
-    { source: 'helen', target: 'minjae', label: 'Finance counterpart', strength: 2, distance: 150 },
-    { source: 'eric', target: 'minjae', label: 'Character assessment', strength: 1.5, distance: 160 },
-    { source: 'minjae', target: 'hwayoung', label: 'WEFUN team', strength: 2 },
-    { source: 'minjae', target: 'kimheon', label: 'Reports to', strength: 2 },
-    { source: 'seungoh', target: 'helen', label: 'Facilitates', strength: 1.5 },
-    { source: 'seungoh', target: 'minjae', label: 'Facilitates', strength: 1.5 },
-    { source: 'seungoh', target: 'eric', label: 'Cultural bridge', strength: 1.5 }
-  ], { height: 450 });
+  // Meeting Dynamics Map — rendered as static SVG (see inline HTML above)
+
+  // Close modal on overlay click
+  document.querySelectorAll('.person-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('active');
+    });
+  });
+  // Close modal on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.person-modal-overlay.active').forEach(m => m.classList.remove('active'));
+    }
+  });
 });
 </script>
 </body>

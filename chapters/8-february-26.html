@@ -16,10 +16,10 @@
   .flow-duration {
     display: inline-block;
     padding: 0.15rem 0.5rem;
-    background: rgba(201, 169, 110, 0.12);
+    background: rgba(212, 184, 122, 0.2);
     border-radius: 4px;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.92rem;
     color: var(--champagne);
     font-weight: 500;
     margin-right: 0.5rem;
@@ -39,7 +39,7 @@
     transition: border-color var(--dur-fast), transform var(--dur-fast);
   }
   .bridge-card:hover {
-    border-color: rgba(201, 169, 110, 0.15);
+    border-color: rgba(212, 184, 122, 0.25);
     transform: translateY(-3px);
   }
   .bridge-card h4 {
@@ -49,7 +49,7 @@
     color: var(--champagne-light);
   }
   .bridge-card p {
-    font-size: 0.85rem; color: var(--smoke); line-height: 1.7;
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
   }
 
   .closing-champagne {
@@ -73,7 +73,7 @@
     padding: 1.5rem 1rem;
     text-align: center;
     position: relative;
-    border-right: 1px solid rgba(244, 242, 237, 0.06);
+    border-right: 1px solid rgba(232, 229, 222, 0.1);
   }
   .flow-segment:last-child { border-right: none; }
   .flow-segment::before {
@@ -84,10 +84,11 @@
     transition: opacity 0.3s;
   }
   .flow-segment:hover::before { opacity: 0.5; }
-  .flow-segment:hover { background: rgba(201, 169, 110, 0.03); }
+  .flow-segment:hover { background: rgba(212, 184, 122, 0.06); }
   .flow-time {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.85rem;
+    font-weight: 500;
     letter-spacing: 0.15em;
     color: var(--champagne);
     margin-bottom: 0.5rem;
@@ -99,16 +100,16 @@
     margin-bottom: 0.3rem;
   }
   .flow-tip {
-    font-size: 0.78rem;
+    font-size: 0.95rem;
     color: var(--smoke);
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   .winning-message {
     margin-top: 3rem;
     padding: 3rem;
     background: var(--ink-card);
-    border: 1px solid rgba(201, 169, 110, 0.15);
+    border: 1px solid rgba(212, 184, 122, 0.25);
     border-radius: var(--radius-card);
     text-align: center;
   }
@@ -149,6 +150,12 @@
   </div>
 </header>
 
+<!-- ═══════════════ ATMOSPHERIC: SEOUL ═══════════════ -->
+<div class="atmos-img" data-animate="fade-up">
+  <img src="https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=1400&q=80" alt="Seoul cityscape — dramatic urban skyline at dusk" loading="lazy">
+  <span class="atmos-caption">Seoul, February 26, 2026 — the day two worlds meet</span>
+</div>
+
 <!-- ═══════════════ CONTENT ═══════════════ -->
 <main class="chapter-content">
 
@@ -172,6 +179,11 @@
       <div class="section-label">Presentation Flow</div>
       <h2 class="section-title">The <em>100 minutes</em></h2>
     </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=1200&q=80" alt="Professional conference room — executive meeting space" loading="lazy">
+      <figcaption>Six acts, one afternoon — the choreography of a first meeting</figcaption>
+    </figure>
 
     <div class="meeting-flow-visual" data-animate="fade-up">
       <div class="flow-segment">
@@ -334,6 +346,11 @@
         <p>Lyreco is selling operations they built over 20 years with 700 employees. For Eric Bigeard, this is personal — he opened many of these markets. For Helen, this is her first major deal in a newly created role. Treat the emotional weight with the gravity it deserves.</p>
       </div>
     </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1423592707957-3b212afa6733?w=1200&q=80" alt="Chess pieces on a board — strategic thinking and discipline" loading="lazy">
+      <figcaption>Strategic discipline — knowing what NOT to say is as important as knowing what to say</figcaption>
+    </figure>
   </section>
 
   <div class="divider"></div>
@@ -370,9 +387,78 @@
         <div class="play-desc">Use "Monsieur" / "Madame" until invited otherwise. Exchange business cards with both hands — a Korean gesture that will register powerfully with guests who understand cross-cultural respect. Consider a thoughtful Korean cultural gift — something that signals effort and attention, not expense.</div>
       </div>
     </div>
+
+    <div class="chapter-img chapter-img--duo" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80" alt="Paris, France — the Eiffel Tower" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=80" alt="Seoul, South Korea — Gyeongbokgung Palace" loading="lazy">
+    </div>
   </section>
 
   <div class="divider"></div>
+
+  <!-- ── P&G PARALLEL · ICEBREAKER ── -->
+  <div class="pg-compare" data-animate="fade-up">
+    <div class="pg-compare-header">
+      <span class="pg-compare-badge">P&G PARALLEL · ICEBREAKER</span>
+    </div>
+    <div class="pg-compare-title">Meeting Culture & Deal-Making</div>
+    <div class="pg-compare-subtitle">HOW GREAT COMPANIES APPROACH FIRST MEETINGS — LESSONS FROM P&G'S PLAYBOOK</div>
+
+    <div class="pg-compare-body" style="margin-top: 1.2rem;">
+      <p><em>P&G</em> is famous for its <strong>"one-page memo" culture</strong> — every meeting starts with a concise written memo, read silently. Clarity and preparation are non-negotiable. The February 26 meeting should borrow this discipline: be prepared, be concise, respect everyone's time. But also remember that Lyreco is a <strong>French family business</strong>, not a P&G-style American corporation — warmth and relationship matter more than process.</p>
+
+      <p style="margin-top: 1rem;"><em>P&G's</em> first meeting with <strong>Gillette (2004)</strong> was legendary — it was a dinner, not a boardroom. Jim Kilts (Gillette CEO) and A.G. Lafley met personally before any deal team assembled. The deal was built on <strong>personal trust first</strong>. This is exactly the model for February 26: 70% relationship, 30% substance. Helen and Eric are coming to Seoul to meet people, not to read decks.</p>
+
+      <p style="margin-top: 1rem;"><em>P&G's</em> biggest M&A mistake was its hostile bid for Clairol — it learned that <strong>the best acquisitions are "invited, not imposed."</strong> Lyreco's Asian divestment is Lyreco's initiative. Lyreco creating a dedicated M&A role and flying to Seoul means WEFUN is being invited. That's the strongest starting position possible.</p>
+    </div>
+
+    <!-- ── Meeting Culture Comparison ── -->
+    <table class="compare-table" style="margin-top: 2rem;">
+      <thead>
+        <tr>
+          <th>Element</th>
+          <th class="col-pg">P&amp;G + Gillette (2004)</th>
+          <th>Feb 26 Meeting</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Format</td><td>Dinner — Lafley &amp; Kilts, 1-on-1</td><td>Office meeting — 5 people, mixed format</td></tr>
+        <tr><td>First Move</td><td>Personal trust before deal teams</td><td>Relationship first (70%), substance second (30%)</td></tr>
+        <tr><td>Prep Style</td><td>"One-page memo" — silent reading</td><td>Deep briefing — visual storytelling</td></tr>
+        <tr><td>Culture</td><td>American corporate — direct, efficient</td><td>French family × Korean startup — warmth + energy</td></tr>
+        <tr><td>Power Dynamic</td><td>Gillette invited, P&amp;G pursued</td><td>Lyreco initiated — WEFUN is being invited</td></tr>
+        <tr><td>Key Risk</td><td>Hostile approach (Clairol mistake)</td><td>Being too transactional too fast</td></tr>
+        <tr><td>Success Signal</td><td>"We should talk more" — led to $57B deal</td><td>"We'd like a second meeting" — that's the win</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pg-note-grid">
+      <div class="pg-note">
+        <div class="pg-note-label">First Meetings Matter</div>
+        <div class="pg-note-text">P&G + Gillette started with a dinner. Lafley and Kilts built trust before any deal team assembled. Chemistry first, commerce second.</div>
+      </div>
+      <div class="pg-note">
+        <div class="pg-note-label">Invited, Not Imposed</div>
+        <div class="pg-note-text">P&G's best deals were consensual. Lyreco flying to Seoul = invitation. The strongest starting position for any acquisition.</div>
+      </div>
+      <div class="pg-note">
+        <div class="pg-note-label">Preparation = Respect</div>
+        <div class="pg-note-text">P&G's one-page memo culture: never waste anyone's time. Come prepared. It signals respect — the single most important currency in a first meeting.</div>
+      </div>
+    </div>
+
+    <div class="pg-talking-point">
+      "P&G learned the hard way that the best acquisitions are invited. Lyreco creating a dedicated M&A role and flying to Seoul means we're being invited. That's the strongest starting position."
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════ ATMOSPHERIC: DAWN ═══════════════ -->
+  <div class="atmos-img" data-animate="fade-up">
+    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80" alt="Dawn breaking over mountain peaks — new horizons" loading="lazy">
+    <span class="atmos-caption">The beginning of something extraordinary</span>
+  </div>
 
   <!-- ── CLOSING ── -->
   <section class="closing">

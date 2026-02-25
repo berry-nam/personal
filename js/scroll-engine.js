@@ -45,18 +45,21 @@ function initScrollEngine() {
     var children = group.querySelectorAll('[data-stagger-child]');
     if (children.length === 0) return;
 
-    gsap.from(children, {
-      y: 40,
-      opacity: 0,
-      immediateRender: false,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: group,
-        start: 'top 80%',
-      },
-    });
+    gsap.fromTo(children,
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: group,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
   });
 
   // ─── Parallax Layers ───

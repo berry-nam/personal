@@ -42,7 +42,7 @@
 
   .org-tier-label {
     font-family: var(--font-mono);
-    font-size: 0.6rem; letter-spacing: 0.15em;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.15em;
     text-transform: uppercase; color: var(--champagne);
     margin-bottom: 0.4rem;
   }
@@ -52,7 +52,7 @@
     color: var(--pearl); margin-bottom: 0.3rem;
   }
   .org-tier-detail {
-    font-size: 0.85rem; color: var(--smoke); line-height: 1.6;
+    font-size: 1.0rem; color: var(--smoke); line-height: 1.7;
   }
 
   .investment-card {
@@ -70,16 +70,16 @@
     color: var(--champagne-light);
   }
   .investment-card p {
-    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
   }
 
   .family-role {
     display: inline-block;
     padding: 0.2rem 0.6rem;
-    background: rgba(201, 169, 110, 0.12);
+    background: rgba(212, 184, 122, 0.2);
     border-radius: 4px;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.92rem;
     color: var(--champagne);
     font-weight: 500;
     margin-right: 0.3rem;
@@ -102,7 +102,7 @@
     color: var(--pearl);
   }
   .insight-block p {
-    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
   }
 
   /* ─── NETWORK GRAPH ─── */
@@ -119,7 +119,8 @@
   .network-caption {
     text-align: center;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.88rem;
+    font-weight: 500;
     letter-spacing: 0.1em;
     color: var(--smoke);
     margin-top: 1rem;
@@ -143,9 +144,138 @@
     font-size: 1.2rem; font-weight: 600;
     margin-bottom: 1rem;
   }
-  .person-avatar.lyreco-avatar { background: rgba(230, 57, 70, 0.15); color: var(--lyreco-red); border: 1.5px solid rgba(230, 57, 70, 0.3); }
+  .person-avatar.lyreco-avatar { background: rgba(230, 57, 70, 0.15); color: var(--lyreco-red); border: 1.5px solid rgba(240, 77, 90, 0.4); }
   .person-avatar.wefun-avatar { background: rgba(74, 114, 255, 0.15); color: var(--wefun-blue); border: 1.5px solid rgba(74, 114, 255, 0.3); }
-  .person-avatar.family-avatar { background: rgba(201, 169, 110, 0.15); color: var(--champagne); border: 1.5px solid rgba(201, 169, 110, 0.3); }
+  .person-avatar.family-avatar { background: rgba(212, 184, 122, 0.25); color: var(--champagne); border: 1.5px solid rgba(212, 184, 122, 0.45); }
+
+  .person-photo {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 1.5px solid rgba(212, 184, 122, 0.45);
+    filter: grayscale(30%);
+  }
+
+  /* ─── FAMILY TREE ─── */
+  .family-tree {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 2rem 0 3rem;
+    overflow-x: auto;
+  }
+
+  .ft-generation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .ft-connector {
+    width: 2px;
+    height: 2.5rem;
+    background: linear-gradient(180deg, var(--champagne), var(--champagne-dim));
+  }
+
+  .ft-branch-connector {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+  }
+  .ft-branch-connector::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    right: 25%;
+    height: 2px;
+    background: var(--champagne-dim);
+  }
+
+  .ft-node {
+    background: var(--ink-card);
+    border: 1px solid rgba(212, 184, 122, 0.25);
+    border-radius: var(--radius-card);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    min-width: 220px;
+    max-width: 300px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .ft-node:hover {
+    border-color: var(--champagne);
+    transform: translateY(-2px);
+  }
+
+  .ft-node-gen {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 0.3rem;
+  }
+
+  .ft-node-name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .ft-node-role {
+    font-size: 0.95rem;
+    color: var(--smoke);
+    line-height: 1.6;
+  }
+
+  .ft-node-date {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--champagne-dim);
+    margin-top: 0.4rem;
+  }
+
+  .ft-children {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ft-child-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ft-non-family {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .ft-node.non-family {
+    border-color: rgba(232, 229, 222, 0.12);
+    opacity: 0.8;
+    min-width: 180px;
+  }
+  .ft-node.non-family .ft-node-gen {
+    color: var(--smoke);
+  }
+
+  @media (max-width: 768px) {
+    .ft-children { flex-direction: column; align-items: center; }
+    .ft-branch-connector::before { display: none; }
+    .ft-non-family { flex-direction: column; align-items: center; }
+  }
 </style>
 </head>
 <body data-chapter="2">
@@ -182,35 +312,41 @@
 <!-- ═══════════════ CONTENT ═══════════════ -->
 <main class="chapter-content">
 
+  <div class="atmos-img" data-animate="fade-up">
+    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400&q=80" alt="A grand French estate — evoking the generational wealth and legacy of the Gaspard dynasty" loading="lazy">
+    <span class="atmos-caption">The Gaspard dynasty — four generations, one vision</span>
+  </div>
+
   <!-- ── THE STRUCTURE ── -->
   <section class="section">
     <div data-animate="fade-up">
       <div class="section-label">The Structure</div>
       <h2 class="section-title">Corely SAS<br><em>The family's holding company</em></h2>
       <div class="section-body">
-        <p>At the apex of the Lyreco empire sits Corely SAS &mdash; the Gaspard family's holding company. Corely controls approximately 84% of Lyreco's ownership, making the family the undisputed masters of the enterprise. This is not a dispersed public shareholding. This is concentrated, generational power.</p>
+        <p>At the apex of the Lyreco empire sits <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(201,169,110,0.4);">Corely SAS</a> &mdash; the Gaspard family's holding company. Corely controls approximately <strong style="color: var(--pearl);">84%</strong> of Lyreco's ownership. The remaining <strong>~16%</strong> is held through <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a> (&euro;10.5M capital, est. 1998) &mdash; a management participation vehicle that likely holds equity for senior executives. This is not a dispersed public shareholding. This is concentrated, generational power.</p>
         <p>The leadership of Corely tells you everything about the family's structure:</p>
       </div>
     </div>
 
     <div class="stat-grid" data-stagger-group>
       <div class="stat-card" data-stagger-child>
-        <div class="person-avatar family-avatar">GG</div>
+        <img class="person-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&q=80" alt="Georges Gaspard (representative)" loading="lazy">
         <div class="stat-number">Georges Gaspard</div>
         <div class="stat-label">President of Corely SAS</div>
         <div class="stat-sub">3rd generation patriarch</div>
       </div>
       <div class="stat-card" data-stagger-child>
-        <div class="person-avatar family-avatar">CG</div>
+        <img class="person-photo" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80" alt="Caroline Gaspard (representative)" loading="lazy">
         <div class="stat-number">Caroline Gaspard</div>
         <div class="stat-label">Deputy Director-General</div>
         <div class="stat-sub">4th generation</div>
       </div>
       <div class="stat-card" data-stagger-child>
-        <div class="person-avatar family-avatar">NG</div>
+        <img class="person-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80" alt="Nathalie Gaspard (representative)" loading="lazy">
         <div class="stat-number">Nathalie Gaspard</div>
         <div class="stat-label">Deputy Director-General</div>
         <div class="stat-sub">4th generation</div>
+        <a href="https://www.linkedin.com/in/nathalie-gaspard-1388347/" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; color: #0A66C2; text-decoration: none; text-transform: uppercase; margin-top: 0.5rem;">🔗 LinkedIn</a>
       </div>
     </div>
 
@@ -237,12 +373,25 @@
       <div class="org-tier" data-stagger-child>
         <div class="org-tier-label">Family Holding</div>
         <div class="org-tier-name">Corely SAS</div>
-        <div class="org-tier-detail">Onnaing, France &middot; ~84% ownership of Lyreco &middot; President: Georges Gaspard</div>
+        <div class="org-tier-detail"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.2);">Onnaing, France</a> &middot; ~84% ownership of Lyreco &middot; &euro;25.1M capital &middot; President: Georges Gaspard</div>
       </div>
-      <div class="org-tier" data-stagger-child>
+      <div class="org-tier" data-stagger-child style="display: flex; gap: 1.5rem; align-items: stretch; flex-wrap: wrap; justify-content: center; text-align: center; padding: 0; background: none; border: none;">
+        <div style="flex: 2; min-width: 250px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid var(--champagne);">
+          <div class="org-tier-label">~84% &middot; Family Holding</div>
+          <div class="org-tier-name" style="font-size: 1.1rem;"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Corely SAS</a></div>
+          <div class="org-tier-detail">Gaspard family control</div>
+        </div>
+        <div style="flex: 1; min-width: 180px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid rgba(232,229,222,0.2);">
+          <div class="org-tier-label" style="color: var(--smoke);">~16% &middot; Management</div>
+          <div class="org-tier-name" style="font-size: 1.1rem;"><a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Lyreco Management SAS</a></div>
+          <div class="org-tier-detail">Senior executive equity vehicle &middot; &euro;10.5M capital</div>
+        </div>
+      </div>
+      <div class="org-tier" data-stagger-child style="position: relative;">
+        <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr; combined ~100%</div>
         <div class="org-tier-label">Operating Company</div>
-        <div class="org-tier-name">Lyreco SAS</div>
-        <div class="org-tier-detail">Marly, France &middot; Share capital: &euro;64.7M &middot; President: Nathalie Gaspard &middot; Director-General: Georges Gaspard</div>
+        <div class="org-tier-name"><a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Lyreco SAS</a></div>
+        <div class="org-tier-detail">Marly, France &middot; Share capital: &euro;65.2M &middot; President: Nathalie Gaspard &middot; Director-General: Georges Gaspard</div>
       </div>
       <div class="org-tier" data-stagger-child>
         <div class="org-tier-label">Global Operations</div>
@@ -257,13 +406,310 @@
       </div>
     </div>
 
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=1200&q=80" alt="A corporate boardroom — representing the governance structure of the Gaspard family's enterprise" loading="lazy">
+      <figcaption>Corely SAS — the holding vehicle through which the Gaspard family maintains 84% control</figcaption>
+    </figure>
+
     <!-- Full Corporate Structure Wireframe -->
     <div data-animate="fade-up">
       <div class="structure-diagram-container" id="corely-structure"></div>
-      <div class="network-caption">Full corporate ownership chain &mdash; Gaspard family &rarr; Corely SAS &rarr; Lyreco SAS &rarr; Global subsidiaries</div>
+      <div class="network-caption">Full corporate ownership chain &mdash; Gaspard family &rarr; Corely SAS (~84%) + Lyreco Management SAS (~16%) &rarr; Lyreco SAS &rarr; Global subsidiaries</div>
     </div>
   </section>
 
+  <div class="divider"></div>
+
+  <!-- ── FAMILY TREE ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Bloodline</div>
+      <h2 class="section-title">The Gaspard <em>Family Tree</em></h2>
+      <p class="section-body" style="margin-bottom: 2rem;">Four generations. One hundred years. The bookshop became an empire &mdash; and the family never let go.</p>
+    </div>
+
+    <!-- ── OWNERSHIP PIE CHART (SVG) ── -->
+    <div data-animate="fade-up" style="display: flex; justify-content: center; margin-bottom: 2.5rem;">
+      <div style="text-align: center;">
+        <svg viewBox="0 0 260 260" style="width: 220px; height: 220px;">
+          <!-- 84% Gaspard family (champagne) — 302.4 degrees -->
+          <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(201,169,110,0.25)" stroke-width="30"/>
+          <circle cx="130" cy="130" r="100" fill="none" stroke="var(--champagne)" stroke-width="30"
+                  stroke-dasharray="527.8 100" stroke-dashoffset="0" transform="rotate(-90 130 130)" style="filter: drop-shadow(0 0 8px rgba(212,184,122,0.45));"/>
+          <!-- 16% Lyreco Management (smoke) -->
+          <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(244,242,237,0.2)" stroke-width="30"
+                  stroke-dasharray="100.5 527.8" stroke-dashoffset="-527.8" transform="rotate(-90 130 130)"/>
+          <!-- Center text -->
+          <text x="130" y="120" text-anchor="middle" font-family="'Playfair Display', serif" font-size="28" font-weight="700" fill="var(--pearl)">84%</text>
+          <text x="130" y="145" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="var(--champagne)" letter-spacing="0.12em">GASPARD FAMILY</text>
+        </svg>
+        <div style="display: flex; gap: 1.5rem; justify-content: center; margin-top: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--champagne); display: inline-block;"></span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--champagne);">~84% Gaspard Family <span style="color: var(--smoke);">via Corely SAS</span></span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 12px; height: 12px; border-radius: 50%; background: rgba(244,242,237,0.25); display: inline-block;"></span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--smoke);">~16% <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a></span>
+          </div>
+        </div>
+        <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: 0.8rem; max-width: 500px;">
+          Lyreco Management SAS (&euro;10.5M capital, est. 1998) is a management participation vehicle — likely holding equity for senior executives. Exact beneficial ownership data restricted since July 2024.
+          <br><a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">Source: Societe.com</a> &middot;
+          <a href="https://find-and-update.company-information.service.gov.uk/company/00442696/persons-with-significant-control" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">UK Companies House PSC</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="family-tree" data-animate="fade-up">
+
+      <!-- Generation 1 -->
+      <div class="ft-generation">
+        <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+          <div class="ft-node-gen">Generation I &middot; Founder</div>
+          <div class="ft-node-name">Georges-Gaston Gaspard</div>
+          <div class="ft-node-role">Founded the &ldquo;Gaspard&rdquo; bookshop<br>in Valenciennes. Started B2B distribution.</div>
+          <div class="ft-node-date">1926 &middot; &ldquo;The Bookshop&rdquo;</div>
+          <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease; margin-top: 0;">
+            <div style="padding-top: 0.8rem; border-top: 1px solid rgba(212,184,122,0.18); margin-top: 0.8rem; font-size: 0.95rem; color: var(--smoke); line-height: 1.7; text-align: left;">
+              Born in Guise, Aisne. Opened a bookstore (&ldquo;papeterie-librairie&rdquo;) in Valenciennes in 1926. Began direct B2B delivery of office supplies from his first warehouse in 1936. Published the company&rsquo;s first product catalogue in 1959.
+              <br><span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);"><a href="https://www.lyreco.com/group/about/lyreco-history" target="_blank" rel="noopener" style="color: var(--champagne-dim); text-decoration: underline;">Source: Lyreco Group History</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector 1→2 -->
+      <div class="ft-connector"></div>
+
+      <!-- Generation 2 -->
+      <div class="ft-generation">
+        <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+          <div class="ft-node-gen">Generation II &middot; Expansion</div>
+          <div class="ft-node-name">Etienne Gaspard</div>
+          <div class="ft-node-role">Son of Georges-Gaston. Entered company in 1942.<br>Succeeded father as head ~1956. Built first warehouse.</div>
+          <div class="ft-node-date">Managed growth through post-war France</div>
+          <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease; margin-top: 0;">
+            <div style="padding-top: 0.8rem; border-top: 1px solid rgba(212,184,122,0.18); margin-top: 0.8rem; font-size: 0.95rem; color: var(--smoke); line-height: 1.7; text-align: left;">
+              Joined his father&rsquo;s business during WWII in 1942 and gradually took over management. Oversaw the transition from storefront retail to catalog-based B2B distribution. Under Etienne, the company built its first warehouse (1936) and published its first catalogue (1959), laying the foundation for the direct distribution model that would define Lyreco.
+              <br><span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);"><a href="https://why.lyreco.com/about-lyreco/history/" target="_blank" rel="noopener" style="color: var(--champagne-dim); text-decoration: underline;">Source: Lyreco UK History</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector 2→3 -->
+      <div class="ft-connector"></div>
+
+      <!-- Generation 3 -->
+      <div class="ft-generation">
+        <div class="ft-node" style="cursor: pointer; border-color: rgba(212,184,122,0.45);" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+          <div class="ft-node-gen">Generation III &middot; Patriarch</div>
+          <div class="ft-node-name">Georges Andr&eacute; Daniel Gaspard</div>
+          <div class="ft-node-role">
+            President of <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">Corely SAS</a> (&euro;25.1M capital)<br>
+            Director-General of <a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">Lyreco SAS</a> (&euro;65.1M capital)<br>
+            <a href="https://www.lyreco.com/group/be/fr/pionniers-en-produits-pour-le-lieu-de-travail-depuis-1926" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.3);">Acquired Vermeire (Belgium, 1989)</a> — first international expansion<br>
+            Renamed company to &ldquo;Lyreco&rdquo; in 2001
+          </div>
+          <div class="ft-node-date">Age ~75 &middot; Onnaing, France &middot; President since 1996</div>
+          <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease; margin-top: 0;">
+            <div style="padding-top: 0.8rem; border-top: 1px solid rgba(212,184,122,0.18); margin-top: 0.8rem; font-size: 0.95rem; color: var(--smoke); line-height: 1.7; text-align: left;">
+              <strong style="color: var(--pearl);">The architect of modern Lyreco.</strong> Joined as a sales representative in 1969. Took over from his father Etienne and became President in 1996. His most transformative decision was hiring <strong>Eric Bigeard</strong> as CEO in 1988 &mdash; freeing the family from day-to-day management while retaining ownership control through Corely SAS.
+              <br><br>
+              <strong style="color: var(--champagne);">The Vermeire Acquisition (1989)</strong><br>
+              Georges led Lyreco's first international move: the acquisition of <em>Vermeire</em>, a Belgian office supplies distributor. This was the company's first operation outside France and proved that the Gaspard distribution model could travel across borders. It opened the door to 25+ countries.
+              <br><a href="https://www.lyreco.com/group/be/fr/pionniers-en-produits-pour-le-lieu-de-travail-depuis-1926" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim); text-decoration: underline;">Source: Lyreco Belgium History</a>
+              <br><br>
+              <strong style="color: var(--champagne);">Why the Gaspards Hired Professional CEOs</strong><br>
+              Georges made the strategic choice to separate <em>ownership</em> (family via Corely) from <em>operations</em> (professional CEOs). He remained President/Chairman while delegating the CEO role to professionals who could scale the business internationally. This mirrors the evolution of many European family conglomerates &mdash; the family governs, professionals execute.
+              <br><a href="https://www.lagazettefrance.fr/article/c2-abj-e2-80-99ai-poursuivi-le-reve-familial-c2-bb" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim); text-decoration: underline;">Source: La Gazette France interview</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector 3→4 (branching) -->
+      <div class="ft-connector"></div>
+
+      <!-- Sisters label -->
+      <div style="text-align: center; margin-bottom: -0.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; color: var(--champagne-dim); text-transform: uppercase;">Daughters of Georges &middot; Sisters</span>
+      </div>
+
+      <!-- Generation 4: Two children side by side -->
+      <div class="ft-branch-connector">
+        <div class="ft-children">
+          <div class="ft-child-branch">
+            <div class="ft-connector"></div>
+            <div class="ft-node" style="border-color: rgba(201,169,110,0.25); cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+              <div class="ft-node-gen">Generation IV &middot; Successor</div>
+              <div class="ft-node-name">Nathalie Gaspard</div>
+              <div class="ft-node-role">President of Lyreco SAS<br>Deputy Director-General at Corely SAS<br>Announced as successor in <a href="https://why.lyreco.com/about-lyreco/history/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">2017</a></div>
+              <div class="ft-node-date">b. ~1976 &middot; Elder daughter</div>
+              <a href="https://www.linkedin.com/in/nathalie-gaspard-1388347/" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; color: #0A66C2; text-decoration: none; text-transform: uppercase; margin-top: 0.5rem;">&#x1F517; LinkedIn</a>
+              <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease; margin-top: 0;">
+                <div style="padding-top: 0.8rem; border-top: 1px solid rgba(212,184,122,0.18); margin-top: 0.8rem; font-size: 0.95rem; color: var(--smoke); line-height: 1.7; text-align: left;">
+                  Nathalie worked alongside Lyreco's financial director before being groomed for succession. In 2017, Georges publicly announced that she would succeed him. She now holds the title of <strong>President of Lyreco SAS</strong> — meaning she is the formal head of the operating company, while Georges retains Director-General and Corely President roles. Per UK Companies House filings, she holds <strong>25-50% of Lyreco UK</strong> shares.
+                  <br><a href="https://find-and-update.company-information.service.gov.uk/company/00442696/persons-with-significant-control" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim); text-decoration: underline;">Source: UK Companies House PSC</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ft-child-branch">
+            <div class="ft-connector"></div>
+            <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+              <div class="ft-node-gen">Generation IV</div>
+              <div class="ft-node-name">Caroline Gaspard</div>
+              <div class="ft-node-role">Deputy Director-General at Corely SAS<br>Delegated DG since 2008</div>
+              <div class="ft-node-date">b. ~1981 &middot; Younger daughter</div>
+              <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease; margin-top: 0;">
+                <div style="padding-top: 0.8rem; border-top: 1px solid rgba(212,184,122,0.18); margin-top: 0.8rem; font-size: 0.95rem; color: var(--smoke); line-height: 1.7; text-align: left;">
+                  Caroline holds a Delegated Director-General role at Corely SAS, the family holding company. Per UK Companies House, she also holds <strong>25-50% of Lyreco UK</strong> shares. Both sisters serve as the 4th generation of Gaspard leadership.
+                  <br><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim); text-decoration: underline;">Source: Corely SAS on Societe.com</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CEO SUCCESSION TIMELINE ── -->
+      <div style="margin-top: 3rem; width: 100%; max-width: 700px;">
+        <p style="font-family: var(--font-mono); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.12em; color: var(--champagne); text-transform: uppercase; text-align: center; margin-bottom: 1.5rem;">Professional CEO Succession &middot; Why the Gaspards Stepped Back</p>
+        <p style="font-size: 1.0rem; color: var(--smoke); line-height: 1.7; text-align: center; margin-bottom: 2rem;">
+          The Gaspards made a deliberate choice: <strong style="color: var(--pearl);">own the company, but hire professionals to run it.</strong> Georges Gaspard retained the presidency and board control via Corely SAS, while delegating CEO operations to world-class managers. This separation of ownership and execution is how the family scaled from a French regional business to a €2.2B European leader.
+        </p>
+
+        <div style="position: relative; padding-left: 2.5rem; border-left: 2px solid rgba(212,184,122,0.25);">
+
+          <!-- Bigeard -->
+          <div class="ft-node non-family" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; max-width: none; border-left: 3px solid var(--champagne); padding: 1.2rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+            <div style="position: absolute; left: -0.6rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--champagne); border: 2px solid var(--ink);"></div>
+            <div class="ft-node-gen" style="color: var(--champagne);">CEO #1 &middot; 1988&ndash;2010 &middot; 22 YEARS</div>
+            <div class="ft-node-name">Eric Bigeard</div>
+            <div class="ft-node-role" style="text-align: left;">
+              Joined Lyreco in 1980 as a young professional. Appointed CEO at age 33 by Georges Gaspard in 1988.<br>
+              Grew revenue <strong style="color: var(--pearl);">&euro;15M &rarr; &euro;2B</strong> (133&times;). Expanded from 1 to 29 countries.<br>
+              <a href="https://www.opi.net/news/analysis/bigeard-to-leave-lyreco/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Announced departure in 2010</a> after planning his exit 10 years in advance.
+            </div>
+            <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease;">
+              <div style="padding-top: 0.8rem; border-top: 1px solid rgba(212,184,122,0.18); margin-top: 0.8rem; font-size: 0.95rem; color: var(--smoke); line-height: 1.7;">
+                <strong style="color: var(--pearl);">Eric Bigeard is NOT a family member</strong> — he was the professional CEO Georges Gaspard hired to scale the business. After stepping down in 2010, he <a href="https://www.opi.net/news/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">remained on the Supervisory Board</a> at Georges Gaspard&rsquo;s personal request. He stated he had <em>&ldquo;decided about 10 years ago&rdquo;</em> when he would leave &mdash; showing the kind of long-term planning that defines the Gaspard approach.
+                <br><span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">Sources: <a href="https://www.opi.net/news/analysis/bigeard-to-leave-lyreco/" target="_blank" rel="noopener" style="color: var(--champagne-dim); text-decoration: underline;">OPI &mdash; &ldquo;Bigeard to Leave Lyreco&rdquo;</a> &middot; <a href="https://www.opi.net/news/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="color: var(--champagne-dim); text-decoration: underline;">OPI &mdash; &ldquo;End of an Era&rdquo;</a></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Martinez -->
+          <div class="ft-node non-family" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; max-width: none; opacity: 0.6; padding: 1rem 1.5rem;">
+            <div style="position: absolute; left: -0.4rem; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: rgba(244,242,237,0.2); border: 2px solid var(--ink);"></div>
+            <div class="ft-node-gen" style="color: var(--smoke);">CEO #2 &middot; 2011 &middot; &lt;1 YEAR</div>
+            <div class="ft-node-name" style="font-size: 1rem;">Philippe Martinez</div>
+            <div class="ft-node-role" style="text-align: left;">External hire from Xerox (26 years). Departed August 2011.</div>
+          </div>
+
+          <!-- Law -->
+          <div class="ft-node non-family" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; max-width: none; opacity: 0.6; padding: 1rem 1.5rem;">
+            <div style="position: absolute; left: -0.4rem; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: rgba(244,242,237,0.2); border: 2px solid var(--ink);"></div>
+            <div class="ft-node-gen" style="color: var(--smoke);">CEO #3 &middot; 2012&ndash;2014 &middot; 2 YEARS</div>
+            <div class="ft-node-name" style="font-size: 1rem;">Steve Law</div>
+            <div class="ft-node-role" style="text-align: left;">Appointed March 2012 after Martinez&rsquo;s abrupt departure.</div>
+          </div>
+
+          <!-- Milcent -->
+          <div class="ft-node non-family" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; max-width: none; opacity: 0.7; padding: 1rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+            <div style="position: absolute; left: -0.4rem; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: rgba(244,242,237,0.3); border: 2px solid var(--ink);"></div>
+            <div class="ft-node-gen" style="color: var(--smoke);">CEO #4 &middot; 2015&ndash;2019 &middot; 4 YEARS</div>
+            <div class="ft-node-name" style="font-size: 1rem;">Herv&eacute; Milcent</div>
+            <div class="ft-node-role" style="text-align: left;">Stabilized Lyreco after turbulent succession period. Quoted: <em>&ldquo;I underestimated the legacy of Eric Bigeard.&rdquo;</em></div>
+            <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease;">
+              <div style="padding-top: 0.8rem; border-top: 1px solid rgba(212,184,122,0.18); margin-top: 0.8rem; font-size: 0.95rem; color: var(--smoke); line-height: 1.7;">
+                Milcent took over in January 2015 after the turbulence of two short-lived CEO tenures. He <a href="https://www.opi.net/news/region/002-europe/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">kept a low profile initially</a>, &ldquo;assessing and learning about the market.&rdquo; His tenure stabilized the company but he acknowledged the enormous shadow of Bigeard's legacy.
+                <br><span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);"><a href="https://www.opi.net/news/region/002-europe/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="color: var(--champagne-dim); text-decoration: underline;">Source: OPI &mdash; &ldquo;A New Lyreco World&rdquo; (2016)</a></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Liénard -->
+          <div class="ft-node non-family" style="margin-bottom: 0; text-align: left; min-width: auto; max-width: none; border-left: 3px solid rgba(244,242,237,0.3); padding: 1.2rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+            <div style="position: absolute; left: -0.6rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--pearl); border: 2px solid var(--ink);"></div>
+            <img class="person-photo" src="https://why.lyreco.com/app/uploads/2019/08/gregory-lienard-240x300.jpg" alt="Gregory Li&eacute;nard" loading="lazy" style="border-color: rgba(232, 229, 222, 0.2); width: 48px; height: 48px; margin-bottom: 0.5rem;">
+            <div class="ft-node-gen" style="color: var(--pearl);">CEO #5 &middot; 2019&ndash;PRESENT</div>
+            <div class="ft-node-name">Gregory Li&eacute;nard</div>
+            <div class="ft-node-role" style="text-align: left;">
+              Joined Lyreco in 1996. Spent <strong>entire career</strong> at the company (28+ years).<br>
+              Built Asian operations from Singapore for nearly 10 years.<br>
+              <a href="https://why.lyreco.com/news/lyreco-group-announces-new-ceo/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Appointed CEO August 2019</a>, succeeding Milcent.
+            </div>
+            <a href="https://www.linkedin.com/in/gregorylienard/" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; color: #0A66C2; text-decoration: none; text-transform: uppercase; margin-top: 0.5rem;">&#x1F517; LinkedIn</a>
+            <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease;">
+              <div style="padding-top: 0.8rem; border-top: 1px solid rgba(212,184,122,0.18); margin-top: 0.8rem; font-size: 0.95rem; color: var(--smoke); line-height: 1.7;">
+                Li&eacute;nard is the first true &ldquo;Lyreco lifer&rdquo; to serve as CEO since the Gaspard family stepped back from daily operations. He held positions as Innovation Director, Group HR Director, and Acquisition Manager before heading Asia for nearly a decade. Eric Bigeard took on an advisory role &ldquo;in support&rdquo; of Li&eacute;nard in 2021 (separate from his Supervisory Board seat) &mdash; a symbolic blessing from the builder of modern Lyreco. His appointment &ldquo;reaffirms the company board&rsquo;s will to develop the group while sustaining the family and people-centred values.&rdquo;
+                <br><span style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">Sources: <a href="https://why.lyreco.com/news/lyreco-group-announces-new-ceo/" target="_blank" rel="noopener" style="color: var(--champagne-dim); text-decoration: underline;">Lyreco Press Release (2019)</a> &middot; <a href="https://www.euwid-paper.com/news/markets/lyreco-appoints-gregory-lienard-as-new-ceo/" target="_blank" rel="noopener" style="color: var(--champagne-dim); text-decoration: underline;">EUWID Paper</a></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Helen Riley -->
+      <div style="margin-top: 2.5rem; width: 100%; max-width: 700px;">
+        <p style="font-family: var(--font-mono); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.12em; color: var(--champagne); text-transform: uppercase; text-align: center; margin-bottom: 1rem;">Your Key Counterpart</p>
+        <div class="ft-node non-family" style="text-align: left; min-width: auto; max-width: none; border-left: 3px solid var(--lyreco-red); padding: 1.2rem 1.5rem;">
+          <div class="ft-node-gen" style="color: var(--lyreco-red);">Non-Family &middot; M&amp;A Lead</div>
+          <div class="ft-node-name">Helen Riley</div>
+          <div class="ft-node-role" style="text-align: left;">Group Development Director M&amp;A (since Sept 2025)<br>At Lyreco since 2004 &middot; 20+ year &ldquo;lifer&rdquo;<br>She reports into the corporate structure, not the family directly.</div>
+          <a href="https://www.linkedin.com/in/helen-riley-21a13018/" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; color: #0A66C2; text-decoration: none; text-transform: uppercase; margin-top: 0.5rem;">&#x1F517; LinkedIn</a>
+        </div>
+      </div>
+
+      <!-- Key Relationships Note -->
+      <div style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(212, 184, 122, 0.08); border: 1px solid rgba(212, 184, 122, 0.18); border-radius: var(--radius-small); width: 100%; max-width: 700px;">
+        <p style="font-family: var(--font-mono); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.08em; color: var(--champagne); text-transform: uppercase; margin-bottom: 0.5rem;">&#x1F4A1; Key Relationships &middot; Click cards above to expand</p>
+        <p style="font-size: 1.0rem; color: var(--smoke); line-height: 1.7;">
+          <strong style="color: var(--pearl);">Nathalie &amp; Caroline</strong> are <strong>sisters</strong> &mdash; both daughters of Georges Gaspard (4th generation). Nathalie was <a href="https://why.lyreco.com/about-lyreco/history/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">publicly announced as her father's successor in 2017</a>. Both hold <strong>25-50% of Lyreco UK shares each</strong> per <a href="https://find-and-update.company-information.service.gov.uk/company/00442696/persons-with-significant-control" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">UK Companies House filings</a>.<br><br>
+          <strong style="color: var(--pearl);">Eric Bigeard</strong> is NOT a family member &mdash; he was the professional CEO hired to scale the business. He <a href="https://www.opi.net/news/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">remained on the Supervisory Board</a> at Georges Gaspard's personal request, where he could &ldquo;still play a role from a strategic point of view.&rdquo; (<a href="https://www.opi.net/news/analysis/bigeard-to-leave-lyreco/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">OPI, 2010</a>)<br><br>
+          <strong style="color: var(--pearl);">Gregory Li&eacute;nard</strong> is NOT a family member &mdash; he is the current CEO and a <a href="https://why.lyreco.com/news/lyreco-group-announces-new-ceo/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">28-year Lyreco lifer</a> who built the Asian operations personally. Bigeard took on an advisory role &ldquo;in support&rdquo; of Li&eacute;nard in 2021 (separate from his Supervisory Board seat) &mdash; a symbolic passing of the torch.<br><br>
+          <strong style="color: var(--pearl);">Helen Riley</strong> is NOT a family member &mdash; she is a 20-year Lyreco employee appointed to a newly created M&amp;A role in September 2025.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ── Toggle script for expandable cards ── -->
+    <script>
+      document.querySelectorAll('.ft-expand').forEach(el => {
+        el.style.maxHeight = '0';
+      });
+      document.addEventListener('click', (e) => {
+        const card = e.target.closest('[onclick]');
+        if (!card) return;
+        const expand = card.querySelector('.ft-expand');
+        if (expand) {
+          if (expand.classList.contains('expanded')) {
+            expand.style.maxHeight = expand.scrollHeight + 'px';
+          } else {
+            expand.style.maxHeight = '0';
+          }
+        }
+      });
+      // Fix: toggle expanded properly
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach(m => {
+          if (m.target.classList.contains('expanded')) {
+            m.target.style.maxHeight = m.target.scrollHeight + 'px';
+          } else {
+            m.target.style.maxHeight = '0';
+          }
+        });
+      });
+      document.querySelectorAll('.ft-expand').forEach(el => {
+        observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+      });
+    </script>
+  </section>
   <div class="divider"></div>
 
   <!-- ── ENTITY NETWORK ── -->
@@ -278,7 +724,7 @@
 
     <div data-animate="scale-in">
       <div class="network-graph-container" id="gaspard-network"></div>
-      <div class="network-caption">Interactive force-directed graph &mdash; drag nodes to explore connections</div>
+      <div class="network-caption">Interactive force-directed graph &mdash; drag nodes to explore &middot; click entities to open source / homepage &middot; hover for details</div>
     </div>
   </section>
 
@@ -297,14 +743,18 @@
     <div data-animate="fade-up" data-delay="0.1">
       <div class="investment-card">
         <h4>Corely Belgium SPRL &amp; Bratya SPRL</h4>
-        <p>Belgian investment vehicles managed by David Coti since 2015. Coti is an ESSEC and Plekhanov University graduate &mdash; signaling the family hires world-class talent to manage its non-Lyreco assets. These entities invested <strong style="color: var(--pearl);">&euro;15 million + &euro;3.6 million in CARMAT</strong> &mdash; the French artificial heart company. This is not a family that plays it safe. They back visionary, high-risk ventures alongside their steady B2B cash cow.</p>
+        <p>Belgian investment vehicles managed by David Coti since 2015. Coti is an <a href="https://www.essec.edu/en/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">ESSEC</a> and Plekhanov University graduate &mdash; signaling the family hires world-class talent to manage its non-Lyreco assets. These entities invested <strong style="color: var(--pearl);">&euro;15 million + &euro;3.6 million in <a href="https://www.carmatsa.com/en/" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.3);">CARMAT</a></strong> &mdash; the French artificial heart company. This is not a family that plays it safe. They back visionary, high-risk ventures alongside their steady B2B cash cow.</p>
+        <div style="margin-top: 1.2rem; padding: 1rem 1.2rem; background: rgba(240, 77, 90, 0.08); border: 1px solid rgba(240, 77, 90, 0.2); border-radius: var(--radius-small);">
+          <p style="font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lyreco-red); font-weight: 600; margin-bottom: 0.5rem;">&#9888; UPDATE &mdash; CARMAT STATUS</p>
+          <p style="font-size: 1.0rem; color: var(--pearl-muted); line-height: 1.7; margin: 0;">CARMAT <a href="https://www.medicaldevice-network.com/news/french-artificial-heart-maker-carmat-files-for-insolvency/" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline;">filed for insolvency on June 30, 2025</a> at the Versailles Economic Affairs Court, unable to raise the &euro;35M it needed to continue operations. By October 14, 2025, the court <a href="https://www.marketscreener.com/news/carmat-says-imminent-liquidation-now-extremely-probable-ce7d5bdbdb88f326" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline;">pronounced judicial liquidation</a> after a takeover bid by chairman Pierre Bastid failed to secure funding. The company was delisted from Euronext. On December 1, 2025, a <a href="https://www.businesswire.com/news/home/20251201285797/fr" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">disposal plan</a> was approved, with Bastid&rsquo;s LOHAS S.&agrave;.r.l acquiring the remaining assets. The Gaspard entities&rsquo; &euro;18.6M investment was almost certainly wiped out &mdash; a reminder that this family&rsquo;s risk appetite is genuine, not performative.</p>
+        </div>
       </div>
     </div>
 
     <div data-animate="fade-up" data-delay="0.1">
       <div class="investment-card">
         <h4>Georges Gaspard &mdash; Extended Network</h4>
-        <p>Beyond the formal holding structure, Georges Gaspard is connected to multiple entities: <span class="family-role">Erypharm SAS</span> <span class="family-role">Nataline SC</span> <span class="family-role">Villa Geoanne du Cap Martin</span> &mdash; the latter being a real estate entity based in Onnaing. This web of interests paints a picture of a patriarch who is deeply engaged across industries, not merely a figurehead atop a single company.</p>
+        <p>Beyond the formal holding structure, Georges Gaspard is connected to multiple entities: <a href="https://www.erypharm.com/en/home-page/" target="_blank" rel="noopener"><span class="family-role">Erypharm SAS</span></a> <a href="https://www.societe.com/societe/nataline-432999043.html" target="_blank" rel="noopener"><span class="family-role">Nataline SC</span></a> <a href="https://www.pappers.fr/entreprise/villa-geoanne-du-cap-martin-402728885" target="_blank" rel="noopener"><span class="family-role">Villa Geoanne du Cap Martin</span></a> &mdash; the latter being a real estate entity based in Onnaing. This web of interests paints a picture of a patriarch who is deeply engaged across industries, not merely a figurehead atop a single company.</p>
       </div>
     </div>
   </section>
@@ -317,7 +767,10 @@
       <div class="section-label">The Auditors</div>
       <h2 class="section-title">PwC on the books.<br><em>Institutional governance.</em></h2>
       <div class="section-body">
-        <p>Lyreco's statutory auditors are PricewaterhouseCoopers (previously KPMG). For a family-owned company with no stock market listing, choosing a Big Four auditor is a deliberate signal. It tells banks, partners, and potential counterparties: <em>we run this like a public company, even though we don't have to.</em></p>
+        <p>Lyreco's current statutory auditors (<em>commissaires aux comptes</em>) are <strong style="color: var(--pearl);">PricewaterhouseCoopers Audit SA</strong>, appointed in <strong style="color: var(--pearl);">July 2016</strong> alongside co-auditors Antoine Gu&eacute;roult and Estelle Chermat. <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--smoke);">(<a href="https://www.societe.com/dirigeants/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline;">Source: Societe.com &mdash; Lyreco SAS dirigeants</a>)</span></p>
+        <p>Previously, <strong style="color: var(--pearl);">KPMG Audit</strong> held the mandate alongside individual auditor Roland Bergagnini &mdash; documented from at least 2008 through approximately 2012. <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--smoke);">(<a href="https://www.northdata.com/Lyreco%20SAS,%20Marly/Siren%20400423968" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline;">Source: NorthData &mdash; Lyreco SAS publications</a>)</span></p>
+        <p>The switch was <em>not mandatory</em>. Under <a href="https://reawave-france.com/mandatory-rotation-of-auditors-in-france/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline;">French audit law</a>, commissaires aux comptes serve 6-year mandates. Mandatory rotation only applies to Public Interest Entities (listed companies, banks) &mdash; Lyreco, as a privately-held SAS, is exempt. The family <em>chose</em> to bring in PwC during the post-Bigeard governance restructuring (2011&ndash;2016, the Martinez/Law/Milcent era), signaling a deliberate upgrade in institutional credibility.</p>
+        <p>For a family-owned company with no stock market listing, choosing a Big Four auditor is a deliberate signal. It tells banks, partners, and potential counterparties: <em>we run this like a public company, even though we don&rsquo;t have to.</em></p>
         <p>This matters for the deal. It means Lyreco's financials will be clean, well-documented, and prepared to institutional standards. Due diligence will be rigorous &mdash; but the data will be there.</p>
       </div>
     </div>
@@ -336,7 +789,7 @@
       <div class="stat-card" data-stagger-child>
         <div class="stat-number">~84%</div>
         <div class="stat-label">Family Ownership</div>
-        <div class="stat-sub">Via Corely SAS</div>
+        <div class="stat-sub">Via Corely SAS &middot; ~16% via Lyreco Mgmt SAS</div>
       </div>
       <div class="stat-card" data-stagger-child>
         <div class="stat-number" data-counter="4" data-suffix="">0</div>
@@ -344,14 +797,14 @@
         <div class="stat-sub">4th generation now in position</div>
       </div>
       <div class="stat-card" data-stagger-child>
-        <div class="stat-number">&euro;64.7M</div>
+        <div class="stat-number">&euro;65.2M</div>
         <div class="stat-label">Lyreco Capital</div>
         <div class="stat-sub">Share capital of Lyreco SAS</div>
       </div>
       <div class="stat-card" data-stagger-child>
         <div class="stat-number">100 yrs</div>
         <div class="stat-label">In 2026</div>
-        <div class="stat-sub">Founded 1926 in Onnaing</div>
+        <div class="stat-sub">Founded 1926 in Valenciennes</div>
       </div>
     </div>
   </section>
@@ -367,8 +820,9 @@
 
     <div class="quote-block" data-animate="fade-up">
       <div class="quote-text">"This is not a public corporation optimizing quarterly earnings. This is a family's century-long legacy. Every decision is measured not in fiscal quarters, but in generations."</div>
-      <div class="quote-attr">Key Insight</div>
+      <div class="quote-attr">Briefing Note · Editorial</div>
     </div>
+    <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: -1.5rem; margin-bottom: 2rem;">This is editorial framing written for this briefing — not a direct quotation.</p>
 
     <div data-animate="fade-up">
       <div class="section-body">
@@ -382,6 +836,95 @@
       <p>The family structure is your biggest obstacle and your biggest opportunity. It is an obstacle because the Gaspards will never sell to someone they do not trust &mdash; no matter the price. It is an opportunity because if you earn that trust, the deal dynamics shift entirely. The Gaspards want a partner who thinks in decades, not quarters. WEFUN's founding story &mdash; built by entrepreneurs, not financial engineers &mdash; is exactly the kind of narrative that resonates with a family dynasty. Lead with that.</p>
     </div>
   </section>
+
+  <div class="divider"></div>
+
+  <figure class="chapter-img" data-animate="fade-up">
+    <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1200&q=80" alt="A modern glass corporate building — representing Lyreco Group headquarters near Valenciennes" loading="lazy">
+    <figcaption>Lyreco Group headquarters — Marly, near Valenciennes</figcaption>
+  </figure>
+
+  <!-- ── P&G PARALLEL · ICEBREAKER ── -->
+  <div class="pg-compare" data-animate="fade-up">
+    <div class="pg-compare-header">
+      <span class="pg-compare-badge">P&amp;G Parallel &middot; Icebreaker</span>
+    </div>
+    <div class="pg-compare-title">Family vs. Professional Management</div>
+    <div class="pg-compare-subtitle">Two governance models &mdash; one shared commitment to values</div>
+    <div class="pg-compare-body" style="margin-top: 1.2rem;">
+      <p><em>Procter &amp; Gamble</em> was family-run for its first ~50 years, then transitioned to <strong>professional management</strong> in the 1880s&ndash;1890s. The Procter and Gamble families gradually reduced their direct involvement &mdash; but the founding families' values persisted. <em>&ldquo;Do what is right&rdquo;</em> remained the company's guiding ethos through nearly two centuries of professional stewardship.</p>
+      <p style="margin-top: 0.8rem;"><strong>Lyreco took the opposite path.</strong> The Gaspard family maintained ~84% control through 100 years. The 4th generation is already in position. Where P&amp;G entrusted its values to professional managers, the Gaspards chose to carry them personally &mdash; generation after generation.</p>
+      <p style="margin-top: 0.8rem;">In <em>1887</em>, P&amp;G introduced one of the first <strong>employee profit-sharing programs</strong> in American corporate history &mdash; a revolutionary act that reflected the founders' people-first philosophy. Lyreco's employee-centric culture under Bigeard echoes this same instinct, decades later and an ocean apart.</p>
+      <p style="margin-top: 0.8rem;">Both models work: <em>P&amp;G became the world's largest FMCG company</em>. <em>Lyreco became Europe's largest B2B workplace distributor</em>. The common thread isn't the governance model &mdash; it's <strong>values-driven leadership</strong>.</p>
+    </div>
+
+    <!-- ── GOVERNANCE COMPARISON ── -->
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="col-pg">P&amp;G Governance</th>
+          <th class="col-lyreco">Lyreco / Gaspard Governance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Model</td>
+          <td>Professional management (since ~1890s)</td>
+          <td><strong>Family-controlled</strong> — 84% via Corely SAS</td>
+        </tr>
+        <tr>
+          <td>Family Role</td>
+          <td>Founders' families exited by early 1900s</td>
+          <td>4th generation actively involved</td>
+        </tr>
+        <tr>
+          <td>CEO Selection</td>
+          <td><strong>"Promote from within"</strong> — always internal</td>
+          <td>Mix of internal (Bigeard) &amp; family direction</td>
+        </tr>
+        <tr>
+          <td>Board</td>
+          <td>Independent board of directors (NYSE-listed)</td>
+          <td>Supervisory Board chaired by family</td>
+        </tr>
+        <tr>
+          <td>Profit Sharing</td>
+          <td>Pioneered in <em>1887</em> — one of first in US</td>
+          <td>Employee-centric culture under Bigeard</td>
+        </tr>
+        <tr>
+          <td>Values Source</td>
+          <td>Codified PVP (Purpose, Values, Principles)</td>
+          <td>Family tradition passed through generations</td>
+        </tr>
+        <tr>
+          <td>Result</td>
+          <td>World's #1 FMCG — $84B revenue</td>
+          <td>Europe's #1 B2B workplace — &euro;2.2B revenue</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pg-note-grid">
+      <div class="pg-note">
+        <div class="pg-note-label">Governance Paths</div>
+        <div class="pg-note-text">P&amp;G: family &rarr; professional management. Lyreco: family control for 100 years. Both paths led to global market leadership.</div>
+      </div>
+      <div class="pg-note">
+        <div class="pg-note-label">Values Persist</div>
+        <div class="pg-note-text">P&amp;G's founding values survived 187 years of professional management. The Gaspards' values persist through direct family control. Different vehicles, same durability.</div>
+      </div>
+      <div class="pg-note">
+        <div class="pg-note-label">People First</div>
+        <div class="pg-note-text">P&amp;G's 1887 profit-sharing was revolutionary &mdash; one of the first in US corporate history. Lyreco's employee-centric culture under Bigeard echoes this philosophy.</div>
+      </div>
+    </div>
+
+    <div class="pg-talking-point">
+      &ldquo;P&amp;G proved that family values can outlive family control. The Gaspard family proves they can coexist. Both models honor the founders.&rdquo;
+    </div>
+  </div>
 
 </main>
 
@@ -424,13 +967,14 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         label: 'Holding',
         nodes: [
-          { id: 'corely', label: 'Corely SAS', sublabel: 'Onnaing · ~84% ownership', color: '#E63946', badge: '84%', wide: true }
+          { id: 'corely', label: 'Corely SAS', sublabel: 'Onnaing · ~84% ownership', color: '#E63946', badge: '84%' },
+          { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', sublabel: 'Est. 1998 · ~16% · €10.5M capital', color: '#A0A0AC', badge: '16%', wide: true }
         ]
       },
       {
         label: 'Operating',
         nodes: [
-          { id: 'lyreco', label: 'Lyreco SAS', sublabel: 'Marly · €64.7M capital · €2.2B rev', color: '#4A72FF', badge: '€2.2B', wide: true }
+          { id: 'lyreco', label: 'Lyreco SAS', sublabel: 'Marly · €65.2M capital · €2.2B rev', color: '#4A72FF', badge: '€2.2B', wide: true }
         ]
       },
       {
@@ -447,6 +991,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { from: 'cg', to: 'corely', label: 'Deputy DG' },
       { from: 'ng', to: 'corely', label: 'Deputy DG' },
       { from: 'corely', to: 'lyreco', label: '~84%' },
+      { from: 'lyreco-mgmt', to: 'lyreco', label: '~16%' },
       { from: 'lyreco', to: 'europe' },
       { from: 'lyreco', to: 'asia' },
       { from: 'lyreco', to: 'other' }
@@ -455,29 +1000,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ── Network Graph: Gaspard Entity Web ──
   var nodes = [
+    // ── Family (Gaspard bloodline) ──
     { id: 'gg', label: 'Georges Gaspard', type: 'person', icon: 'GG', detail: '3rd generation patriarch. President of Corely SAS. Director-General of Lyreco SAS. Connected to multiple investment entities.' },
-    { id: 'cg', label: 'Caroline Gaspard', type: 'person', icon: 'CG', detail: '4th generation. Deputy Director-General of Corely SAS.' },
-    { id: 'ng', label: 'Nathalie Gaspard', type: 'person', icon: 'NG', detail: '4th generation. Deputy Director-General of Corely. President of Lyreco SAS.' },
-    { id: 'corely', label: 'Corely SAS', type: 'holding', icon: '🏛', sublabel: 'Onnaing', detail: 'Family holding company. ~84% ownership of Lyreco. Registered in Onnaing, Nord.' },
-    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '€2.2B', detail: 'Operating company. €64.7M share capital. 25+ country subsidiaries. €2.2B consolidated revenue.' },
-    { id: 'corely-be', label: 'Corely Belgium', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment vehicle (SPRL). Managed by David Coti since 2015.' },
-    { id: 'bratya', label: 'Bratya SPRL', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment entity. CARMAT investments alongside Corely Belgium.' },
-    { id: 'carmat', label: 'CARMAT', type: 'company', icon: '❤️', detail: 'French artificial heart company. Gaspard entities invested €15M + €3.6M. High-risk, visionary venture.' },
+    { id: 'cg', label: 'Caroline Gaspard', type: 'person', icon: 'CG', detail: '4th generation. Georges\' daughter & Nathalie\'s sister. Deputy Director-General of Corely SAS.' },
+    { id: 'ng', label: 'Nathalie Gaspard', type: 'person', icon: 'NG', detail: '4th generation. Georges\' daughter & Caroline\'s sister. President of Lyreco SAS. Announced successor in 2017.', url: 'https://www.linkedin.com/in/nathalie-gaspard-1388347/' },
+    // ── Non-Family Key Executives ──
+    { id: 'eric', label: 'Eric Bigeard', type: 'person', icon: 'EB', detail: 'CEO 1988–2010 (22 years). Grew revenue €15M → €2B. Now on Supervisory Board at Georges\' personal request. On Decathlon France strategic committee.' },
+    { id: 'greg', label: 'Gregory Liénard', type: 'person', icon: 'GL', detail: 'CEO 2019–present. Built Asia operations personally. 28+ years at Lyreco. Posted in Canada, France, Singapore.', url: 'https://www.linkedin.com/in/gregorylienard/' },
+    { id: 'helen', label: 'Helen Riley', type: 'person', icon: 'HR', detail: 'Group Development Director M&A since Sept 2025. At Lyreco since 2004. 20+ years. Your key negotiating counterpart on Feb 26.', url: 'https://www.linkedin.com/in/helen-riley-21a13018/' },
+    // ── Corporate entities ──
+    { id: 'corely', label: 'Corely SAS', type: 'holding', icon: '🏛', sublabel: 'Onnaing', detail: 'Family holding company. ~84% ownership of Lyreco. Capital €25.1M. Registered in Onnaing, Nord.', url: 'https://www.societe.com/societe/corely-430306126.html' },
+    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '€2.2B', detail: 'Operating company. €64.7M share capital. 25+ country subsidiaries. €2.2B consolidated revenue.', url: 'https://www.lyreco.com/group/' },
+    { id: 'corely-be', label: 'Corely Belgium', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment vehicle (SPRL). Managed by David Coti since 2015. Invested €15M in CARMAT.' },
+    { id: 'bratya', label: 'Bratya SPRL', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment entity. Co-invested €3.6M in CARMAT alongside Corely Belgium.' },
+    { id: 'carmat', label: 'CARMAT', type: 'company', icon: '❤️', detail: 'French artificial heart company. Judicially liquidated Oct 14, 2025 (Versailles court). Delisted from Euronext. Gaspard entities invested €15M + €3.6M — almost certainly wiped out.', url: 'https://www.marketscreener.com/news/carmat-says-imminent-liquidation-now-extremely-probable-ce7d5bdbdb88f326' },
     { id: 'coti', label: 'David Coti', type: 'person', icon: 'DC', detail: 'Manager of Corely Belgium & Bratya SPRL. ESSEC & Plekhanov University graduate.' },
-    { id: 'erypharm', label: 'Erypharm SAS', type: 'entity', icon: '💊', detail: 'Pharmaceutical entity connected to Georges Gaspard.' },
-    { id: 'nataline', label: 'Nataline SC', type: 'entity', icon: '🏘', detail: 'Civil company connected to Georges Gaspard.' },
-    { id: 'villa', label: 'Villa Geoanne', type: 'entity', icon: '🏡', detail: 'Real estate entity in Onnaing. Villa Geoanne du Cap Martin.' },
-    { id: 'pwc', label: 'PwC', type: 'company', icon: '📊', sublabel: 'Auditors', detail: 'Statutory auditors of Lyreco. Previously KPMG. Big Four signal of institutional governance.' },
-    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets', detail: 'Hong Kong (1996), Korea (2004), Singapore (2019), Malaysia, Thailand.' }
+    { id: 'erypharm', label: 'Erypharm SAS', type: 'entity', icon: '💊', detail: 'Biotech company — cultured red blood cells. Georges Gaspard on supervisory board.', url: 'https://www.erypharm.com/en/home-page/' },
+    { id: 'nataline', label: 'Nataline SC', type: 'entity', icon: '🏘', detail: 'Civil real estate company. Land/real estate rental. Located in Onnaing. Manager: Georges Gaspard.', url: 'https://www.societe.com/societe/nataline-432999043.html' },
+    { id: 'villa', label: 'Villa Geoanne', type: 'entity', icon: '🏡', detail: 'Real estate entity (Cap Martin). Capital €3M. Founded 1995. Managed by Annette Gaspard.', url: 'https://www.pappers.fr/entreprise/villa-geoanne-du-cap-martin-402728885' },
+    { id: 'pwc', label: 'PwC', type: 'company', icon: '📊', sublabel: 'Auditors since 2016', detail: 'PricewaterhouseCoopers Audit SA — appointed July 2016 (replacing KPMG Audit, who served ~2008–2012). Deliberate Big Four upgrade during post-Bigeard governance restructuring. Co-auditors: Antoine Guéroult, Estelle Chermat.', url: 'https://www.societe.com/dirigeants/lyreco-400423968.html' },
+    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets', detail: 'Hong Kong (1996), Korea (2004), Singapore (2019), Malaysia, Thailand. Built personally by Gregory Liénard.', url: 'https://www.lyreco.com/group/' },
+    { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', type: 'holding', icon: '🏢', sublabel: '~16% stake', detail: 'Management equity participation vehicle. Est. 1998. ~€10.5M capital. Holds approximately 16% of Lyreco SAS — reserved for senior executives as long-term incentive. President: Nathalie Gaspard.', url: 'https://www.societe.com/societe/lyreco-management-421304312.html' }
   ];
 
   var links = [
+    // ── Ownership / governance ──
     { source: 'gg', target: 'corely', label: 'President', distance: 80, strength: 2.5 },
     { source: 'cg', target: 'corely', label: 'Deputy DG', distance: 100 },
     { source: 'ng', target: 'corely', label: 'Deputy DG', distance: 100 },
     { source: 'ng', target: 'lyreco', label: 'President', distance: 100 },
     { source: 'gg', target: 'lyreco', label: 'Dir-General', distance: 120 },
     { source: 'corely', target: 'lyreco', label: '~84%', distance: 90, strength: 3 },
+    // ── Family relationships ──
+    { source: 'gg', target: 'ng', label: 'Father', distance: 85 },
+    { source: 'gg', target: 'cg', label: 'Father', distance: 85 },
+    { source: 'ng', target: 'cg', label: 'Sisters', distance: 55 },
+    // ── Non-family executive connections ──
+    { source: 'eric', target: 'lyreco', label: 'Supervisory Board', distance: 130 },
+    { source: 'greg', target: 'lyreco', label: 'CEO', distance: 100 },
+    { source: 'helen', target: 'lyreco', label: 'M&A Director', distance: 120 },
+    // ── Investments / entities ──
     { source: 'gg', target: 'erypharm', distance: 140 },
     { source: 'gg', target: 'nataline', distance: 140 },
     { source: 'gg', target: 'villa', distance: 140 },
@@ -488,7 +1050,11 @@ document.addEventListener('DOMContentLoaded', function() {
     { source: 'corely-be', target: 'carmat', label: '€15M', distance: 100 },
     { source: 'bratya', target: 'carmat', label: '€3.6M', distance: 100 },
     { source: 'lyreco', target: 'asia-ops', distance: 100 },
-    { source: 'lyreco', target: 'pwc', label: 'Audits', distance: 130 }
+    { source: 'lyreco', target: 'pwc', label: 'Audits', distance: 130 },
+    // ── Lyreco Management SAS ──
+    { source: 'lyreco-mgmt', target: 'lyreco', label: '~16%', distance: 100, strength: 1.5 },
+    { source: 'ng', target: 'lyreco-mgmt', label: 'President', distance: 90 },
+    { source: 'greg', target: 'lyreco-mgmt', label: 'Shareholder', distance: 100 }
   ];
 
   createNetworkGraph('gaspard-network', nodes, links);

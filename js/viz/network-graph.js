@@ -130,6 +130,13 @@ function createNetworkGraph(containerId, nodesData, linksData, options) {
     .attr('letter-spacing', '0.05em')
     .style('pointer-events', 'none');
 
+  // Click to open URL
+  node.on('click', function(event, d) {
+    if (d.url) {
+      window.open(d.url, '_blank', 'noopener,noreferrer');
+    }
+  }).style('cursor', function(d) { return d.url ? 'pointer' : 'grab'; });
+
   // Hover interactions
   node.on('mouseover', function(event, d) {
     // Highlight connected links
@@ -179,7 +186,9 @@ function createNetworkGraph(containerId, nodesData, linksData, options) {
     if (d.detail) {
       tooltip.html(
         '<strong style="color: ' + getColor(d) + '">' + d.label + '</strong>' +
-        '<div style="margin-top: 4px; color: #A0A0AC; font-size: 11px;">' + d.detail + '</div>'
+        (d.url ? '<span style="color: #A0A0AC; font-size: 10px; margin-left: 6px; font-family: monospace;">↗</span>' : '') +
+        '<div style="margin-top: 4px; color: #A0A0AC; font-size: 11px;">' + d.detail + '</div>' +
+        (d.url ? '<div style="margin-top: 6px; color: #C9A96E; font-size: 10px; font-family: monospace;">Click to open ↗</div>' : '')
       ).style('opacity', 1);
     }
   }).on('mousemove', function(event) {

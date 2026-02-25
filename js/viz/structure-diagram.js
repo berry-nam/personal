@@ -67,10 +67,13 @@ function createStructureDiagram(containerId, config) {
         html += '<text x="' + nx + '" y="' + (ny + 12) + '" text-anchor="middle" font-family="\'JetBrains Mono\', monospace" font-size="8" fill="' + color + '" letter-spacing="0.05em">' + node.sublabel + '</text>';
       }
 
-      // Badge
+      // Badge — top-right corner, fully inside box bounds
       if (node.badge) {
-        html += '<rect x="' + (nx + boxW / 2 - 32) + '" y="' + (ny - boxH / 2 - 8) + '" width="36" height="16" rx="8" fill="' + color + '"/>';
-        html += '<text x="' + (nx + boxW / 2 - 14) + '" y="' + (ny - boxH / 2 + 3) + '" text-anchor="middle" font-family="\'JetBrains Mono\', monospace" font-size="7" fill="#111115" font-weight="600">' + node.badge + '</text>';
+        var bw = Math.max(32, node.badge.length * 7 + 10);
+        var bx = nx + boxW / 2 - bw - 4;
+        var by = ny - boxH / 2 - 9;
+        html += '<rect x="' + bx + '" y="' + by + '" width="' + bw + '" height="17" rx="8" fill="' + color + '"/>';
+        html += '<text x="' + (bx + bw / 2) + '" y="' + (by + 11) + '" text-anchor="middle" font-family="\'JetBrains Mono\', monospace" font-size="8" fill="#111115" font-weight="700">' + node.badge + '</text>';
       }
     });
   });

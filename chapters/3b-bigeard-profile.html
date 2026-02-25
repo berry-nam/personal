@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eric Bigeard — Full Profile | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── BIGEARD PROFILE SPECIFIC ─── */
+  .profile-hero-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    opacity: 0.7;
+    margin-bottom: 0.8rem;
+  }
+
+  .fact-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.8rem;
+    margin: 2rem 0;
+  }
+  .fact-item {
+    background: var(--ink-card);
+    border: 1px solid rgba(212,184,122,0.15);
+    border-radius: var(--radius-small);
+    padding: 1rem 1.2rem;
+  }
+  .fact-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    opacity: 0.5;
+    margin-bottom: 0.35rem;
+  }
+  .fact-value {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--pearl);
+  }
+
+  .acquisition-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(212,184,122,0.08);
+  }
+  .acquisition-year {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--champagne);
+    min-width: 44px;
+    padding-top: 0.1rem;
+  }
+  .acquisition-detail {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--smoke);
+    line-height: 1.5;
+  }
+  .acquisition-detail strong {
+    color: var(--pearl);
+  }
+
+  .opi-link-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(212,184,122,0.08);
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .opi-link-row:hover { opacity: 0.75; }
+  .opi-link-row:last-child { border-bottom: none; }
+  .opi-link-title {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--pearl);
+  }
+  .opi-link-date {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--champagne);
+    opacity: 0.7;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .coincidence-box {
+    background: rgba(212,184,122,0.05);
+    border: 1px solid rgba(212,184,122,0.2);
+    border-left: 3px solid var(--champagne);
+    border-radius: var(--radius-card);
+    padding: 1.5rem 1.8rem;
+    margin: 2rem 0;
+  }
+  .coincidence-box .coincidence-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 0.7rem;
+  }
+  .coincidence-box p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--smoke);
+  }
+
+  .back-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--smoke);
+    opacity: 0.6;
+    text-decoration: none;
+    margin-bottom: 3rem;
+    transition: opacity 0.15s;
+  }
+  .back-nav:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="site-nav" id="site-nav">
+  <a href="../index.html" class="nav-hub">WEFUN × Lyreco</a>
+  <div class="nav-chapter">
+    <span class="nav-chapter-label">Extended Profile</span>
+    <span class="nav-chapter-title">Eric Bigeard</span>
+  </div>
+  <div class="nav-controls">
+    <a href="3-bigeard.html" class="nav-arrow" title="Chapter III">←</a>
+    <a href="4-goes-east.html" class="nav-arrow" title="Chapter IV">→</a>
+  </div>
+</nav>
+<div class="progress-bar" id="progress-bar"></div>
+
+<main>
+
+  <!-- ── HERO ── -->
+  <section class="chapter-hero">
+    <div class="chapter-hero-content">
+      <div class="profile-hero-label">Extended Profile · Confidential</div>
+      <div class="chapter-number">EB</div>
+      <h1 class="chapter-title">Eric Bigeard</h1>
+      <p class="chapter-subtitle"><em>The Man Who Built Lyreco</em></p>
+      <div class="chapter-meta">
+        <span>133× Revenue Growth</span>
+        <span class="meta-dot">·</span>
+        <span>22 Years as CEO</span>
+        <span class="meta-dot">·</span>
+        <span>1 → 29 Countries</span>
+        <span class="meta-dot">·</span>
+        <span>Left at Age 55</span>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span class="scroll-hint-text">Scroll</span>
+      <div class="scroll-hint-line"></div>
+    </div>
+  </section>
+
+  <!-- ── QUICK FACTS ── -->
+  <section class="section">
+    <div class="fact-row" data-animate="fade-up">
+      <div class="fact-item">
+        <div class="fact-label">Full Name</div>
+        <div class="fact-value">Eric Jacques Pierre Bigeard</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Born</div>
+        <div class="fact-value">~1955 · France</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Based</div>
+        <div class="fact-value">Brussels, Belgium</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Education</div>
+        <div class="fact-value">EDHEC Business School · Harvard HBS PMD (1987)</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">At Lyreco</div>
+        <div class="fact-value">1980 – present (Supervisory Board)</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">As CEO</div>
+        <div class="fact-value">1988 – Dec 31, 2010</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 1: THE MAN BEHIND THE NAME ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Man</div>
+      <h2 class="section-title">Who is <em>Eric Bigeard?</em></h2>
+      <div class="section-body">
+        <p>Eric Jacques Pierre Bigeard is, by corporate registry, a resident of Brussels. By industry reputation, he is Lyreco. He joined the company around 1980 at approximately 25 years old &mdash; likely as a product manager &mdash; and never left. He completed his EDHEC Business School degree in Lille, then earned a Harvard Business School PMD (Programme for Management Development) in 1987, a mid-career executive credential he pursued <em>while already at Lyreco</em>. One year later, at approximately 33, he was named CEO.</p>
+        <p>He holds no known prior employer. Lyreco is his entire professional identity. That is both a source of extraordinary dedication and, for any acquirer, a critical data point: he is not evaluating this deal as a businessman. He is evaluating it as a father would evaluate the person asking to marry his child.</p>
+      </div>
+    </div>
+
+    <!-- The Marcel Bigeard question -->
+    <div class="coincidence-box" data-animate="fade-up">
+      <div class="coincidence-label">&#9888; A Note on the Name</div>
+      <p><strong style="color: var(--pearl);">General Marcel Maurice Bigeard</strong> (February 14, 1916 &ndash; June 18, 2010) was one of France&rsquo;s most decorated military officers &mdash; a WWII Resistance figure, Indochina war hero, commander at Dien Bien Phu, veteran of Algeria, and ultimately a Member of the French National Assembly. His radio call sign was &ldquo;Bruno.&rdquo; He died June 18, 2010 &mdash; the same year Eric Bigeard stepped down from Lyreco at age 55.</p>
+      <p style="margin-top: 0.8rem;">The surname <em>Bigeard</em> originates from the Lorraine / northern France region. General Bigeard&rsquo;s only documented child was his daughter Marie-France (born February 13, 1946). <strong style="color: var(--pearl);">No genealogical record links Eric Bigeard to the General.</strong> The shared surname is almost certainly regional coincidence &mdash; not family connection. But it is worth noting: two men named Bigeard, both from northern France, both departing their respective stages in the same year of 2010. History rarely bothers with explanations.</p>
+    </div>
+
+    <div class="section-body" data-animate="fade-up">
+      <p>His management philosophy &mdash; captured in the French press headline <em>&ldquo;Il faut jouer cash&rdquo;</em> (&ldquo;You must play it straight&rdquo;) &mdash; reflects a directness unusual for a man who spent three decades in a family-controlled company. He is not political. He is not bureaucratic. He is precise. <a href="https://www.eco121.fr/eric-bigeard-directeur-general-de-lyreco-il-faut-jouer-cash/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Eco 121, &ldquo;Il faut jouer cash&rdquo; &#8599;</a></p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 2: THE CEO ERA ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The CEO Era · 1988–2010</div>
+      <h2 class="section-title">&euro;15M to &euro;2B. <em>133 times.</em></h2>
+      <div class="section-body">
+        <p>When Bigeard became CEO in 1988, Lyreco was a regional French office supplies distributor with approximately &euro;15 million in annual revenue operating from a single country. Twenty-two years later, it was generating over &euro;2 billion in revenue across 29 countries, and was the fourth-largest office supplies distributor in the world &mdash; behind only the three American giants (Staples, Office Depot, OfficeMax).</p>
+        <p>The growth strategy was a deliberate balance: <strong style="color: var(--pearl);">organic growth first, selective acquisition when the opportunity was exceptional.</strong> &ldquo;We have not acquired too much, being choosy and picky over targets.&rdquo; When he did move, he moved decisively.</p>
+      </div>
+    </div>
+
+    <!-- Stat counters -->
+    <div class="stat-grid" data-stagger-group style="margin: 2.5rem 0;">
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="133" data-suffix="×">0</div>
+        <div class="stat-label">Revenue Growth</div>
+        <div class="stat-sub">&euro;15M &rarr; &euro;2B+</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="22" data-suffix=" yrs">0</div>
+        <div class="stat-label">Tenure as CEO</div>
+        <div class="stat-sub">1988 &ndash; 2010</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="29" data-suffix="">0</div>
+        <div class="stat-label">Countries</div>
+        <div class="stat-sub">1 &rarr; 29</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="4" data-suffix="th">0</div>
+        <div class="stat-label">Global Rank</div>
+        <div class="stat-sub">Behind US Big Three</div>
+      </div>
+    </div>
+
+    <!-- Key acquisitions -->
+    <div data-animate="fade-up" style="margin: 2rem 0; padding: 1.5rem; background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card);">
+      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1rem;">Key Acquisitions Under Bigeard</div>
+      <div class="acquisition-row">
+        <div class="acquisition-year">1989</div>
+        <div class="acquisition-detail"><strong>Vermeire (Belgium) + Kando (Netherlands)</strong> &mdash; First international steps. Lyreco exits France within one year of Bigeard taking the CEO chair.</div>
+      </div>
+      <div class="acquisition-row">
+        <div class="acquisition-year">~1990s</div>
+        <div class="acquisition-detail"><strong>Officeday (Finland)</strong> &mdash; Established market leadership in Scandinavia.</div>
+      </div>
+      <div class="acquisition-row">
+        <div class="acquisition-year">~1990s</div>
+        <div class="acquisition-detail"><strong>Antalis Office Supplies (Spain &amp; Portugal)</strong> &mdash; Iberian entry. Southern European footprint established.</div>
+      </div>
+      <div class="acquisition-row">
+        <div class="acquisition-year">1999</div>
+        <div class="acquisition-detail"><strong>Asia entry</strong> &mdash; Lyreco enters Asia. &ldquo;It&rsquo;s a long-term investment and a tough message to sell to the stock exchange.&rdquo; <a href="https://www.opi.net/news/asia-hour-1/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">OPI &#8599;</a></div>
+      </div>
+      <div class="acquisition-row" style="border-bottom: none;">
+        <div class="acquisition-year">~2000s</div>
+        <div class="acquisition-detail"><strong>Ahrend OP division</strong> &mdash; Strengthened Dutch and German positions. Quote: &ldquo;We are still focused on organic growth but this was just too good an opportunity to turn down.&rdquo; <a href="https://www.opi.net/news/lyreco-to-buy-ahrend-op-division/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">OPI &#8599;</a></div>
+      </div>
+    </div>
+
+    <!-- Post-Bigeard acquisitions: buy-side from PE/FI -->
+    <div data-animate="fade-up" style="margin: 2rem 0; padding: 1.5rem; background: var(--ink-card); border: 1px solid rgba(91,138,255,0.15); border-radius: var(--radius-card);">
+      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--wefun-blue); opacity: 0.7; margin-bottom: 0.3rem;">Post-Bigeard Era</div>
+      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1rem;">Buy-Side Acquisitions from PE / Financial Institutions</div>
+      <div class="acquisition-row">
+        <div class="acquisition-year">2019</div>
+        <div class="acquisition-detail"><strong>Intersafe &amp; Elacin</strong> (PPE specialists) &mdash; Acquired from <strong>Broadview Holding</strong> (HAL Holding N.V.). Combined &euro;125M turnover, 360 employees. NL, BE, FR, DE. <a href="https://www.intersafe.eu/news/lyreco-group-announces-an-agreement-to-acquire-intersafe-and-elacin/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Intersafe.eu &#8599;</a></div>
+      </div>
+      <div class="acquisition-row" style="border-bottom: none;">
+        <div class="acquisition-year">2021</div>
+        <div class="acquisition-detail"><strong>Staples Solutions</strong> (NO, SE, DK, DE, AT, PL) &mdash; Acquired from <strong>Cerberus Capital Management</strong>. ~1,600 employees joined Lyreco. <a href="https://www.lyreco.com/group/people-behind/lyreco-successfully-acquires-staples-solutions-business-operations-central-nordic" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Lyreco Group &#8599;</a></div>
+      </div>
+    </div>
+
+    <div class="section-body" data-animate="fade-up">
+      <p>On Russia and Central Europe, his approach was methodical: establish Central Europe first, then use those operations as a platform for Russia. &ldquo;A declaration of intent&rdquo; was how OPI described his Eastern expansion strategy. <a href="https://www.opi.net/news/russia-hour/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">OPI, &ldquo;Russia hour&rdquo; &#8599;</a></p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 3: THE NEAR-MERGER ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Near-Merger · 2008</div>
+      <h2 class="section-title">The &euro;1.731 billion <em>deal that wasn&rsquo;t</em></h2>
+      <div class="section-body">
+        <p>In May 2008, Corporate Express &mdash; a Dutch-listed global distributor under a hostile Staples bid &mdash; announced it would acquire Lyreco for &euro;1.731 billion as a defensive poison pill. Bigeard was designated CEO of the combined entity. The Gaspard family would receive 25% of Corporate Express with a 2-year lock-up. Staples kept raising. By June 11, Corporate Express accepted Staples&rsquo; &euro;9.25/share final offer. The Lyreco deal was abandoned. Lyreco collected a &euro;30M break-up fee and walked away independent.</p>
+      </div>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <h4>Why This Matters for the WEFUN Meeting</h4>
+      <p>Bigeard has been the subject of a &euro;1.7 billion transaction. He has sat at the table where deals of this magnitude are proposed, negotiated, and dissolved. He understands hostile dynamics, break-up mechanics, and the emotional weight of a deal falling apart. When he evaluates WEFUN, he is not doing it as a passive observer. He has seen the full arc. He knows exactly what a good acquirer looks like &mdash; and what a bad one smells like.</p>
+    </div>
+
+    <div data-animate="fade-up" style="margin-top: 1.5rem;">
+      <a href="3-bigeard.html" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4); letter-spacing: 0.05em;">&#8592; Full deal timeline, fact strip, and sources in Chapter III</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 4: THE EXIT ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Exit · 2010</div>
+      <h2 class="section-title">Decided in 2000. <em>Executed in 2010.</em></h2>
+      <div class="section-body">
+        <p>In approximately 2000, at age 45, Bigeard decided he would step down at 55. He told no one outside his innermost circle. He continued running Lyreco at full intensity for a decade &mdash; growing revenue, expanding into Asia, managing the Corporate Express episode &mdash; all while internally counting down to a predetermined exit.</p>
+        <p>On February 9, 2010, he announced his departure. His final day was December 31, 2010. He was 55 years old. The company was generating over &euro;2 billion in revenue. He had spent 30 years inside the organization.</p>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">&ldquo;Too many CEOs hold on to their jobs too long. I didn&rsquo;t want to be one of those that end up getting fired from the company I love!&rdquo;</div>
+      <div class="quote-attr">Eric Bigeard &mdash; <a href="https://www.opi.net/news/analysis/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, &ldquo;End of an era at Lyreco&rdquo;</a>, December 2010</div>
+    </div>
+
+    <div class="section-body" data-animate="fade-up">
+      <p>Georges Gaspard personally asked him to remain on the Supervisory Board. He agreed. &ldquo;I&rsquo;ll stay on as long as Georges Gaspard wants me to.&rdquo; The shadow he cast over his successors was immense &mdash; as Herv&eacute; Milcent would acknowledge publicly eight years later.</p>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">&ldquo;I underestimated the legacy of Eric Bigeard. Still today, it&rsquo;s very important to keep that legacy alive, because Eric had built this company over the past 25 years.&rdquo;</div>
+      <div class="quote-attr">Herv&eacute; Milcent, CEO 2015&ndash;2019 &mdash; <a href="https://www.opi.net/news/region/002-europe/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, &ldquo;Big Interview: A new (Lyreco) world&rdquo;</a>, July 2018</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 5: POST-CEO ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Post-CEO · 2010 – Present</div>
+      <h2 class="section-title">He never <em>left</em></h2>
+      <div class="section-body">
+        <p>After December 31, 2010, Bigeard remained on the Lyreco Supervisory Board at Georges Gaspard&rsquo;s personal request. He watched four successors struggle with his legacy. In 2011, he funded <a href="https://techcrunch.com/2011/07/14/getyoo-raises-a-e600000-seed-round-for-interactive-nfc-solutions/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Getyoo</a>, a Belgian NFC startup, with &euro;600K seed capital &mdash; a modest bet that signals continued intellectual engagement with the business world. He did not retreat.</p>
+        <p>In 2021, when Gregory Li&eacute;nard had finally stabilized the leadership, Bigeard came &ldquo;back in support&rdquo; &mdash; actively helping consolidate Lyreco&rsquo;s European and Asian market position. That return was a signal of trust extended to Li&eacute;nard that none of his three predecessors ever received.</p>
+      </div>
+    </div>
+
+    <div class="fact-row" data-animate="fade-up">
+      <div class="fact-item">
+        <div class="fact-label">Supervisory Board</div>
+        <div class="fact-value">2010 – present, at Gaspard&rsquo;s personal request</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Angel Investment</div>
+        <div class="fact-value">Getyoo (Belgium) · &euro;600K seed · 2011</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">2021 Return</div>
+        <div class="fact-value">&ldquo;Back in support&rdquo; of CEO Li&eacute;nard · EU &amp; Asia consolidation</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">External Profiles</div>
+        <div class="fact-value">
+          <a href="https://www.bloomberg.com/profile/person/17108130" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Bloomberg &#8599;</a> &nbsp;&middot;&nbsp;
+          <a href="https://www.northdata.com/Bigeard,%20Eric%20Jacques%20Pierre,%20Bruxelles/ydp" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">NorthData &#8599;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 6: WHAT HIS PRESENCE MEANS ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Briefing Intelligence</div>
+      <h2 class="section-title">Win Bigeard. <em>The path clears.</em></h2>
+      <div class="section-body">
+        <p>Eric Bigeard attending a first meeting with a potential acquirer in Seoul is extraordinary. This is not routine diligence. This is the Gaspard family&rsquo;s most trusted figure casting a personal judgment on whether WEFUN is worthy of what he built. He is not here to review financial models &mdash; Helen Riley handles that. He is here to assess character, values, and the long-term vision of the management team.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;" data-animate="fade-up">
+      <div class="succession-note" style="border-left-color: var(--champagne);">
+        <h4 style="margin-bottom: 0.4rem;">He values people above revenue</h4>
+        <p style="font-size: 0.95rem;">His proudest achievement in 22 years was &ldquo;the creation of a solid and stable team.&rdquo; Not the 133&times; growth. Not the 29 countries. The team. Bring stories about WEFUN&rsquo;s people &mdash; retention, culture, team longevity. Quantify it if you can. He will respond to this more than any financial metric.</p>
+      </div>
+      <div class="succession-note" style="border-left-color: var(--champagne);">
+        <h4 style="margin-bottom: 0.4rem;">He respects strategic patience</h4>
+        <p style="font-size: 0.95rem;">He entered Asia in 1999 when no competitor would. He waited. He invested for a decade before it paid. He will respect a long-term vision over a short-term exit thesis. Do not pitch him a 3-year return narrative. Pitch him a 10-year one.</p>
+      </div>
+      <div class="succession-note" style="border-left-color: var(--champagne);">
+        <h4 style="margin-bottom: 0.4rem;">He plays it straight</h4>
+        <p style="font-size: 0.95rem;">&ldquo;Il faut jouer cash.&rdquo; He does not appreciate performative optimism or corporate theater. He has spent 30 years inside a family business where trust is the only currency. Be direct. Be accurate. Do not oversell.</p>
+      </div>
+      <div class="succession-note" style="border-left-color: var(--lyreco-red);">
+        <h4 style="margin-bottom: 0.4rem;">Address him as &ldquo;Monsieur Bigeard&rdquo;</h4>
+        <p style="font-size: 0.95rem;">Until he says otherwise. He is 15+ years senior to most of the WEFUN team, has built a global company from scratch, and carries the institutional memory of everything Lyreco is. The formality is warranted. He will likely relax it himself &mdash; but let him lead.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SECTION 7: THE OPI RECORD ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Primary Sources</div>
+      <h2 class="section-title">The <em>OPI</em> record</h2>
+      <div class="section-body">
+        <p><a href="https://www.opi.net/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Office Products International (OPI)</a> is the trade publication of record for the global office supplies industry &mdash; founded 1991, London, 50,000+ readers in 110+ countries. Every major Bigeard interview and Lyreco executive transition was published first by OPI. Steve Hilleard, OPI&rsquo;s CEO, personally conducted the key interviews. All articles below have been verified and cross-referenced.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" style="margin: 1.5rem 0; padding: 1.5rem; background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card);">
+      <a href="https://www.opi.net/news/analysis/eric-bigeard-interview/" target="_blank" rel="noopener" class="opi-link-row">
+        <span class="opi-link-title">&ldquo;Eric Bigeard Interview&rdquo; &mdash; Final interview as CEO. Greatest achievement, successor, legacy.</span>
+        <span class="opi-link-date">Dec 31, 2010 &#8599;</span>
+      </a>
+      <a href="https://www.opi.net/news/analysis/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" class="opi-link-row">
+        <span class="opi-link-title">&ldquo;End of an era at Lyreco&rdquo; &mdash; Editorial on departure. Source of &ldquo;fired from the company I love&rdquo; quote.</span>
+        <span class="opi-link-date">Dec 2010 &#8599;</span>
+      </a>
+      <a href="https://www.opi.net/news/analysis/bigeard-to-leave-lyreco/" target="_blank" rel="noopener" class="opi-link-row">
+        <span class="opi-link-title">&ldquo;Bigeard to leave Lyreco&rdquo; &mdash; Departure announcement. Martinez introduced as successor.</span>
+        <span class="opi-link-date">Feb 28, 2010 &#8599;</span>
+      </a>
+      <a href="https://www.opi.net/news/analysis/global-news-5/" target="_blank" rel="noopener" class="opi-link-row">
+        <span class="opi-link-title">&ldquo;Global News&rdquo; &mdash; Industry context on Bigeard&rsquo;s strategic decisions.</span>
+        <span class="opi-link-date">OPI Archive &#8599;</span>
+      </a>
+      <a href="https://www.opi.net/news/region/002-europe/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" class="opi-link-row">
+        <span class="opi-link-title">&ldquo;Big Interview: A new (Lyreco) world&rdquo; &mdash; Milcent on Bigeard&rsquo;s legacy. &ldquo;I underestimated...&rdquo;</span>
+        <span class="opi-link-date">Jul 2018 &#8599;</span>
+      </a>
+      <a href="https://www.opi.net/news/asia-hour-1/" target="_blank" rel="noopener" class="opi-link-row">
+        <span class="opi-link-title">&ldquo;Asia Hour&rdquo; &mdash; Bigeard on Asia strategy. &ldquo;Long-term investment&hellip;&rdquo;</span>
+        <span class="opi-link-date">OPI Archive &#8599;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER NAV ── -->
+  <div class="divider"></div>
+  <section class="section" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; padding-bottom: 3rem;">
+    <a href="3-bigeard.html" class="back-nav" data-animate="fade-up">
+      &#8592; &nbsp;Chapter III &mdash; The Bigeard Era
+    </a>
+    <a href="4-goes-east.html" style="display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1.6rem; background: rgba(212,184,122,0.08); border: 1px solid rgba(212,184,122,0.25); border-radius: var(--radius-card); text-decoration: none; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; color: var(--champagne); transition: background 0.2s;" onmouseover="this.style.background='rgba(212,184,122,0.15)'" onmouseout="this.style.background='rgba(212,184,122,0.08)'" data-animate="fade-up">
+      Chapter IV &mdash; Lyreco Goes East &nbsp;&#8594;
+    </a>
+  </section>
+
+  <!-- ── CONFIDENTIAL FOOTER ── -->
+  <footer class="site-footer">
+    <div class="footer-conf">CONFIDENTIAL &mdash; FOR INTERNAL USE ONLY</div>
+    <div class="footer-sub">WEFUN × Lyreco M&amp;A Briefing &middot; February 26, 2026 &middot; Seoul</div>
+  </footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/scroll-engine.js"></script>
+</body>
+</html>

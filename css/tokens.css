@@ -4,28 +4,28 @@
    ═══════════════════════════════════════════════ */
 
 :root {
-  /* ─── COLORS ─── */
-  --champagne:       #C9A96E;
-  --champagne-light: #E8D5A8;
-  --champagne-dim:   rgba(201, 169, 110, 0.18);
-  --champagne-glow:  rgba(201, 169, 110, 0.08);
+  /* ─── COLORS — Soft Dark + High Contrast ─── */
+  --champagne:       #D4B87A;
+  --champagne-light: #EEDCAA;
+  --champagne-dim:   rgba(212, 184, 122, 0.35);
+  --champagne-glow:  rgba(212, 184, 122, 0.12);
 
-  --ink:             #111115;
+  --ink:             #141418;
   --ink-soft:        #1C1C22;
-  --ink-card:        #191920;
-  --ink-elevated:    #242430;
+  --ink-card:        #1E1E24;
+  --ink-elevated:    #28283A;
 
-  --smoke:           #A0A0AC;
-  --smoke-light:     rgba(160, 160, 172, 0.6);
-  --pearl:           #F4F2ED;
-  --pearl-dim:       rgba(244, 242, 237, 0.10);
-  --pearl-muted:     rgba(244, 242, 237, 0.82);
+  --smoke:           #B8B4A8;
+  --smoke-light:     rgba(184, 180, 168, 0.7);
+  --pearl:           #E8E5DE;
+  --pearl-dim:       rgba(232, 229, 222, 0.12);
+  --pearl-muted:     rgba(232, 229, 222, 0.85);
 
-  --wefun-blue:      #4A72FF;
-  --wefun-blue-dim:  rgba(74, 114, 255, 0.18);
-  --lyreco-red:      #E63946;
-  --lyreco-red-dim:  rgba(230, 57, 70, 0.18);
-  --success:         #4ADE80;
+  --wefun-blue:      #5B8AFF;
+  --wefun-blue-dim:  rgba(91, 138, 255, 0.22);
+  --lyreco-red:      #F04D5A;
+  --lyreco-red-dim:  rgba(240, 77, 90, 0.22);
+  --success:         #5AE890;
 
   /* ─── TYPOGRAPHY ─── */
   --font-display:    'Playfair Display', Georgia, serif;
@@ -36,15 +36,15 @@
   --fs-chapter-hero: clamp(2.6rem, 5.5vw, 4.5rem);
   --fs-h2:           clamp(2.2rem, 4vw, 3.4rem);
   --fs-h3:           clamp(1.35rem, 2.2vw, 1.6rem);
-  --fs-body:         1.15rem;
-  --fs-small:        0.95rem;
-  --fs-mono-label:   0.72rem;
-  --fs-mono-nav:     0.78rem;
+  --fs-body:         1.2rem;
+  --fs-small:        1.05rem;
+  --fs-mono-label:   0.85rem;
+  --fs-mono-nav:     0.88rem;
 
-  --lh-tight:        1.1;
-  --lh-heading:      1.15;
-  --lh-body:         1.85;
-  --lh-reading:      1.7;
+  --lh-tight:        1.15;
+  --lh-heading:      1.2;
+  --lh-body:         1.9;
+  --lh-reading:      1.8;
 
   --ls-wide:         0.25em;
   --ls-medium:       0.15em;
@@ -70,8 +70,8 @@
   --dur-slow:        0.8s;
 
   /* ─── BORDERS & SHADOWS ─── */
-  --border-subtle:   1px solid rgba(244, 242, 237, 0.08);
-  --border-hover:    1px solid rgba(201, 169, 110, 0.25);
+  --border-subtle:   1px solid rgba(232, 229, 222, 0.12);
+  --border-hover:    1px solid rgba(212, 184, 122, 0.35);
   --radius-card:     16px;
   --radius-pill:     100px;
   --radius-small:    12px;

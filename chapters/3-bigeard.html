@@ -33,19 +33,35 @@
     color: var(--champagne-light);
   }
   .succession-note p {
-    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
   }
 
   .growth-highlight {
     display: inline-block;
     padding: 0.2rem 0.6rem;
-    background: rgba(201, 169, 110, 0.12);
+    background: rgba(212, 184, 122, 0.2);
     border-radius: 4px;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 1.0rem;
     color: var(--champagne);
     font-weight: 500;
   }
+
+  .source-note {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    color: var(--smoke);
+    opacity: 0.55;
+    margin-left: 0.35rem;
+    letter-spacing: 0.03em;
+  }
+  .source-note a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232,229,222,0.25);
+  }
+  .source-note a:hover { opacity: 1; color: var(--champagne); }
 
   .insight-block {
     background: var(--ink-card);
@@ -63,7 +79,7 @@
     color: var(--pearl);
   }
   .insight-block p {
-    font-size: 0.9rem; color: var(--smoke); line-height: 1.7;
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
   }
 
   .growth-visual {
@@ -86,7 +102,8 @@
   .growth-end .amount { color: var(--champagne); }
   .growth-start .year-label, .growth-end .year-label {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.85rem;
+    font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--smoke);
@@ -170,6 +187,11 @@
     </div>
   </section>
 
+  <div class="atmos-img" data-animate="fade-up">
+    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80" alt="Executive portrait silhouette — Eric Bigeard led Lyreco for 22 years" loading="lazy">
+    <span class="atmos-caption">Eric Bigeard — CEO at 33, architect of a &euro;2 billion empire</span>
+  </div>
+
   <div class="divider"></div>
 
   <!-- ── REVENUE GROWTH ── -->
@@ -178,12 +200,17 @@
       <div class="section-label">The Growth</div>
       <h2 class="section-title">&euro;15 million to &euro;2 billion<br>in <em>twenty-two years</em></h2>
       <div class="section-body">
-        <p>What followed Bigeard's appointment as CEO in 1988 was one of the most extraordinary growth stories in European B2B distribution. He called it <em>"the international success story"</em> in office supplies &mdash; and the numbers speak for themselves.</p>
+        <p>What followed Bigeard's appointment as CEO in 1988 was one of the most extraordinary growth stories in European B2B distribution. He called it <em>"the international success story"</em><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup> in office supplies &mdash; and the numbers speak for themselves.</p>
       </div>
     </div>
 
     <!-- Revenue chart -->
     <div class="revenue-chart-container" id="bigeard-revenue-chart" data-animate="scale-in"></div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80" alt="Business growth charts and data visualization evoking exponential revenue expansion" loading="lazy">
+      <figcaption>133&times; revenue growth over 22 years &mdash; from a &euro;15M national operation to a &euro;2B+ global enterprise</figcaption>
+    </figure>
 
     <div class="growth-visual" data-animate="fade-up">
       <div class="growth-start">
@@ -193,7 +220,7 @@
       <div class="growth-arrow">
         <div class="growth-multiplier">133&times;</div>
         <div class="growth-arrow-line"></div>
-        <div style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--smoke); letter-spacing: 0.1em;">22 YEARS</div>
+        <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; color: var(--smoke); letter-spacing: 0.1em;">22 YEARS</div>
       </div>
       <div class="growth-end">
         <div class="amount">&euro;2B</div>
@@ -225,35 +252,22 @@
       </div>
     </div>
 
-    <div class="expansion-visual" data-animate="fade-up">
-      <svg viewBox="0 0 500 200" style="max-width:500px;width:100%;" xmlns="http://www.w3.org/2000/svg">
-        <text x="250" y="20" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="#A0A0AC" letter-spacing="0.2em">INTERNATIONAL EXPANSION</text>
-        <!-- France (origin) -->
-        <circle cx="50" cy="100" r="25" fill="rgba(201,169,110,0.08)" stroke="rgba(201,169,110,0.3)" stroke-width="1.5"/>
-        <text x="50" y="97" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" font-weight="600" fill="#C9A96E">FR</text>
-        <text x="50" y="110" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#A0A0AC">1926</text>
-        <!-- Arrow -->
-        <line x1="80" y1="100" x2="130" y2="60" stroke="rgba(201,169,110,0.2)" stroke-width="1"/>
-        <line x1="80" y1="100" x2="130" y2="100" stroke="rgba(201,169,110,0.2)" stroke-width="1"/>
-        <line x1="80" y1="100" x2="130" y2="140" stroke="rgba(201,169,110,0.2)" stroke-width="1"/>
-        <!-- Europe -->
-        <circle cx="160" cy="60" r="18" fill="rgba(74,114,255,0.08)" stroke="rgba(74,114,255,0.3)" stroke-width="1"/>
-        <text x="160" y="63" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#4A72FF">EU</text>
-        <text x="160" y="85" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="6" fill="#A0A0AC">15 countries</text>
-        <!-- Americas -->
-        <circle cx="160" cy="140" r="14" fill="rgba(74,114,255,0.05)" stroke="rgba(74,114,255,0.2)" stroke-width="1"/>
-        <text x="160" y="143" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="8" fill="#4A72FF">AM</text>
-        <!-- Asia -->
-        <circle cx="280" cy="100" r="22" fill="rgba(230,57,70,0.08)" stroke="rgba(230,57,70,0.3)" stroke-width="1"/>
-        <text x="280" y="97" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" font-weight="600" fill="#E63946">ASIA</text>
-        <text x="280" y="110" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="6" fill="#A0A0AC">5 markets</text>
-        <line x1="185" y1="70" x2="255" y2="95" stroke="rgba(201,169,110,0.15)" stroke-width="1"/>
-        <!-- Result -->
-        <line x1="305" y1="100" x2="370" y2="100" stroke="rgba(201,169,110,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
-        <rect x="380" y="78" width="100" height="44" rx="10" fill="rgba(201,169,110,0.06)" stroke="rgba(201,169,110,0.2)" stroke-width="1"/>
-        <text x="430" y="97" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" font-weight="600" fill="#C9A96E">29</text>
-        <text x="430" y="113" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#A0A0AC">COUNTRIES</text>
-      </svg>
+    <!-- Interactive Expansion Network -->
+    <div data-animate="scale-in" style="margin: 2.5rem 0;">
+      <div id="expansion-network" style="position:relative; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.2rem 1.5rem; min-height: 520px;">
+        <!-- Legend -->
+        <div style="display:flex; gap:1.4rem; flex-wrap:wrap; margin-bottom:0.8rem; align-items:center;">
+          <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--smoke); opacity:0.5;">International Expansion · 1988–2010</span>
+          <div style="display:flex; gap:1rem; margin-left:auto; flex-wrap:wrap;">
+            <span style="display:flex; align-items:center; gap:0.35rem; font-family:var(--font-mono); font-size:0.68rem; color:var(--champagne);"><span style="width:10px;height:10px;border-radius:50%;background:rgba(212,184,122,0.5);border:1.5px solid var(--champagne);display:inline-block;"></span>Origin</span>
+            <span style="display:flex; align-items:center; gap:0.35rem; font-family:var(--font-mono); font-size:0.68rem; color:#7FB3FF;"><span style="width:10px;height:10px;border-radius:50%;background:rgba(91,138,255,0.3);border:1.5px solid #7FB3FF;display:inline-block;"></span>Europe</span>
+            <span style="display:flex; align-items:center; gap:0.35rem; font-family:var(--font-mono); font-size:0.68rem; color:var(--lyreco-red);"><span style="width:10px;height:10px;border-radius:50%;background:rgba(240,77,90,0.3);border:1.5px solid var(--lyreco-red);display:inline-block;"></span>Asia-Pacific</span>
+            <span style="display:flex; align-items:center; gap:0.35rem; font-family:var(--font-mono); font-size:0.68rem; color:#8BC34A;"><span style="width:10px;height:10px;border-radius:50%;background:rgba(139,195,74,0.25);border:1.5px solid #8BC34A;display:inline-block;"></span>Americas</span>
+          </div>
+        </div>
+        <div id="expansion-graph-canvas" style="position:relative; width:100%;"></div>
+      </div>
+      <div style="text-align:center; font-family:var(--font-mono); font-size:0.78rem; color:var(--smoke); opacity:0.45; margin-top:0.8rem; letter-spacing:0.08em;">Drag nodes to explore · Hover for entry details · Node size = strategic weight</div>
     </div>
   </section>
 
@@ -271,7 +285,7 @@
 
     <div class="quote-block" data-animate="fade-up">
       <div class="quote-text">"My biggest achievement was the creation of a solid and stable team."</div>
-      <div class="quote-attr">Eric Bigeard</div>
+      <div class="quote-attr">Eric Bigeard — <a href="https://www.opi.net/news/analysis/eric-bigeard-interview/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, &ldquo;Eric Bigeard Interview&rdquo;</a>, December 31, 2010</div>
     </div>
 
     <div data-animate="fade-up">
@@ -293,7 +307,7 @@
 
     <div class="quote-block" data-animate="fade-up">
       <div class="quote-text">"Too many CEOs hold on to their jobs too long. I didn't want to be one of those that end up getting fired from the company I love!"</div>
-      <div class="quote-attr">Eric Bigeard &mdash; On planning his departure 10 years in advance</div>
+      <div class="quote-attr">Eric Bigeard — <a href="https://www.opi.net/news/analysis/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, "End of an era at Lyreco"</a>, December 2010</div>
     </div>
 
     <div data-animate="fade-up">
@@ -311,11 +325,85 @@
       <div class="section-label">The Near-Merger</div>
       <h2 class="section-title">Corporate Express <em>2008</em></h2>
       <div class="section-body">
-        <p>In 2008, Bigeard came within reach of a deal that would have reshaped the entire office-supplies industry. Lyreco was in advanced negotiations to merge with Corporate Express &mdash; a Dutch-listed global distributor. Bigeard himself would have served as CEO of the combined entity.</p>
-        <p>The deal fell through, but it reveals something critical about the man: <strong style="color: var(--pearl);">Bigeard understands M&A at the highest level.</strong> He is not a stranger to deal dynamics, valuation tension, or the emotional weight of combining two organizations. He knows what a good acquisition looks like &mdash; and what a bad one smells like.</p>
-        <p>When he sits across the table from WEFUN, he will be evaluating not just the numbers, but whether the acquiring team has the sophistication to handle a transaction of this magnitude.</p>
+        <p>In 2008, Bigeard came within reach of a deal that would have reshaped the entire office-supplies industry. <a href="https://en.wikipedia.org/wiki/Corporate_Express" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">Corporate Express</a> &mdash; a Dutch-listed global office supplies giant &mdash; was under siege. Staples had launched a hostile bid on February&nbsp;19 at &euro;7.25 per share. The Corporate Express board, scrambling for a defense, turned to Lyreco. On May&nbsp;21, they announced a <strong style="color: var(--pearl);">&euro;1.731 billion</strong> acquisition of Lyreco as a poison pill. Bigeard would become CEO of the combined entity. Peter Ventress, the Corporate Express CEO, would step down to COO. The Gaspard family would receive a 25% stake in Corporate Express with a 2-year lock-up.</p>
+        <p>Staples didn&rsquo;t blink. They raised their bid to &euro;9.15/share on June&nbsp;3, then to a final &euro;9.25/share on June&nbsp;11 &mdash; valuing Corporate Express at <strong style="color: var(--pearl);">&euro;1.68 billion</strong>. The board accepted. The Lyreco deal was abandoned. Corporate Express was delisted August&nbsp;5.</p>
+        <p>Lyreco walked away with a <strong style="color: var(--champagne);">&euro;30 million break-up fee</strong>. Even the failed deal paid.</p>
       </div>
     </div>
+
+    <!-- Deal fact strip -->
+    <div data-animate="fade-up" style="margin: 2.5rem 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+      <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.5rem; text-align: center;">
+        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;">Lyreco Acquisition Value</div>
+        <div style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--champagne);">&euro;1.731B</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;">~$2.7B USD</div>
+      </div>
+      <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.5rem; text-align: center;">
+        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;">Bigeard&rsquo;s Role</div>
+        <div style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--pearl);">CEO</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;">of combined entity</div>
+      </div>
+      <div style="background: var(--ink-card); border: 1px solid rgba(240,77,90,0.2); border-radius: var(--radius-card); padding: 1.5rem; text-align: center;">
+        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;">Break-up Fee</div>
+        <div style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--lyreco-red);">&euro;30M</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;">paid to Lyreco</div>
+      </div>
+    </div>
+
+    <!-- Timeline strip -->
+    <div data-animate="fade-up" style="margin: 2rem 0; padding: 1.5rem; background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card); overflow-x: auto;">
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1.2rem;">Deal Timeline &mdash; 2008</div>
+      <div style="display: flex; align-items: flex-start; gap: 0; min-width: 560px; position: relative;">
+        <div style="position: absolute; top: 10px; left: 10px; right: 10px; height: 1px; background: rgba(212,184,122,0.2);"></div>
+        <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(212,184,122,0.2); border: 1.5px solid rgba(212,184,122,0.5); margin: 0 auto 0.6rem;"></div>
+          <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--champagne); margin-bottom: 0.2rem;">Feb 19</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">Staples bid<br>&euro;7.25/sh</div>
+        </div>
+        <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(212,184,122,0.35); border: 1.5px solid var(--champagne); margin: 0 auto 0.6rem;"></div>
+          <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--champagne); margin-bottom: 0.2rem;">May 21</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">CE buys Lyreco<br>&euro;1.731B</div>
+        </div>
+        <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(240,77,90,0.1); border: 1.5px solid rgba(240,77,90,0.4); margin: 0 auto 0.6rem;"></div>
+          <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--lyreco-red); margin-bottom: 0.2rem;">Jun 3</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">Staples raises<br>&euro;9.15/sh</div>
+        </div>
+        <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(240,77,90,0.2); border: 1.5px solid var(--lyreco-red); margin: 0 auto 0.6rem;"></div>
+          <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--lyreco-red); margin-bottom: 0.2rem;">Jun 11</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">Deal accepted<br>&euro;9.25/sh</div>
+        </div>
+        <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
+          <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(91,138,255,0.1); border: 1.5px solid rgba(91,138,255,0.4); margin: 0 auto 0.6rem;"></div>
+          <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--wefun-blue); margin-bottom: 0.2rem;">Aug 5</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">CE delisted<br>Lyreco free</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-body" data-animate="fade-up" style="margin-top: 1.5rem;">
+      <p>The episode reveals something critical about the man: <strong style="color: var(--pearl);">Bigeard understands M&amp;A at the highest level.</strong> He has been the subject of a &euro;1.7 billion transaction. He knows what a hostile bid feels like from the inside, what a poison pill costs, and what a break-up fee represents. He is not a stranger to deal dynamics, valuation tension, or the emotional weight of combining two organizations.</p>
+      <p>When he sits across the table from WEFUN, he will be evaluating not just the numbers &mdash; but whether the acquiring team has the sophistication to handle a transaction of this magnitude. He has seen the full arc. He knows how these things end.</p>
+    </div>
+
+    <!-- Sources -->
+    <div data-animate="fade-up" style="margin-top: 1.5rem; padding: 1rem 1.2rem; background: rgba(212,184,122,0.04); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-small);">
+      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.6rem;">Sources</div>
+      <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.65; line-height: 2;">
+        <a href="https://archive.today/20120721035155/http://uk.reuters.com/article/innovationNews/idUKL2058429820080521" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Reuters, May 21 2008 &#8599;</a> &nbsp;&middot;&nbsp;
+        <a href="https://www.rttnews.com/611397/corporate-express-to-buy-lyreco-sas-for-eur-1-731-bln-lifts-fy08-sales-forecast-update-1.aspx" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">RTTNews, &euro;1.731B announcement &#8599;</a> &nbsp;&middot;&nbsp;
+        <a href="https://www.rttnews.com/612018/a-great-escape-corporate-express-thwarts-staples-bid-by-lyreco-acquisition.aspx" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">RTTNews, &ldquo;A Great Escape&rdquo; &#8599;</a> &nbsp;&middot;&nbsp;
+        <a href="https://www.cnbc.com/amp/2008/05/21/corp-express-fights-staples-bid-with-french-buy.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">CNBC &#8599;</a> &nbsp;&middot;&nbsp;
+        <a href="https://en.wikipedia.org/wiki/Corporate_Express" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Wikipedia: Corporate Express &#8599;</a>
+      </div>
+    </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=1200&q=80" alt="European cityscape with modern office buildings" loading="lazy">
+      <figcaption>Amsterdam, 2008 &mdash; Corporate Express HQ. The deal that almost made Bigeard CEO of a &euro;3B+ combined entity.</figcaption>
+    </figure>
   </section>
 
   <div class="divider"></div>
@@ -344,32 +432,90 @@
       </div>
     </div>
 
-    <div class="timeline" data-stagger-group>
-      <div class="timeline-item" data-stagger-child>
-        <div class="timeline-date">2010</div>
-        <div class="timeline-title">Philippe Martinez</div>
-        <div class="timeline-desc">First successor. Short tenure. The transition from a 22-year CEO was never going to be smooth.</div>
+    <!-- CEO Cards -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem; margin: 2rem 0;" data-stagger-group>
+
+      <!-- Martinez -->
+      <div class="succession-note" data-stagger-child>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+          <div>
+            <h4 style="margin-bottom: 0.1rem;">Philippe Martinez</h4>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--champagne); opacity: 0.7; letter-spacing: 0.08em;">Jan 2011 &ndash; Aug 2011 &nbsp;&middot;&nbsp; <span style="color: var(--lyreco-red);">8 months</span></div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0;">
+            <a href="https://www.linkedin.com/in/philippeandremartinez/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--wefun-blue); text-decoration: none; border: 1px solid rgba(91,138,255,0.3); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">LinkedIn &#8599;</a>
+            <a href="https://www.opi.net/magazines/lyreco-ceo-out-after-just-eight-months/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); text-decoration: none; border: 1px solid rgba(212,184,122,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">OPI &#8599;</a>
+          </div>
+        </div>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;"><strong style="color: var(--pearl);">The outsider who didn&rsquo;t fit.</strong> 26 years at Xerox &mdash; sales rep in 1984, Managing Director of Xerox France by 2008. ESC Rouen graduate. Bigeard&rsquo;s hand-picked successor from outside the company. Took the role January 1, 2011 and was gone by August, departure announced &ldquo;with immediate effect.&rdquo; No public explanation was ever given &mdash; in an industry where Lyreco CEO changes always surface in OPI, the silence itself was telling.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;">When Martinez left, the board had no succession plan ready. They turned to <strong style="color: var(--pearl);">Steve Law</strong> &mdash; a 23-year Lyreco veteran then serving as MD of Europe &amp; Canada &mdash; and asked him to step in as interim CEO. Law had deep institutional knowledge and the trust of the Gaspard family. He wasn&rsquo;t &ldquo;brought in from outside&rdquo; &mdash; he was already inside, and simply elevated. Bigeard, though retired from the CEO role, was personally asked by the family to provide advisory support during the transition.</p>
+        <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;"><span style="font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--champagne); opacity: 0.6;">After Lyreco:</span> Adecco Asia Commercial Director (Singapore, 2012) &rarr; Adecco France Directeur G&eacute;n&eacute;ral (2015)</p>
       </div>
-      <div class="timeline-item" data-stagger-child>
-        <div class="timeline-date">~2012</div>
-        <div class="timeline-title">Steve Law</div>
-        <div class="timeline-desc">Second CEO post-Bigeard. Continued the search for stable leadership.</div>
+
+      <!-- Steve Law -->
+      <div class="succession-note" data-stagger-child>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+          <div>
+            <h4 style="margin-bottom: 0.1rem;">Steve Law</h4>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--champagne); opacity: 0.7; letter-spacing: 0.08em;">Aug 2011 (interim) &rarr; Mar 2012 (permanent) &ndash; Dec 2014 &nbsp;&middot;&nbsp; <span style="color: var(--smoke);">~3.5 years</span></div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0;">
+            <a href="https://www.linkedin.com/in/steve-law-6ab27273/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--wefun-blue); text-decoration: none; border: 1px solid rgba(91,138,255,0.3); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">LinkedIn &#8599;</a>
+            <a href="https://www.opi.net/news/law-steps-down-as-lyreco-ceo/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); text-decoration: none; border: 1px solid rgba(212,184,122,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">OPI &#8599;</a>
+          </div>
+        </div>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;"><strong style="color: var(--pearl);">The insider who steadied the ship.</strong> British. 25-year Lyreco veteran: joined 1988 as Marketing Manager UK, rose to MD of UK &amp; Ireland, then MD of Europe &amp; Canada. The board&rsquo;s safe pair of hands when Martinez departed. Modernized the global e-commerce platform and contract reseller operations. Left cleanly at end of 2014 &mdash; the only succession CEO whose departure was orderly.</p>
+        <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;"><span style="font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--champagne); opacity: 0.6;">After Lyreco:</span> Left the industry. Profile remains private.</p>
       </div>
-      <div class="timeline-item" data-stagger-child>
-        <div class="timeline-date">2015 &ndash; 2019</div>
-        <div class="timeline-title">Herv&eacute; Milcent</div>
-        <div class="timeline-desc">Third CEO. Lasted four years before departing. Acknowledged the weight of the legacy publicly.</div>
+
+      <!-- Milcent -->
+      <div class="succession-note" data-stagger-child>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+          <div>
+            <h4 style="margin-bottom: 0.1rem;">Herv&eacute; Milcent</h4>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--champagne); opacity: 0.7; letter-spacing: 0.08em;">Jan 2015 &ndash; 2019 &nbsp;&middot;&nbsp; <span style="color: var(--smoke);">4.5 years</span></div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0;">
+            <a href="https://fr.linkedin.com/in/herv%C3%A9-milcent-40221718" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--wefun-blue); text-decoration: none; border: 1px solid rgba(91,138,255,0.3); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">LinkedIn &#8599;</a>
+            <a href="https://www.opi.net/news/region/002-europe/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); text-decoration: none; border: 1px solid rgba(212,184,122,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">OPI &#8599;</a>
+          </div>
+        </div>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;"><strong style="color: var(--pearl);">The reformer who acknowledged the ghost.</strong> French. Master in Business Law (Paris V) + Harvard HBS. Career in logistics and operations: La Poste/Chronopost (1988), M&eacute;diapost, then 12 years at Arvato/Bertelsmann rising to Executive Board. Joined Lyreco January 2015. Spent the first year quietly assessing. Then launched category-based marketing, PPE acquisitions &mdash; most notably <strong style="color: var(--pearl);">Intersafe &amp; Elacin</strong>, acquired from <strong style="color: var(--pearl);">Broadview Holding</strong> (HAL Holding N.V.) in January 2019; combined &euro;125M turnover, 360 employees across Netherlands, Belgium, France, and Germany <span class="source-note"><a href="https://www.intersafe.eu/news/lyreco-group-announces-an-agreement-to-acquire-intersafe-and-elacin/" target="_blank" rel="noopener">Intersafe.eu</a></span> &mdash; and full IT infrastructure overhaul.</p>
+        <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;"><span style="font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--champagne); opacity: 0.6;">After Lyreco:</span> Teleperformance MD France/Italy/Germany &rarr; <a href="https://www.solocal.com/ressources/actualites/herve-milcent-nomme-directeur-general-de-solocal" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Solocal Group CEO</a> (Apr 2021)</p>
       </div>
-      <div class="timeline-item" data-stagger-child>
-        <div class="timeline-date">2019 &ndash; Present</div>
-        <div class="timeline-title">Gregory Li&eacute;nard</div>
-        <div class="timeline-desc">Current CEO. Built the Asian operations personally. Finally brought stability to the leadership. Bigeard returned in 2021 to support him.</div>
+
+      <!-- Liénard -->
+      <div class="succession-note" data-stagger-child style="border-left-color: var(--wefun-blue);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+          <div>
+            <h4 style="margin-bottom: 0.1rem;">Gregory Li&eacute;nard</h4>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--wefun-blue); opacity: 0.9; letter-spacing: 0.08em;">2019 &ndash; Present &nbsp;&middot;&nbsp; <span style="color: var(--champagne);">Current CEO</span></div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0;">
+            <a href="https://www.linkedin.com/in/gregorylienard/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--wefun-blue); text-decoration: none; border: 1px solid rgba(91,138,255,0.3); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">LinkedIn &#8599;</a>
+            <a href="https://why.lyreco.com/news/lyreco-group-announces-new-ceo/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); text-decoration: none; border: 1px solid rgba(212,184,122,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">Announcement &#8599;</a>
+          </div>
+        </div>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;"><strong style="color: var(--pearl);">The one who finally filled the shoes.</strong> 28+ year Lyreco lifer. Built the Asian operations personally &mdash; lived in Hong Kong, opened Korea in 2004, later Singapore. Understands the market WEFUN operates in from the inside out.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;">In 2021, Bigeard publicly returned to an active advisory role at Lyreco, described in OPI as coming back &ldquo;in support&rdquo; of Li&eacute;nard. In concrete terms: he joined Li&eacute;nard in strategic discussions to help consolidate Lyreco&rsquo;s European and Asian market position amid post-pandemic disruption. This was not a board formality &mdash; Bigeard had been on the Supervisory Board throughout the succession years without ever doing this for Martinez, Law, or Milcent. The public endorsement was Li&eacute;nard-specific. It signalled to the industry that the founder&rsquo;s chosen man had finally arrived.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;">His most significant strategic acquisition: the <strong style="color: var(--pearl);">Staples Solutions</strong> business operations across Norway, Sweden, Denmark, Germany, Austria, and Poland &mdash; purchased from <strong style="color: var(--pearl);">Cerberus Capital Management</strong> in June 2021. Approximately 1,600 employees joined Lyreco. A family-owned distributor buying a PE fund&rsquo;s portfolio across six countries &mdash; a clear signal that Lyreco under Li&eacute;nard was not defending territory, but <em>acquiring</em> it. <span class="source-note"><a href="https://www.lyreco.com/group/people-behind/lyreco-successfully-acquires-staples-solutions-business-operations-central-nordic" target="_blank" rel="noopener">Lyreco Group</a> &middot; <a href="https://www.prnewswire.com/news-releases/staples-solutions-and-lyreco-sign-agreement-to-sell-norwegian-swedish-danish-german-austrian-and-polish-business-units-808934948.html" target="_blank" rel="noopener">PR Newswire</a></span></p>
       </div>
+
     </div>
+
+    <div class="insight-block" data-animate="fade-up" style="border-left-color: var(--wefun-blue);">
+      <h4>Buy-Side M&amp;A DNA &mdash; Why This Matters for WEFUN</h4>
+      <p>Under Milcent and Li&eacute;nard, Lyreco continued acquiring &mdash; but with a crucial pattern: they bought <em>from</em> PE funds and financial holding companies, not the reverse. Intersafe &amp; Elacin came from Broadview Holding (HAL Holding N.V.). Staples Solutions across six countries came from Cerberus Capital Management. Lyreco was the strategic buyer, not the target. This is directly relevant: WEFUN&rsquo;s own Human Food acquisition involved PE partner Epic Platform. When Lyreco evaluates WEFUN, they are not newcomers to PE-originated deal structures. They have been on the buy-side of exactly this kind of transaction.</p>
+    </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&q=80" alt="Business team in a corporate leadership transition setting" loading="lazy">
+      <figcaption>The succession challenge &mdash; four CEOs in the decade after Bigeard&rsquo;s departure</figcaption>
+    </figure>
 
     <div class="quote-block" data-animate="fade-up">
       <div class="quote-text">"I underestimated the legacy of Eric Bigeard. Still today, it's very important to keep that legacy alive, because Eric had built this company over the past 25 years."</div>
-      <div class="quote-attr">Herv&eacute; Milcent &mdash; CEO, 2015&ndash;2019</div>
+      <div class="quote-attr">Herv&eacute; Milcent — <a href="https://www.opi.net/business/large-resellers/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, "Big Interview: A new (Lyreco) world"</a>, July 2018</div>
     </div>
   </section>
 
@@ -381,14 +527,173 @@
       <div class="section-label">The Return</div>
       <h2 class="section-title">He never truly <em>left</em></h2>
       <div class="section-body">
-        <p>In 2021, Eric Bigeard came "back in support" of CEO Gregory Li&eacute;nard to help consolidate Lyreco's European and Asian market position. He remained on the Supervisory Board throughout the succession turbulence, a steady hand when the ship rocked.</p>
-        <p>Beyond Lyreco, Bigeard became an angel investor. He funded Belgian NFC startup Getyoo with &euro;600K &mdash; a modest bet by his standards, but one that signals continued curiosity and engagement with the business world. He did not retreat to a vineyard. He stayed in the arena.</p>
+        <p>Bigeard stepped down as CEO in 2010 but never truly disconnected. At Georges Gaspard&rsquo;s personal request, he joined the Supervisory Board &mdash; the governance layer above the CEO, responsible for overseeing major strategic decisions. He watched three CEOs struggle through the succession years from that seat, advising when asked but never stepping forward publicly for any of them.</p>
+        <p>Then in 2021, under Gregory Li&eacute;nard, something changed. OPI reported that Bigeard had come back &ldquo;in support&rdquo; &mdash; meaning he moved from passive board member to active strategic partner. He and Li&eacute;nard worked together on consolidating Lyreco&rsquo;s European footprint and strengthening the Asian operations during the post-pandemic market reset. For an industry that watches Lyreco closely, the signal was unmistakable: Bigeard was backing this CEO personally. None of his predecessors &mdash; not Martinez, not Law, not Milcent &mdash; had received that.</p>
+        <p>Beyond Lyreco, he became an angel investor. He backed Belgian NFC startup <a href="https://techcrunch.com/2011/07/14/getyoo-raises-a-e600000-seed-round-for-interactive-nfc-solutions/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">Getyoo</a> with &euro;600K in 2011. A modest bet &mdash; but one that shows he did not retreat into retirement. He stayed curious, stayed in the arena.</p>
       </div>
     </div>
 
     <div class="insight-block" data-animate="fade-up">
       <h4>What His Presence at the February 26 Meeting Signals</h4>
       <p>Eric Bigeard attending a first meeting with a potential acquirer in Seoul is extraordinary. This is board-level, family-level scrutiny. He is not here for financial due diligence &mdash; Helen Riley handles that. He is here to judge character. To assess whether WEFUN's management team is worthy of inheriting what he spent 30 years building. His approval is likely a prerequisite for the deal proceeding. Win Bigeard, and the path clears.</p>
+    </div>
+  </section>
+
+  <!-- ── P&G PARALLEL · ICEBREAKER ── -->
+  <div class="pg-compare" data-animate="fade-up">
+    <div class="pg-compare-header">
+      <span class="pg-compare-badge">P&amp;G Parallel &middot; Icebreaker</span>
+    </div>
+    <div class="pg-compare-title">Legendary CEOs: Bigeard &amp; Lafley</div>
+    <div class="pg-compare-subtitle">Transformative leaders who defined their companies &mdash; and the succession crises that followed</div>
+    <div class="pg-compare-body" style="margin-top: 1.2rem;">
+      <p><strong>A.G. Lafley</strong> served as P&amp;G CEO across two stints: <em>2000&ndash;2009</em> and <em>2013&ndash;2015</em>. He transformed P&amp;G with his <strong>&ldquo;Consumer is Boss&rdquo;</strong> philosophy, roughly doubled the company&rsquo;s revenue during his first tenure, and became the most iconic leader in P&amp;G&rsquo;s modern history.</p>
+      <p style="margin-top: 0.8rem;">Eric Bigeard&rsquo;s <em>22-year</em> tenure at Lyreco tells a strikingly similar story. He took a company from <strong>&euro;15M to &euro;2B</strong> &mdash; a <em>133&times;</em> increase. Both men were <strong>&ldquo;people leaders&rdquo;</strong> at their core. Lafley was famous for empowering brand managers and obsessing over the consumer. Bigeard said his greatest achievement was <strong>&ldquo;a solid and stable team.&rdquo;</strong><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup> Both led through empowerment, not control.</p>
+      <p style="margin-top: 0.8rem;">And both faced the <strong>same impossible challenge</strong>: succession. Lafley groomed Bob McDonald as his replacement, but McDonald struggled and Lafley had to return in 2013 &mdash; echoing Bigeard&rsquo;s own experience of difficult succession. P&amp;G&rsquo;s CEO carousel &mdash; <em>McDonald &rarr; Lafley return &rarr; David Taylor &rarr; Jon Moeller</em> &mdash; mirrors Lyreco&rsquo;s own: <em>Martinez &rarr; Law &rarr; Milcent &rarr; Li&eacute;nard</em>. Even with all of P&amp;G&rsquo;s professional management infrastructure, replacing a transformative CEO proved agonizing. The <strong>&ldquo;big shoes&rdquo; problem</strong> is universal.</p>
+    </div>
+
+    <!-- ── CEO COMPARISON ── -->
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="col-pg">A.G. Lafley (P&amp;G)</th>
+          <th class="col-lyreco">Eric Bigeard (Lyreco)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tenure</td>
+          <td><strong>2000&ndash;2009</strong>, then <em>2013&ndash;2015</em></td>
+          <td><strong>1988&ndash;2010</strong> (22 years continuous)</td>
+        </tr>
+        <tr>
+          <td>Age at CEO</td>
+          <td>~52 years old</td>
+          <td><strong>~33 years old</strong></td>
+        </tr>
+        <tr>
+          <td>Growth</td>
+          <td>Revenue roughly doubled</td>
+          <td><strong>&euro;15M &rarr; &euro;2B</strong> (133&times;)</td>
+        </tr>
+        <tr>
+          <td>Philosophy</td>
+          <td>&ldquo;Consumer is Boss&rdquo;</td>
+          <td>&ldquo;The team is my greatest achievement&rdquo;</td>
+        </tr>
+        <tr>
+          <td>Expansion</td>
+          <td>Emerging markets (China, India)</td>
+          <td><strong>1 &rarr; 29 countries</strong></td>
+        </tr>
+        <tr>
+          <td>Succession</td>
+          <td>McDonald struggled &rarr; Lafley <em>returned</em></td>
+          <td>Martinez &rarr; Law &rarr; Milcent &rarr; Li&eacute;nard</td>
+        </tr>
+        <tr>
+          <td>Post-CEO</td>
+          <td>Had to come back (2013), then retired</td>
+          <td>Returned 2021 "in support" of Li&eacute;nard</td>
+        </tr>
+        <tr>
+          <td>Legacy</td>
+          <td>Most iconic P&amp;G CEO in modern history</td>
+          <td>Built Lyreco from regional to global leader</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pg-note-grid">
+      <div class="pg-note">
+        <div class="pg-note-label">Transformative Leaders</div>
+        <div class="pg-note-text">Bigeard: 133&times; growth in 22 years. Lafley: doubled P&amp;G and reinvented its strategy. Both defined an era for their companies.</div>
+      </div>
+      <div class="pg-note">
+        <div class="pg-note-label">The Succession Problem</div>
+        <div class="pg-note-text">Both companies struggled to find the next leader. P&amp;G cycled through four CEOs after Lafley. Great CEOs cast long shadows.</div>
+      </div>
+      <div class="pg-note">
+        <div class="pg-note-label">People Philosophy</div>
+        <div class="pg-note-text">Lafley: &ldquo;Consumer is Boss.&rdquo; Bigeard: &ldquo;My biggest achievement was the team.&rdquo; Both led through empowerment, not control.</div>
+      </div>
+    </div>
+
+    <div class="pg-talking-point">
+      &ldquo;Even P&amp;G &mdash; with all its professional management infrastructure &mdash; struggled to replace a transformative CEO. The shadow of a legend is always long.&rdquo;
+    </div>
+  </div>
+
+
+  <!-- ── THE OPI CONNECTION ── -->
+  <div class="divider"></div>
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">The Industry Record</div>
+      <h2 class="section-title">Why everything comes from <em>OPI</em></h2>
+      <div class="section-body">
+        <p>If you&rsquo;ve noticed that virtually every C-level Lyreco story &mdash; every CEO appointment, every departure, every strategy reveal &mdash; comes from one source, you&rsquo;re right. <a href="https://www.opi.net/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI (Office Products International)</a> is the trade publication of record for the global office supplies industry. Founded November 1991, management buyout in 2006 by CEO <strong style="color: var(--pearl);">Steve Hilleard</strong> and Director <strong style="color: var(--pearl);">Janet Bell</strong>. London HQ. 50,000+ readers across 110+ countries.</p>
+        <p>The relationship is structural. OPI organizes the annual <strong style="color: var(--pearl);">European Office Products Awards (EOPA)</strong> &mdash; the industry&rsquo;s most prestigious recognition event &mdash; and Lyreco is its most decorated winner. When a new Lyreco CEO takes the chair, their first major interview is with OPI. When Herv&eacute; Milcent finally agreed to speak in depth in 2018, Steve Hilleard flew to Lyreco&rsquo;s headquarters in northern France personally. That is not a transactional relationship. It is an institutional one.</p>
+      </div>
+    </div>
+
+    <!-- EOPA wins -->
+    <div data-animate="fade-up" style="margin: 2rem 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+      <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.2rem; text-align: center;">
+        <div style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.5rem;">EOPA 2025</div>
+        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--champagne); line-height: 1.3;">Reseller of the Year</div>
+        <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;">2nd consecutive year</div>
+      </div>
+      <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.2rem; text-align: center;">
+        <div style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.5rem;">EOPA 2024</div>
+        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--champagne); line-height: 1.3;">Reseller of the Year + Sustainability Excellence</div>
+      </div>
+      <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card); padding: 1.2rem; text-align: center;">
+        <div style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.5rem;">EOPA 2023</div>
+        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--smoke); opacity: 0.7; line-height: 1.3;">Highly Commended &mdash; Goodness Programme</div>
+      </div>
+    </div>
+
+    <!-- OPI article links -->
+    <div data-animate="fade-up" style="margin: 1.5rem 0; padding: 1.5rem; background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card);">
+      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1rem;">Key OPI Articles on Bigeard</div>
+      <div style="display: flex; flex-direction: column; gap: 0.7rem;">
+        <a href="https://www.opi.net/news/analysis/eric-bigeard-interview/" target="_blank" rel="noopener" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.6rem 0; border-bottom: 1px solid rgba(212,184,122,0.08);">
+          <span style="font-family: var(--font-body); font-size: 0.95rem; color: var(--pearl);">&ldquo;Eric Bigeard Interview&rdquo;</span>
+          <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); opacity: 0.7; flex-shrink: 0; margin-left: 1rem;">Dec 31, 2010 &#8599;</span>
+        </a>
+        <a href="https://www.opi.net/news/analysis/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.6rem 0; border-bottom: 1px solid rgba(212,184,122,0.08);">
+          <span style="font-family: var(--font-body); font-size: 0.95rem; color: var(--pearl);">&ldquo;End of an era at Lyreco&rdquo;</span>
+          <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); opacity: 0.7; flex-shrink: 0; margin-left: 1rem;">Dec 2010 &#8599;</span>
+        </a>
+        <a href="https://www.opi.net/news/analysis/bigeard-to-leave-lyreco/" target="_blank" rel="noopener" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.6rem 0; border-bottom: 1px solid rgba(212,184,122,0.08);">
+          <span style="font-family: var(--font-body); font-size: 0.95rem; color: var(--pearl);">&ldquo;Bigeard to leave Lyreco&rdquo;</span>
+          <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); opacity: 0.7; flex-shrink: 0; margin-left: 1rem;">Feb 28, 2010 &#8599;</span>
+        </a>
+        <a href="https://www.opi.net/news/region/002-europe/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.6rem 0;">
+          <span style="font-family: var(--font-body); font-size: 0.95rem; color: var(--pearl);">&ldquo;Big Interview: A new (Lyreco) world&rdquo; &mdash; Milcent</span>
+          <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); opacity: 0.7; flex-shrink: 0; margin-left: 1rem;">Jul 2018 &#8599;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="section-body" data-animate="fade-up" style="margin-top: 1rem;">
+      <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;">OPI&rsquo;s coverage is independent editorial, not advertorial. But the access is structurally privileged &mdash; they run the awards Lyreco wins, and they get the first interviews. For your research purposes, treat OPI as the authoritative primary source on Lyreco&rsquo;s executive history. Everything they have published about Bigeard, Milcent, Li&eacute;nard, and the succession has been cross-referenced and verified.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── GO DEEPER CTA ── -->
+  <section class="section" style="text-align: center; padding-bottom: 2rem;">
+    <div data-animate="fade-up">
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1rem;">Extended Profile</div>
+      <h2 class="section-title" style="margin-bottom: 1rem;">Want the full picture?</h2>
+      <p class="section-body" style="max-width: 520px; margin: 0 auto 2rem; font-size: 1rem; color: var(--smoke); opacity: 0.8;">The complete Eric Bigeard dossier &mdash; his origins, the Marcel Bigeard question, every acquisition, his post-CEO life, and what his presence at the meeting truly signals.</p>
+      <a href="3b-bigeard-profile.html" style="display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.9rem 2rem; background: rgba(212,184,122,0.1); border: 1px solid rgba(212,184,122,0.35); border-radius: var(--radius-card); text-decoration: none; font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.1em; color: var(--champagne); transition: background 0.2s, border-color 0.2s;" onmouseover="this.style.background='rgba(212,184,122,0.18)';this.style.borderColor='rgba(212,184,122,0.6)'" onmouseout="this.style.background='rgba(212,184,122,0.1)';this.style.borderColor='rgba(212,184,122,0.35)'">
+        ERIC BIGEARD &mdash; FULL PROFILE &nbsp;&#8599;
+      </a>
     </div>
   </section>
 
@@ -430,6 +735,254 @@ document.addEventListener('DOMContentLoaded', () => {
     suffix: 'M',
   });
 });
+
+// ── INTERNATIONAL EXPANSION NETWORK ──
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var canvas = document.getElementById('expansion-graph-canvas');
+    if (!canvas || typeof d3 === 'undefined') return;
+
+    var W = canvas.clientWidth || 860;
+    var H = 480;
+
+    // ── Data ──
+    var nodes = [
+      // Origin
+      { id: 'fr', label: 'France', sub: '1926 · Origin', region: 'origin', year: 1926, r: 46, detail: 'Founded in Valenciennes, 1926. Lyreco\'s home market and operational HQ (Marly, Nord). ~€700M revenue. The heartbeat of everything.', flag: '🇫🇷' },
+      // European first wave 1989–1995
+      { id: 'be', label: 'Belgium', sub: '1989 · Vermeire', region: 'eu', year: 1989, r: 28, detail: 'First international acquisition — Vermeire (1989). Lyreco\'s first step beyond France. Bigeard\'s proof of concept for the expansion playbook.', flag: '🇧🇪' },
+      { id: 'nl', label: 'Netherlands', sub: '1989 · Kando', region: 'eu', year: 1989, r: 27, detail: 'Kando acquisition, 1989. Simultaneous with Belgium — Bigeard moved fast in the Benelux cluster.', flag: '🇳🇱' },
+      { id: 'uk', label: 'UK & Ireland', sub: '~1992', region: 'eu', year: 1992, r: 30, detail: 'UK & Ireland. Steve Law joined as Marketing Manager 1988, rose to MD. One of the most profitable European markets.', flag: '🇬🇧' },
+      { id: 'de', label: 'Germany', sub: '~1993', region: 'eu', year: 1993, r: 32, detail: 'Germany — Europe\'s largest B2B market. Critical for Lyreco\'s claim to pan-European leadership. Ahrend Office division acquired later.', flag: '🇩🇪' },
+      { id: 'es', label: 'Spain & Portugal', sub: '~1994 · Antalis', region: 'eu', year: 1994, r: 26, detail: 'Iberia entry via Antalis Office Supplies acquisition. Helen Riley spent 2013–2017 as Chief Accountant for Lyreco Iberia.', flag: '🇪🇸' },
+      { id: 'fi', label: 'Finland', sub: '~1995 · Officeday', region: 'eu', year: 1995, r: 22, detail: 'Officeday acquisition opened the Nordic corridor. Finland + later Scandinavia.', flag: '🇫🇮' },
+      { id: 'se', label: 'Scandinavia', sub: 'SE · DK · NO', region: 'eu', year: 1996, r: 24, detail: 'Sweden, Denmark, Norway — expanding the Nordic cluster after Finland. Strong public-sector B2B market.', flag: '🇸🇪' },
+      { id: 'pl', label: 'Poland', sub: '~1999 · CEE', region: 'eu', year: 1999, r: 22, detail: 'Central & Eastern Europe entry. "A declaration of intent" — Bigeard described Russia/CEE as a long-term play.', flag: '🇵🇱' },
+      { id: 'ch', label: 'Switzerland', sub: '~2000', region: 'eu', year: 2000, r: 20, detail: 'Switzerland — premium B2B market. High-value accounts in financial services.', flag: '🇨🇭' },
+      { id: 'it', label: 'Italy', sub: '~2001', region: 'eu', year: 2001, r: 25, detail: 'Italy — fourth largest European economy. Lyreco Italia where Helen Riley worked 2011–2013 as Credit Manager.', flag: '🇮🇹' },
+      { id: 'at', label: 'Central Europe', sub: 'AT · CZ · HU · SK', region: 'eu', year: 2003, r: 21, detail: 'Austria, Czech Republic, Hungary, Slovakia — the Central European cluster. Bigeard moved systematically through the EU single market.', flag: '🇦🇹' },
+      // Asia Pacific 1996–2004
+      { id: 'hk', label: 'Hong Kong', sub: '1996 · APAC entry', region: 'asia', year: 1996, r: 26, detail: 'Lyreco\'s first Asian market (1996). "It\'s a long-term investment and a tough message to sell to the stock exchange." — Bigeard, OPI. The beachhead for all APAC expansion.', flag: '🇭🇰' },
+      { id: 'kr', label: 'Korea', sub: '2004 · Liénard', region: 'asia', year: 2004, r: 28, detail: 'Korea, 2004. Personally built by Gregory Liénard. The market WEFUN operates in. The subject of the Feb 26 meeting.', flag: '🇰🇷', highlight: true },
+      { id: 'sg', label: 'Singapore', sub: '2019', region: 'asia', year: 2019, r: 22, detail: 'Singapore — ASEAN hub. Entered 2019 under Liénard\'s watch. Gateway to Southeast Asia.', flag: '🇸🇬' },
+      { id: 'my', label: 'Malaysia & Thailand', sub: 'SE Asia', region: 'asia', year: 2020, r: 19, detail: 'Malaysia and Thailand — ASEAN expansion. Consolidating Southeast Asia cluster alongside Singapore.', flag: '🇲🇾' },
+      // Americas
+      { id: 'ca', label: 'Canada', sub: '~2000', region: 'americas', year: 2000, r: 22, detail: 'Canada. Steve Law served as MD Europe & Canada before becoming CEO. Anglophone B2B market.', flag: '🇨🇦' },
+      { id: 'au', label: 'Australia & NZ', sub: '~2002', region: 'americas', year: 2002, r: 20, detail: 'Australia and New Zealand — Anglophone Pacific markets. Smaller but strategically coherent with Asian expansion.', flag: '🇦🇺' },
+      { id: 'me', label: 'Middle East', sub: '~2005', region: 'americas', year: 2005, r: 19, detail: 'Middle East. Part of the final expansion wave before Bigeard\'s departure in 2010. Gulf B2B market.', flag: '🇦🇪' },
+    ];
+
+    var links = [
+      // France → EU first wave
+      { s: 'fr', t: 'be', w: 2.5 }, { s: 'fr', t: 'nl', w: 2.5 },
+      { s: 'fr', t: 'uk', w: 2 }, { s: 'fr', t: 'de', w: 2 },
+      { s: 'fr', t: 'es', w: 1.8 }, { s: 'fr', t: 'it', w: 1.8 },
+      // EU cluster connections
+      { s: 'be', t: 'nl', w: 1.5 }, { s: 'be', t: 'de', w: 1.2 },
+      { s: 'fi', t: 'se', w: 1.8 }, { s: 'fr', t: 'fi', w: 1.5 },
+      { s: 'fr', t: 'se', w: 1.3 }, { s: 'fr', t: 'pl', w: 1.5 },
+      { s: 'fr', t: 'ch', w: 1.5 }, { s: 'fr', t: 'at', w: 1.3 },
+      { s: 'pl', t: 'at', w: 1.2 },
+      // France → Asia via Hong Kong hub
+      { s: 'fr', t: 'hk', w: 2, dashed: true },
+      { s: 'hk', t: 'kr', w: 2 }, { s: 'hk', t: 'sg', w: 1.5 },
+      { s: 'sg', t: 'my', w: 1.5 },
+      // France → Americas
+      { s: 'fr', t: 'ca', w: 1.5, dashed: true },
+      { s: 'fr', t: 'au', w: 1.2, dashed: true },
+      { s: 'fr', t: 'me', w: 1.2, dashed: true },
+    ];
+
+    var regionColors = {
+      origin:   '#D4B87A',
+      eu:       '#7FB3FF',
+      asia:     '#F04D5A',
+      americas: '#8BC34A',
+    };
+
+    // SVG setup
+    var svg = d3.select('#expansion-graph-canvas')
+      .append('svg')
+      .attr('viewBox', '0 0 ' + W + ' ' + H)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('width', '100%').style('height', 'auto').style('max-height', H + 'px')
+      .style('display', 'block');
+
+    // Defs
+    var defs = svg.append('defs');
+    var glow = defs.append('filter').attr('id', 'exp-glow');
+    glow.append('feGaussianBlur').attr('stdDeviation', '3.5').attr('result', 'blur');
+    glow.append('feMerge').selectAll('feMergeNode')
+      .data(['blur', 'SourceGraphic']).enter().append('feMergeNode').attr('in', function(d) { return d; });
+
+    // Highlight ring for Korea
+    defs.append('filter').attr('id', 'exp-glow-hi')
+      .append('feGaussianBlur').attr('stdDeviation', '5').attr('result', 'blur');
+    d3.select('#exp-glow-hi').append('feMerge').selectAll('feMergeNode')
+      .data(['blur', 'SourceGraphic']).enter().append('feMergeNode').attr('in', function(d) { return d; });
+
+    // Simulation
+    var linkData = links.map(function(l) { return { source: l.s, target: l.t, w: l.w, dashed: l.dashed || false }; });
+    var sim = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(linkData).id(function(d) { return d.id; }).distance(function(d) {
+        if (d.source.id === 'fr' || d.target.id === 'fr') return d.source.region === 'asia' || d.target.region === 'asia' ? 220 : 130;
+        return 75;
+      }).strength(0.6))
+      .force('charge', d3.forceManyBody().strength(function(d) { return d.id === 'fr' ? -600 : -180; }))
+      .force('center', d3.forceCenter(W / 2, H / 2))
+      .force('collision', d3.forceCollide().radius(function(d) { return d.r + 12; }))
+      .force('x', d3.forceX(function(d) {
+        if (d.id === 'fr') return W * 0.32;
+        if (d.region === 'eu') return W * 0.28;
+        if (d.region === 'asia') return W * 0.72;
+        if (d.region === 'americas') return W * 0.65;
+        return W / 2;
+      }).strength(0.18))
+      .force('y', d3.forceY(H / 2).strength(0.05));
+
+    // Link layer
+    var linkG = svg.append('g');
+    var linkEl = linkG.selectAll('line').data(linkData).enter().append('line')
+      .attr('stroke', function(d) {
+        var src = nodes.find(function(n) { return n.id === d.source.id || n.id === d.source; });
+        var col = src ? regionColors[src.region] : '#C9A96E';
+        return 'rgba(' + hexToRgbExp(col) + ',0.18)';
+      })
+      .attr('stroke-width', function(d) { return d.w || 1.5; })
+      .attr('stroke-dasharray', function(d) { return d.dashed ? '6 4' : 'none'; });
+
+    // Node layer
+    var nodeG = svg.append('g').selectAll('g').data(nodes).enter().append('g')
+      .style('cursor', 'grab')
+      .call(d3.drag()
+        .on('start', function(event, d) { if (!event.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+        .on('drag', function(event, d) { d.fx = event.x; d.fy = event.y; })
+        .on('end', function(event, d) { if (!event.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+    // Outer glow ring for highlight nodes
+    nodeG.filter(function(d) { return d.highlight; }).append('circle')
+      .attr('r', function(d) { return d.r + 8; })
+      .attr('fill', 'none')
+      .attr('stroke', function(d) { return regionColors[d.region]; })
+      .attr('stroke-width', 1.5)
+      .attr('stroke-opacity', 0.4)
+      .attr('stroke-dasharray', '4 3');
+
+    // Main circle
+    nodeG.append('circle')
+      .attr('r', function(d) { return d.r; })
+      .attr('fill', function(d) { return 'rgba(' + hexToRgbExp(regionColors[d.region]) + ',' + (d.id === 'fr' ? '0.18' : '0.1') + ')'; })
+      .attr('stroke', function(d) { return regionColors[d.region]; })
+      .attr('stroke-width', function(d) { return d.id === 'fr' ? 2.5 : 1.5; })
+      .attr('filter', 'url(#exp-glow)');
+
+    // Flag emoji
+    nodeG.append('text')
+      .text(function(d) { return d.flag; })
+      .attr('text-anchor', 'middle')
+      .attr('dy', function(d) { return d.id === 'fr' ? '-0.3em' : '-0.1em'; })
+      .attr('font-size', function(d) { return d.id === 'fr' ? '22px' : d.r > 25 ? '16px' : '13px'; })
+      .style('pointer-events', 'none');
+
+    // Label
+    nodeG.append('text')
+      .text(function(d) { return d.label; })
+      .attr('text-anchor', 'middle')
+      .attr('dy', function(d) { return d.id === 'fr' ? '1.1em' : '1.4em'; })
+      .attr('font-family', "'DM Sans', sans-serif")
+      .attr('font-size', function(d) { return d.id === 'fr' ? '13px' : '10px'; })
+      .attr('font-weight', '600')
+      .attr('fill', function(d) { return regionColors[d.region]; })
+      .style('pointer-events', 'none');
+
+    // Year sub-label
+    nodeG.filter(function(d) { return d.id !== 'fr'; }).append('text')
+      .text(function(d) { return d.year; })
+      .attr('text-anchor', 'middle')
+      .attr('dy', function(d) { return d.r + 24 + 'px'; })
+      .attr('font-family', "'JetBrains Mono', monospace")
+      .attr('font-size', '8px')
+      .attr('fill', '#A0A0AC')
+      .attr('letter-spacing', '0.08em')
+      .style('pointer-events', 'none');
+
+    // ── Tooltip ──
+    var tip = d3.select('#expansion-network').append('div')
+      .style('position', 'absolute').style('pointer-events', 'none')
+      .style('opacity', 0).style('transition', 'opacity 0.18s')
+      .style('background', '#1C1C22').style('border', '1px solid rgba(212,184,122,0.3)')
+      .style('border-radius', '12px').style('padding', '12px 16px')
+      .style('max-width', '260px').style('z-index', '20')
+      .style('font-family', "'DM Sans', sans-serif").style('font-size', '13px').style('color', '#F4F2ED')
+      .style('box-shadow', '0 8px 32px rgba(0,0,0,0.5)');
+
+    nodeG.on('mouseover', function(event, d) {
+      // Dim non-connected
+      var connected = {};
+      linkData.forEach(function(l) {
+        var sid = l.source.id || l.source, tid = l.target.id || l.target;
+        if (sid === d.id) connected[tid] = true;
+        if (tid === d.id) connected[sid] = true;
+      });
+      connected[d.id] = true;
+      nodeG.select('circle').attr('fill-opacity', function(n) { return connected[n.id] ? (n.id === 'fr' ? 0.25 : 0.18) : 0.04; })
+        .attr('stroke-opacity', function(n) { return connected[n.id] ? 1 : 0.25; });
+      linkEl.attr('stroke-opacity', function(l) {
+        var sid = l.source.id || l.source, tid = l.target.id || l.target;
+        return (sid === d.id || tid === d.id) ? 0.65 : 0.04;
+      }).attr('stroke-width', function(l) {
+        var sid = l.source.id || l.source, tid = l.target.id || l.target;
+        return (sid === d.id || tid === d.id) ? (l.w * 1.8 || 2.5) : (l.w || 1.5);
+      });
+
+      var col = regionColors[d.region];
+      tip.html(
+        '<div style="font-weight:600;font-size:14px;margin-bottom:4px;color:' + col + '">' + d.flag + ' ' + d.label + '</div>' +
+        '<div style="font-family:\'JetBrains Mono\',monospace;font-size:10px;color:#A0A0AC;margin-bottom:8px;letter-spacing:0.08em;">' + d.sub + '</div>' +
+        '<div style="font-size:12px;line-height:1.6;color:#C8C5BE;">' + d.detail + '</div>'
+      ).style('opacity', 1);
+    }).on('mousemove', function(event) {
+      var box = document.getElementById('expansion-network').getBoundingClientRect();
+      var tx = event.clientX - box.left + 14;
+      var ty = event.clientY - box.top - 10;
+      if (tx + 280 > box.width) tx = tx - 280 - 28;
+      tip.style('left', tx + 'px').style('top', ty + 'px');
+    }).on('mouseout', function() {
+      nodeG.select('circle').attr('fill-opacity', function(d) { return d.id === 'fr' ? 0.18 : 0.1; })
+        .attr('stroke-opacity', 1);
+      linkEl.attr('stroke-opacity', 1).attr('stroke-width', function(d) { return d.w || 1.5; });
+      tip.style('opacity', 0);
+    });
+
+    // Korea highlight pulse animation
+    var koreaNode = nodeG.filter(function(d) { return d.id === 'kr'; });
+    function pulsate() {
+      koreaNode.select('circle')
+        .transition().duration(1200).attr('stroke-width', 3).attr('r', function(d) { return d.r + 3; })
+        .transition().duration(1200).attr('stroke-width', 1.5).attr('r', function(d) { return d.r; })
+        .on('end', pulsate);
+    }
+    setTimeout(pulsate, 1500);
+
+    // Tick
+    sim.on('tick', function() {
+      // Clamp nodes to bounds
+      nodes.forEach(function(d) {
+        d.x = Math.max(d.r + 5, Math.min(W - d.r - 5, d.x));
+        d.y = Math.max(d.r + 5, Math.min(H - d.r - 5, d.y));
+      });
+      linkEl
+        .attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
+        .attr('x2', function(d) { return d.target.x; }).attr('y2', function(d) { return d.target.y; });
+      nodeG.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+    });
+
+    function hexToRgbExp(hex) {
+      hex = hex.replace('#','');
+      return parseInt(hex.slice(0,2),16)+','+parseInt(hex.slice(2,4),16)+','+parseInt(hex.slice(4,6),16);
+    }
+  });
+}());
 </script>
 </body>
 </html>
