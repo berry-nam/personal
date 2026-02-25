@@ -17,7 +17,7 @@ const CHAPTERS = [
     title: 'The Gaspard Dynasty',
     subtitle: 'Four generations of family control through Corely SAS',
     readTime: '8 min',
-    teaser: 'The Gaspard family controls ~84% of Lyreco through Corely SAS. Their investment vehicles reach from artificial hearts to Belgian real estate.',
+    teaser: 'The Gaspard family controls Lyreco through Corely SAS via Holding Lyreco France. Their investment vehicles reach from artificial hearts to Belgian real estate.',
   },
   {
     num: 3,

@@ -377,7 +377,7 @@
       </div>
       <div class="org-tier" data-stagger-child style="display: flex; gap: 1.5rem; align-items: stretch; flex-wrap: wrap; justify-content: center; text-align: center; padding: 0; background: none; border: none;">
         <div style="flex: 2; min-width: 250px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid var(--champagne);">
-          <div class="org-tier-label">~84% &middot; Family Holding</div>
+          <div class="org-tier-label">~84% (2008 est.) &middot; Family Holding</div>
           <div class="org-tier-name" style="font-size: 1.1rem;"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Corely SAS</a></div>
           <div class="org-tier-detail">Gaspard family control</div>
         </div>
@@ -388,7 +388,13 @@
         </div>
       </div>
       <div class="org-tier" data-stagger-child style="position: relative;">
-        <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr; combined ~100%</div>
+        <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr;</div>
+        <div class="org-tier-label">Intermediate Holding</div>
+        <div class="org-tier-name"><a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Holding Lyreco France SAS</a></div>
+        <div class="org-tier-detail">Marly, France &middot; &euro;157M capital &middot; Est. 2004 &middot; Sole shareholder: Corely &middot; Former PE involvement (Butler Capital Partners 2004–2008)</div>
+      </div>
+      <div class="org-tier" data-stagger-child style="position: relative;">
+        <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr; sole shareholder</div>
         <div class="org-tier-label">Operating Company</div>
         <div class="org-tier-name"><a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Lyreco SAS</a></div>
         <div class="org-tier-detail">Marly, France &middot; Share capital: &euro;65.2M &middot; President: Nathalie Gaspard &middot; Director-General: Georges Gaspard</div>
@@ -408,7 +414,7 @@
 
     <figure class="chapter-img" data-animate="fade-up">
       <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=1200&q=80" alt="A corporate boardroom — representing the governance structure of the Gaspard family's enterprise" loading="lazy">
-      <figcaption>Corely SAS — the holding vehicle through which the Gaspard family maintains 84% control</figcaption>
+      <figcaption>Corely SAS → Holding Lyreco France → Lyreco SAS — the holding chain through which the Gaspard family maintains control (84% est. 2008)</figcaption>
     </figure>
 
     <!-- Full Corporate Structure Wireframe -->
@@ -440,13 +446,14 @@
           <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(244,242,237,0.2)" stroke-width="30"
                   stroke-dasharray="100.5 527.8" stroke-dashoffset="-527.8" transform="rotate(-90 130 130)"/>
           <!-- Center text -->
-          <text x="130" y="120" text-anchor="middle" font-family="'Playfair Display', serif" font-size="28" font-weight="700" fill="var(--pearl)">84%</text>
-          <text x="130" y="145" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="var(--champagne)" letter-spacing="0.12em">GASPARD FAMILY</text>
+          <text x="130" y="115" text-anchor="middle" font-family="'Playfair Display', serif" font-size="28" font-weight="700" fill="var(--pearl)">~84%</text>
+          <text x="130" y="137" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="var(--champagne)" letter-spacing="0.12em">GASPARD FAMILY</text>
+          <text x="130" y="152" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="var(--smoke)" opacity="0.5">(2008 est.)</text>
         </svg>
         <div style="display: flex; gap: 1.5rem; justify-content: center; margin-top: 1rem;">
           <div style="display: flex; align-items: center; gap: 0.5rem;">
             <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--champagne); display: inline-block;"></span>
-            <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--champagne);">~84% Gaspard Family <span style="color: var(--smoke);">via Corely SAS</span></span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--champagne);">~84% <span style="opacity:0.5">(2008 est.)</span> Gaspard Family <span style="color: var(--smoke);">via Corely → HLF</span></span>
           </div>
           <div style="display: flex; align-items: center; gap: 0.5rem;">
             <span style="width: 12px; height: 12px; border-radius: 50%; background: rgba(244,242,237,0.25); display: inline-block;"></span>
@@ -788,8 +795,8 @@
     <div class="stat-grid" data-stagger-group>
       <div class="stat-card" data-stagger-child>
         <div class="stat-number">~84%</div>
-        <div class="stat-label">Family Ownership</div>
-        <div class="stat-sub">Via Corely SAS &middot; ~16% via Lyreco Mgmt SAS</div>
+        <div class="stat-label">Family Ownership <span style="font-weight:400; opacity:0.5;">(2008 est.)</span></div>
+        <div class="stat-sub">Via Corely → HLF → Lyreco SAS &middot; ~16% via Lyreco Mgmt SAS</div>
       </div>
       <div class="stat-card" data-stagger-child>
         <div class="stat-number" data-counter="4" data-suffix="">0</div>
@@ -853,7 +860,7 @@
     <div class="pg-compare-subtitle">Two governance models &mdash; one shared commitment to values</div>
     <div class="pg-compare-body" style="margin-top: 1.2rem;">
       <p><em>Procter &amp; Gamble</em> was family-run for its first ~50 years, then transitioned to <strong>professional management</strong> in the 1880s&ndash;1890s. The Procter and Gamble families gradually reduced their direct involvement &mdash; but the founding families' values persisted. <em>&ldquo;Do what is right&rdquo;</em> remained the company's guiding ethos through nearly two centuries of professional stewardship.</p>
-      <p style="margin-top: 0.8rem;"><strong>Lyreco took the opposite path.</strong> The Gaspard family maintained ~84% control through 100 years. The 4th generation is already in position. Where P&amp;G entrusted its values to professional managers, the Gaspards chose to carry them personally &mdash; generation after generation.</p>
+      <p style="margin-top: 0.8rem;"><strong>Lyreco took the opposite path.</strong> The Gaspard family maintained ~84% control (2008 est.) through 100 years. The 4th generation is already in position. Where P&amp;G entrusted its values to professional managers, the Gaspards chose to carry them personally &mdash; generation after generation.</p>
       <p style="margin-top: 0.8rem;">In <em>1887</em>, P&amp;G introduced one of the first <strong>employee profit-sharing programs</strong> in American corporate history &mdash; a revolutionary act that reflected the founders' people-first philosophy. Lyreco's employee-centric culture under Bigeard echoes this same instinct, decades later and an ocean apart.</p>
       <p style="margin-top: 0.8rem;">Both models work: <em>P&amp;G became the world's largest FMCG company</em>. <em>Lyreco became Europe's largest B2B workplace distributor</em>. The common thread isn't the governance model &mdash; it's <strong>values-driven leadership</strong>.</p>
     </div>
@@ -871,7 +878,7 @@
         <tr>
           <td>Model</td>
           <td>Professional management (since ~1890s)</td>
-          <td><strong>Family-controlled</strong> — 84% via Corely SAS</td>
+          <td><strong>Family-controlled</strong> — ~84% (2008 est.) via Corely → HLF</td>
         </tr>
         <tr>
           <td>Family Role</td>

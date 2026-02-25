@@ -1,20 +1,23 @@
 {
   "gaspard_family": {
     "nodes": [
-      { "id": "corely", "label": "Corely SAS", "sub": "~84% ownership · Onnaing, France", "x": 350, "y": 50, "width": 200, "height": 50, "accent": "#C9A96E" },
-      { "id": "georges", "label": "Georges Gaspard", "sub": "President of Corely SAS", "x": 200, "y": 140, "width": 170, "height": 45 },
-      { "id": "caroline", "label": "Caroline Gaspard", "sub": "Deputy Dir-General", "x": 400, "y": 140, "width": 170, "height": 45 },
-      { "id": "nathalie", "label": "Nathalie Gaspard", "sub": "Deputy Dir-General · President Lyreco SAS", "x": 580, "y": 140, "width": 200, "height": 45 },
-      { "id": "lyreco", "label": "Lyreco SAS", "sub": "Capital €64.7M · Marly, France", "x": 350, "y": 240, "width": 200, "height": 50, "accent": "#E63946" },
-      { "id": "subs", "label": "25+ Country Subsidiaries", "sub": "Europe · Asia", "x": 350, "y": 340, "width": 200, "height": 45, "accent": "rgba(242, 240, 235, 0.15)" }
+      { "id": "corely", "label": "Corely SAS", "sub": "Family holding · Sole shareholder of HLF · Onnaing, France", "x": 350, "y": 50, "width": 200, "height": 50, "accent": "#C9A96E" },
+      { "id": "georges", "label": "Georges Gaspard", "sub": "President of Corely SAS", "x": 140, "y": 140, "width": 170, "height": 45 },
+      { "id": "caroline", "label": "Caroline Gaspard", "sub": "Deputy Dir-General", "x": 350, "y": 140, "width": 170, "height": 45 },
+      { "id": "nathalie", "label": "Nathalie Gaspard", "sub": "Deputy Dir-General · President Lyreco SAS", "x": 560, "y": 140, "width": 200, "height": 45 },
+      { "id": "hlf", "label": "Holding Lyreco France SAS", "sub": "€157M capital · Marly · Est. 2004", "x": 350, "y": 230, "width": 220, "height": 50, "accent": "#E63946" },
+      { "id": "lyreco", "label": "Lyreco SAS", "sub": "Capital €64.7M · Marly, France", "x": 350, "y": 320, "width": 200, "height": 50, "accent": "#E63946" },
+      { "id": "subs", "label": "25+ Country Subsidiaries", "sub": "Europe · Asia", "x": 350, "y": 410, "width": 200, "height": 45, "accent": "rgba(242, 240, 235, 0.15)" }
     ],
     "links": [
       { "from": "corely", "to": "georges" },
       { "from": "corely", "to": "caroline" },
       { "from": "corely", "to": "nathalie" },
-      { "from": "corely", "to": "lyreco" },
+      { "from": "corely", "to": "hlf", "label": "Sole shareholder" },
+      { "from": "hlf", "to": "lyreco", "label": "Sole shareholder" },
       { "from": "lyreco", "to": "subs" }
-    ]
+    ],
+    "ownership_note": "The ~84/16% split (Corely vs Lyreco Management SAS) dates from the 2008 Corporate Express deal. Exact current percentages are unverifiable since France restricted beneficial-ownership (RBE) access in July 2024."
   },
   "investment_vehicles": [
     {
@@ -26,6 +29,15 @@
       "name": "Bratya SPRL",
       "manager": "David Coti",
       "investments": ["CARMAT €3.6M"]
+    },
+    {
+      "name": "Opale Jumping SCI",
+      "manager": "Nathalie Gaspard",
+      "note": "Civil real estate company · Same Onnaing address as Corely · Est. May 2022 · Capital €1K"
+    },
+    {
+      "name": "Impactivist SAS",
+      "note": "Impact VC firm (Paris). Corely held Supervisory Board seat Aug 2022 – Nov 2024 (resigned). Previously Investir&+ SAS."
     }
   ],
   "georges_connections": [
