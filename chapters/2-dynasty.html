@@ -323,7 +323,7 @@
       <div class="section-label">The Structure</div>
       <h2 class="section-title">Corely SAS<br><em>The family's holding company</em></h2>
       <div class="section-body">
-        <p>At the apex of the Lyreco empire sits <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(201,169,110,0.4);">Corely SAS</a> &mdash; the Gaspard family's holding company. Corely controls approximately <strong style="color: var(--pearl);">84%</strong> of Lyreco's ownership. The remaining <strong>~16%</strong> is held through <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a> (&euro;10.5M capital, est. 1998) &mdash; a management participation vehicle that likely holds equity for senior executives. This is not a dispersed public shareholding. This is concentrated, generational power.</p>
+        <p>At the apex of the Lyreco empire sits <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(201,169,110,0.4);">Corely SAS</a> &mdash; the Gaspard family's holding company. Corely is the sole shareholder of <a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Holding Lyreco France SAS</a> (&euro;157M capital, est. 2004), which in turn is the sole shareholder of Lyreco SAS. The Gaspard family's economic interest was estimated at approximately <strong style="color: var(--pearl);">84%</strong> during the 2008 Corporate Express acquisition, with the remaining <strong>~16%</strong> held through <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a> (&euro;10.5M capital, est. 1998) &mdash; a management participation vehicle for senior executives. <span class="source-note">Note: The exact current ownership split is unverifiable since France restricted beneficial ownership (RBE) access on July 31, 2024, following the CJEU privacy ruling of Nov 2022. The ~84/16% split dates from the 2008 Corporate Express deal.</span> This is not a dispersed public shareholding. This is concentrated, generational power.</p>
         <p>The leadership of Corely tells you everything about the family's structure:</p>
       </div>
     </div>
@@ -373,7 +373,7 @@
       <div class="org-tier" data-stagger-child>
         <div class="org-tier-label">Family Holding</div>
         <div class="org-tier-name">Corely SAS</div>
-        <div class="org-tier-detail"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.2);">Onnaing, France</a> &middot; ~84% ownership of Lyreco &middot; &euro;25.1M capital &middot; President: Georges Gaspard</div>
+        <div class="org-tier-detail"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.2);">Onnaing, France</a> &middot; Sole shareholder of <a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.2);">Holding Lyreco France</a> &middot; ~84% family interest (2008 est.) &middot; &euro;25.1M capital &middot; President: Georges Gaspard</div>
       </div>
       <div class="org-tier" data-stagger-child style="display: flex; gap: 1.5rem; align-items: stretch; flex-wrap: wrap; justify-content: center; text-align: center; padding: 0; background: none; border: none;">
         <div style="flex: 2; min-width: 250px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid var(--champagne);">
@@ -414,7 +414,7 @@
     <!-- Full Corporate Structure Wireframe -->
     <div data-animate="fade-up">
       <div class="structure-diagram-container" id="corely-structure"></div>
-      <div class="network-caption">Full corporate ownership chain &mdash; Gaspard family &rarr; Corely SAS (~84%) + Lyreco Management SAS (~16%) &rarr; Lyreco SAS &rarr; Global subsidiaries</div>
+      <div class="network-caption">Full corporate ownership chain &mdash; Gaspard family &rarr; Corely SAS &rarr; Holding Lyreco France &rarr; Lyreco SAS &rarr; Global subsidiaries <span class="source-note">(~84/16% split is a 2008 estimate; current % unverifiable since RBE restricted Jul 2024)</span></div>
     </div>
   </section>
 
@@ -967,8 +967,14 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         label: 'Holding',
         nodes: [
-          { id: 'corely', label: 'Corely SAS', sublabel: 'Onnaing · ~84% ownership', color: '#E63946', badge: '84%' },
-          { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', sublabel: 'Est. 1998 · ~16% · €10.5M capital', color: '#A0A0AC', badge: '16%', wide: true }
+          { id: 'corely', label: 'Corely SAS', sublabel: 'Onnaing · Family holding · €25M capital', color: '#E63946', badge: 'Family' },
+          { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', sublabel: 'Est. 1998 · Executive equity · €10.5M capital', color: '#A0A0AC', wide: true }
+        ]
+      },
+      {
+        label: 'Intermediate',
+        nodes: [
+          { id: 'hlf', label: 'Holding Lyreco France SAS', sublabel: 'Marly · €157M capital · Est. 2004', color: '#E63946', badge: '€157M', wide: true }
         ]
       },
       {
@@ -990,8 +996,9 @@ document.addEventListener('DOMContentLoaded', function() {
       { from: 'gg', to: 'corely', label: 'President' },
       { from: 'cg', to: 'corely', label: 'Deputy DG' },
       { from: 'ng', to: 'corely', label: 'Deputy DG' },
-      { from: 'corely', to: 'lyreco', label: '~84%' },
-      { from: 'lyreco-mgmt', to: 'lyreco', label: '~16%' },
+      { from: 'corely', to: 'hlf', label: 'Sole shareholder' },
+      { from: 'hlf', to: 'lyreco', label: 'Sole shareholder' },
+      { from: 'lyreco-mgmt', to: 'lyreco', label: 'Minority (est. ~16%)' },
       { from: 'lyreco', to: 'europe' },
       { from: 'lyreco', to: 'asia' },
       { from: 'lyreco', to: 'other' }
@@ -1009,8 +1016,9 @@ document.addEventListener('DOMContentLoaded', function() {
     { id: 'greg', label: 'Gregory Liénard', type: 'person', icon: 'GL', detail: 'CEO 2019–present. Built Asia operations personally. 28+ years at Lyreco. Posted in Canada, France, Singapore.', url: 'https://www.linkedin.com/in/gregorylienard/' },
     { id: 'helen', label: 'Helen Riley', type: 'person', icon: 'HR', detail: 'Group Development Director M&A since Sept 2025. At Lyreco since 2004. 20+ years. Your key negotiating counterpart on Feb 26.', url: 'https://www.linkedin.com/in/helen-riley-21a13018/' },
     // ── Corporate entities ──
-    { id: 'corely', label: 'Corely SAS', type: 'holding', icon: '🏛', sublabel: 'Onnaing', detail: 'Family holding company. ~84% ownership of Lyreco. Capital €25.1M. Registered in Onnaing, Nord.', url: 'https://www.societe.com/societe/corely-430306126.html' },
-    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '€3B', detail: 'Operating company. €64.7M share capital. 25+ country subsidiaries. €3B consolidated revenue.', url: 'https://www.lyreco.com/group/' },
+    { id: 'corely', label: 'Corely SAS', type: 'holding', icon: '🏛', sublabel: 'Onnaing', detail: 'Family holding company. Sole shareholder of Holding Lyreco France SAS (which in turn is sole shareholder of Lyreco SAS). Capital €25.1M. 2 shareholders, 3 subsidiaries. The "~84%" figure dates from the 2008 Corporate Express deal disclosure — current exact percentage unverifiable since France restricted beneficial ownership (RBE) access on July 31, 2024 (CJEU privacy ruling).', url: 'https://www.societe.com/societe/corely-430306126.html' },
+    { id: 'hlf', label: 'Holding Lyreco France', type: 'holding', icon: '🏛', sublabel: '€157M capital', detail: 'Intermediate holding company. Sole shareholder of Lyreco SAS. Its own sole shareholder = Corely. Capital €157M. Est. July 2004. Former PE involvement (Butler Capital Partners 2004–2008). Registered in Marly.', url: 'https://www.societe.com/societe/holding-lyreco-france-477704191.html' },
+    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '€3B', detail: 'Operating company. €65.2M share capital. 25+ country subsidiaries. €3B consolidated revenue. Single shareholder: Holding Lyreco France SAS.', url: 'https://www.lyreco.com/group/' },
     { id: 'corely-be', label: 'Corely Belgium', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment vehicle (SPRL). Managed by David Coti since 2015. Invested €15M in CARMAT.' },
     { id: 'bratya', label: 'Bratya SPRL', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment entity. Co-invested €3.6M in CARMAT alongside Corely Belgium.' },
     { id: 'carmat', label: 'CARMAT', type: 'company', icon: '❤️', detail: 'French artificial heart company. Judicially liquidated Oct 14, 2025 (Versailles court). Delisted from Euronext. Gaspard entities invested €15M + €3.6M — almost certainly wiped out.', url: 'https://www.marketscreener.com/news/carmat-says-imminent-liquidation-now-extremely-probable-ce7d5bdbdb88f326' },
@@ -1019,9 +1027,10 @@ document.addEventListener('DOMContentLoaded', function() {
     { id: 'nataline', label: 'Nataline SC', type: 'entity', icon: '🏘', detail: 'Civil real estate company. Land/real estate rental. Located in Onnaing. Manager: Georges Gaspard.', url: 'https://www.societe.com/societe/nataline-432999043.html' },
     { id: 'villa', label: 'Villa Geoanne', type: 'entity', icon: '🏡', detail: 'Real estate entity (Cap Martin). Capital €3M. Founded 1995. Managed by Annette Gaspard.', url: 'https://www.pappers.fr/entreprise/villa-geoanne-du-cap-martin-402728885' },
     { id: 'opale', label: 'Opale Jumping', type: 'entity', icon: '🏇', detail: 'SCI (civil real estate company). Land/property leasing — likely equestrian property. Same Onnaing address as Corely. Manager: Nathalie Gaspard. Associate: Corely. Capital €1K. Est. May 2022.', url: 'https://www.societe.com/societe/opale-jumping-913752804.html' },
+    { id: 'impactivist', label: 'Impactivist SAS', type: 'entity', icon: '🌱', detail: 'Impact VC firm (Paris). Corely held Supervisory Board seat Aug 2022 – Nov 2024 (resigned). Invests in social/environmental tech companies. Previously known as Investir&+ SAS.', url: 'https://www.societe.com/societe/impactivist-sas-480654250.html' },
     { id: 'pwc', label: 'PwC', type: 'company', icon: '📊', sublabel: 'Auditors since 2016', detail: 'PricewaterhouseCoopers Audit SA — appointed July 2016 (replacing KPMG Audit, who served ~2008–2012). Deliberate Big Four upgrade during post-Bigeard governance restructuring. Co-auditors: Antoine Guéroult, Estelle Chermat.', url: 'https://www.societe.com/dirigeants/lyreco-400423968.html' },
-    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets · €86M', detail: 'Hong Kong (1996), Thailand (2002), Korea (2004), Singapore (2005), Malaysia (2005). €86M revenue. 655 FTE. Built personally by Gregory Liénard.', url: 'https://www.lyreco.com/group/' },
-    { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', type: 'holding', icon: '🏢', sublabel: '~16% stake', detail: 'Management equity participation vehicle. Est. 1998. ~€10.5M capital. Holds approximately 16% of Lyreco SAS — reserved for senior executives as long-term incentive. President: Nathalie Gaspard.', url: 'https://www.societe.com/societe/lyreco-management-421304312.html' }
+    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets · €81–86M', detail: 'Hong Kong (1996), Thailand (2002), Korea (2004), Singapore (2005), Malaysia (2005). €81–86M revenue (discrepancy: IM P&L shows €81–84M; IM headline & RFI show €86M — different accounting bases). 655 FTE. Built personally by Gregory Liénard.', url: 'https://www.lyreco.com/group/' },
+    { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', type: 'holding', icon: '🏢', sublabel: 'Est. ~16% stake', detail: 'Management equity participation vehicle. Est. 1998. €10.5M capital. ~16% stake (2008 estimate — exact current % unverifiable since RBE restricted Jul 2024). €86.5M revenue (2024) — likely management fee income. 250–499 employees. President: Nathalie Gaspard.', url: 'https://www.societe.com/societe/lyreco-management-421304312.html' }
   ];
 
   var links = [
@@ -1031,7 +1040,8 @@ document.addEventListener('DOMContentLoaded', function() {
     { source: 'ng', target: 'corely', label: 'Deputy DG', distance: 100 },
     { source: 'ng', target: 'lyreco', label: 'President', distance: 100 },
     { source: 'gg', target: 'lyreco', label: 'Dir-General', distance: 120 },
-    { source: 'corely', target: 'lyreco', label: '~84%', distance: 90, strength: 3 },
+    { source: 'corely', target: 'hlf', label: 'Sole shareholder', distance: 80, strength: 3 },
+    { source: 'hlf', target: 'lyreco', label: 'Sole shareholder', distance: 80, strength: 3 },
     // ── Family relationships ──
     { source: 'gg', target: 'ng', label: 'Father', distance: 85 },
     { source: 'gg', target: 'cg', label: 'Father', distance: 85 },
@@ -1058,7 +1068,9 @@ document.addEventListener('DOMContentLoaded', function() {
     { source: 'greg', target: 'lyreco-mgmt', label: 'Shareholder', distance: 100 },
     // ── Opale Jumping SCI ──
     { source: 'corely', target: 'opale', label: 'Associate', distance: 130 },
-    { source: 'ng', target: 'opale', label: 'Manager', distance: 120 }
+    { source: 'ng', target: 'opale', label: 'Manager', distance: 120 },
+    // ── Impactivist SAS (impact VC) ──
+    { source: 'corely', target: 'impactivist', label: 'Supervisory (ended 2024)', distance: 150 }
   ];
 
   createNetworkGraph('gaspard-network', nodes, links);

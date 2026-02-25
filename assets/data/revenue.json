@@ -37,7 +37,11 @@
     "revenue_2025": { "value": 16, "unit": "€M", "pct_of_asia": 0.19 }
   },
   "lyreco_asia": {
-    "revenue_2025": 86,
+    "revenue_headline": 86,
+    "revenue_im_pl_2025E": 84,
+    "revenue_im_pl_2024A": 81,
+    "revenue_rfi_2024A": 86.4,
+    "revenue_discrepancy_note": "IM headline = 86M; IM P&L table = 84M (2025E) / 81M (2024A); RFI BP tab = 86.4M (2024A). Gap likely due to IFRS consolidated (IM P&L) vs local GAAP external revenue (RFI/IM KPI). Per-country KPI sums match RFI at 86.4M.",
     "unit": "€M",
     "fte": 655,
     "customers": 50000,
