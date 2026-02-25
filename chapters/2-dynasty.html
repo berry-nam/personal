@@ -370,16 +370,12 @@
     </div>
 
     <div class="org-structure" data-stagger-group>
-      <div class="org-tier" data-stagger-child>
-        <div class="org-tier-label">Family Holding</div>
-        <div class="org-tier-name">Corely SAS</div>
-        <div class="org-tier-detail"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.2);">Onnaing, France</a> &middot; Sole shareholder of <a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.2);">Holding Lyreco France</a> &middot; ~84% family interest (2008 est.) &middot; &euro;25.1M capital &middot; President: Georges Gaspard</div>
-      </div>
+      <!-- Tier 1: Two shareholders side by side -->
       <div class="org-tier" data-stagger-child style="display: flex; gap: 1.5rem; align-items: stretch; flex-wrap: wrap; justify-content: center; text-align: center; padding: 0; background: none; border: none;">
         <div style="flex: 2; min-width: 250px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid var(--champagne);">
           <div class="org-tier-label">~84% (2008 est.) &middot; Family Holding</div>
           <div class="org-tier-name" style="font-size: 1.1rem;"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Corely SAS</a></div>
-          <div class="org-tier-detail">Gaspard family control</div>
+          <div class="org-tier-detail">Onnaing, France &middot; &euro;25.1M capital &middot; President: Georges Gaspard</div>
         </div>
         <div style="flex: 1; min-width: 180px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid rgba(232,229,222,0.2);">
           <div class="org-tier-label" style="color: var(--smoke);">~16% &middot; Management</div>
@@ -387,19 +383,23 @@
           <div class="org-tier-detail">Senior executive equity vehicle &middot; &euro;10.5M capital</div>
         </div>
       </div>
+      <!-- Tier 2: Intermediate holding -->
       <div class="org-tier" data-stagger-child style="position: relative;">
-        <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr;</div>
+        <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr; sole shareholder</div>
         <div class="org-tier-label">Intermediate Holding</div>
         <div class="org-tier-name"><a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Holding Lyreco France SAS</a></div>
         <div class="org-tier-detail">Marly, France &middot; &euro;157M capital &middot; Est. 2004 &middot; Sole shareholder: Corely &middot; Former PE involvement (Butler Capital Partners 2004–2008)</div>
       </div>
+      <!-- Tier 3: Operating company -->
       <div class="org-tier" data-stagger-child style="position: relative;">
         <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr; sole shareholder</div>
         <div class="org-tier-label">Operating Company</div>
         <div class="org-tier-name"><a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Lyreco SAS</a></div>
         <div class="org-tier-detail">Marly, France &middot; Share capital: &euro;65.2M &middot; President: Nathalie Gaspard &middot; Director-General: Georges Gaspard</div>
       </div>
-      <div class="org-tier" data-stagger-child>
+      <!-- Tier 4: Global subsidiaries -->
+      <div class="org-tier" data-stagger-child style="position: relative;">
+        <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr;</div>
         <div class="org-tier-label">Global Operations</div>
         <div class="org-tier-name">25+ Country Subsidiaries</div>
         <div class="org-tier-detail">Europe, Asia-Pacific, Middle East &middot; 10,000+ employees &middot; &euro;3B consolidated revenue</div>
