@@ -1018,8 +1018,9 @@ document.addEventListener('DOMContentLoaded', function() {
     { id: 'erypharm', label: 'Erypharm SAS', type: 'entity', icon: '💊', detail: 'Biotech company — cultured red blood cells. Georges Gaspard on supervisory board.', url: 'https://www.erypharm.com/en/home-page/' },
     { id: 'nataline', label: 'Nataline SC', type: 'entity', icon: '🏘', detail: 'Civil real estate company. Land/real estate rental. Located in Onnaing. Manager: Georges Gaspard.', url: 'https://www.societe.com/societe/nataline-432999043.html' },
     { id: 'villa', label: 'Villa Geoanne', type: 'entity', icon: '🏡', detail: 'Real estate entity (Cap Martin). Capital €3M. Founded 1995. Managed by Annette Gaspard.', url: 'https://www.pappers.fr/entreprise/villa-geoanne-du-cap-martin-402728885' },
+    { id: 'opale', label: 'Opale Jumping', type: 'entity', icon: '🏇', detail: 'SCI (civil real estate company). Land/property leasing — likely equestrian property. Same Onnaing address as Corely. Manager: Nathalie Gaspard. Associate: Corely. Capital €1K. Est. May 2022.', url: 'https://www.societe.com/societe/opale-jumping-913752804.html' },
     { id: 'pwc', label: 'PwC', type: 'company', icon: '📊', sublabel: 'Auditors since 2016', detail: 'PricewaterhouseCoopers Audit SA — appointed July 2016 (replacing KPMG Audit, who served ~2008–2012). Deliberate Big Four upgrade during post-Bigeard governance restructuring. Co-auditors: Antoine Guéroult, Estelle Chermat.', url: 'https://www.societe.com/dirigeants/lyreco-400423968.html' },
-    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets', detail: 'Hong Kong (1996), Korea (2004), Singapore (2019), Malaysia, Thailand. Built personally by Gregory Liénard.', url: 'https://www.lyreco.com/group/' },
+    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets · €86M', detail: 'Hong Kong (1996), Thailand (2002), Korea (2004), Singapore (2005), Malaysia (2005). €86M revenue. 655 FTE. Built personally by Gregory Liénard.', url: 'https://www.lyreco.com/group/' },
     { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', type: 'holding', icon: '🏢', sublabel: '~16% stake', detail: 'Management equity participation vehicle. Est. 1998. ~€10.5M capital. Holds approximately 16% of Lyreco SAS — reserved for senior executives as long-term incentive. President: Nathalie Gaspard.', url: 'https://www.societe.com/societe/lyreco-management-421304312.html' }
   ];
 
@@ -1054,7 +1055,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // ── Lyreco Management SAS ──
     { source: 'lyreco-mgmt', target: 'lyreco', label: '~16%', distance: 100, strength: 1.5 },
     { source: 'ng', target: 'lyreco-mgmt', label: 'President', distance: 90 },
-    { source: 'greg', target: 'lyreco-mgmt', label: 'Shareholder', distance: 100 }
+    { source: 'greg', target: 'lyreco-mgmt', label: 'Shareholder', distance: 100 },
+    // ── Opale Jumping SCI ──
+    { source: 'corely', target: 'opale', label: 'Associate', distance: 130 },
+    { source: 'ng', target: 'opale', label: 'Manager', distance: 120 }
   ];
 
   createNetworkGraph('gaspard-network', nodes, links);
