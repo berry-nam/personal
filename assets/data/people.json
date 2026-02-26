@@ -25,6 +25,13 @@
       ],
       "languages": ["English", "French", "Spanish", "Italian"],
       "personality": ["Go getter", "Can do attitude", "Bubbly personality", "Very knowledgeable", "SAP expert", "Accessible", "Professional"],
+      "recentDeals": [
+        { "target": "Nespresso distribution", "geography": "Nordics", "category": "Coffee", "note": "Expanded exclusive Nespresso partnership" },
+        { "target": "Groenendijk Workwear", "geography": "Netherlands/Benelux", "category": "PPE/Workwear" },
+        { "target": "Zenith Hygiene", "geography": "UK", "category": "Cleaning/Hygiene", "note": "Acquired from Diversey (Solenis)" },
+        { "target": "Shorrock-Trichem", "geography": "UK", "category": "Hygiene", "note": "Dual deal with Zenith" }
+      ],
+      "roleScopeNote": "Scope explicitly covers M&A, divestments, AND partnerships — the word 'divestments' signals ongoing portfolio pruning. The partnerships pillar mirrors the post-exit model used with Novexco (Canada) and COS (Australia).",
       "personal": "Avid cyclist — 216km ride with 4,420m elevation with 9 colleagues. Enjoys cooking, yoga, trekking, discovering new cultures.",
       "radar": [
         { "axis": "Analytical", "value": 9 },
