@@ -64,12 +64,27 @@
     <div class="deal-stepper">
       <div class="deal-step deal-step--done">
         <div class="deal-step__dot"></div>
-        <div class="deal-step__label" data-ko="접촉">Contact</div>
+        <div class="deal-step__label">접촉</div>
+      </div>
+      <div class="deal-step__line deal-step__line--done"></div>
+      <div class="deal-step deal-step--done">
+        <div class="deal-step__dot"></div>
+        <div class="deal-step__label" data-ko="미팅">Meeting</div>
       </div>
       <div class="deal-step__line deal-step__line--done"></div>
       <div class="deal-step deal-step--active">
         <div class="deal-step__dot"></div>
-        <div class="deal-step__label" data-ko="NBO">NBO</div>
+        <div class="deal-step__label">Fit Check</div>
+      </div>
+      <div class="deal-step__line"></div>
+      <div class="deal-step">
+        <div class="deal-step__dot"></div>
+        <div class="deal-step__label" data-ko="김헌 대표">CEO Kim</div>
+      </div>
+      <div class="deal-step__line"></div>
+      <div class="deal-step">
+        <div class="deal-step__dot"></div>
+        <div class="deal-step__label">NBO</div>
       </div>
       <div class="deal-step__line"></div>
       <div class="deal-step">
@@ -79,7 +94,7 @@
       <div class="deal-step__line"></div>
       <div class="deal-step">
         <div class="deal-step__dot"></div>
-        <div class="deal-step__label" data-ko="구조">Structure</div>
+        <div class="deal-step__label" data-ko="협상">Negotiate</div>
       </div>
       <div class="deal-step__line"></div>
       <div class="deal-step">
@@ -93,24 +108,24 @@
     <!-- STAT STRIP -->
     <div class="dash-stats">
       <div class="dash-stat" data-animate="fade-up">
-        <div class="dash-stat__value">&euro;2.5B</div>
-        <div class="dash-stat__label" data-ko="리레코 그룹">Lyreco Group</div>
+        <div class="dash-stat__value" data-ko="약 43,500억">&euro;3B</div>
+        <div class="dash-stat__label" data-ko="리레코 그룹 매출">Lyreco Group</div>
         <div class="dash-stat__sub" data-ko="100% 가족 소유">100% family-owned</div>
       </div>
       <div class="dash-stat" data-animate="fade-up">
-        <div class="dash-stat__value">&euro;86M</div>
+        <div class="dash-stat__value" data-ko="약 1,250억">&euro;86M</div>
         <div class="dash-stat__label" data-ko="아시아 매출">Asia Revenue</div>
         <div class="dash-stat__sub" data-ko="5개 시장 &middot; 655명">5 markets &middot; 655 FTE</div>
       </div>
       <div class="dash-stat" data-animate="fade-up">
-        <div class="dash-stat__value">&#8361;143B</div>
+        <div class="dash-stat__value" data-ko="1,430억">&euro;99M</div>
         <div class="dash-stat__label" data-ko="위펀 매출">WEFUN Revenue</div>
         <div class="dash-stat__sub" data-ko="IPO 목표 2026년 4월">IPO target Apr 2026</div>
       </div>
       <div class="dash-stat" data-animate="fade-up">
-        <div class="dash-stat__value dash-stat__value--status">NBO</div>
+        <div class="dash-stat__value dash-stat__value--status">Fit Check</div>
         <div class="dash-stat__label" data-ko="딜 단계">Deal Stage</div>
-        <div class="dash-stat__sub" data-ko="밸류에이션 진행 중">Valuation pending</div>
+        <div class="dash-stat__sub" data-ko="전략적 적합성 평가 중">Assessing strategic fit</div>
       </div>
     </div>
   </div>
@@ -212,71 +227,109 @@
       <!-- Phase gradient bars -->
       <div class="roadmap-phases">
         <div class="roadmap-phase roadmap-phase--done">
-          <span class="roadmap-phase-label" data-ko="접촉">Contact</span>
+          <span class="roadmap-phase-label" data-ko="탐색">Discovery</span>
         </div>
         <div class="roadmap-phase roadmap-phase--active">
-          <span class="roadmap-phase-label" data-ko="제안">Proposal</span>
+          <span class="roadmap-phase-label" data-ko="평가">Evaluation</span>
         </div>
         <div class="roadmap-phase roadmap-phase--upcoming">
-          <span class="roadmap-phase-label" data-ko="실사">Due Diligence</span>
+          <span class="roadmap-phase-label" data-ko="제안 &amp; 실사">Offer &amp; DD</span>
         </div>
         <div class="roadmap-phase roadmap-phase--last">
-          <span class="roadmap-phase-label" data-ko="구조 확정">Structuring</span>
+          <span class="roadmap-phase-label" data-ko="종결">Close</span>
         </div>
       </div>
 
-      <!-- Horizontal track with nodes -->
+      <!-- Horizontal track with 8 nodes -->
       <div class="roadmap-track">
         <div class="roadmap-line">
           <div class="roadmap-line__fill"></div>
         </div>
 
-        <div class="roadmap-node roadmap-node--done" style="left: 10%">
+        <!-- 1. 접촉 — done -->
+        <div class="roadmap-node roadmap-node--done" style="left: 6%">
           <div class="roadmap-dot"></div>
           <div class="roadmap-card roadmap-card--above">
-            <div class="roadmap-card__date" data-ko="2월 26일">Feb 26</div>
-            <div class="roadmap-card__title" data-ko="첫 미팅">First Meeting</div>
-            <div class="roadmap-card__desc" data-ko="위펀 본사, 강남. Helen + Eric. 전략적 정합성 확인.">WEFUN HQ, Gangnam. Helen + Eric. Strategic alignment confirmed.</div>
+            <div class="roadmap-card__date" data-ko="2026년 2월">Feb 2026</div>
+            <div class="roadmap-card__title">접촉</div>
+            <div class="roadmap-card__desc" data-ko="네트워크를 통한 초기 접촉. 리레코 아시아 매각 의향 확인.">Initial approach via network. Lyreco Asia divestment interest confirmed.</div>
             <div class="roadmap-card__tag roadmap-card__tag--done" data-ko="완료">Complete</div>
           </div>
         </div>
 
-        <div class="roadmap-node roadmap-node--active" style="left: 35%">
+        <!-- 2. 미팅 — done -->
+        <div class="roadmap-node roadmap-node--done" style="left: 18%">
           <div class="roadmap-dot"></div>
           <div class="roadmap-card roadmap-card--below">
+            <div class="roadmap-card__date" data-ko="2월 26일">Feb 26</div>
+            <div class="roadmap-card__title" data-ko="미팅">Meeting</div>
+            <div class="roadmap-card__desc" data-ko="위펀 본사, 강남. Helen Riley + Eric Bigeard. 전략적 정합성 확인.">WEFUN HQ, Gangnam. Helen + Eric. Strategic alignment confirmed.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--done" data-ko="완료">Complete</div>
+          </div>
+        </div>
+
+        <!-- 3. Fit Check — active -->
+        <div class="roadmap-node roadmap-node--active" style="left: 30%">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-card roadmap-card--above">
             <div class="roadmap-card__date" data-ko="2026년 3월">Mar 2026</div>
-            <div class="roadmap-card__title" data-ko="NBO + 밸류에이션">NBO + Valuation</div>
-            <div class="roadmap-card__desc" data-ko="초기 밸류에이션 포함 비구속적 제안서. 딜 구조 논의.">Non-binding offer with initial valuation. Structure to be discussed.</div>
+            <div class="roadmap-card__title">Fit Check</div>
+            <div class="roadmap-card__desc" data-ko="전략적 &middot; 운영적 적합성 평가. 밸류에이션 프레임워크 준비.">Evaluating strategic &amp; operational fit. Preparing valuation framework.</div>
             <div class="roadmap-card__tag roadmap-card__tag--wefun">WEFUN</div>
           </div>
         </div>
 
+        <!-- 4. 김헌 대표 미팅 — upcoming -->
+        <div class="roadmap-node roadmap-node--upcoming" style="left: 42%">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-card roadmap-card--below">
+            <div class="roadmap-card__date" data-ko="일정 미정">TBD</div>
+            <div class="roadmap-card__title" data-ko="김헌 대표 미팅">CEO Kim Meeting</div>
+            <div class="roadmap-card__desc" data-ko="대표 간 미팅 주선 예정. 핵심 의사결정자 정합성 확인.">CEO-level meeting to be arranged. Key decision-maker alignment.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--wefun">WEFUN</div>
+          </div>
+        </div>
+
+        <!-- 5. NBO — upcoming -->
         <div class="roadmap-node roadmap-node--upcoming" style="left: 55%">
           <div class="roadmap-dot"></div>
           <div class="roadmap-card roadmap-card--above">
             <div class="roadmap-card__date" data-ko="일정 미정">TBD</div>
-            <div class="roadmap-card__title" data-ko="현장 방문">Site Visits</div>
-            <div class="roadmap-card__desc" data-ko="리레코 아시아 법인. 핵심 인력 인터뷰.">Lyreco Asia entities. Key personnel interviews.</div>
-            <div class="roadmap-card__tag roadmap-card__tag--lyreco">Lyreco</div>
+            <div class="roadmap-card__title">NBO</div>
+            <div class="roadmap-card__desc" data-ko="초기 밸류에이션 포함 비구속적 제안서 제출.">Non-binding offer with initial valuation submitted.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--wefun">WEFUN</div>
           </div>
         </div>
 
-        <div class="roadmap-node roadmap-node--upcoming" style="left: 75%">
+        <!-- 6. 실사 — upcoming -->
+        <div class="roadmap-node roadmap-node--upcoming" style="left: 67%">
           <div class="roadmap-dot"></div>
           <div class="roadmap-card roadmap-card--below">
             <div class="roadmap-card__date" data-ko="NBO 이후">Post-NBO</div>
-            <div class="roadmap-card__title" data-ko="데이터룸">Data Room</div>
-            <div class="roadmap-card__desc" data-ko="리레코 데이터룸 준비. 실사 시작.">Lyreco to prepare data room. Due diligence begins.</div>
-            <div class="roadmap-card__tag roadmap-card__tag--lyreco">Lyreco</div>
+            <div class="roadmap-card__title" data-ko="실사">Due Diligence</div>
+            <div class="roadmap-card__desc" data-ko="데이터룸, 현장 방문, 재무 실사.">Data room, site visits, financial DD.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--both" data-ko="양측">Both</div>
           </div>
         </div>
 
-        <div class="roadmap-node roadmap-node--upcoming" style="left: 92%">
+        <!-- 7. 협상 — upcoming -->
+        <div class="roadmap-node roadmap-node--upcoming" style="left: 80%">
           <div class="roadmap-dot"></div>
           <div class="roadmap-card roadmap-card--above">
             <div class="roadmap-card__date" data-ko="일정 미정">TBD</div>
-            <div class="roadmap-card__title" data-ko="딜 구조 확정">Deal Structure</div>
-            <div class="roadmap-card__desc" data-ko="1단계 vs. 2단계 &mdash; 양측 합의 필요.">Phase 1 full vs. Phase 2 staged &mdash; both parties to agree.</div>
+            <div class="roadmap-card__title" data-ko="협상">Negotiation</div>
+            <div class="roadmap-card__desc" data-ko="딜 구조 &amp; 조건 협상. 최종 가격 합의.">Deal structure &amp; terms negotiation. Final pricing.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--both" data-ko="양측">Both</div>
+          </div>
+        </div>
+
+        <!-- 8. 종결 — upcoming -->
+        <div class="roadmap-node roadmap-node--upcoming" style="left: 94%">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-card roadmap-card--below">
+            <div class="roadmap-card__date" data-ko="일정 미정">TBD</div>
+            <div class="roadmap-card__title" data-ko="종결">Close</div>
+            <div class="roadmap-card__desc" data-ko="최종 계약 체결. 서명 및 클로징.">Final agreement, signing &amp; closing.</div>
             <div class="roadmap-card__tag roadmap-card__tag--both" data-ko="양측">Both</div>
           </div>
         </div>
@@ -288,8 +341,8 @@
           <div class="roadmap-progress__fill"></div>
         </div>
         <div class="roadmap-progress__labels">
-          <span data-ko="시작">Start</span>
-          <span class="roadmap-progress__current" data-ko="현재 위치">Current</span>
+          <span>접촉</span>
+          <span class="roadmap-progress__current" data-ko="현재: Fit Check">Current: Fit Check</span>
           <span data-ko="종결">Close</span>
         </div>
       </div>
@@ -310,7 +363,7 @@
       <a href="chapters/1-bookshop.html" class="chapter-card" data-chapter="1">
         <div class="card-num">Chapter I</div>
         <div class="card-title" data-ko="발랑시엔의 서점">A Bookshop in Valenciennes</div>
-        <div class="card-teaser" data-ko="1926년 창업. 서점에서 ~&euro;2.5B 기업으로. 100년 가문의 레거시.">1926 founding. Bookshop to ~&euro;2.5B enterprise. The 100-year family legacy.</div>
+        <div class="card-teaser" data-ko="1926년 창업. 서점에서 ~&euro;3B 기업으로. 100년 가문의 레거시.">1926 founding. Bookshop to ~&euro;3B enterprise. The 100-year family legacy.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
           <span class="card-progress-label" data-ko="미열람">Unread</span>
@@ -320,7 +373,7 @@
       <a href="chapters/2-dynasty.html" class="chapter-card" data-chapter="2">
         <div class="card-num">Chapter II</div>
         <div class="card-title" data-ko="가스파르 왕조">The Gaspard Dynasty</div>
-        <div class="card-teaser" data-ko="Corely SAS 지배구조. ~&euro;2.5B 매출, 100% 가족 소유, PE 없음. 재무 건전성.">Corely SAS ownership. ~&euro;2.5B revenue, 100% family-owned, no PE. Financial strength.</div>
+        <div class="card-teaser" data-ko="Corely SAS 지배구조. ~&euro;3B 매출, 100% 가족 소유, PE 없음. 재무 건전성.">Corely SAS ownership. ~&euro;3B revenue, 100% family-owned, no PE. Financial strength.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
           <span class="card-progress-label" data-ko="미열람">Unread</span>

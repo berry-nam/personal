@@ -491,7 +491,7 @@
 /* Horizontal track */
 .roadmap-track {
   position: relative;
-  height: 360px;
+  height: 380px;
   margin-bottom: 2rem;
 }
 
@@ -507,7 +507,7 @@
 /* Gradient fill showing progress */
 .roadmap-line__fill {
   height: 100%;
-  width: 30%;
+  width: 26%;
   background: linear-gradient(90deg, var(--success) 0%, var(--champagne) 100%);
   box-shadow: 0 0 16px rgba(212, 184, 122, 0.2);
   position: relative;
@@ -626,7 +626,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 190px;
+  width: 160px;
   background: var(--ink-card);
   border: 1px solid rgba(232, 229, 222, 0.08);
   border-radius: 10px;
@@ -746,7 +746,7 @@
 }
 .roadmap-progress__fill {
   height: 100%;
-  width: 25%;
+  width: 30%;
   border-radius: 3px;
   background: linear-gradient(90deg, var(--success), var(--champagne));
 }
