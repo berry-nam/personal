@@ -110,6 +110,34 @@
 }
 .hub-nav .nav-links a:hover { color: var(--champagne); }
 
+/* ─── LANGUAGE TOGGLE ─── */
+.lang-toggle-btn {
+  display: flex; align-items: center; gap: 0;
+  background: none; border: 1px solid rgba(232, 229, 222, 0.12);
+  border-radius: var(--radius-pill);
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  transition: border-color var(--dur-fast);
+  margin-left: 0.5rem;
+}
+.lang-toggle-btn:hover { border-color: var(--champagne-dim); }
+.lang-toggle-btn span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--smoke);
+  transition: color var(--dur-fast);
+  padding: 0.1rem 0.2rem;
+}
+.lang-toggle-btn span.active {
+  color: var(--champagne);
+}
+.lang-divider {
+  color: rgba(232, 229, 222, 0.2) !important;
+  padding: 0 !important;
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
   .site-nav { padding: 0.6rem 1rem; }

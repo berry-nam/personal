@@ -43,8 +43,9 @@
 
   /* ─── TYPOGRAPHY ─── */
   --font-display:    'Playfair Display', Georgia, serif;
-  --font-body:       'DM Sans', -apple-system, sans-serif;
+  --font-body:       'DM Sans', 'Noto Sans KR', -apple-system, sans-serif;
   --font-mono:       'JetBrains Mono', monospace;
+  --font-kr:         'Noto Sans KR', -apple-system, sans-serif;
 
   --fs-hero:         clamp(3rem, 7vw, 6rem);
   --fs-chapter-hero: clamp(2.6rem, 5.5vw, 4.5rem);
@@ -118,6 +119,23 @@ body {
 
 a { color: inherit; }
 img { max-width: 100%; display: block; }
+
+/* ─── KOREAN LANGUAGE SUPPORT ─── */
+html[lang="ko"] body {
+  font-family: 'Noto Sans KR', 'DM Sans', -apple-system, sans-serif;
+  word-break: keep-all;
+}
+html[lang="ko"] .section-body,
+html[lang="ko"] .dash-section-sub,
+html[lang="ko"] .signal-read,
+html[lang="ko"] .tl-desc,
+html[lang="ko"] .read-text,
+html[lang="ko"] .card-teaser,
+html[lang="ko"] .deal-pos-stance,
+html[lang="ko"] .chapter-hero__subtitle {
+  word-break: keep-all;
+  line-height: 1.9;
+}
 
 /* ─── GLOBAL MOBILE SAFETY ─── */
 @media (max-width: 768px) {

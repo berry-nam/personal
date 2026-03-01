@@ -8,7 +8,7 @@
 <meta http-equiv="Referrer-Policy" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WEFUN × Lyreco — Deal Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/components.css">
@@ -23,12 +23,12 @@
 <div class="auth-gate" id="authGate">
   <div class="auth-card">
     <div class="auth-brand">WEFUN &times; Lyreco</div>
-    <div class="auth-subtitle">Confidential Access</div>
+    <div class="auth-subtitle" data-ko="기밀 접속">Confidential Access</div>
     <div class="auth-divider"></div>
     <div class="auth-input-wrap">
       <input type="password" class="auth-input" id="authInput" placeholder="Enter password" autocomplete="off" autofocus>
     </div>
-    <button class="auth-btn" id="authBtn">Unlock Briefing</button>
+    <button class="auth-btn" id="authBtn" data-ko="브리핑 열기">Unlock Briefing</button>
     <div class="auth-error-msg" id="authError"></div>
   </div>
 </div>
@@ -40,9 +40,9 @@
 <nav class="hub-nav" id="mainNav">
   <a href="index.html" class="nav-brand">WEFUN &times; Lyreco</a>
   <div class="nav-links">
-    <a href="#deal-status">Status</a>
-    <a href="#next-steps">Next Steps</a>
-    <a href="#chapters">Research</a>
+    <a href="#deal-status" data-ko="현황">Status</a>
+    <a href="#next-steps" data-ko="다음 단계">Next Steps</a>
+    <a href="#chapters" data-ko="리서치">Research</a>
   </div>
 </nav>
 
@@ -50,37 +50,37 @@
 <header class="dash-header">
   <div class="dash-header__inner">
     <div class="dash-header__top">
-      <div class="conf-badge">Confidential &mdash; Internal Use Only</div>
+      <div class="conf-badge" data-ko="기밀 &mdash; 내부용">Confidential &mdash; Internal Use Only</div>
       <div class="dash-header__meta">
-        <span class="dash-meta-item"><span class="dash-dot"></span>Feb 26, 2026</span>
-        <span class="dash-meta-item"><span class="dash-dot"></span>WEFUN HQ, Gangnam</span>
-        <span class="dash-meta-item"><span class="dash-dot status-green"></span>Meeting Complete</span>
+        <span class="dash-meta-item"><span class="dash-dot"></span><span data-ko="2026년 2월 26일">Feb 26, 2026</span></span>
+        <span class="dash-meta-item"><span class="dash-dot"></span><span data-ko="위펀 본사, 강남">WEFUN HQ, Gangnam</span></span>
+        <span class="dash-meta-item"><span class="dash-dot status-green"></span><span data-ko="미팅 완료">Meeting Complete</span></span>
       </div>
     </div>
     <h1 class="dash-header__title">WEFUN <span class="dash-x">&times;</span> Lyreco <em>Asia</em></h1>
-    <p class="dash-header__sub">Strategic Acquisition &mdash; Deal Tracker</p>
+    <p class="dash-header__sub" data-ko="전략적 인수 &mdash; 딜 트래커">Strategic Acquisition &mdash; Deal Tracker</p>
 
     <!-- STAT STRIP -->
     <div class="dash-stats">
       <div class="dash-stat" data-animate="fade-up">
         <div class="dash-stat__value">&euro;2.5B</div>
-        <div class="dash-stat__label">Lyreco Group</div>
-        <div class="dash-stat__sub">100% family-owned</div>
+        <div class="dash-stat__label" data-ko="리레코 그룹">Lyreco Group</div>
+        <div class="dash-stat__sub" data-ko="100% 가족 소유">100% family-owned</div>
       </div>
       <div class="dash-stat" data-animate="fade-up">
         <div class="dash-stat__value">&euro;86M</div>
-        <div class="dash-stat__label">Asia Revenue</div>
-        <div class="dash-stat__sub">5 markets &middot; 655 FTE</div>
+        <div class="dash-stat__label" data-ko="아시아 매출">Asia Revenue</div>
+        <div class="dash-stat__sub" data-ko="5개 시장 &middot; 655명">5 markets &middot; 655 FTE</div>
       </div>
       <div class="dash-stat" data-animate="fade-up">
         <div class="dash-stat__value">&#8361;143B</div>
-        <div class="dash-stat__label">WEFUN Revenue</div>
-        <div class="dash-stat__sub">IPO target Apr 2026</div>
+        <div class="dash-stat__label" data-ko="위펀 매출">WEFUN Revenue</div>
+        <div class="dash-stat__sub" data-ko="IPO 목표 2026년 4월">IPO target Apr 2026</div>
       </div>
       <div class="dash-stat" data-animate="fade-up">
         <div class="dash-stat__value dash-stat__value--status">NBO</div>
-        <div class="dash-stat__label">Deal Stage</div>
-        <div class="dash-stat__sub">Valuation pending</div>
+        <div class="dash-stat__label" data-ko="딜 단계">Deal Stage</div>
+        <div class="dash-stat__sub" data-ko="밸류에이션 진행 중">Valuation pending</div>
       </div>
     </div>
   </div>
@@ -89,82 +89,82 @@
 <!-- ═══════════════ DEAL STATUS ═══════════════ -->
 <section id="deal-status" class="dash-section">
   <div class="dash-section__inner">
-    <div class="dash-section-label">Deal Status</div>
-    <h2 class="dash-section-title">Meeting Outcomes &mdash; <em>February 26</em></h2>
-    <p class="dash-section-sub">First encounter between WEFUN and Lyreco delegations. Key signals from Helen Riley (M&amp;A) and Eric Bigeard (legacy guardian).</p>
+    <div class="dash-section-label" data-ko="딜 현황">Deal Status</div>
+    <h2 class="dash-section-title" data-ko="미팅 결과 &mdash; <em>2월 26일</em>">Meeting Outcomes &mdash; <em>February 26</em></h2>
+    <p class="dash-section-sub" data-ko="위펀과 리레코 대표단의 첫 만남. Helen Riley(M&amp;A 담당)와 Eric Bigeard(레거시 수호자)의 핵심 시그널.">First encounter between WEFUN and Lyreco delegations. Key signals from Helen Riley (M&amp;A) and Eric Bigeard (legacy guardian).</p>
 
     <!-- DEAL STRUCTURE -->
     <div class="deal-structure-box" data-animate="fade-up">
-      <div class="deal-structure-header">Deal Structure</div>
+      <div class="deal-structure-header" data-ko="딜 구조">Deal Structure</div>
       <div class="deal-structure-grid">
         <div class="deal-pos">
           <div class="deal-pos-who">Lyreco</div>
-          <div class="deal-pos-stance">Prefers full acquisition (Phase 1)</div>
+          <div class="deal-pos-stance" data-ko="1단계 전체 인수 선호">Prefers full acquisition (Phase 1)</div>
         </div>
         <div class="deal-pos">
           <div class="deal-pos-who">WEFUN</div>
-          <div class="deal-pos-stance">Proposed 2-phase; open to full acquisition</div>
+          <div class="deal-pos-stance" data-ko="2단계 구조 제안, 전체 인수도 수용 가능">Proposed 2-phase; open to full acquisition</div>
         </div>
       </div>
       <div class="deal-quote">
-        <span class="deal-quote-attr">Eric Bigeard:</span> &ldquo;I would do the same if I were you, so I can&rsquo;t say no.&rdquo;
+        <span class="deal-quote-attr">Eric Bigeard:</span> <span data-ko="&ldquo;저도 같은 입장이라면 그렇게 했을 겁니다. 거절할 수 없죠.&rdquo;">&ldquo;I would do the same if I were you, so I can&rsquo;t say no.&rdquo;</span>
       </div>
     </div>
 
     <!-- INTEREST SIGNALS -->
-    <h3 class="dash-subhead" data-animate="fade-up">What Lyreco Focused On</h3>
+    <h3 class="dash-subhead" data-animate="fade-up" data-ko="리레코가 주목한 포인트">What Lyreco Focused On</h3>
 
     <div class="signal-grid" data-stagger-group>
       <div class="signal-card" data-stagger-child>
         <div class="signal-who">Helen</div>
-        <div class="signal-topic">Customer Retention Model</div>
-        <div class="signal-quote">&ldquo;How do you track the number of users?&rdquo;</div>
-        <div class="signal-read">Verifying unit economics &amp; recurring revenue stability. 38-month average contract length impressed. Deeply resonated with rapport-building as KPI.</div>
+        <div class="signal-topic" data-ko="고객 유지 모델">Customer Retention Model</div>
+        <div class="signal-quote" data-ko="&ldquo;사용자 수를 어떻게 추적하시나요?&rdquo;">&ldquo;How do you track the number of users?&rdquo;</div>
+        <div class="signal-read" data-ko="유닛 이코노믹스와 반복 매출 안정성 확인. 평균 계약 기간 38개월에 깊은 인상. 관계 구축을 KPI로 삼는 점에 공감.">Verifying unit economics &amp; recurring revenue stability. 38-month average contract length impressed. Deeply resonated with rapport-building as KPI.</div>
       </div>
       <div class="signal-card" data-stagger-child>
         <div class="signal-who">Helen</div>
-        <div class="signal-topic">Online + Offline Hybrid</div>
-        <div class="signal-quote">&ldquo;So you really believe in the combination of online plus offline?&rdquo;</div>
-        <div class="signal-read">Lyreco runs same hybrid model. Strategic alignment confirmed. Interest in B2B2E approach and in-house platform.</div>
+        <div class="signal-topic" data-ko="온라인 + 오프라인 하이브리드">Online + Offline Hybrid</div>
+        <div class="signal-quote" data-ko="&ldquo;온라인과 오프라인의 결합을 정말 믿으시나요?&rdquo;">&ldquo;So you really believe in the combination of online plus offline?&rdquo;</div>
+        <div class="signal-read" data-ko="리레코도 동일한 하이브리드 모델 운영. 전략적 정합성 확인. B2B2E 접근법과 자체 플랫폼에 관심.">Lyreco runs same hybrid model. Strategic alignment confirmed. Interest in B2B2E approach and in-house platform.</div>
       </div>
       <div class="signal-card" data-stagger-child>
         <div class="signal-who">Helen</div>
-        <div class="signal-topic">Full Value Chain Platform</div>
-        <div class="signal-quote">&ldquo;Before it was a platform&hellip; you were like the intermediary&hellip; but you were not stocking the products?&rdquo;</div>
-        <div class="signal-read">Exploring WEFUN&rsquo;s evolution from intermediary to full-stack operator. Synergy with Lyreco logistics capabilities.</div>
+        <div class="signal-topic" data-ko="풀 밸류체인 플랫폼">Full Value Chain Platform</div>
+        <div class="signal-quote" data-ko="&ldquo;이전에는 플랫폼이었는데&hellip; 중개자 같은 역할&hellip; 직접 재고를 두지는 않았던 거죠?&rdquo;">&ldquo;Before it was a platform&hellip; you were like the intermediary&hellip; but you were not stocking the products?&rdquo;</div>
+        <div class="signal-read" data-ko="위펀의 중개자에서 풀스택 운영사로의 진화 과정 탐색. 리레코 물류 역량과의 시너지.">Exploring WEFUN&rsquo;s evolution from intermediary to full-stack operator. Synergy with Lyreco logistics capabilities.</div>
       </div>
       <div class="signal-card" data-stagger-child>
         <div class="signal-who">Eric</div>
-        <div class="signal-topic">Post-Acquisition Integration</div>
+        <div class="signal-topic" data-ko="인수 후 통합">Post-Acquisition Integration</div>
         <div class="signal-quote">&ldquo;Integrate, integrate, integrate.&rdquo;</div>
-        <div class="signal-read">Strong impression from immediate cross-selling to acquired clients + Pudding&rsquo;s turnaround to OPM ~9%. 21-year CEO resonated with M&amp;A integration discipline.</div>
+        <div class="signal-read" data-ko="인수 직후 크로스셀링 실행과 푸딩의 OPM ~9% 턴어라운드에 강한 인상. 21년 경력 CEO로서 M&amp;A 통합 역량에 공감.">Strong impression from immediate cross-selling to acquired clients + Pudding&rsquo;s turnaround to OPM ~9%. 21-year CEO resonated with M&amp;A integration discipline.</div>
       </div>
       <div class="signal-card" data-stagger-child>
         <div class="signal-who">Helen</div>
-        <div class="signal-topic">Blue-Collar Expansion</div>
-        <div class="signal-quote">&ldquo;It&rsquo;s the white collar mainly &mdash; you don&rsquo;t serve blue collar?&rdquo;</div>
-        <div class="signal-read">Positive reaction to Q4 blue-collar expansion. TAM enlargement recognized.</div>
+        <div class="signal-topic" data-ko="블루칼라 확장">Blue-Collar Expansion</div>
+        <div class="signal-quote" data-ko="&ldquo;주로 화이트칼라인데 &mdash; 블루칼라는 안 하시나요?&rdquo;">&ldquo;It&rsquo;s the white collar mainly &mdash; you don&rsquo;t serve blue collar?&rdquo;</div>
+        <div class="signal-read" data-ko="Q4 블루칼라 확장에 긍정적 반응. TAM 확대 가능성 인정.">Positive reaction to Q4 blue-collar expansion. TAM enlargement recognized.</div>
       </div>
     </div>
 
     <!-- WEFUN'S STRATEGIC READS -->
-    <h3 class="dash-subhead" data-animate="fade-up">WEFUN&rsquo;s Strategic Reads</h3>
+    <h3 class="dash-subhead" data-animate="fade-up" data-ko="위펀의 전략적 리딩">WEFUN&rsquo;s Strategic Reads</h3>
     <div class="reads-grid" data-stagger-group>
       <div class="read-item" data-stagger-child>
-        <div class="read-label">Growth Model</div>
-        <div class="read-text">&ldquo;Did you only grow within Europe, or globally?&rdquo; &mdash; Helen confirmed Asia was greenfield + acquisition (e.g. Singapore DeskRight)</div>
+        <div class="read-label" data-ko="성장 모델">Growth Model</div>
+        <div class="read-text" data-ko="&ldquo;유럽 내에서만 성장하셨나요, 아니면 글로벌로?&rdquo; &mdash; Helen은 아시아가 그린필드 + 인수(예: 싱가포르 DeskRight)였음을 확인">&ldquo;Did you only grow within Europe, or globally?&rdquo; &mdash; Helen confirmed Asia was greenfield + acquisition (e.g. Singapore DeskRight)</div>
       </div>
       <div class="read-item" data-stagger-child>
-        <div class="read-label">Origin Story</div>
-        <div class="read-text">&ldquo;What did you start with 100 years ago?&rdquo; &mdash; Printing/supplies business, gradually expanded coverage</div>
+        <div class="read-label" data-ko="창업 스토리">Origin Story</div>
+        <div class="read-text" data-ko="&ldquo;100년 전에는 뭘로 시작하셨나요?&rdquo; &mdash; 인쇄/사무용품 사업으로 시작, 점진적으로 범위 확대">&ldquo;What did you start with 100 years ago?&rdquo; &mdash; Printing/supplies business, gradually expanded coverage</div>
       </div>
       <div class="read-item" data-stagger-child>
         <div class="read-label">PB/OEM</div>
-        <div class="read-text">&ldquo;Is it mostly OEM?&rdquo; &mdash; Certain SKUs yes. Paper 50% Lyreco PB, share growing</div>
+        <div class="read-text" data-ko="&ldquo;대부분 OEM인가요?&rdquo; &mdash; 일부 SKU는 그렇다. 용지는 50%가 리레코 PB, 비중 증가 중">&ldquo;Is it mostly OEM?&rdquo; &mdash; Certain SKUs yes. Paper 50% Lyreco PB, share growing</div>
       </div>
       <div class="read-item" data-stagger-child>
-        <div class="read-label">Alignment</div>
-        <div class="read-text">&ldquo;I think we share the same strategy&rdquo; &mdash; B2B focus + customer-centricity as shared DNA</div>
+        <div class="read-label" data-ko="전략 정합">Alignment</div>
+        <div class="read-text" data-ko="&ldquo;같은 전략을 공유하고 있는 것 같습니다&rdquo; &mdash; B2B 중심 + 고객 중심이 공통 DNA">&ldquo;I think we share the same strategy&rdquo; &mdash; B2B focus + customer-centricity as shared DNA</div>
       </div>
     </div>
   </div>
@@ -173,26 +173,26 @@
 <!-- ═══════════════ NEXT STEPS TIMELINE ═══════════════ -->
 <section id="next-steps" class="dash-section dash-section--dark">
   <div class="dash-section__inner">
-    <div class="dash-section-label">Next Steps</div>
-    <h2 class="dash-section-title">Deal <em>Roadmap</em></h2>
+    <div class="dash-section-label" data-ko="다음 단계">Next Steps</div>
+    <h2 class="dash-section-title" data-ko="딜 <em>로드맵</em>">Deal <em>Roadmap</em></h2>
 
     <div class="timeline-track" data-animate="fade-up">
       <div class="tl-step tl-step--done">
         <div class="tl-marker"></div>
         <div class="tl-content">
-          <div class="tl-date">Feb 26</div>
-          <div class="tl-title">First Meeting</div>
-          <div class="tl-desc">WEFUN HQ, Gangnam. Helen Riley + Eric Bigeard met Joshua Hwang + Jo Hwa-young. Constructive. Both sides confirmed strategic alignment.</div>
-          <div class="tl-owner">Complete</div>
+          <div class="tl-date" data-ko="2월 26일">Feb 26</div>
+          <div class="tl-title" data-ko="첫 미팅">First Meeting</div>
+          <div class="tl-desc" data-ko="위펀 본사, 강남. Helen Riley + Eric Bigeard가 황민재 대표 + 조화영 부사장과 만남. 건설적 분위기. 양측 전략적 정합성 확인.">WEFUN HQ, Gangnam. Helen Riley + Eric Bigeard met Joshua Hwang + Jo Hwa-young. Constructive. Both sides confirmed strategic alignment.</div>
+          <div class="tl-owner" data-ko="완료">Complete</div>
         </div>
       </div>
 
       <div class="tl-step tl-step--active">
         <div class="tl-marker"></div>
         <div class="tl-content">
-          <div class="tl-date">Mar 2026</div>
-          <div class="tl-title">NBO + Valuation</div>
-          <div class="tl-desc">Non-binding offer with initial valuation. Deal structure (Phase 1 full vs. Phase 2 staged) to be discussed before submission.</div>
+          <div class="tl-date" data-ko="2026년 3월">Mar 2026</div>
+          <div class="tl-title" data-ko="NBO + 밸류에이션">NBO + Valuation</div>
+          <div class="tl-desc" data-ko="초기 밸류에이션이 포함된 비구속적 제안서. 딜 구조(1단계 전체 인수 vs. 2단계 단계적 인수)는 제출 전 논의 예정.">Non-binding offer with initial valuation. Deal structure (Phase 1 full vs. Phase 2 staged) to be discussed before submission.</div>
           <div class="tl-owner">WEFUN</div>
         </div>
       </div>
@@ -200,9 +200,9 @@
       <div class="tl-step tl-step--upcoming">
         <div class="tl-marker"></div>
         <div class="tl-content">
-          <div class="tl-date">TBD</div>
-          <div class="tl-title">Site Visits &amp; Key Personnel Interviews</div>
-          <div class="tl-desc">Lyreco Asia entities. Accepted by Lyreco; minimum staff. Schedule to be confirmed.</div>
+          <div class="tl-date" data-ko="일정 미정">TBD</div>
+          <div class="tl-title" data-ko="현장 방문 &amp; 핵심 인력 인터뷰">Site Visits &amp; Key Personnel Interviews</div>
+          <div class="tl-desc" data-ko="리레코 아시아 법인. 리레코 측 수락 완료; 최소 인원 참여. 일정은 추후 확정.">Lyreco Asia entities. Accepted by Lyreco; minimum staff. Schedule to be confirmed.</div>
           <div class="tl-owner">Lyreco</div>
         </div>
       </div>
@@ -210,9 +210,9 @@
       <div class="tl-step tl-step--upcoming">
         <div class="tl-marker"></div>
         <div class="tl-content">
-          <div class="tl-date">Post-NBO</div>
-          <div class="tl-title">Data Room</div>
-          <div class="tl-desc">Lyreco to prepare data room. Due diligence phase begins.</div>
+          <div class="tl-date" data-ko="NBO 이후">Post-NBO</div>
+          <div class="tl-title" data-ko="데이터룸">Data Room</div>
+          <div class="tl-desc" data-ko="리레코 측에서 데이터룸 준비. 실사 단계 시작.">Lyreco to prepare data room. Due diligence phase begins.</div>
           <div class="tl-owner">Lyreco</div>
         </div>
       </div>
@@ -220,10 +220,10 @@
       <div class="tl-step tl-step--upcoming">
         <div class="tl-marker"></div>
         <div class="tl-content">
-          <div class="tl-date">TBD</div>
-          <div class="tl-title">Deal Structure Confirmation</div>
-          <div class="tl-desc">Phase 1 (full acquisition) vs. Phase 2 (staged) &mdash; to be agreed by both parties before NBO.</div>
-          <div class="tl-owner">Both</div>
+          <div class="tl-date" data-ko="일정 미정">TBD</div>
+          <div class="tl-title" data-ko="딜 구조 확정">Deal Structure Confirmation</div>
+          <div class="tl-desc" data-ko="1단계(전체 인수) vs. 2단계(단계적 인수) &mdash; NBO 제출 전 양측 합의 필요.">Phase 1 (full acquisition) vs. Phase 2 (staged) &mdash; to be agreed by both parties before NBO.</div>
+          <div class="tl-owner" data-ko="양측">Both</div>
         </div>
       </div>
     </div>
@@ -233,89 +233,89 @@
 <!-- ═══════════════ CHAPTER GRID ═══════════════ -->
 <section id="chapters" class="dash-section">
   <div class="dash-section__inner">
-    <div class="dash-section-label">Research &amp; Background</div>
-    <h2 class="dash-section-title">Deep-Dive <em>Chapters</em></h2>
-    <p class="dash-section-sub">Eight chapters covering Lyreco&rsquo;s history, the Gaspard family, divestment playbook, WEFUN&rsquo;s growth story, key people, and the strategic thesis.</p>
+    <div class="dash-section-label" data-ko="리서치 &amp; 배경">Research &amp; Background</div>
+    <h2 class="dash-section-title" data-ko="심층 분석 <em>챕터</em>">Deep-Dive <em>Chapters</em></h2>
+    <p class="dash-section-sub" data-ko="리레코의 역사, 가스파르 가문, 매각 플레이북, 위펀의 성장 스토리, 핵심 인물, 전략적 논거를 다루는 8개 챕터.">Eight chapters covering Lyreco&rsquo;s history, the Gaspard family, divestment playbook, WEFUN&rsquo;s growth story, key people, and the strategic thesis.</p>
 
     <div class="chapter-grid">
 
       <a href="chapters/1-bookshop.html" class="chapter-card" data-chapter="1">
         <div class="card-num">Chapter I</div>
-        <div class="card-title">A Bookshop in Valenciennes</div>
-        <div class="card-teaser">1926 founding. Bookshop to ~&euro;2.5B enterprise. The 100-year family legacy.</div>
+        <div class="card-title" data-ko="발랑시엔의 서점">A Bookshop in Valenciennes</div>
+        <div class="card-teaser" data-ko="1926년 창업. 서점에서 ~&euro;2.5B 기업으로. 100년 가문의 레거시.">1926 founding. Bookshop to ~&euro;2.5B enterprise. The 100-year family legacy.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
-          <span class="card-progress-label">Unread</span>
+          <span class="card-progress-label" data-ko="미열람">Unread</span>
         </div>
       </a>
 
       <a href="chapters/2-dynasty.html" class="chapter-card" data-chapter="2">
         <div class="card-num">Chapter II</div>
-        <div class="card-title">The Gaspard Dynasty</div>
-        <div class="card-teaser">Corely SAS ownership. ~&euro;2.5B revenue, 100% family-owned, no PE. Financial strength.</div>
+        <div class="card-title" data-ko="가스파르 왕조">The Gaspard Dynasty</div>
+        <div class="card-teaser" data-ko="Corely SAS 지배구조. ~&euro;2.5B 매출, 100% 가족 소유, PE 없음. 재무 건전성.">Corely SAS ownership. ~&euro;2.5B revenue, 100% family-owned, no PE. Financial strength.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
-          <span class="card-progress-label">Unread</span>
+          <span class="card-progress-label" data-ko="미열람">Unread</span>
         </div>
       </a>
 
       <a href="chapters/3-bigeard.html" class="chapter-card" data-chapter="3">
         <div class="card-num">Chapter III</div>
-        <div class="card-title">The Bigeard Era</div>
-        <div class="card-teaser">CEO at 33. &euro;15M to &euro;2B+ in 22 years. 1 to 29 countries. The builder.</div>
+        <div class="card-title" data-ko="비가르 시대">The Bigeard Era</div>
+        <div class="card-teaser" data-ko="33세에 CEO. &euro;15M에서 &euro;2B+로 22년. 1개국에서 29개국. 건설자.">CEO at 33. &euro;15M to &euro;2B+ in 22 years. 1 to 29 countries. The builder.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
-          <span class="card-progress-label">Unread</span>
+          <span class="card-progress-label" data-ko="미열람">Unread</span>
         </div>
       </a>
 
       <a href="chapters/4-goes-east.html" class="chapter-card" data-chapter="4">
         <div class="card-num">Chapter IV</div>
-        <div class="card-title">Lyreco Goes East</div>
-        <div class="card-teaser">Canada (2014), Australia (2018), now Asia. The divestment playbook and deal track record.</div>
+        <div class="card-title" data-ko="리레코, 동쪽으로">Lyreco Goes East</div>
+        <div class="card-teaser" data-ko="캐나다(2014), 호주(2018), 이제 아시아. 매각 플레이북과 딜 트랙레코드.">Canada (2014), Australia (2018), now Asia. The divestment playbook and deal track record.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
-          <span class="card-progress-label">Unread</span>
+          <span class="card-progress-label" data-ko="미열람">Unread</span>
         </div>
       </a>
 
       <a href="chapters/5-christmas-eve.html" class="chapter-card" data-chapter="5">
         <div class="card-num">Chapter V</div>
-        <div class="card-title">Christmas Eve 2018</div>
-        <div class="card-teaser">WEFUN founded with &#8361;50M. Seven years: &#8361;143B revenue, 6 acquisitions, IPO imminent.</div>
+        <div class="card-title" data-ko="2018년 크리스마스 이브">Christmas Eve 2018</div>
+        <div class="card-teaser" data-ko="위펀, &#8361;5천만으로 창업. 7년 만에: &#8361;1,430억 매출, 6건의 인수, IPO 임박.">WEFUN founded with &#8361;50M. Seven years: &#8361;143B revenue, 6 acquisitions, IPO imminent.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
-          <span class="card-progress-label">Unread</span>
+          <span class="card-progress-label" data-ko="미열람">Unread</span>
         </div>
       </a>
 
       <a href="chapters/6-people.html" class="chapter-card" data-chapter="6">
         <div class="card-num">Chapter VI</div>
-        <div class="card-title">The People in the Room</div>
-        <div class="card-teaser">Helen Riley&rsquo;s 20-year career + recent deals. Eric Bigeard&rsquo;s legacy. Deep profiles.</div>
+        <div class="card-title" data-ko="미팅에 참석한 사람들">The People in the Room</div>
+        <div class="card-teaser" data-ko="Helen Riley의 20년 커리어 + 최근 딜. Eric Bigeard의 레거시. 심층 프로필.">Helen Riley&rsquo;s 20-year career + recent deals. Eric Bigeard&rsquo;s legacy. Deep profiles.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
-          <span class="card-progress-label">Unread</span>
+          <span class="card-progress-label" data-ko="미열람">Unread</span>
         </div>
       </a>
 
       <a href="chapters/7-convergence.html" class="chapter-card" data-chapter="7">
         <div class="card-num">Chapter VII</div>
-        <div class="card-title">Convergence</div>
-        <div class="card-teaser">Partner model, GREAT 2026 strategy, financial context, industry rationalization.</div>
+        <div class="card-title" data-ko="수렴">Convergence</div>
+        <div class="card-teaser" data-ko="파트너 모델, GREAT 2026 전략, 재무 맥락, 업계 구조조정.">Partner model, GREAT 2026 strategy, financial context, industry rationalization.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
-          <span class="card-progress-label">Unread</span>
+          <span class="card-progress-label" data-ko="미열람">Unread</span>
         </div>
       </a>
 
       <a href="chapters/8-february-26.html" class="chapter-card" data-chapter="8">
         <div class="card-num">Chapter VIII</div>
-        <div class="card-title">February 26</div>
-        <div class="card-teaser">The meeting playbook. 70% relationship, 30% substance. Minute-by-minute.</div>
+        <div class="card-title" data-ko="2월 26일">February 26</div>
+        <div class="card-teaser" data-ko="미팅 플레이북. 70%는 관계, 30%는 실질. 분 단위 시나리오.">The meeting playbook. 70% relationship, 30% substance. Minute-by-minute.</div>
         <div class="card-progress">
           <span class="card-progress-dot dot-unvisited"></span>
-          <span class="card-progress-label">Unread</span>
+          <span class="card-progress-label" data-ko="미열람">Unread</span>
         </div>
       </a>
 
@@ -324,7 +324,7 @@
 </section>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
-<footer class="site-footer">
+<footer class="site-footer" data-ko="기밀 &mdash; 위펀 경영진을 위해 작성 &mdash; 2026년 3월">
   Confidential &mdash; Prepared for WEFUN Management &mdash; March 2026
 </footer>
 
@@ -335,5 +335,6 @@
 <script src="js/chapters.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/scroll-engine.js"></script>
+<script src="js/lang.js"></script>
 </body>
 </html>
