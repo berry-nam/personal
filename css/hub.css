@@ -951,7 +951,7 @@
   .reads-grid { grid-template-columns: 1fr; }
   .read-item { padding: 0.8rem 1rem; }
 
-  /* Roadmap: stack vertically on tablet/mobile */
+  /* ── Roadmap: vertical timeline on tablet/mobile ── */
   .roadmap::before { display: none; }
   .roadmap-phases { gap: 4px; margin-bottom: 1.5rem; }
   .roadmap-phase-label { font-size: 0.58rem; top: -18px; }
@@ -964,41 +964,102 @@
     position: relative;
     padding-left: 2.5rem;
   }
+  /* Vertical line — centered at 14px from track edge */
   .roadmap-line {
     position: absolute;
     top: 0; bottom: 0;
     left: 14px;
     width: 3px; height: auto;
     right: auto;
-    transform: none;
+    transform: translateX(-50%);
     border-radius: 2px;
   }
-  .roadmap-node::after { display: none; }
   .roadmap-line::before { display: none; }
   .roadmap-line__fill {
     width: 100%;
     height: 20%;
     background: linear-gradient(180deg, var(--success) 0%, var(--champagne) 100%);
     box-shadow: none;
+    border-radius: 2px;
   }
   .roadmap-line__fill::after { display: none; }
+
   .roadmap-node {
     position: relative;
     top: auto; left: auto !important;
     transform: none;
-    padding-bottom: 2rem;
+    padding-bottom: 1.8rem;
     display: flex;
     align-items: flex-start;
     gap: 0;
   }
   .roadmap-node:last-child { padding-bottom: 0; }
+
+  /* Dot — centered at same 14px as line */
   .roadmap-dot {
     position: absolute;
-    left: -2.5rem;
-    top: 0.2rem;
+    left: calc(14px - 2.5rem);
+    top: 0.15rem;
     flex-shrink: 0;
+    transform: translateX(-50%);
   }
-  .roadmap-dot::before { display: none; }
+  /* Vertical connector through dot — line passes through */
+  .roadmap-dot::before {
+    display: block;
+    inset: auto;
+    border: none;
+    border-radius: 2px;
+    position: absolute;
+    top: -12px;
+    bottom: -12px;
+    left: 50%;
+    width: 3px;
+    background: rgba(232, 229, 222, 0.10);
+    transform: translateX(-50%);
+    z-index: -1;
+    transition: none;
+  }
+  .roadmap-node--done .roadmap-dot::before {
+    background: rgba(90, 232, 144, 0.25);
+  }
+  .roadmap-node--active .roadmap-dot::before {
+    background: rgba(212, 184, 122, 0.25);
+  }
+  .roadmap-node--upcoming .roadmap-dot::before {
+    background: rgba(91, 138, 255, 0.08);
+  }
+
+  /* Horizontal connector — dot to card */
+  .roadmap-node::after {
+    display: block;
+    position: absolute;
+    left: calc(14px - 2.5rem + 10px);
+    top: calc(0.15rem + 9px);
+    width: calc(2.5rem - 14px - 10px);
+    height: 2px;
+    background: rgba(232, 229, 222, 0.15);
+    transform: translateY(-50%);
+    border-radius: 1px;
+    z-index: 1;
+  }
+  .roadmap-node--done::after {
+    background: rgba(90, 232, 144, 0.2);
+  }
+  .roadmap-node--active::after {
+    left: calc(14px - 2.5rem + 13px);
+    top: calc(0.15rem + 12px);
+    width: calc(2.5rem - 14px - 13px);
+    background: rgba(212, 184, 122, 0.25);
+  }
+  .roadmap-node--upcoming::after {
+    background: rgba(91, 138, 255, 0.1);
+  }
+
+  /* Hover — preserve centering transform */
+  .roadmap-node:hover .roadmap-dot {
+    transform: translateX(-50%) scale(1.1);
+  }
+
   .roadmap-card {
     position: relative;
     left: auto; top: auto; bottom: auto;
