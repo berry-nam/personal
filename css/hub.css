@@ -500,9 +500,10 @@
   position: absolute;
   top: 50%;
   left: 0; right: 0;
-  height: 2px;
-  background: rgba(232, 229, 222, 0.08);
+  height: 3px;
+  background: rgba(232, 229, 222, 0.10);
   transform: translateY(-50%);
+  border-radius: 2px;
 }
 /* Gradient fill showing progress */
 .roadmap-line__fill {
@@ -511,6 +512,7 @@
   background: linear-gradient(90deg, var(--success) 0%, var(--champagne) 100%);
   box-shadow: 0 0 16px rgba(212, 184, 122, 0.2);
   position: relative;
+  border-radius: 2px;
 }
 /* Glow effect on the fill */
 .roadmap-line__fill::after {
@@ -617,6 +619,30 @@
   background: rgba(91, 138, 255, 0.3);
 }
 
+/* Horizontal connector through each node — unifies dot with main line */
+.roadmap-node::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 3px;
+  background: rgba(232, 229, 222, 0.10);
+  z-index: 1;
+  border-radius: 2px;
+}
+.roadmap-node--done::after {
+  background: linear-gradient(90deg, transparent, rgba(90, 232, 144, 0.3), transparent);
+}
+.roadmap-node--active::after {
+  background: linear-gradient(90deg, transparent, rgba(212, 184, 122, 0.35), transparent);
+  width: 56px;
+}
+.roadmap-node--upcoming::after {
+  background: linear-gradient(90deg, transparent, rgba(91, 138, 255, 0.12), transparent);
+}
+
 .roadmap-node:hover .roadmap-dot {
   transform: scale(1.15);
 }
@@ -640,31 +666,33 @@
 }
 
 .roadmap-card--above {
-  bottom: calc(100% + 20px);
+  bottom: calc(100% + 14px);
 }
-/* Connector line — above card to dot */
+/* Connector line — above card to dot (extends through dot to main line) */
 .roadmap-card--above::after {
   content: '';
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  width: 1px; height: 20px;
-  background: linear-gradient(180deg, rgba(232, 229, 222, 0.2), rgba(232, 229, 222, 0.05));
+  width: 2px; height: 24px;
+  background: linear-gradient(180deg, rgba(232, 229, 222, 0.12), rgba(232, 229, 222, 0.28));
+  border-radius: 1px;
 }
 
 .roadmap-card--below {
-  top: calc(100% + 20px);
+  top: calc(100% + 14px);
 }
-/* Connector line — below card to dot */
+/* Connector line — below card to dot (extends through dot to main line) */
 .roadmap-card--below::before {
   content: '';
   position: absolute;
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  width: 1px; height: 20px;
-  background: linear-gradient(180deg, rgba(232, 229, 222, 0.05), rgba(232, 229, 222, 0.2));
+  width: 2px; height: 24px;
+  background: linear-gradient(180deg, rgba(232, 229, 222, 0.28), rgba(232, 229, 222, 0.12));
+  border-radius: 1px;
 }
 
 .roadmap-card__date {
@@ -697,12 +725,20 @@
 .roadmap-node--active .roadmap-card {
   border-color: rgba(212, 184, 122, 0.2);
 }
-.roadmap-node--active .roadmap-card::before,
 .roadmap-node--active .roadmap-card--above::after {
-  background: linear-gradient(180deg, rgba(212, 184, 122, 0.3), rgba(212, 184, 122, 0.05));
+  background: linear-gradient(180deg, rgba(212, 184, 122, 0.15), rgba(212, 184, 122, 0.4));
+}
+.roadmap-node--active .roadmap-card--below::before {
+  background: linear-gradient(180deg, rgba(212, 184, 122, 0.4), rgba(212, 184, 122, 0.15));
 }
 .roadmap-node--done .roadmap-card {
   border-color: rgba(90, 232, 144, 0.15);
+}
+.roadmap-node--done .roadmap-card--above::after {
+  background: linear-gradient(180deg, rgba(90, 232, 144, 0.1), rgba(90, 232, 144, 0.28));
+}
+.roadmap-node--done .roadmap-card--below::before {
+  background: linear-gradient(180deg, rgba(90, 232, 144, 0.28), rgba(90, 232, 144, 0.1));
 }
 
 .roadmap-card__tag {
@@ -932,10 +968,12 @@
     position: absolute;
     top: 0; bottom: 0;
     left: 14px;
-    width: 2px; height: auto;
+    width: 3px; height: auto;
     right: auto;
     transform: none;
+    border-radius: 2px;
   }
+  .roadmap-node::after { display: none; }
   .roadmap-line::before { display: none; }
   .roadmap-line__fill {
     width: 100%;
