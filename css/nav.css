@@ -112,8 +112,17 @@
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
-  .site-nav { padding: 0.8rem 1.2rem; }
+  .site-nav { padding: 0.6rem 1rem; }
+  .nav-brand { font-size: 0.78rem; letter-spacing: 0.1em; }
   .nav-chapter-indicator { display: none; }
-  .hub-nav { padding: 0.8rem 1.2rem; }
+  .nav-controls { gap: 0.5rem; }
+  .nav-hub { font-size: 0.75rem; padding: 0.25rem 0.6rem; }
+  .hub-nav { padding: 0.6rem 1rem; }
   .hub-nav .nav-links { display: none; }
+}
+
+@media (max-width: 480px) {
+  .site-nav { padding: 0.5rem 0.8rem; }
+  .hub-nav { padding: 0.5rem 0.8rem; }
+  .nav-brand { font-size: 0.72rem; }
 }

@@ -118,3 +118,9 @@ body {
 
 a { color: inherit; }
 img { max-width: 100%; display: block; }
+
+/* ─── GLOBAL MOBILE SAFETY ─── */
+@media (max-width: 768px) {
+  table:not(.compare-table) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  svg:not(.venn-svg) { max-width: 100%; height: auto; }
+}

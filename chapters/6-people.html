@@ -232,8 +232,23 @@
     margin-top: 0.2rem;
   }
 
+  /* ─── MOBILE: CH6 ─── */
   @media (max-width: 768px) {
-    .cycling-stat { flex-direction: column; gap: 1rem; }
+    .cycling-stat { flex-direction: column; gap: 1rem; padding: 1rem; }
+    .cycling-stat-num { font-size: 1.2rem; }
+    .career-timeline { padding-left: 2rem; }
+    .career-timeline::before { left: 8px; }
+    .career-stage { padding-left: 1rem; }
+    .career-stage::before { left: -2rem; width: 8px; height: 8px; }
+    .career-stage.milestone::before { left: calc(-2rem - 1px); width: 10px; height: 10px; }
+    .profile-meta-grid { grid-template-columns: 1fr; }
+    .profile-meta-item { padding: 1rem; }
+    .strategy-card { padding: 1.2rem; }
+    .meeting-network-container { min-height: 280px; }
+    .radar-container svg { max-width: 100%; height: auto; }
+    .person-photo-placeholder { width: 72px; height: 72px; }
+    .person-avatar { width: 60px; height: 60px; font-size: 1.4rem; }
+    .profile-divider { margin: 3rem 0; }
   }
 
   /* ─── PERSON CARD POPUP/MODAL ─── */

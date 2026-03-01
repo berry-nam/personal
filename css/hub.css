@@ -540,18 +540,83 @@
 }
 
 @media (max-width: 768px) {
-  .dash-header { padding: 3rem 1.5rem 2rem; }
-  .dash-header__top { flex-direction: column; align-items: flex-start; }
-  .dash-header__meta { gap: 1rem; }
+  .dash-header { padding: 5rem 1.2rem 1.5rem; }
+  .dash-header__top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .dash-header__meta { gap: 0.6rem; font-size: 0.72rem; }
+  .dash-header__title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+  .dash-header__sub {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
   .dash-stats { grid-template-columns: 1fr 1fr; }
-  .dash-section { padding: 3rem 1.5rem; }
-  .chapter-grid { grid-template-columns: 1fr; }
+  .dash-stat { padding: 1rem 1.2rem; }
+  .dash-stat__value { font-size: clamp(1.3rem, 5vw, 1.6rem); }
+  .dash-stat__label { font-size: 0.7rem; }
+  .dash-stat__sub { font-size: 0.78rem; }
+
+  .dash-section { padding: 2rem 1.2rem; }
+  .dash-section-title { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+  .dash-section-sub { font-size: 0.95rem; margin-bottom: 1.5rem; }
+  .dash-subhead { font-size: 1.15rem; margin: 1.5rem 0 1rem; }
+
+  .deal-structure-box { padding: 1.2rem 1rem; }
+  .deal-structure-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .deal-pos { padding: 0.8rem 1rem; }
+  .deal-pos-stance { font-size: 0.95rem; }
+  .deal-quote { font-size: 1rem; }
+
   .signal-grid { grid-template-columns: 1fr; }
-  .deal-structure-grid { grid-template-columns: 1fr; }
+  .signal-card { padding: 1.2rem; }
+  .signal-topic { font-size: 1rem; }
+  .signal-quote { font-size: 0.9rem; }
+  .signal-read { font-size: 0.85rem; }
+
   .reads-grid { grid-template-columns: 1fr; }
+  .read-item { padding: 0.8rem 1rem; }
+
+  .timeline-track { padding-left: 2.2rem; }
+  .timeline-track::before { left: 9px; }
+  .tl-marker {
+    left: -2.2rem;
+    width: 20px; height: 20px;
+  }
+  .tl-marker::after { width: 6px; height: 6px; }
+  .tl-title { font-size: 1.05rem; }
+  .tl-desc { font-size: 0.88rem; }
+  .tl-step { padding-bottom: 1.8rem; }
+
+  .chapter-grid { grid-template-columns: 1fr; max-width: none; }
+  .chapter-card { padding: 1.2rem 1.4rem 1rem; }
+  .card-title { font-size: 1.1rem; }
+  .card-teaser { font-size: 0.85rem; }
 }
 
 @media (max-width: 480px) {
-  .dash-stats { grid-template-columns: 1fr; }
-  .dash-header__meta { flex-direction: column; gap: 0.5rem; }
+  .dash-header { padding: 4.5rem 1rem 1.2rem; }
+  .dash-stats { grid-template-columns: 1fr 1fr; gap: 1px; }
+  .dash-stat { padding: 0.8rem 1rem; }
+  .dash-stat__value { font-size: 1.2rem; }
+  .dash-stat__label { font-size: 0.65rem; letter-spacing: 0.1em; }
+  .dash-stat__sub { font-size: 0.72rem; }
+  .dash-header__meta { flex-direction: column; gap: 0.4rem; }
+
+  .dash-section { padding: 1.5rem 1rem; }
+  .conf-badge { font-size: 0.72rem; padding: 0.35rem 0.8rem; letter-spacing: 0.12em; }
+
+  .signal-card { padding: 1rem; }
+  .deal-structure-box { padding: 1rem 0.8rem; }
+
+  .timeline-track { padding-left: 1.8rem; }
+  .timeline-track::before { left: 7px; }
+  .tl-marker {
+    left: -1.8rem;
+    width: 16px; height: 16px;
+  }
+  .tl-marker::after { width: 5px; height: 5px; }
 }

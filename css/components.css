@@ -709,15 +709,39 @@
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
-  .convergence-box { grid-template-columns: 1fr; }
+  .convergence-box { grid-template-columns: 1fr; gap: 1rem; }
   .conv-center { flex-direction: row; padding: 0; gap: 0.5rem; }
+  .conv-side { padding: 1.5rem; }
   .person-grid { grid-template-columns: 1fr; }
+  .person-card { padding: 1.5rem; }
+  .person-name { font-size: 1.4rem; }
   .card-grid { grid-template-columns: 1fr; }
-  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .play-card { padding: 1.5rem; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .stat-card { padding: 1.2rem; }
+  .stat-number { font-size: 1.6rem; }
+  .quote-block { padding: 1.2rem 1.5rem; }
+  .quote-text { font-size: 1.2rem; }
+  .timeline-item { padding-left: 1.2rem; }
+  .avoid-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .value-card { padding: 1.2rem; }
+  .value-letter { font-size: 2rem; }
+  .ice-card { padding: 1.2rem; }
+  .pg-compare { padding: 1.5rem; margin: 2rem 1rem; }
+  .pg-note-grid { grid-template-columns: 1fr; }
+  .site-footer { padding: 2rem 1rem; font-size: 0.72rem; letter-spacing: 0.12em; }
 }
 
 @media (max-width: 480px) {
   .stat-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .stat-card { padding: 1rem; }
+  .stat-number { font-size: 1.4rem; }
+  .quote-block { padding: 1rem; }
+  .quote-text { font-size: 1.05rem; }
+  .person-card { padding: 1.2rem; }
+  .person-name { font-size: 1.2rem; }
 }
 
 /* ─── KEYBOARD FOCUS ─── */

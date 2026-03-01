@@ -109,6 +109,16 @@
     transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .progress-bar-fill.animated { width: var(--target-width); }
+
+  /* ─── MOBILE: CH7 ─── */
+  @media (max-width: 768px) {
+    .venn-container { min-height: 220px; margin: 2rem 0; }
+    .venn-svg { max-width: 100%; }
+    .venn-svg .venn-label { font-size: 14px; }
+    .venn-svg .venn-sublabel { font-size: 7px; }
+    .progress-bar-visual { padding: 1rem; }
+    .benchmark-note { padding: 0.8rem; font-size: 0.92rem; }
+  }
 </style>
 </head>
 <body data-chapter="7">

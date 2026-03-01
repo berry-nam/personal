@@ -505,17 +505,24 @@ footer {
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
+  nav { padding: 0.8rem 1rem; }
   .nav-links { display: none; }
-  section { padding: 5rem 1.5rem; }
-  .convergence-box {
-    grid-template-columns: 1fr;
-  }
-  .conv-center { 
-    flex-direction: row; padding: 0; gap: 0.5rem;
-  }
+  section { padding: 3rem 1.2rem; }
+  .convergence-box { grid-template-columns: 1fr; }
+  .conv-center { flex-direction: row; padding: 0; gap: 0.5rem; }
+  .conv-side { padding: 1.5rem; }
   .person-grid { grid-template-columns: 1fr; }
-  .hero-details { gap: 1.5rem; }
+  .person-card { padding: 1.5rem; }
+  .hero-details { gap: 1rem; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .stat-card { padding: 1.2rem; }
+  .values-grid { grid-template-columns: 1fr 1fr; }
+  .value-card { padding: 1.2rem; }
+}
+@media (max-width: 480px) {
+  section { padding: 2rem 1rem; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
 }
 
 /* ─── CONFIDENTIAL BADGE ─── */
