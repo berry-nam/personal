@@ -176,56 +176,94 @@
     <div class="dash-section-label" data-ko="다음 단계">Next Steps</div>
     <h2 class="dash-section-title" data-ko="딜 <em>로드맵</em>">Deal <em>Roadmap</em></h2>
 
-    <div class="timeline-track" data-animate="fade-up">
-      <div class="tl-step tl-step--done">
-        <div class="tl-marker"></div>
-        <div class="tl-content">
-          <div class="tl-date" data-ko="2월 26일">Feb 26</div>
-          <div class="tl-title" data-ko="첫 미팅">First Meeting</div>
-          <div class="tl-desc" data-ko="위펀 본사, 강남. Helen Riley + Eric Bigeard가 황민재 대표 + 조화영 부사장과 만남. 건설적 분위기. 양측 전략적 정합성 확인.">WEFUN HQ, Gangnam. Helen Riley + Eric Bigeard met Joshua Hwang + Jo Hwa-young. Constructive. Both sides confirmed strategic alignment.</div>
-          <div class="tl-owner" data-ko="완료">Complete</div>
+    <!-- HORIZONTAL INFOGRAPHIC TIMELINE -->
+    <div class="roadmap" data-animate="fade-up">
+
+      <!-- Phase gradient bars -->
+      <div class="roadmap-phases">
+        <div class="roadmap-phase roadmap-phase--done">
+          <span class="roadmap-phase-label" data-ko="접촉">Contact</span>
+        </div>
+        <div class="roadmap-phase roadmap-phase--active">
+          <span class="roadmap-phase-label" data-ko="제안">Proposal</span>
+        </div>
+        <div class="roadmap-phase roadmap-phase--upcoming">
+          <span class="roadmap-phase-label" data-ko="실사">Due Diligence</span>
+        </div>
+        <div class="roadmap-phase roadmap-phase--last">
+          <span class="roadmap-phase-label" data-ko="구조 확정">Structuring</span>
         </div>
       </div>
 
-      <div class="tl-step tl-step--active">
-        <div class="tl-marker"></div>
-        <div class="tl-content">
-          <div class="tl-date" data-ko="2026년 3월">Mar 2026</div>
-          <div class="tl-title" data-ko="NBO + 밸류에이션">NBO + Valuation</div>
-          <div class="tl-desc" data-ko="초기 밸류에이션이 포함된 비구속적 제안서. 딜 구조(1단계 전체 인수 vs. 2단계 단계적 인수)는 제출 전 논의 예정.">Non-binding offer with initial valuation. Deal structure (Phase 1 full vs. Phase 2 staged) to be discussed before submission.</div>
-          <div class="tl-owner">WEFUN</div>
+      <!-- Horizontal track with nodes -->
+      <div class="roadmap-track">
+        <div class="roadmap-line">
+          <div class="roadmap-line__fill"></div>
+        </div>
+
+        <div class="roadmap-node roadmap-node--done" style="left: 10%">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-card roadmap-card--above">
+            <div class="roadmap-card__date" data-ko="2월 26일">Feb 26</div>
+            <div class="roadmap-card__title" data-ko="첫 미팅">First Meeting</div>
+            <div class="roadmap-card__desc" data-ko="위펀 본사, 강남. Helen + Eric. 전략적 정합성 확인.">WEFUN HQ, Gangnam. Helen + Eric. Strategic alignment confirmed.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--done" data-ko="완료">Complete</div>
+          </div>
+        </div>
+
+        <div class="roadmap-node roadmap-node--active" style="left: 35%">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-card roadmap-card--below">
+            <div class="roadmap-card__date" data-ko="2026년 3월">Mar 2026</div>
+            <div class="roadmap-card__title" data-ko="NBO + 밸류에이션">NBO + Valuation</div>
+            <div class="roadmap-card__desc" data-ko="초기 밸류에이션 포함 비구속적 제안서. 딜 구조 논의.">Non-binding offer with initial valuation. Structure to be discussed.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--wefun">WEFUN</div>
+          </div>
+        </div>
+
+        <div class="roadmap-node roadmap-node--upcoming" style="left: 55%">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-card roadmap-card--above">
+            <div class="roadmap-card__date" data-ko="일정 미정">TBD</div>
+            <div class="roadmap-card__title" data-ko="현장 방문">Site Visits</div>
+            <div class="roadmap-card__desc" data-ko="리레코 아시아 법인. 핵심 인력 인터뷰.">Lyreco Asia entities. Key personnel interviews.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--lyreco">Lyreco</div>
+          </div>
+        </div>
+
+        <div class="roadmap-node roadmap-node--upcoming" style="left: 75%">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-card roadmap-card--below">
+            <div class="roadmap-card__date" data-ko="NBO 이후">Post-NBO</div>
+            <div class="roadmap-card__title" data-ko="데이터룸">Data Room</div>
+            <div class="roadmap-card__desc" data-ko="리레코 데이터룸 준비. 실사 시작.">Lyreco to prepare data room. Due diligence begins.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--lyreco">Lyreco</div>
+          </div>
+        </div>
+
+        <div class="roadmap-node roadmap-node--upcoming" style="left: 92%">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-card roadmap-card--above">
+            <div class="roadmap-card__date" data-ko="일정 미정">TBD</div>
+            <div class="roadmap-card__title" data-ko="딜 구조 확정">Deal Structure</div>
+            <div class="roadmap-card__desc" data-ko="1단계 vs. 2단계 &mdash; 양측 합의 필요.">Phase 1 full vs. Phase 2 staged &mdash; both parties to agree.</div>
+            <div class="roadmap-card__tag roadmap-card__tag--both" data-ko="양측">Both</div>
+          </div>
         </div>
       </div>
 
-      <div class="tl-step tl-step--upcoming">
-        <div class="tl-marker"></div>
-        <div class="tl-content">
-          <div class="tl-date" data-ko="일정 미정">TBD</div>
-          <div class="tl-title" data-ko="현장 방문 &amp; 핵심 인력 인터뷰">Site Visits &amp; Key Personnel Interviews</div>
-          <div class="tl-desc" data-ko="리레코 아시아 법인. 리레코 측 수락 완료; 최소 인원 참여. 일정은 추후 확정.">Lyreco Asia entities. Accepted by Lyreco; minimum staff. Schedule to be confirmed.</div>
-          <div class="tl-owner">Lyreco</div>
+      <!-- Progress indicator -->
+      <div class="roadmap-progress">
+        <div class="roadmap-progress__bar">
+          <div class="roadmap-progress__fill"></div>
+        </div>
+        <div class="roadmap-progress__labels">
+          <span data-ko="시작">Start</span>
+          <span class="roadmap-progress__current" data-ko="현재 위치">Current</span>
+          <span data-ko="종결">Close</span>
         </div>
       </div>
 
-      <div class="tl-step tl-step--upcoming">
-        <div class="tl-marker"></div>
-        <div class="tl-content">
-          <div class="tl-date" data-ko="NBO 이후">Post-NBO</div>
-          <div class="tl-title" data-ko="데이터룸">Data Room</div>
-          <div class="tl-desc" data-ko="리레코 측에서 데이터룸 준비. 실사 단계 시작.">Lyreco to prepare data room. Due diligence phase begins.</div>
-          <div class="tl-owner">Lyreco</div>
-        </div>
-      </div>
-
-      <div class="tl-step tl-step--upcoming">
-        <div class="tl-marker"></div>
-        <div class="tl-content">
-          <div class="tl-date" data-ko="일정 미정">TBD</div>
-          <div class="tl-title" data-ko="딜 구조 확정">Deal Structure Confirmation</div>
-          <div class="tl-desc" data-ko="1단계(전체 인수) vs. 2단계(단계적 인수) &mdash; NBO 제출 전 양측 합의 필요.">Phase 1 (full acquisition) vs. Phase 2 (staged) &mdash; to be agreed by both parties before NBO.</div>
-          <div class="tl-owner" data-ko="양측">Both</div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
