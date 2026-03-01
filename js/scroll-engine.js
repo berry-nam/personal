@@ -41,25 +41,25 @@ function initScrollEngine() {
   });
 
   // ─── Staggered Group Reveals ───
+  // Uses gsap.from() with immediateRender:false so elements stay visible
+  // until ScrollTrigger fires. Prevents content stuck at opacity:0.
   document.querySelectorAll('[data-stagger-group]').forEach(function(group) {
     var children = group.querySelectorAll('[data-stagger-child]');
     if (children.length === 0) return;
 
-    gsap.fromTo(children,
-      { y: 40, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: group,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
+    gsap.from(children, {
+      y: 40,
+      opacity: 0,
+      immediateRender: false,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: group,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+    });
   });
 
   // ─── Parallax Layers ───
