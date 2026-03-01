@@ -31,15 +31,27 @@
 }
 
 .dash-header__meta {
-  display: flex; gap: 2rem; flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--smoke);
+  white-space: nowrap;
 }
-.dash-meta-item { display: flex; align-items: center; gap: 0.4rem; }
+.dash-meta-sep {
+  color: var(--champagne-dim);
+  font-size: 0.9rem;
+}
+.dash-meta-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
 .dash-dot {
   width: 5px; height: 5px; border-radius: 50%;
   background: var(--champagne-dim);
@@ -48,6 +60,88 @@
 .dash-dot.status-green {
   background: var(--success);
   box-shadow: 0 0 6px rgba(90, 232, 144, 0.4);
+}
+
+/* ─── DEAL STAGE STEPPER (at-a-glance) ─── */
+.deal-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 1.5rem 0 2.5rem;
+  padding: 1.2rem 1.5rem;
+  background: var(--ink-card);
+  border: 1px solid rgba(232, 229, 222, 0.08);
+  border-radius: var(--radius-card);
+  opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.deal-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.deal-step__dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(232, 229, 222, 0.15);
+  background: var(--ink);
+  position: relative;
+  transition: all 0.3s;
+}
+.deal-step__dot::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: rgba(232, 229, 222, 0.1);
+}
+
+.deal-step--done .deal-step__dot {
+  border-color: var(--success);
+  background: rgba(90, 232, 144, 0.1);
+}
+.deal-step--done .deal-step__dot::after {
+  background: var(--success);
+}
+
+.deal-step--active .deal-step__dot {
+  width: 18px; height: 18px;
+  border-color: var(--champagne);
+  background: rgba(212, 184, 122, 0.12);
+  box-shadow: 0 0 16px rgba(212, 184, 122, 0.3);
+}
+.deal-step--active .deal-step__dot::after {
+  background: var(--champagne);
+  animation: pulse-dot 2s infinite;
+}
+
+.deal-step__label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(184, 180, 168, 0.5);
+  white-space: nowrap;
+}
+.deal-step--done .deal-step__label { color: var(--success); }
+.deal-step--active .deal-step__label { color: var(--champagne); font-weight: 600; }
+
+.deal-step__line {
+  flex: 1;
+  height: 2px;
+  min-width: 20px;
+  background: rgba(232, 229, 222, 0.1);
+  margin: 0 0.3rem;
+  margin-bottom: 1.2rem;
+  border-radius: 1px;
+}
+.deal-step__line--done {
+  background: linear-gradient(90deg, var(--success), var(--champagne));
+  box-shadow: 0 0 6px rgba(90, 232, 144, 0.2);
 }
 
 .dash-header__title {
@@ -786,7 +880,9 @@
     gap: 0.8rem;
     margin-bottom: 1.5rem;
   }
-  .dash-header__meta { gap: 0.6rem; font-size: 0.72rem; }
+  .dash-header__meta { gap: 0.4rem; font-size: 0.72rem; }
+  .deal-stepper { padding: 1rem 1.2rem; margin: 1rem 0 1.5rem; }
+  .deal-step__label { font-size: 0.56rem; }
   .dash-header__title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
   .dash-header__sub {
     font-size: 0.78rem;
@@ -895,7 +991,12 @@
   .dash-stat__value { font-size: 1.2rem; }
   .dash-stat__label { font-size: 0.65rem; letter-spacing: 0.1em; }
   .dash-stat__sub { font-size: 0.72rem; }
-  .dash-header__meta { flex-direction: column; gap: 0.4rem; }
+  .dash-header__meta { font-size: 0.68rem; gap: 0.3rem; }
+  .deal-stepper { padding: 0.8rem; margin: 0.8rem 0 1.2rem; }
+  .deal-step__dot { width: 10px; height: 10px; }
+  .deal-step--active .deal-step__dot { width: 14px; height: 14px; }
+  .deal-step__label { font-size: 0.5rem; }
+  .deal-step__line { min-width: 12px; }
 
   .dash-section { padding: 1.5rem 1rem; }
   .conf-badge { font-size: 0.72rem; padding: 0.35rem 0.8rem; letter-spacing: 0.12em; }
