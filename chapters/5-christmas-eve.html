@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="no-referrer">
 <script src="../js/auth.js"></script><script>window.__wlAuth.guardPage();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter V — Christmas Eve 2018 | WEFUN × Lyreco</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/components.css">
@@ -191,6 +195,15 @@
   @media (max-width: 768px) {
     .platform-visual { grid-template-columns: repeat(2, 1fr); }
     .platform-pillar:nth-child(2) { border-right: none; }
+    .funding-round { padding: 1.2rem; }
+    .funding-amount { font-size: 1.2rem; }
+    .persuasion-card { padding: 1.2rem; }
+    .ma-network-container { min-height: 300px; }
+  }
+  @media (max-width: 480px) {
+    .platform-visual { grid-template-columns: 1fr; }
+    .platform-pillar { border-right: none; border-bottom: var(--border-subtle); }
+    .platform-pillar:last-child { border-bottom: none; }
   }
 </style>
 </head>
@@ -216,9 +229,9 @@
   <!-- Snowfall effect -->
   <div class="snowfall" id="snowfall"></div>
   <div class="chapter-hero__label">Chapter V</div>
-  <h1 class="chapter-hero__title">Christmas Eve <em>2018</em></h1>
-  <p class="chapter-hero__subtitle">On a day most people rest, Kim Heon incorporated a company with ₩50 million. Seven years later, it touches 800,000 lives daily.</p>
-  <div class="chapter-hero__meta">Reading time · ~12 min</div>
+  <h1 class="chapter-hero__title" data-ko="2018년 <em>크리스마스 이브</em>">Christmas Eve <em>2018</em></h1>
+  <p class="chapter-hero__subtitle" data-ko="위펀은 &#8361;5천만원으로 시작했다. 7년 만에: &#8361;1,430억 매출, 6건의 인수, IPO 임박.">On a day most people rest, Kim Heon incorporated a company with ₩50 million. Seven years later, it touches 800,000 lives daily.</p>
+  <div class="chapter-hero__meta" data-ko="읽기 시간 · ~10분">Reading time · ~12 min</div>
   <div class="chapter-hero__scroll">
     <div class="scroll-indicator">
       <span>Begin</span>
@@ -233,7 +246,7 @@
   <!-- ── THE FOUNDING ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Origin</div>
+      <div class="section-label" data-ko="창업">The Origin</div>
       <h2 class="section-title">일할 맛 나는 사무실<br><em>An office worth working in</em></h2>
       <div class="section-body">
         <p>December 24, 2018. While Korea celebrated Christmas Eve, Kim Heon filed incorporation papers for a company called WEFUN. Capital: ₩50 million — roughly $45,000. Address: a basement office in Gasan Digital Complex, Seoul's startup district.</p>
@@ -253,7 +266,7 @@
   <!-- ── GROWTH TRAJECTORY ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Growth</div>
+      <div class="section-label" data-ko="성장">The Growth</div>
       <h2 class="section-title">₩3.5 billion to ₩143 billion<br>in <em>five years</em></h2>
       <div class="section-body">
         <p>WEFUN reached monthly P&L breakeven in 2019, just months after founding. Then the trajectory went vertical.</p>
@@ -375,7 +388,7 @@
   <!-- ── THE PLATFORM ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Platform</div>
+      <div class="section-label" data-ko="플랫폼">The Platform</div>
       <h2 class="section-title">~100 modular services<br>across <em>four pillars</em></h2>
       <div class="section-body">
         <p>What started as snack delivery now spans the entire workplace experience. WEFUN operates roughly 100 modular services organized into four strategic pillars:</p>
@@ -490,7 +503,7 @@
   <!-- ── THE CULTURE ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Culture</div>
+      <div class="section-label" data-ko="문화">The Culture</div>
       <h2 class="section-title">복지 끝판왕<br><em>The Ultimate Welfare Champion</em></h2>
       <div class="section-body">
         <p>A company that sells workplace welfare to others had better practice what it preaches. WEFUN does. Here's what employees say on Jobplanet (Korea's Glassdoor):</p>
@@ -553,7 +566,7 @@
       <div class="persuasion-card">
         <h4>Basement to Tower</h4>
         <div class="ko-text">"가산디지털 지하실에서 강남 15층까지"</div>
-        <p>Started at Gasan Digital Complex basement with ₩50M → now at K-Square Gangnam 15F, 252 employees, ₩89.2B revenue. This mirrors Lyreco's own journey from a bookshop to a €3B empire. The parallel is powerful.</p>
+        <p>Started at Gasan Digital Complex basement with ₩50M → now at K-Square Gangnam 15F, 252 employees, ₩89.2B revenue. This mirrors Lyreco's own journey from a bookshop to a ~€2.5B empire. The parallel is powerful.</p>
       </div>
     </div>
 
@@ -651,7 +664,7 @@
 <!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
 <div class="chapter-footer">
   <a href="6-people.html" class="next-chapter-cta">
-    <span class="next-label">Next Chapter</span>
+    <span class="next-label" data-ko="다음 챕터">Next Chapter</span>
     <span class="next-num">Chapter VI</span>
     <span class="next-name">The People in the Room</span>
     <span class="next-arrow">→</span>
@@ -776,5 +789,6 @@ document.addEventListener('DOMContentLoaded', () => {
   ]);
 });
 </script>
+<script src="../js/lang.js"></script>
 </body>
 </html>

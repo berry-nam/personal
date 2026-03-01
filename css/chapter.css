@@ -200,3 +200,27 @@
 }
 
 .closing-body p { margin-bottom: 1.5rem; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .chapter-hero { min-height: 80vh; padding: 3rem 1.2rem; }
+  .chapter-hero__title { font-size: clamp(2rem, 7vw, 2.6rem); }
+  .chapter-hero__subtitle { font-size: 1.1rem; max-width: 100%; }
+  .chapter-hero__label { font-size: 0.78rem; margin-bottom: 1.2rem; }
+  .chapter-hero__scroll { bottom: 1.5rem; }
+  .chapter-content .section { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .chapter-footer { padding: 3rem 1.2rem 2rem; }
+  .next-chapter-cta { padding: 2rem 1.5rem; border-radius: 12px; }
+  .next-name { font-size: 1.3rem; }
+  .closing { padding: 5rem 1.2rem; }
+  .closing-title { font-size: clamp(1.4rem, 5vw, 2rem); }
+  .closing-body { font-size: 1.05rem; }
+}
+
+@media (max-width: 480px) {
+  .chapter-hero { min-height: 70vh; padding: 2.5rem 1rem; }
+  .chapter-hero__title { font-size: clamp(1.6rem, 8vw, 2rem); }
+  .chapter-hero__subtitle { font-size: 1rem; }
+  .chapter-content .section { padding-left: 1rem; padding-right: 1rem; }
+  .closing { padding: 3rem 1rem; }
+}

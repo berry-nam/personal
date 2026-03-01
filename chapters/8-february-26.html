@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="no-referrer">
 <script src="../js/auth.js"></script><script>window.__wlAuth.guardPage();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter VIII — February 26 | WEFUN × Lyreco</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/components.css">
@@ -118,6 +122,17 @@
     font-size: 2.5rem;
     margin-bottom: 1rem;
   }
+
+  /* ─── MOBILE: CH8 ─── */
+  @media (max-width: 768px) {
+    .bridge-grid { grid-template-columns: 1fr; }
+    .bridge-card { padding: 1.2rem; }
+    .flow-segment { min-width: 120px; padding: 1rem 0.8rem; }
+    .flow-name { font-size: 0.85rem; }
+    .flow-tip { font-size: 0.85rem; }
+    .winning-message { padding: 1.5rem; }
+    .closing-champagne { font-size: 1rem; }
+  }
 </style>
 </head>
 <body data-chapter="8">
@@ -140,9 +155,9 @@
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="chapter-hero">
   <div class="chapter-hero__label">Chapter VIII</div>
-  <h1 class="chapter-hero__title">February <em>26</em></h1>
-  <p class="chapter-hero__subtitle">The meeting playbook. Every minute choreographed, every word chosen.</p>
-  <div class="chapter-hero__meta">Reading time · ~12 min</div>
+  <h1 class="chapter-hero__title" data-ko="2월 <em>26일</em>">February <em>26</em></h1>
+  <p class="chapter-hero__subtitle" data-ko="첫 만남의 모든 것. 70%는 관계, 30%는 실질. 성공적인 미팅을 위한 분 단위 시나리오.">The meeting playbook. Every minute choreographed, every word chosen.</p>
+  <div class="chapter-hero__meta" data-ko="읽기 시간 · ~12분">Reading time · ~12 min</div>
   <div class="chapter-hero__scroll">
     <div class="scroll-indicator">
       <span>Begin</span>
@@ -163,7 +178,7 @@
   <!-- ── INTRO ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Architecture</div>
+      <div class="section-label" data-ko="플레이북">The Architecture</div>
       <h2 class="section-title">70% relationship.<br><em>30% substance.</em></h2>
       <div class="section-body">
         <p>This is 70% relationship, 30% substance. The meeting architecture should feel like a conversation between two companies who share a belief, not a pitch deck review.</p>
@@ -194,7 +209,7 @@
   <!-- ── PRESENTATION FLOW ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">Presentation Flow</div>
+      <div class="section-label" data-ko="흐름">Presentation Flow</div>
       <h2 class="section-title">The <em>100 minutes</em></h2>
     </div>
 
@@ -275,7 +290,7 @@
   <!-- ── ICEBREAKERS ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">Conversation Design</div>
+      <div class="section-label" data-ko="연결고리">Conversation Design</div>
       <h2 class="section-title">Icebreakers &<br><em>Dinner Conversation</em></h2>
       <div class="section-body">
         <p>These are not throwaway pleasantries. Each opener is designed to unlock a specific emotional register — legacy pride, shared purpose, cultural curiosity. Use them at the dinner, during breaks, or when the formal conversation needs a human moment.</p>
@@ -508,5 +523,6 @@
 <script src="../js/nav.js"></script>
 <script src="../js/scroll-engine.js"></script>
 <script src="../js/interactions/accordion.js"></script>
+<script src="../js/lang.js"></script>
 </body>
 </html>

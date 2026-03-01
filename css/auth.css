@@ -2,6 +2,13 @@
    WEFUN × Lyreco — Auth Gate Styles
    ═══════════════════════════════════════════════ */
 
+/* ─── SECURITY: Hide all content until authenticated ─── */
+body:not(.wl-ok) > *:not(.auth-gate) {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .auth-gate {
   position: fixed;
   inset: 0;

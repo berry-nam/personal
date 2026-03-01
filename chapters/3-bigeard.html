@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="no-referrer">
 <script src="../js/auth.js"></script><script>window.__wlAuth.guardPage();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter III — The Bigeard Era | WEFUN × Lyreco</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/components.css">
@@ -135,10 +139,15 @@
     margin: 3rem 0;
   }
 
-  @media (max-width: 600px) {
-    .growth-visual { flex-direction: column; gap: 1rem; }
+  /* ─── MOBILE: CH3 ─── */
+  @media (max-width: 768px) {
+    .growth-visual { flex-direction: column; gap: 1rem; padding: 1.5rem; }
     .growth-arrow-line { width: 2px; height: 40px; background: linear-gradient(180deg, var(--smoke), var(--champagne)); }
     .growth-arrow-line::after { right: -4px; top: auto; bottom: -4px; border: 5px solid transparent; border-top: 8px solid var(--champagne); border-left: 5px solid transparent; }
+    .growth-start .amount, .growth-end .amount { font-size: 1.6rem; }
+    .growth-multiplier { font-size: 1.2rem; }
+    .succession-note { padding: 1.2rem; }
+    .insight-block { padding: 1.2rem; }
   }
 </style>
 </head>
@@ -162,9 +171,9 @@
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="chapter-hero">
   <div class="chapter-hero__label">Chapter III</div>
-  <h1 class="chapter-hero__title">The Bigeard <em>Era</em></h1>
-  <p class="chapter-hero__subtitle">One man took a &euro;15 million French company and turned it into a &euro;2 billion global empire in 22 years. Then he walked away on his own terms.</p>
-  <div class="chapter-hero__meta">Reading time · ~10 min</div>
+  <h1 class="chapter-hero__title" data-ko="비가르 <em>시대</em>">The Bigeard <em>Era</em></h1>
+  <p class="chapter-hero__subtitle" data-ko="한 남자가 &euro;1,500만 프랑스 회사를 22년 만에 &euro;20억 글로벌 제국으로 키웠다. 그리고 자신의 의지로 떠났다.">One man took a &euro;15 million French company and turned it into a &euro;2 billion global empire in 22 years. Then he walked away on his own terms.</p>
+  <div class="chapter-hero__meta" data-ko="읽기 시간 · ~10분">Reading time · ~10 min</div>
   <div class="chapter-hero__scroll">
     <div class="scroll-indicator">
       <span>Begin</span>
@@ -179,7 +188,7 @@
   <!-- ── THE ARRIVAL ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Arrival</div>
+      <div class="section-label" data-ko="등장">The Arrival</div>
       <h2 class="section-title">A twenty-something <em>walks in</em></h2>
       <div class="section-body">
         <p>Eric Jacques Pierre Bigeard joined Lyreco in 1980 as a young man in his twenties. The company was still a modest French office-supplies distributor, firmly regional, firmly traditional. Eight years later, at approximately 33 years old, the Gaspard family handed him the keys to the entire operation.</p>
@@ -198,7 +207,7 @@
   <!-- ── REVENUE GROWTH ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Growth</div>
+      <div class="section-label" data-ko="성장">The Growth</div>
       <h2 class="section-title">&euro;15 million to &euro;2 billion<br>in <em>twenty-two years</em></h2>
       <div class="section-body">
         <p>What followed Bigeard's appointment as CEO in 1988 was one of the most extraordinary growth stories in European B2B distribution. He called it <em>"the international success story"</em><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup> in office supplies &mdash; and the numbers speak for themselves.</p>
@@ -277,7 +286,7 @@
   <!-- ── THE PHILOSOPHY ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Philosophy</div>
+      <div class="section-label" data-ko="철학">The Philosophy</div>
       <h2 class="section-title">Not revenue. <em>People.</em></h2>
       <div class="section-body">
         <p>Ask Eric Bigeard about his greatest accomplishment and he will not mention the 133&times; revenue growth. He will not cite the 29-country expansion. His answer is disarmingly human:</p>
@@ -302,7 +311,7 @@
   <!-- ── THE QUOTE ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Exit Philosophy</div>
+      <div class="section-label" data-ko="퇴장의 철학">The Exit Philosophy</div>
       <h2 class="section-title">Knowing when <em>to leave</em></h2>
     </div>
 
@@ -323,7 +332,7 @@
   <!-- ── THE NEAR-MERGER ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Near-Merger</div>
+      <div class="section-label" data-ko="무산된 합병">The Near-Merger</div>
       <h2 class="section-title">Corporate Express <em>2008</em></h2>
       <div class="section-body">
         <p>In 2008, Bigeard came within reach of a deal that would have reshaped the entire office-supplies industry. <a href="https://en.wikipedia.org/wiki/Corporate_Express" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">Corporate Express</a> &mdash; a Dutch-listed global office supplies giant &mdash; was under siege. Staples had launched a hostile bid on February&nbsp;19 at &euro;7.25 per share. The Corporate Express board, scrambling for a defense, turned to Lyreco. On May&nbsp;21, they announced a <strong style="color: var(--pearl);">&euro;1.731 billion</strong> acquisition of Lyreco as a poison pill. Bigeard would become CEO of the combined entity. Peter Ventress, the Corporate Express CEO, would step down to COO. The Gaspard family would receive a 25% stake in Corporate Express with a 2-year lock-up.</p>
@@ -333,7 +342,7 @@
     </div>
 
     <!-- Deal fact strip -->
-    <div data-animate="fade-up" style="margin: 2.5rem 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+    <div class="deal-fact-strip" data-animate="fade-up" style="margin: 2.5rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
       <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.5rem; text-align: center;">
         <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;">Lyreco Acquisition Value</div>
         <div style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--champagne);">&euro;1.731B</div>
@@ -354,7 +363,7 @@
     <!-- Timeline strip -->
     <div data-animate="fade-up" style="margin: 2rem 0; padding: 1.5rem; background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card); overflow-x: auto;">
       <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1.2rem;">Deal Timeline &mdash; 2008</div>
-      <div style="display: flex; align-items: flex-start; gap: 0; min-width: 560px; position: relative;">
+      <div style="display: flex; align-items: flex-start; gap: 0; min-width: 440px; position: relative;">
         <div style="position: absolute; top: 10px; left: 10px; right: 10px; height: 1px; background: rgba(212,184,122,0.2);"></div>
         <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
           <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(212,184,122,0.2); border: 1.5px solid rgba(212,184,122,0.5); margin: 0 auto 0.6rem;"></div>
@@ -403,7 +412,7 @@
 
     <figure class="chapter-img" data-animate="fade-up">
       <img src="https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=1200&q=80" alt="European cityscape with modern office buildings" loading="lazy">
-      <figcaption>Amsterdam, 2008 &mdash; Corporate Express HQ. The deal that almost made Bigeard CEO of a &euro;3B+ combined entity.</figcaption>
+      <figcaption>Amsterdam, 2008 &mdash; Corporate Express HQ. The deal that almost made Bigeard CEO of a ~&euro;2.5B+ combined entity.</figcaption>
     </figure>
 
     <!-- ── SUCCESSION PARALLEL · THE HOSTILE BID ── -->
@@ -828,7 +837,7 @@
 <!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
 <div class="chapter-footer">
   <a href="4-goes-east.html" class="next-chapter-cta">
-    <span class="next-label">Next Chapter</span>
+    <span class="next-label" data-ko="다음 챕터">Next Chapter</span>
     <span class="next-num">Chapter IV</span>
     <span class="next-name">Lyreco Goes East</span>
     <span class="next-arrow">&rarr;</span>
@@ -1110,5 +1119,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 }());
 </script>
+<script src="../js/lang.js"></script>
 </body>
 </html>

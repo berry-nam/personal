@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="no-referrer">
 <script src="../js/auth.js"></script><script>window.__wlAuth.guardPage();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter VI — The People in the Room | WEFUN × Lyreco</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/components.css">
@@ -35,6 +39,16 @@
     color: var(--wefun-blue);
     letter-spacing: 0.06em;
     opacity: 0.65;
+  }
+
+  .market-detail {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--champagne);
+    margin-top: 0.5rem;
+    line-height: 1.6;
   }
 
   .career-timeline { position: relative; margin: 3rem 0; padding-left: 3rem; }
@@ -218,8 +232,23 @@
     margin-top: 0.2rem;
   }
 
+  /* ─── MOBILE: CH6 ─── */
   @media (max-width: 768px) {
-    .cycling-stat { flex-direction: column; gap: 1rem; }
+    .cycling-stat { flex-direction: column; gap: 1rem; padding: 1rem; }
+    .cycling-stat-num { font-size: 1.2rem; }
+    .career-timeline { padding-left: 2rem; }
+    .career-timeline::before { left: 8px; }
+    .career-stage { padding-left: 1rem; }
+    .career-stage::before { left: -2rem; width: 8px; height: 8px; }
+    .career-stage.milestone::before { left: calc(-2rem - 1px); width: 10px; height: 10px; }
+    .profile-meta-grid { grid-template-columns: 1fr; }
+    .profile-meta-item { padding: 1rem; }
+    .strategy-card { padding: 1.2rem; }
+    .meeting-network-container { min-height: 280px; }
+    .radar-container svg { max-width: 100%; height: auto; }
+    .person-photo-placeholder { width: 72px; height: 72px; }
+    .person-avatar { width: 60px; height: 60px; font-size: 1.4rem; }
+    .profile-divider { margin: 3rem 0; }
   }
 
   /* ─── PERSON CARD POPUP/MODAL ─── */
@@ -442,9 +471,9 @@
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="chapter-hero">
   <div class="chapter-hero__label">Chapter VI</div>
-  <h1 class="chapter-hero__title">The People <em>in the Room</em></h1>
-  <p class="chapter-hero__subtitle">Know who you're speaking with. Each person carries a different mandate, different history, and different criteria for trust.</p>
-  <div class="chapter-hero__meta">Reading time · ~14 min</div>
+  <h1 class="chapter-hero__title" data-ko="미팅에 참석한 <em>사람들</em>">The People <em>in the Room</em></h1>
+  <p class="chapter-hero__subtitle" data-ko="당신이 마주 앉을 사람들 &mdash; 그들의 이력, 성격, 그리고 의사결정에 미치는 영향.">Know who you're speaking with. Each person carries a different mandate, different history, and different criteria for trust.</p>
+  <div class="chapter-hero__meta" data-ko="읽기 시간 · ~12분">Reading time · ~14 min</div>
   <div class="chapter-hero__scroll">
     <div class="scroll-indicator">
       <span>Begin</span>
@@ -475,7 +504,7 @@
       <div class="section-label">Profile I</div>
       <h2 class="section-title">Helen Riley</h2>
       <p style="font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--smoke); margin-bottom: 2rem;">Group Development Director — M&A, Divestments & Partnerships</p>
-      <img class="person-photo lyreco-border" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80" alt="Helen Riley (representative photo)" loading="lazy" style="cursor: pointer;" onclick="document.getElementById('modal-helen').classList.add('active')">
+      <img class="person-photo lyreco-border" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80" alt="Helen Riley (representative photo)" loading="lazy" style="cursor: pointer;" onclick="document.getElementById('modal-helen').classList.add('active')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
       <a href="https://www.linkedin.com/in/helen-riley-21a13018/" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; color: #0A66C2; text-decoration: none; text-transform: uppercase; margin-bottom: 1rem;">🔗 LinkedIn Profile</a>
     </div>
 
@@ -651,6 +680,56 @@
       </div>
     </div>
 
+    <!-- Recent Deals Led -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">Deals She Has Led</h3>
+      <div class="section-body">
+        <p>Since her appointment in September 2025, Helen has already led or overseen multiple transactions. Every single one is a <strong style="color: var(--champagne);">bolt-on acquisition in an existing European market</strong> that deepens category expertise. This is not someone exploring new geographies — she's building density in core markets.</p>
+      </div>
+    </div>
+
+    <div class="card-grid" data-stagger-group>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon" style="font-size: 1.3rem;">☕</div>
+        <div class="play-title">Nespresso Distribution</div>
+        <div class="play-desc">Expanded Lyreco's exclusive Nespresso distribution partnership across the Nordics. Acquired Premium Coffee (Denmark, Finland, Sweden) to build the coffee category.</div>
+        <div class="market-detail" style="color: var(--champagne); font-size: 0.82rem;">NORDICS · COFFEE · CATEGORY EXPANSION</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon" style="font-size: 1.3rem;">👷</div>
+        <div class="play-title">Groenendijk Workwear</div>
+        <div class="play-desc">Acquired Groenendijk in the Netherlands/Benelux. PPE and workwear — deepening the safety category that Lyreco entered via the 2018 Intersafe/Elacin acquisition (€125M+ combined revenue).</div>
+        <div class="market-detail" style="color: var(--champagne); font-size: 0.82rem;">NETHERLANDS · PPE/WORKWEAR · BOLT-ON</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon" style="font-size: 1.3rem;">🧹</div>
+        <div class="play-title">Zenith Hygiene</div>
+        <div class="play-desc">Acquired from Diversey (Solenis). UK-based cleaning and hygiene specialist. Part of a dual deal with Shorrock-Trichem to consolidate Lyreco's UK hygiene presence.</div>
+        <div class="market-detail" style="color: var(--champagne); font-size: 0.82rem;">UK · CLEANING/HYGIENE · DIVERSEY EXIT</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon" style="font-size: 1.3rem;">🧴</div>
+        <div class="play-title">Shorrock-Trichem</div>
+        <div class="play-desc">Also acquired from Diversey alongside Zenith. Completes Lyreco UK's transformation from office supplies into total workplace solutions — hygiene is the fastest-growing adjacent category.</div>
+        <div class="market-detail" style="color: var(--champagne); font-size: 0.82rem;">UK · HYGIENE · CATEGORY DENSITY</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" style="margin-top: 1.5rem;">
+      <div class="section-body">
+        <p style="font-size: 1.05rem; color: var(--smoke); line-height: 1.7;">The pattern reveals her mandate clearly: <strong style="color: var(--pearl);">coffee, PPE, workwear, hygiene</strong> — all adjacent categories that transform Lyreco from "office supplies distributor" into "workplace multi-specialist." This is the same transformation story she'll want to hear from WEFUN about Asia.</p>
+      </div>
+    </div>
+
+    <!-- What Her Job Title Actually Signals -->
+    <div data-animate="fade-up">
+      <h3 class="sub-heading">What Her Title Actually Signals</h3>
+      <div class="section-body">
+        <p>Her official scope covers three pillars: <strong style="color: var(--champagne);">M&A, divestments, and partnerships.</strong> The inclusion of "divestments" is not accidental — it means the Gaspard family anticipates ongoing portfolio pruning, not just growth acquisitions. And "partnerships" signals the post-exit model: the same approach used with Novexco in Canada and COS in Australia, where Lyreco retained the buyer as a partner for international client coverage.</p>
+        <p>This is not just an M&A role. It's a <em>portfolio architect</em> role. And the fact that an internal 20-year veteran holds it — not an external PE-style restructuring hire — signals continuity and thoughtfulness, not slash-and-burn.</p>
+      </div>
+    </div>
+
     <!-- Radar Chart -->
     <div data-animate="fade-up">
       <h3 class="sub-heading">Assessment Radar</h3>
@@ -686,8 +765,15 @@
 
     <div data-animate="fade-up" data-delay="0.15">
       <div class="strategy-card">
-        <h4>Her role was created for this moment</h4>
-        <p>A newly created "Group Development Director" focused on M&A and divestments means the family has decided to actively reshape the portfolio. She has executive backing. She can make things happen.</p>
+        <h4>Her role was created for this moment — and "divestments" is in the title</h4>
+        <p>A newly created "Group Development Director" covering M&A, divestments, and partnerships means the family has decided to actively reshape the portfolio. The word "divestments" is explicit. She has executive backing to both acquire and sell. She can make things happen — and Asia is on the sell side of her ledger.</p>
+      </div>
+    </div>
+
+    <div data-animate="fade-up" data-delay="0.15">
+      <div class="strategy-card">
+        <h4>Her recent deals reveal the playbook — and the ask</h4>
+        <p>Every deal she's led is a European bolt-on. Coffee in the Nordics, workwear in the Netherlands, hygiene in the UK. The capital for those deals comes from somewhere. If WEFUN can position itself as both the right steward for Asia AND a source of deployment capital for her European playbook, the deal becomes self-financing for Lyreco.</p>
       </div>
     </div>
   </section>
@@ -700,7 +786,7 @@
       <div class="section-label">Profile II</div>
       <h2 class="section-title">Eric Bigeard</h2>
       <p style="font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--smoke); margin-bottom: 2rem;">Former CEO (1988–2010) · Supervisory Board Member · Guardian of the Legacy</p>
-      <img class="person-photo lyreco-border" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80" alt="Eric Bigeard (representative photo)" loading="lazy" style="cursor: pointer;" onclick="document.getElementById('modal-eric').classList.add('active')">
+      <img class="person-photo lyreco-border" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80" alt="Eric Bigeard (representative photo)" loading="lazy" style="cursor: pointer;" onclick="document.getElementById('modal-eric').classList.add('active')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
     </div>
 
     <!-- Meta grid -->
@@ -878,14 +964,14 @@
     </div>
 
     <div class="person-grid" data-stagger-group>
-      <div class="person-card wefun person-card-clickable" data-stagger-child onclick="document.getElementById('modal-minjae').classList.add('active')">
+      <div class="person-card wefun person-card-clickable" data-stagger-child onclick="document.getElementById('modal-minjae').classList.add('active')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
         <div class="person-role">CFO & Chief Strategy Officer</div>
         <div class="person-photo-placeholder" aria-label="Hwang Minjae — no verified photo available"><span class="person-initials">HM</span></div>
         <div class="person-name">Hwang Minjae (황민재)</div>
         <div class="person-bio">VP-level executive and the public face of WEFUN's M&A strategy. Architected the holding company vision and led all six acquisitions. Will present the WEFUN company introduction and M&A track record. His English name is Joshua. Key objective: demonstrate WEFUN's financial discipline and integration capability.</div>
         <div class="person-tag key">Lead Presenter</div>
       </div>
-      <div class="person-card wefun person-card-clickable" data-stagger-child onclick="document.getElementById('modal-hwayoung').classList.add('active')">
+      <div class="person-card wefun person-card-clickable" data-stagger-child onclick="document.getElementById('modal-hwayoung').classList.add('active')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
         <div class="person-role">Head of Business Development</div>
         <div class="person-photo-placeholder" aria-label="Jo Hwa-young — no verified photo available"><span class="person-initials">JH</span></div>
         <div class="person-name">Jo Hwa-young (조화영)</div>
@@ -1169,7 +1255,7 @@
 <!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
 <div class="chapter-footer">
   <a href="7-convergence.html" class="next-chapter-cta">
-    <span class="next-label">Next Chapter</span>
+    <span class="next-label" data-ko="다음 챕터">Next Chapter</span>
     <span class="next-num">Chapter VII</span>
     <span class="next-name">Convergence</span>
     <span class="next-arrow">→</span>
@@ -1377,5 +1463,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<script src="../js/lang.js"></script>
 </body>
 </html>

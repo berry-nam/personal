@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="no-referrer">
 <script src="../js/auth.js"></script><script>window.__wlAuth.guardPage();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter II — The Gaspard Dynasty | WEFUN × Lyreco</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/components.css">
@@ -272,10 +276,20 @@
     color: var(--smoke);
   }
 
+  /* ─── MOBILE: CH2 ─── */
   @media (max-width: 768px) {
-    .ft-children { flex-direction: column; align-items: center; }
+    .ft-children { flex-direction: column; align-items: center; gap: 1rem; }
     .ft-branch-connector::before { display: none; }
     .ft-non-family { flex-direction: column; align-items: center; }
+    .ft-node { min-width: 0; max-width: 100%; padding: 1rem 1.2rem; }
+    .ft-node.non-family { min-width: 0; }
+    .ft-node-name { font-size: 1rem; }
+    .ft-node-role { font-size: 0.88rem; }
+    .org-tier { padding: 1.2rem; }
+    .investment-card { padding: 1.2rem; }
+    .insight-block { padding: 1.2rem; }
+    .network-graph-container { min-height: 300px; padding: 1rem; }
+    .structure-diagram-container { padding: 1rem; }
   }
 </style>
 </head>
@@ -299,9 +313,9 @@
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="chapter-hero">
   <div class="chapter-hero__label">Chapter II</div>
-  <h1 class="chapter-hero__title">The Gaspard <em>Dynasty</em></h1>
-  <p class="chapter-hero__subtitle">Four generations. One hundred years. A single family's iron grip on a &euro;3 billion empire &mdash; and what that means for anyone who wants to do business with them.</p>
-  <div class="chapter-hero__meta">Reading time · ~9 min</div>
+  <h1 class="chapter-hero__title" data-ko="가스파르 <em>왕조</em>">The Gaspard <em>Dynasty</em></h1>
+  <p class="chapter-hero__subtitle" data-ko="4대에 걸친 100년. 한 가문이 ~&euro;2.5B 제국을 철권으로 쥐고 있다 &mdash; 그리고 그 의미가 무엇인지.">Four generations. One hundred years. A single family's iron grip on a ~&euro;2.5 billion empire &mdash; and what that means for anyone who wants to do business with them.</p>
+  <div class="chapter-hero__meta" data-ko="읽기 시간 · ~9분">Reading time · ~9 min</div>
   <div class="chapter-hero__scroll">
     <div class="scroll-indicator">
       <span>Begin</span>
@@ -321,7 +335,7 @@
   <!-- ── THE STRUCTURE ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Structure</div>
+      <div class="section-label" data-ko="구조">The Structure</div>
       <h2 class="section-title">Corely SAS<br><em>The family's holding company</em></h2>
       <div class="section-body">
         <p>At the apex of the Lyreco empire sits <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(201,169,110,0.4);">Corely SAS</a> &mdash; the Gaspard family's holding company. Corely is the sole shareholder of <a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Holding Lyreco France SAS</a> (&euro;157M capital, est. 2004), which in turn is the sole shareholder of Lyreco SAS. The Gaspard family's economic interest was estimated at approximately <strong style="color: var(--pearl);">84%</strong> during the 2008 Corporate Express acquisition, with the remaining <strong>~16%</strong> held through <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a> (&euro;10.5M capital, est. 1998) &mdash; a management participation vehicle for senior executives. <span class="source-note">Note: The exact current ownership split is unverifiable since France restricted beneficial ownership (RBE) access on July 31, 2024, following the CJEU privacy ruling of Nov 2022. The ~84/16% split dates from the 2008 Corporate Express deal.</span> This is not a dispersed public shareholding. This is concentrated, generational power.</p>
@@ -363,7 +377,7 @@
   <!-- ── CORPORATE STRUCTURE ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Architecture</div>
+      <div class="section-label" data-ko="아키텍처">The Architecture</div>
       <h2 class="section-title">From Onnaing to <em>25+ countries</em></h2>
       <div class="section-body">
         <p>The corporate structure cascades from the family holding company down through Lyreco SAS and into the global subsidiary network:</p>
@@ -373,12 +387,12 @@
     <div class="org-structure" data-stagger-group>
       <!-- Tier 1: Two shareholders side by side -->
       <div class="org-tier" data-stagger-child style="display: flex; gap: 1.5rem; align-items: stretch; flex-wrap: wrap; justify-content: center; text-align: center; padding: 0; background: none; border: none;">
-        <div style="flex: 2; min-width: 250px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid var(--champagne);">
+        <div style="flex: 2; min-width: 0; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid var(--champagne);">
           <div class="org-tier-label">~84% (2008 est.) &middot; Family Holding</div>
           <div class="org-tier-name" style="font-size: 1.1rem;"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Corely SAS</a></div>
           <div class="org-tier-detail">Onnaing, France &middot; &euro;25.1M capital &middot; President: Georges Gaspard</div>
         </div>
-        <div style="flex: 1; min-width: 180px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid rgba(232,229,222,0.2);">
+        <div style="flex: 1; min-width: 0; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid rgba(232,229,222,0.2);">
           <div class="org-tier-label" style="color: var(--smoke);">~16% &middot; Management</div>
           <div class="org-tier-name" style="font-size: 1.1rem;"><a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Lyreco Management SAS</a></div>
           <div class="org-tier-detail">Senior executive equity vehicle &middot; &euro;10.5M capital</div>
@@ -403,7 +417,7 @@
         <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr;</div>
         <div class="org-tier-label">Global Operations</div>
         <div class="org-tier-name">25+ Country Subsidiaries</div>
-        <div class="org-tier-detail">Europe, Asia-Pacific, Middle East &middot; 10,000+ employees &middot; &euro;3B consolidated revenue</div>
+        <div class="org-tier-detail">Europe, Asia-Pacific, Middle East &middot; 10,000+ employees &middot; ~&euro;2.5B consolidated revenue</div>
       </div>
     </div>
 
@@ -456,7 +470,7 @@
   <!-- ── FAMILY TREE ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">Bloodline</div>
+      <div class="section-label" data-ko="혈통">Bloodline</div>
       <h2 class="section-title">The Gaspard <em>Family Tree</em></h2>
       <p class="section-body" style="margin-bottom: 2rem;">Four generations. One hundred years. The bookshop became an empire &mdash; and the family never let go.</p>
     </div>
@@ -464,7 +478,7 @@
     <!-- ── OWNERSHIP PIE CHART (SVG) ── -->
     <div data-animate="fade-up" style="display: flex; justify-content: center; margin-bottom: 2.5rem;">
       <div style="text-align: center;">
-        <svg viewBox="0 0 260 260" style="width: 220px; height: 220px;">
+        <svg viewBox="0 0 260 260" style="width: 100%; max-width: 220px; height: auto;">
           <!-- 84% Gaspard family (champagne) — 302.4 degrees -->
           <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(201,169,110,0.25)" stroke-width="30"/>
           <circle cx="130" cy="130" r="100" fill="none" stroke="var(--champagne)" stroke-width="30"
@@ -477,14 +491,14 @@
           <text x="130" y="137" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="var(--champagne)" letter-spacing="0.12em">GASPARD FAMILY</text>
           <text x="130" y="152" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="var(--smoke)" opacity="0.5">(2008 est.)</text>
         </svg>
-        <div style="display: flex; gap: 1.5rem; justify-content: center; margin-top: 1rem;">
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap;">
           <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--champagne); display: inline-block;"></span>
-            <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--champagne);">~84% <span style="opacity:0.5">(2008 est.)</span> Gaspard Family <span style="color: var(--smoke);">via Corely → HLF</span></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--champagne); display: inline-block; flex-shrink: 0;"></span>
+            <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--champagne);">~84% Gaspard Family</span>
           </div>
           <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="width: 12px; height: 12px; border-radius: 50%; background: rgba(244,242,237,0.25); display: inline-block;"></span>
-            <span style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--smoke);">~16% <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: rgba(244,242,237,0.25); display: inline-block; flex-shrink: 0;"></span>
+            <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--smoke);">~16% <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Mgmt SAS</a></span>
           </div>
         </div>
         <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: 0.8rem; max-width: 500px;">
@@ -499,7 +513,7 @@
 
       <!-- Generation 1 -->
       <div class="ft-generation">
-        <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+        <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
           <div class="ft-node-gen">Generation I &middot; Founder</div>
           <div class="ft-node-name">Georges-Gaston Gaspard</div>
           <div class="ft-node-role">Founded the &ldquo;Gaspard&rdquo; bookshop<br>in Valenciennes. Started B2B distribution.</div>
@@ -518,7 +532,7 @@
 
       <!-- Generation 2 -->
       <div class="ft-generation">
-        <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+        <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
           <div class="ft-node-gen">Generation II &middot; Expansion</div>
           <div class="ft-node-name">Etienne Gaspard</div>
           <div class="ft-node-role">Son of Georges-Gaston. Entered company in 1942.<br>Succeeded father as head ~1956. Built first warehouse.</div>
@@ -537,7 +551,7 @@
 
       <!-- Generation 3 -->
       <div class="ft-generation">
-        <div class="ft-node" style="cursor: pointer; border-color: rgba(212,184,122,0.45);" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+        <div class="ft-node" style="cursor: pointer; border-color: rgba(212,184,122,0.45);" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
           <div class="ft-node-gen">Generation III &middot; Patriarch</div>
           <div class="ft-node-name">Georges Andr&eacute; Daniel Gaspard</div>
           <div class="ft-node-role">
@@ -576,7 +590,7 @@
         <div class="ft-children">
           <div class="ft-child-branch">
             <div class="ft-connector"></div>
-            <div class="ft-node" style="border-color: rgba(201,169,110,0.25); cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+            <div class="ft-node" style="border-color: rgba(201,169,110,0.25); cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
               <div class="ft-node-gen">Generation IV &middot; Successor</div>
               <div class="ft-node-name">Nathalie Gaspard</div>
               <div class="ft-node-role">President of Lyreco SAS<br>Deputy Director-General at Corely SAS<br>Announced as successor in <a href="https://why.lyreco.com/about-lyreco/history/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">2017</a></div>
@@ -592,7 +606,7 @@
           </div>
           <div class="ft-child-branch">
             <div class="ft-connector"></div>
-            <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+            <div class="ft-node" style="cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
               <div class="ft-node-gen">Generation IV</div>
               <div class="ft-node-name">Caroline Gaspard</div>
               <div class="ft-node-role">Deputy Director-General at Corely SAS<br>Delegated DG since 2008</div>
@@ -612,13 +626,13 @@
       <div style="margin-top: 3rem; width: 100%; max-width: 700px;">
         <p style="font-family: var(--font-mono); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.12em; color: var(--champagne); text-transform: uppercase; text-align: center; margin-bottom: 1.5rem;">Professional CEO Succession &middot; Why the Gaspards Stepped Back</p>
         <p style="font-size: 1.0rem; color: var(--smoke); line-height: 1.7; text-align: center; margin-bottom: 2rem;">
-          The Gaspards made a deliberate choice: <strong style="color: var(--pearl);">own the company, but hire professionals to run it.</strong> Georges Gaspard retained the presidency and board control via Corely SAS, while delegating CEO operations to world-class managers. This separation of ownership and execution is how the family scaled from a French regional business to a €3B European leader.
+          The Gaspards made a deliberate choice: <strong style="color: var(--pearl);">own the company, but hire professionals to run it.</strong> Georges Gaspard retained the presidency and board control via Corely SAS, while delegating CEO operations to world-class managers. This separation of ownership and execution is how the family scaled from a French regional business to a ~€2.5B European leader.
         </p>
 
         <div style="position: relative; padding-left: 2.5rem; border-left: 2px solid rgba(212,184,122,0.25);">
 
           <!-- Bigeard -->
-          <div class="ft-node non-family" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; max-width: none; border-left: 3px solid var(--champagne); padding: 1.2rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+          <div class="ft-node non-family" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; max-width: none; border-left: 3px solid var(--champagne); padding: 1.2rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
             <div style="position: absolute; left: -0.6rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--champagne); border: 2px solid var(--ink);"></div>
             <div class="ft-node-gen" style="color: var(--champagne);">CEO #1 &middot; 1988&ndash;2010 &middot; 22 YEARS</div>
             <div class="ft-node-name">Eric Bigeard</div>
@@ -652,7 +666,7 @@
           </div>
 
           <!-- Milcent -->
-          <div class="ft-node non-family" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; max-width: none; opacity: 0.7; padding: 1rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+          <div class="ft-node non-family" style="margin-bottom: 1.5rem; text-align: left; min-width: auto; max-width: none; opacity: 0.7; padding: 1rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
             <div style="position: absolute; left: -0.4rem; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: rgba(244,242,237,0.3); border: 2px solid var(--ink);"></div>
             <div class="ft-node-gen" style="color: var(--smoke);">CEO #4 &middot; 2015&ndash;2019 &middot; 4 YEARS</div>
             <div class="ft-node-name" style="font-size: 1rem;">Herv&eacute; Milcent</div>
@@ -666,7 +680,7 @@
           </div>
 
           <!-- Liénard -->
-          <div class="ft-node non-family" style="margin-bottom: 0; text-align: left; min-width: auto; max-width: none; border-left: 3px solid rgba(244,242,237,0.3); padding: 1.2rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
+          <div class="ft-node non-family" style="margin-bottom: 0; text-align: left; min-width: auto; max-width: none; border-left: 3px solid rgba(244,242,237,0.3); padding: 1.2rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">
             <div style="position: absolute; left: -0.6rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--pearl); border: 2px solid var(--ink);"></div>
             <img class="person-photo" src="https://why.lyreco.com/app/uploads/2019/08/gregory-lienard-240x300.jpg" alt="Gregory Li&eacute;nard" loading="lazy" style="border-color: rgba(232, 229, 222, 0.2); width: 48px; height: 48px; margin-bottom: 0.5rem;">
             <div class="ft-node-gen" style="color: var(--pearl);">CEO #5 &middot; 2019&ndash;PRESENT</div>
@@ -873,6 +887,54 @@
 
   <div class="divider"></div>
 
+  <!-- ── FINANCIAL STRENGTH ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label" data-ko="재무 건전성">Financial Position</div>
+      <h2 class="section-title">Selling from <em>strength, not weakness</em></h2>
+      <div class="section-body">
+        <p>Lyreco is private and does not publish consolidated group financials. But the data points that are available paint a clear picture: this family is not in distress. There is <strong style="color: var(--pearl);">no PE involvement, no debt crisis, no activist pressure.</strong> Any divestment of Asian operations is a strategic choice, not a forced sale.</p>
+      </div>
+    </div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">~&euro;2.5B</div>
+        <div class="stat-label">Group Revenue</div>
+        <div class="stat-sub">2023 estimate &middot; 25 countries</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">~12,000</div>
+        <div class="stat-label">Employees</div>
+        <div class="stat-sub">Direct operations worldwide</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Family Owned</div>
+        <div class="stat-sub">No PE &middot; No IPO &middot; No activist</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">&euro;1.4B</div>
+        <div class="stat-label">2008 Valuation</div>
+        <div class="stat-sub">Corporate Express bid (abandoned)</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body">
+        <p>The 2008 episode is instructive: <strong style="color: var(--pearl);">Corporate Express proposed acquiring Lyreco for approximately &euro;1.4 billion (~$2.7B)</strong> as a defensive maneuver against Staples&rsquo; hostile takeover bid. That deal was abandoned when Staples ultimately acquired Corporate Express instead. But it validated Lyreco&rsquo;s significant standalone value &mdash; nearly two decades ago, when the company was smaller than it is today.</p>
+        <p>The family&rsquo;s aggressive acquisition activity since 2018 &mdash; Intersafe/Elacin (&euro;125M+ combined revenue), Staples Solutions (6 countries, ~1,600 employees), Premium Coffee, Groenendijk, Zenith, Shorrock-Trichem &mdash; suggests either strong internal cash generation or access to comfortable debt facilities. These are not the moves of a family under financial pressure.</p>
+      </div>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <h4>The Negotiation Implication</h4>
+      <p>Because the Gaspards are not under financial pressure, they have <strong style="color: var(--pearl);">no urgency to sell</strong>. They can walk away from any deal that doesn&rsquo;t feel right. Price will matter, but it won&rsquo;t be decisive. What will be decisive is whether WEFUN convinces them that the Asian employees, clients, and culture will be <em>better off</em> under new ownership than they would be under continued remote management from Marly.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <figure class="chapter-img" data-animate="fade-up">
     <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1200&q=80" alt="A modern glass corporate building — representing Lyreco Group headquarters near Valenciennes" loading="lazy">
     <figcaption>Lyreco Group headquarters — Marly, near Valenciennes</figcaption>
@@ -935,7 +997,7 @@
         <tr>
           <td>Result</td>
           <td>World's #1 FMCG — $84B revenue</td>
-          <td>Europe's #1 B2B workplace — &euro;3B revenue</td>
+          <td>Europe's #1 B2B workplace — ~&euro;2.5B revenue</td>
         </tr>
       </tbody>
     </table>
@@ -1030,7 +1092,7 @@
 <!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
 <div class="chapter-footer">
   <a href="3-bigeard.html" class="next-chapter-cta">
-    <span class="next-label">Next Chapter</span>
+    <span class="next-label" data-ko="다음 챕터">Next Chapter</span>
     <span class="next-num">Chapter III</span>
     <span class="next-name">The Bigeard Era</span>
     <span class="next-arrow">&rarr;</span>
@@ -1079,7 +1141,7 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         label: 'Operating',
         nodes: [
-          { id: 'lyreco', label: 'Lyreco SAS', sublabel: 'Marly · €65.2M capital · €3B rev', color: '#4A72FF', badge: '€3B', wide: true }
+          { id: 'lyreco', label: 'Lyreco SAS', sublabel: 'Marly · €65.2M capital · ~€2.5B rev', color: '#4A72FF', badge: '~€2.5B', wide: true }
         ]
       },
       {
@@ -1117,7 +1179,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ── Corporate entities ──
     { id: 'corely', label: 'Corely SAS', type: 'holding', icon: '🏛', sublabel: 'Onnaing', detail: 'Family holding company. Sole shareholder of Holding Lyreco France SAS (which in turn is sole shareholder of Lyreco SAS). Capital €25.1M. 2 shareholders, 3 subsidiaries. The "~84%" figure dates from the 2008 Corporate Express deal disclosure — current exact percentage unverifiable since France restricted beneficial ownership (RBE) access on July 31, 2024 (CJEU privacy ruling).', url: 'https://www.societe.com/societe/corely-430306126.html' },
     { id: 'hlf', label: 'Holding Lyreco France', type: 'holding', icon: '🏛', sublabel: '€157M capital', detail: 'Intermediate holding company. Sole shareholder of Lyreco SAS. Its own sole shareholder = Corely. Président = Lyreco SAS (since Apr 2022) — the subsidiary manages the holding, common in French SAS structures. Capital €157M. Est. July 2004. Former PE involvement (Butler Capital Partners 2004–2008). Registered in Marly. Auditor: PwC.', url: 'https://www.societe.com/societe/holding-lyreco-france-477704191.html' },
-    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '€3B', detail: 'Operating company. €65.2M share capital. 25+ country subsidiaries. €3B consolidated revenue. Single shareholder: Holding Lyreco France SAS.', url: 'https://www.lyreco.com/group/' },
+    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '~€2.5B', detail: 'Operating company. €65.2M share capital. 25+ country subsidiaries. ~€2.5B consolidated revenue. Single shareholder: Holding Lyreco France SAS.', url: 'https://www.lyreco.com/group/' },
     { id: 'corely-be', label: 'Corely Belgium', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment vehicle (SPRL). Managed by David Coti since 2015. Invested €15M in CARMAT.' },
     { id: 'bratya', label: 'Bratya SPRL', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment entity. Co-invested €3.6M in CARMAT alongside Corely Belgium.' },
     { id: 'carmat', label: 'CARMAT', type: 'company', icon: '❤️', detail: 'French artificial heart company. Judicially liquidated Oct 14, 2025 (Versailles court). Delisted from Euronext. Gaspard entities invested €15M + €3.6M — almost certainly wiped out.', url: 'https://www.marketscreener.com/news/carmat-says-imminent-liquidation-now-extremely-probable-ce7d5bdbdb88f326' },
@@ -1175,5 +1237,6 @@ document.addEventListener('DOMContentLoaded', function() {
   createNetworkGraph('gaspard-network', nodes, links);
 });
 </script>
+<script src="../js/lang.js"></script>
 </body>
 </html>

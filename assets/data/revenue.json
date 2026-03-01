@@ -28,10 +28,46 @@
     "countries_end": 29
   },
   "lyreco_group": {
-    "annual_revenue": "€3B",
-    "employees": ">10,000",
-    "type": "privately held"
+    "annual_revenue_estimate": "~€2.5B",
+    "annual_revenue_note": "Private company, no published consolidated financials. ~€2.5B per industry estimates (Wikidata, RocketReach). Previously cited as €3B in some sources — the ~€2.5B figure is the more conservative and current estimate.",
+    "employees": "~12,000",
+    "countries_direct": 25,
+    "countries_with_partners": 40,
+    "pe_involvement": "none",
+    "ownership": "100% Gaspard family via Corely SAS",
+    "valuation_2008": { "value": 1.4, "unit": "€B", "context": "Corporate Express proposed acquisition — abandoned when Staples acquired Corporate Express" },
+    "type": "privately held, family-owned since 1926"
   },
+  "lyreco_france": {
+    "source": "Societe.com (subsidiary public filings)",
+    "annual": [
+      { "year": 2022, "revenue": 561.5, "net_profit": null, "employees": 1956, "unit": "€M" },
+      { "year": 2023, "revenue": 583.9, "net_profit": 16.0, "employees": 1956, "unit": "€M" },
+      { "year": 2024, "revenue": 547.5, "net_profit": 14.0, "employees": 1956, "unit": "€M" }
+    ],
+    "note": "~6% revenue decline from 2023 to 2024 reflects post-inflation normalization and secular office products decline, not distress"
+  },
+  "lyreco_uk": {
+    "source": "UK Companies House",
+    "annual": [
+      { "year": 2021, "revenue_approx": 233, "operating_profit": 6.6, "unit": "£M" },
+      { "year": 2022, "revenue": 279.1, "operating_profit": 5.1, "yoy_growth": 0.20, "operating_margin": 0.0182, "unit": "£M" }
+    ],
+    "note": "MD Mike Milward: 1.82% operating margin 'an acceptable return during another challenging economic year.' 2022 top-line boosted ~12% by price inflation."
+  },
+  "lyreco_divestments": [
+    { "year": 2014, "market": "Canada", "buyer": "Novexco", "revenue_at_exit": null, "partner_retained": true, "years_in_market": 23 },
+    { "year": 2018, "market": "Australia", "buyer": "Complete Office Supplies (COS)", "revenue_at_exit": 70, "revenue_unit": "AUD M", "employees_at_exit": 245, "partner_retained": true, "years_in_market": 14 }
+  ],
+  "lyreco_acquisitions": [
+    { "year": 2018, "target": "Intersafe + Elacin", "geography": "NL, BE, FR, DE", "category": "PPE/Safety", "revenue_note": "€125M+ combined" },
+    { "year": 2019, "target": "DeskRight", "geography": "Singapore", "category": "Workplace solutions" },
+    { "year": 2020, "target": "Office Depot Spain (contract)", "geography": "Spain", "category": "Office supplies" },
+    { "year": 2021, "target": "Staples Solutions (Nordic + Central EU)", "geography": "NO, SE, DK, DE, AT, PL", "category": "Office supplies + PPE", "employees_added": 1600 },
+    { "year": 2023, "target": "Premium Coffee", "geography": "DK, FI, SE", "category": "Coffee/Nespresso" },
+    { "year": 2024, "target": "Groenendijk Workwear", "geography": "NL/Benelux", "category": "PPE/Workwear" },
+    { "year": 2025, "target": "Zenith Hygiene + Shorrock-Trichem", "geography": "UK", "category": "Cleaning/Hygiene" }
+  ],
   "lyreco_korea": {
     "revenue_2023": { "value": 26.87, "unit": "₩B", "usd_approx": "$20M" },
     "revenue_2025": { "value": 16, "unit": "€M", "pct_of_asia": 0.19 }

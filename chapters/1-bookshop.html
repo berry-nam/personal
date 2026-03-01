@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="no-referrer">
 <script src="../js/auth.js"></script><script>window.__wlAuth.guardPage();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter I — A Bookshop in Valenciennes | WEFUN × Lyreco</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/components.css">
@@ -97,6 +101,12 @@
     position: relative;
     z-index: 0;
   }
+
+  /* ─── MOBILE: CH1 ─── */
+  @media (max-width: 768px) {
+    .legacy-card { padding: 1.2rem; }
+    .centenary-badge { font-size: 0.78rem; }
+  }
 </style>
 </head>
 <body data-chapter="1">
@@ -119,9 +129,9 @@
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="chapter-hero">
   <div class="chapter-hero__label">Chapter I</div>
-  <h1 class="chapter-hero__title">A Bookshop <em>in Valenciennes</em></h1>
-  <p class="chapter-hero__subtitle">Where a family legacy began — a century ago</p>
-  <div class="chapter-hero__meta">Reading time · ~6 min</div>
+  <h1 class="chapter-hero__title" data-ko="발랑시엔의 <em>서점</em>">A Bookshop <em>in Valenciennes</em></h1>
+  <p class="chapter-hero__subtitle" data-ko="1926년, 한 서점에서 시작된 이야기가 100년 후 ~&euro;2.5B 규모의 유럽 기업이 되었다. 그리고 지금, 그 제국의 일부가 매물로 나왔다.">Where a family legacy began — a century ago</p>
+  <div class="chapter-hero__meta" data-ko="읽기 시간 · ~8분">Reading time · ~6 min</div>
   <div class="chapter-hero__scroll">
     <div class="scroll-indicator">
       <span>Begin</span>
@@ -136,14 +146,14 @@
   <!-- ── THE CITY ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The City</div>
+      <div class="section-label" data-ko="기원">The City</div>
       <h2 class="section-title">Valenciennes</h2>
       <div class="section-body">
         <p>Valenciennes is a city in northern France, in the <a href="https://en.wikipedia.org/wiki/Hauts-de-France" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">Hauts-de-France</a> region near the Belgian border. A place shaped by industrial heritage, coal mining, and a culture of hard work and family. The architecture carries the memory of centuries of commerce. The people carry a stubbornness about quality and loyalty that outsiders sometimes mistake for coldness.</p>
         <p>This is where the Gaspard story begins. Not in Paris. Not in a boardroom. In a modest town where families built things to last, where a handshake still meant something, and where the line between business and family was never drawn at all.</p>
 
         <!-- ── Valenciennes Info Card ── -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; align-items: start;" data-animate="fade-up">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0; align-items: start;" data-animate="fade-up">
           <div style="background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem;">
             <p style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; color: var(--champagne); text-transform: uppercase; margin-bottom: 0.8rem;">Valenciennes at a Glance</p>
             <table style="width: 100%; font-size: 0.95rem; color: var(--smoke); line-height: 1.8;">
@@ -164,7 +174,7 @@
   </section>
 
   <div class="france-map-container" data-animate="fade-up">
-    <svg viewBox="0 0 500 400" style="max-width:400px;width:100%;" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 500 400" style="max-width:100%;width:100%;" xmlns="http://www.w3.org/2000/svg">
       <!-- Simplified Northern France outline -->
       <path d="M80,350 L60,280 L40,220 L60,180 L100,140 L160,100 L220,80 L300,70 L360,80 L420,120 L460,180 L480,250 L460,320 L400,360 L320,380 L240,370 L160,360 Z" fill="rgba(244,242,237,0.03)" stroke="rgba(232,229,222,0.15)" stroke-width="1.5"/>
       <!-- Belgium border region -->
@@ -218,10 +228,10 @@
   <!-- ── FROM STOREFRONT TO EMPIRE ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Transformation</div>
+      <div class="section-label" data-ko="진화">The Transformation</div>
       <h2 class="section-title">From Storefront<br>to <em>Empire</em></h2>
       <div class="section-body">
-        <p>Four generations later, the bookshop became something its founder could never have imagined. A <span class="origin-highlight">€3 billion enterprise</span> operating across <span class="origin-highlight">25 countries</span> with <span class="origin-highlight">10,000+ employees</span>.</p>
+        <p>Four generations later, the bookshop became something its founder could never have imagined. A <span class="origin-highlight">~€2.5 billion enterprise</span> operating across <span class="origin-highlight">25 countries</span> with <span class="origin-highlight">10,000+ employees</span>.</p>
         <p>What started as paper and pens evolved into a full workplace solutions company. The product catalog expanded methodically, each new category building on the trust and distribution network that came before.</p>
       </div>
     </div>
@@ -253,7 +263,7 @@
   <section class="section">
     <div class="stat-grid" data-stagger-group>
       <div class="stat-card" data-stagger-child>
-        <div class="stat-number">€3B</div>
+        <div class="stat-number">~€2.5B</div>
         <div class="stat-label">Annual Revenue</div>
         <div class="stat-sub">Europe's #1 B2B workplace distributor</div>
       </div>
@@ -279,13 +289,13 @@
 
   <div class="atmos-img" data-animate="fade-up">
     <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80" alt="Modern corporate tower — representing Lyreco's transformation into a global enterprise" loading="lazy">
-    <span class="atmos-caption">From a bookshop to a &euro;3 billion enterprise — Lyreco today</span>
+    <span class="atmos-caption">From a bookshop to a ~&euro;2.5 billion enterprise — Lyreco today</span>
   </div>
 
   <!-- ── THE 100TH ANNIVERSARY ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label">The Centenary</div>
+      <div class="section-label" data-ko="100년">The Centenary</div>
       <h2 class="section-title">The 100th <em>Anniversary</em></h2>
       <div class="centenary-badge">100 Years · 1926–2026</div>
       <div class="section-body">
@@ -366,7 +376,7 @@
     <div class="pg-compare-subtitle">Two humble beginnings &mdash; two global empires</div>
     <div class="pg-compare-body" style="margin-top: 1.2rem;">
       <p>In <em>1837</em>, two immigrants in Cincinnati, Ohio &mdash; <strong>William Procter</strong>, a candlemaker from England, and <strong>James Gamble</strong>, a soapmaker from Ireland &mdash; married sisters and decided to start a business together. That candle-and-soap shop became <a href="https://us.pg.com/" target="_blank" rel="noopener" style="color: #5B9BD5; text-decoration: underline; text-decoration-color: rgba(91,155,213,0.4);">Procter &amp; Gamble</a>, today a <strong>~$84 billion</strong> company operating across <strong>~180 countries</strong> with over <strong>107,000 employees</strong> and a brand portfolio touching <strong>5 billion consumers daily</strong>.</p>
-      <p style="margin-top: 0.8rem;">Nearly a century later, in <em>1926</em>, Georges-Gaston Gaspard opened a bookshop in Valenciennes, France. That bookshop became <a href="https://www.lyreco.com/group/" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline; text-decoration-color: rgba(230,57,70,0.4);">Lyreco</a> &mdash; <strong>&euro;3B</strong> in revenue, <strong>25 countries</strong>, <strong>10,000+ employees</strong>, and Europe&rsquo;s largest B2B workplace distributor.</p>
+      <p style="margin-top: 0.8rem;">Nearly a century later, in <em>1926</em>, Georges-Gaston Gaspard opened a bookshop in Valenciennes, France. That bookshop became <a href="https://www.lyreco.com/group/" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline; text-decoration-color: rgba(230,57,70,0.4);">Lyreco</a> &mdash; <strong>~&euro;2.5B</strong> in revenue, <strong>25 countries</strong>, <strong>10,000+ employees</strong>, and Europe&rsquo;s largest B2B workplace distributor.</p>
       <p style="margin-top: 0.8rem;">Both companies started from the <strong>humblest possible origins</strong>. Both grew into global empires through <strong>patient, methodical expansion</strong>, not overnight disruption. And remarkably, both remained rooted in their founding cities: <em>P&amp;G is still headquartered in Cincinnati</em>. <em>Lyreco is still headquartered near Valenciennes</em>, in Marly.</p>
     </div>
 
@@ -393,7 +403,7 @@
         <tr>
           <td>Revenue</td>
           <td><strong>~$84B</strong> (FY 2024)</td>
-          <td><strong>&euro;3B</strong> (FY 2025)</td>
+          <td><strong>~&euro;2.5B</strong> (FY 2025)</td>
         </tr>
         <tr>
           <td>Countries</td>
@@ -459,7 +469,7 @@
 <!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
 <div class="chapter-footer">
   <a href="2-dynasty.html" class="next-chapter-cta">
-    <span class="next-label">Next Chapter</span>
+    <span class="next-label" data-ko="다음 챕터">Next Chapter</span>
     <span class="next-num">Chapter II</span>
     <span class="next-name">The Gaspard Dynasty</span>
     <span class="next-arrow">→</span>
@@ -475,5 +485,6 @@
 <script src="../js/chapters.js"></script>
 <script src="../js/nav.js"></script>
 <script src="../js/scroll-engine.js"></script>
+<script src="../js/lang.js"></script>
 </body>
 </html>

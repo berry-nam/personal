@@ -27,10 +27,25 @@
   --lyreco-red-dim:  rgba(240, 77, 90, 0.22);
   --success:         #5AE890;
 
+  /* ─── OPACITY VARIANTS (for inline style reduction) ─── */
+  --champagne-15:    rgba(212, 184, 122, 0.15);
+  --champagne-08:    rgba(212, 184, 122, 0.08);
+  --champagne-20:    rgba(212, 184, 122, 0.2);
+  --wefun-blue-15:   rgba(91, 138, 255, 0.15);
+  --wefun-blue-08:   rgba(91, 138, 255, 0.08);
+  --lyreco-red-15:   rgba(240, 77, 90, 0.15);
+  --lyreco-red-08:   rgba(240, 77, 90, 0.08);
+  --pg-navy:         #003F87;
+  --pg-blue:         #5B9BD5;
+
+  /* ─── INTERACTION ─── */
+  --lift-hover:      -3px;
+
   /* ─── TYPOGRAPHY ─── */
   --font-display:    'Playfair Display', Georgia, serif;
-  --font-body:       'DM Sans', -apple-system, sans-serif;
+  --font-body:       'DM Sans', 'Noto Sans KR', -apple-system, sans-serif;
   --font-mono:       'JetBrains Mono', monospace;
+  --font-kr:         'Noto Sans KR', -apple-system, sans-serif;
 
   --fs-hero:         clamp(3rem, 7vw, 6rem);
   --fs-chapter-hero: clamp(2.6rem, 5.5vw, 4.5rem);
@@ -104,3 +119,26 @@ body {
 
 a { color: inherit; }
 img { max-width: 100%; display: block; }
+
+/* ─── KOREAN LANGUAGE SUPPORT ─── */
+html[lang="ko"] body {
+  font-family: 'Noto Sans KR', 'DM Sans', -apple-system, sans-serif;
+  word-break: keep-all;
+}
+html[lang="ko"] .section-body,
+html[lang="ko"] .dash-section-sub,
+html[lang="ko"] .signal-read,
+html[lang="ko"] .tl-desc,
+html[lang="ko"] .read-text,
+html[lang="ko"] .card-teaser,
+html[lang="ko"] .deal-pos-stance,
+html[lang="ko"] .chapter-hero__subtitle {
+  word-break: keep-all;
+  line-height: 1.9;
+}
+
+/* ─── GLOBAL MOBILE SAFETY ─── */
+@media (max-width: 768px) {
+  table:not(.compare-table) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  svg:not(.venn-svg) { max-width: 100%; height: auto; }
+}
