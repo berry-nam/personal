@@ -67,6 +67,29 @@
       });
       nav.appendChild(btn);
     }
+
+    // Also create a fixed floating toggle always visible (independent of nav scroll)
+    if (!document.querySelector('.lang-toggle-fixed')) {
+      var fixedBtn = document.createElement('button');
+      fixedBtn.className = 'lang-toggle-btn lang-toggle-fixed';
+      fixedBtn.setAttribute('aria-label', 'Toggle language');
+      fixedBtn.innerHTML = '<span class="lang-en active">EN</span><span class="lang-divider">/</span><span class="lang-kr">KR</span>';
+      fixedBtn.addEventListener('click', function() {
+        setLang(currentLang === 'en' ? 'kr' : 'en');
+      });
+      document.body.appendChild(fixedBtn);
+
+      // Hide fixed toggle when nav is visible (avoid duplicate)
+      var nav = document.querySelector('.hub-nav, .site-nav');
+      if (nav) {
+        var observer = new MutationObserver(function() {
+          var navVisible = nav.classList.contains('visible');
+          fixedBtn.style.opacity = navVisible ? '0' : '';
+          fixedBtn.style.pointerEvents = navVisible ? 'none' : '';
+        });
+        observer.observe(nav, { attributes: true, attributeFilter: ['class'] });
+      }
+    }
   }
 
   // Auto-init
