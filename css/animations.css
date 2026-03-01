@@ -2,8 +2,15 @@
    Animation Helpers
    ═══════════════════════════════════════════════ */
 
-/* No opacity:0 rules. Everything is visible.
-   GSAP handles hide→show via JS only. */
+/* Safety: Force all GSAP-targeted elements visible after 2s.
+   Prevents content from staying invisible if ScrollTrigger fails. */
+[data-stagger-child],
+[data-animate] {
+  animation: gsap-fallback 0s 2s forwards;
+}
+@keyframes gsap-fallback {
+  to { opacity: 1 !important; transform: none !important; }
+}
 
 .parallax-layer { will-change: transform; }
 

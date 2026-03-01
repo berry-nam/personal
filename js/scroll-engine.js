@@ -41,25 +41,25 @@ function initScrollEngine() {
   });
 
   // ─── Staggered Group Reveals ───
+  // Uses gsap.from() with immediateRender:false so elements stay visible
+  // until ScrollTrigger fires. Prevents content stuck at opacity:0.
   document.querySelectorAll('[data-stagger-group]').forEach(function(group) {
     var children = group.querySelectorAll('[data-stagger-child]');
     if (children.length === 0) return;
 
-    gsap.fromTo(children,
-      { y: 40, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: group,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
+    gsap.from(children, {
+      y: 40,
+      opacity: 0,
+      immediateRender: false,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: group,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+    });
   });
 
   // ─── Parallax Layers ───
@@ -134,4 +134,28 @@ function initScrollEngine() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', initScrollEngine);
+// Defer scroll engine until page content is actually visible (after auth gate)
+document.addEventListener('DOMContentLoaded', function() {
+  // If already authenticated, init immediately
+  if (document.body.classList.contains('wl-ok') || document.documentElement.classList.contains('wl-ok')) {
+    initScrollEngine();
+  } else {
+    // Wait for wl-ok class to be added (auth complete)
+    var observer = new MutationObserver(function(mutations) {
+      if (document.body.classList.contains('wl-ok') || document.documentElement.classList.contains('wl-ok')) {
+        observer.disconnect();
+        // Small delay to let layout recalculate after visibility change
+        setTimeout(initScrollEngine, 150);
+      }
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    // Fallback: if no auth gate (e.g. chapter pages with guardPage), init after short delay
+    setTimeout(function() {
+      observer.disconnect();
+      if (document.body.classList.contains('wl-ok') || document.documentElement.classList.contains('wl-ok')) {
+        initScrollEngine();
+      }
+    }, 2000);
+  }
+});

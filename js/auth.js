@@ -27,6 +27,12 @@
   function revealPage() {
     document.documentElement.classList.add('wl-ok');
     if (document.body) document.body.classList.add('wl-ok');
+    // Refresh GSAP ScrollTrigger after layout recalculates
+    setTimeout(function () {
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh(true);
+      }
+    }, 100);
   }
 
   /* ── Gate logic for non-index pages: redirect to index ── */
