@@ -20,7 +20,7 @@ function initNav() {
 
   // ─── Nav Visibility (show after scrolling past hero) ───
   if (nav) {
-    var hero = document.querySelector('.chapter-hero') || document.querySelector('.hub-hero');
+    var hero = document.querySelector('.chapter-hero') || document.querySelector('.hub-hero') || document.querySelector('.dash-header');
     if (hero) {
       var heroBottom = hero.offsetTop + hero.offsetHeight;
       window.addEventListener('scroll', function() {

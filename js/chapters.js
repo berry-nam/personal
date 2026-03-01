@@ -9,7 +9,7 @@ const CHAPTERS = [
     title: 'A Bookshop in Valenciennes',
     subtitle: 'Where a family legacy began — a century ago',
     readTime: '6 min',
-    teaser: 'In 1926, in a small town in northern France, Georges-Gaston Gaspard opened a bookshop. Four generations later, it became a €3 billion empire.',
+    teaser: 'In 1926, in a small town in northern France, Georges-Gaston Gaspard opened a bookshop. Four generations later, it became a ~€2.5 billion empire.',
   },
   {
     num: 2,

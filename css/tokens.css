@@ -27,6 +27,20 @@
   --lyreco-red-dim:  rgba(240, 77, 90, 0.22);
   --success:         #5AE890;
 
+  /* ─── OPACITY VARIANTS (for inline style reduction) ─── */
+  --champagne-15:    rgba(212, 184, 122, 0.15);
+  --champagne-08:    rgba(212, 184, 122, 0.08);
+  --champagne-20:    rgba(212, 184, 122, 0.2);
+  --wefun-blue-15:   rgba(91, 138, 255, 0.15);
+  --wefun-blue-08:   rgba(91, 138, 255, 0.08);
+  --lyreco-red-15:   rgba(240, 77, 90, 0.15);
+  --lyreco-red-08:   rgba(240, 77, 90, 0.08);
+  --pg-navy:         #003F87;
+  --pg-blue:         #5B9BD5;
+
+  /* ─── INTERACTION ─── */
+  --lift-hover:      -3px;
+
   /* ─── TYPOGRAPHY ─── */
   --font-display:    'Playfair Display', Georgia, serif;
   --font-body:       'DM Sans', -apple-system, sans-serif;

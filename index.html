@@ -7,7 +7,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Referrer-Policy" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WEFUN × Lyreco — Strategic Briefing</title>
+<title>WEFUN × Lyreco — Deal Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -38,127 +38,294 @@
 
 <!-- NAV (hidden until scroll) -->
 <nav class="hub-nav" id="mainNav">
-  <a href="index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <a href="index.html" class="nav-brand">WEFUN &times; Lyreco</a>
   <div class="nav-links">
-    <a href="#chapters">Chapters</a>
+    <a href="#deal-status">Status</a>
+    <a href="#next-steps">Next Steps</a>
+    <a href="#chapters">Research</a>
   </div>
 </nav>
 
-<!-- ═══════════════ HERO ═══════════════ -->
-<header class="hub-hero">
-  <div class="conf-badge">Confidential — Internal Use Only</div>
-  <div class="hub-meta">Strategic Acquisition Briefing</div>
-  <h1 class="hub-title">Where <em>Two Worlds</em><br>Converge</h1>
-  <p class="hub-subtitle">WEFUN's acquisition of Lyreco's Asian operations</p>
-  <div class="hub-details">
-    <span><span class="dot"></span>February 26, 2026</span>
-    <span><span class="dot"></span>10:30 AM KST</span>
-    <span><span class="dot"></span>WEFUN HQ, Gangnam</span>
-    <span><span class="dot"></span>First Encounter</span>
-  </div>
-  <div class="hub-scroll-cue">
-    <div class="scroll-indicator">
-      <span>Explore</span>
-      <div class="scroll-line"></div>
+<!-- ═══════════════ DASHBOARD HEADER ═══════════════ -->
+<header class="dash-header">
+  <div class="dash-header__inner">
+    <div class="dash-header__top">
+      <div class="conf-badge">Confidential &mdash; Internal Use Only</div>
+      <div class="dash-header__meta">
+        <span class="dash-meta-item"><span class="dash-dot"></span>Feb 26, 2026</span>
+        <span class="dash-meta-item"><span class="dash-dot"></span>WEFUN HQ, Gangnam</span>
+        <span class="dash-meta-item"><span class="dash-dot status-green"></span>Meeting Complete</span>
+      </div>
+    </div>
+    <h1 class="dash-header__title">WEFUN <span class="dash-x">&times;</span> Lyreco <em>Asia</em></h1>
+    <p class="dash-header__sub">Strategic Acquisition &mdash; Deal Tracker</p>
+
+    <!-- STAT STRIP -->
+    <div class="dash-stats">
+      <div class="dash-stat" data-animate="fade-up">
+        <div class="dash-stat__value">&euro;2.5B</div>
+        <div class="dash-stat__label">Lyreco Group</div>
+        <div class="dash-stat__sub">100% family-owned</div>
+      </div>
+      <div class="dash-stat" data-animate="fade-up">
+        <div class="dash-stat__value">&euro;86M</div>
+        <div class="dash-stat__label">Asia Revenue</div>
+        <div class="dash-stat__sub">5 markets &middot; 655 FTE</div>
+      </div>
+      <div class="dash-stat" data-animate="fade-up">
+        <div class="dash-stat__value">&#8361;143B</div>
+        <div class="dash-stat__label">WEFUN Revenue</div>
+        <div class="dash-stat__sub">IPO target Apr 2026</div>
+      </div>
+      <div class="dash-stat" data-animate="fade-up">
+        <div class="dash-stat__value dash-stat__value--status">NBO</div>
+        <div class="dash-stat__label">Deal Stage</div>
+        <div class="dash-stat__sub">Valuation pending</div>
+      </div>
     </div>
   </div>
 </header>
 
-<!-- ═══════════════ INTRO ═══════════════ -->
-<div class="hub-intro">
-  <p>This briefing is organized as eight chapters — each exploring a different dimension of the meeting on February 26. Read them in order for the full narrative, or dive into any chapter that calls to you.</p>
-</div>
+<!-- ═══════════════ DEAL STATUS ═══════════════ -->
+<section id="deal-status" class="dash-section">
+  <div class="dash-section__inner">
+    <div class="dash-section-label">Deal Status</div>
+    <h2 class="dash-section-title">Meeting Outcomes &mdash; <em>February 26</em></h2>
+    <p class="dash-section-sub">First encounter between WEFUN and Lyreco delegations. Key signals from Helen Riley (M&amp;A) and Eric Bigeard (legacy guardian).</p>
+
+    <!-- DEAL STRUCTURE -->
+    <div class="deal-structure-box" data-animate="fade-up">
+      <div class="deal-structure-header">Deal Structure</div>
+      <div class="deal-structure-grid">
+        <div class="deal-pos">
+          <div class="deal-pos-who">Lyreco</div>
+          <div class="deal-pos-stance">Prefers full acquisition (Phase 1)</div>
+        </div>
+        <div class="deal-pos">
+          <div class="deal-pos-who">WEFUN</div>
+          <div class="deal-pos-stance">Proposed 2-phase; open to full acquisition</div>
+        </div>
+      </div>
+      <div class="deal-quote">
+        <span class="deal-quote-attr">Eric Bigeard:</span> &ldquo;I would do the same if I were you, so I can&rsquo;t say no.&rdquo;
+      </div>
+    </div>
+
+    <!-- INTEREST SIGNALS -->
+    <h3 class="dash-subhead" data-animate="fade-up">What Lyreco Focused On</h3>
+
+    <div class="signal-grid" data-stagger-group>
+      <div class="signal-card" data-stagger-child>
+        <div class="signal-who">Helen</div>
+        <div class="signal-topic">Customer Retention Model</div>
+        <div class="signal-quote">&ldquo;How do you track the number of users?&rdquo;</div>
+        <div class="signal-read">Verifying unit economics &amp; recurring revenue stability. 38-month average contract length impressed. Deeply resonated with rapport-building as KPI.</div>
+      </div>
+      <div class="signal-card" data-stagger-child>
+        <div class="signal-who">Helen</div>
+        <div class="signal-topic">Online + Offline Hybrid</div>
+        <div class="signal-quote">&ldquo;So you really believe in the combination of online plus offline?&rdquo;</div>
+        <div class="signal-read">Lyreco runs same hybrid model. Strategic alignment confirmed. Interest in B2B2E approach and in-house platform.</div>
+      </div>
+      <div class="signal-card" data-stagger-child>
+        <div class="signal-who">Helen</div>
+        <div class="signal-topic">Full Value Chain Platform</div>
+        <div class="signal-quote">&ldquo;Before it was a platform&hellip; you were like the intermediary&hellip; but you were not stocking the products?&rdquo;</div>
+        <div class="signal-read">Exploring WEFUN&rsquo;s evolution from intermediary to full-stack operator. Synergy with Lyreco logistics capabilities.</div>
+      </div>
+      <div class="signal-card" data-stagger-child>
+        <div class="signal-who">Eric</div>
+        <div class="signal-topic">Post-Acquisition Integration</div>
+        <div class="signal-quote">&ldquo;Integrate, integrate, integrate.&rdquo;</div>
+        <div class="signal-read">Strong impression from immediate cross-selling to acquired clients + Pudding&rsquo;s turnaround to OPM ~9%. 21-year CEO resonated with M&amp;A integration discipline.</div>
+      </div>
+      <div class="signal-card" data-stagger-child>
+        <div class="signal-who">Helen</div>
+        <div class="signal-topic">Blue-Collar Expansion</div>
+        <div class="signal-quote">&ldquo;It&rsquo;s the white collar mainly &mdash; you don&rsquo;t serve blue collar?&rdquo;</div>
+        <div class="signal-read">Positive reaction to Q4 blue-collar expansion. TAM enlargement recognized.</div>
+      </div>
+    </div>
+
+    <!-- WEFUN'S STRATEGIC READS -->
+    <h3 class="dash-subhead" data-animate="fade-up">WEFUN&rsquo;s Strategic Reads</h3>
+    <div class="reads-grid" data-stagger-group>
+      <div class="read-item" data-stagger-child>
+        <div class="read-label">Growth Model</div>
+        <div class="read-text">&ldquo;Did you only grow within Europe, or globally?&rdquo; &mdash; Helen confirmed Asia was greenfield + acquisition (e.g. Singapore DeskRight)</div>
+      </div>
+      <div class="read-item" data-stagger-child>
+        <div class="read-label">Origin Story</div>
+        <div class="read-text">&ldquo;What did you start with 100 years ago?&rdquo; &mdash; Printing/supplies business, gradually expanded coverage</div>
+      </div>
+      <div class="read-item" data-stagger-child>
+        <div class="read-label">PB/OEM</div>
+        <div class="read-text">&ldquo;Is it mostly OEM?&rdquo; &mdash; Certain SKUs yes. Paper 50% Lyreco PB, share growing</div>
+      </div>
+      <div class="read-item" data-stagger-child>
+        <div class="read-label">Alignment</div>
+        <div class="read-text">&ldquo;I think we share the same strategy&rdquo; &mdash; B2B focus + customer-centricity as shared DNA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ NEXT STEPS TIMELINE ═══════════════ -->
+<section id="next-steps" class="dash-section dash-section--dark">
+  <div class="dash-section__inner">
+    <div class="dash-section-label">Next Steps</div>
+    <h2 class="dash-section-title">Deal <em>Roadmap</em></h2>
+
+    <div class="timeline-track" data-animate="fade-up">
+      <div class="tl-step tl-step--done">
+        <div class="tl-marker"></div>
+        <div class="tl-content">
+          <div class="tl-date">Feb 26</div>
+          <div class="tl-title">First Meeting</div>
+          <div class="tl-desc">WEFUN HQ, Gangnam. Helen Riley + Eric Bigeard met Joshua Hwang + Jo Hwa-young. Constructive. Both sides confirmed strategic alignment.</div>
+          <div class="tl-owner">Complete</div>
+        </div>
+      </div>
+
+      <div class="tl-step tl-step--active">
+        <div class="tl-marker"></div>
+        <div class="tl-content">
+          <div class="tl-date">Mar 2026</div>
+          <div class="tl-title">NBO + Valuation</div>
+          <div class="tl-desc">Non-binding offer with initial valuation. Deal structure (Phase 1 full vs. Phase 2 staged) to be discussed before submission.</div>
+          <div class="tl-owner">WEFUN</div>
+        </div>
+      </div>
+
+      <div class="tl-step tl-step--upcoming">
+        <div class="tl-marker"></div>
+        <div class="tl-content">
+          <div class="tl-date">TBD</div>
+          <div class="tl-title">Site Visits &amp; Key Personnel Interviews</div>
+          <div class="tl-desc">Lyreco Asia entities. Accepted by Lyreco; minimum staff. Schedule to be confirmed.</div>
+          <div class="tl-owner">Lyreco</div>
+        </div>
+      </div>
+
+      <div class="tl-step tl-step--upcoming">
+        <div class="tl-marker"></div>
+        <div class="tl-content">
+          <div class="tl-date">Post-NBO</div>
+          <div class="tl-title">Data Room</div>
+          <div class="tl-desc">Lyreco to prepare data room. Due diligence phase begins.</div>
+          <div class="tl-owner">Lyreco</div>
+        </div>
+      </div>
+
+      <div class="tl-step tl-step--upcoming">
+        <div class="tl-marker"></div>
+        <div class="tl-content">
+          <div class="tl-date">TBD</div>
+          <div class="tl-title">Deal Structure Confirmation</div>
+          <div class="tl-desc">Phase 1 (full acquisition) vs. Phase 2 (staged) &mdash; to be agreed by both parties before NBO.</div>
+          <div class="tl-owner">Both</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════ CHAPTER GRID ═══════════════ -->
-<section id="chapters">
-  <div class="chapter-grid">
+<section id="chapters" class="dash-section">
+  <div class="dash-section__inner">
+    <div class="dash-section-label">Research &amp; Background</div>
+    <h2 class="dash-section-title">Deep-Dive <em>Chapters</em></h2>
+    <p class="dash-section-sub">Eight chapters covering Lyreco&rsquo;s history, the Gaspard family, divestment playbook, WEFUN&rsquo;s growth story, key people, and the strategic thesis.</p>
 
-    <a href="chapters/1-bookshop.html" class="chapter-card" data-chapter="1">
-      <div class="card-num">Chapter I</div>
-      <div class="card-title">A Bookshop in Valenciennes</div>
-      <div class="card-teaser">In 1926, in a small town in northern France, Georges-Gaston Gaspard opened a bookshop. Four generations later, it became a €3 billion empire.</div>
-      <div class="card-progress">
-        <span class="card-progress-dot dot-unvisited"></span>
-        <span class="card-progress-label">Unread</span>
-      </div>
-    </a>
+    <div class="chapter-grid">
 
-    <a href="chapters/2-dynasty.html" class="chapter-card" data-chapter="2">
-      <div class="card-num">Chapter II</div>
-      <div class="card-title">The Gaspard Dynasty</div>
-      <div class="card-teaser">The Gaspard family controls ~€2.5B Lyreco through Corely SAS. 100% family-owned, no PE pressure. Selling from strength — the 2008 Corporate Express bid valued them at €1.4B.</div>
-      <div class="card-progress">
-        <span class="card-progress-dot dot-unvisited"></span>
-        <span class="card-progress-label">Unread</span>
-      </div>
-    </a>
+      <a href="chapters/1-bookshop.html" class="chapter-card" data-chapter="1">
+        <div class="card-num">Chapter I</div>
+        <div class="card-title">A Bookshop in Valenciennes</div>
+        <div class="card-teaser">1926 founding. Bookshop to ~&euro;2.5B enterprise. The 100-year family legacy.</div>
+        <div class="card-progress">
+          <span class="card-progress-dot dot-unvisited"></span>
+          <span class="card-progress-label">Unread</span>
+        </div>
+      </a>
 
-    <a href="chapters/3-bigeard.html" class="chapter-card" data-chapter="3">
-      <div class="card-num">Chapter III</div>
-      <div class="card-title">The Bigeard Era</div>
-      <div class="card-teaser">Eric Bigeard became CEO at 33 and spent 22 years transforming Lyreco from a French-only operation into a 29-country powerhouse.</div>
-      <div class="card-progress">
-        <span class="card-progress-dot dot-unvisited"></span>
-        <span class="card-progress-label">Unread</span>
-      </div>
-    </a>
+      <a href="chapters/2-dynasty.html" class="chapter-card" data-chapter="2">
+        <div class="card-num">Chapter II</div>
+        <div class="card-title">The Gaspard Dynasty</div>
+        <div class="card-teaser">Corely SAS ownership. ~&euro;2.5B revenue, 100% family-owned, no PE. Financial strength.</div>
+        <div class="card-progress">
+          <span class="card-progress-dot dot-unvisited"></span>
+          <span class="card-progress-label">Unread</span>
+        </div>
+      </a>
 
-    <a href="chapters/4-goes-east.html" class="chapter-card" data-chapter="4">
-      <div class="card-num">Chapter IV</div>
-      <div class="card-title">Lyreco Goes East</div>
-      <div class="card-teaser">Canada (2014), Australia (2018) — now Asia. Lyreco's divestment playbook: exit distant, subscale markets, keep as partner, buy deep in Europe. The full deal track record.</div>
-      <div class="card-progress">
-        <span class="card-progress-dot dot-unvisited"></span>
-        <span class="card-progress-label">Unread</span>
-      </div>
-    </a>
+      <a href="chapters/3-bigeard.html" class="chapter-card" data-chapter="3">
+        <div class="card-num">Chapter III</div>
+        <div class="card-title">The Bigeard Era</div>
+        <div class="card-teaser">CEO at 33. &euro;15M to &euro;2B+ in 22 years. 1 to 29 countries. The builder.</div>
+        <div class="card-progress">
+          <span class="card-progress-dot dot-unvisited"></span>
+          <span class="card-progress-label">Unread</span>
+        </div>
+      </a>
 
-    <a href="chapters/5-christmas-eve.html" class="chapter-card" data-chapter="5">
-      <div class="card-num">Chapter V</div>
-      <div class="card-title">Christmas Eve 2018</div>
-      <div class="card-teaser">Kim Heon incorporated WEFUN on December 24, 2018 with ₩50M. Seven years later: ₩143B revenue, 252 employees, 6 acquisitions.</div>
-      <div class="card-progress">
-        <span class="card-progress-dot dot-unvisited"></span>
-        <span class="card-progress-label">Unread</span>
-      </div>
-    </a>
+      <a href="chapters/4-goes-east.html" class="chapter-card" data-chapter="4">
+        <div class="card-num">Chapter IV</div>
+        <div class="card-title">Lyreco Goes East</div>
+        <div class="card-teaser">Canada (2014), Australia (2018), now Asia. The divestment playbook and deal track record.</div>
+        <div class="card-progress">
+          <span class="card-progress-dot dot-unvisited"></span>
+          <span class="card-progress-label">Unread</span>
+        </div>
+      </a>
 
-    <a href="chapters/6-people.html" class="chapter-card" data-chapter="6">
-      <div class="card-num">Chapter VI</div>
-      <div class="card-title">The People in the Room</div>
-      <div class="card-teaser">Helen Riley: 20-year Lyreco lifer turned M&A director. Eric Bigeard: legendary ex-CEO and guardian of legacy. Know who you're meeting.</div>
-      <div class="card-progress">
-        <span class="card-progress-dot dot-unvisited"></span>
-        <span class="card-progress-label">Unread</span>
-      </div>
-    </a>
+      <a href="chapters/5-christmas-eve.html" class="chapter-card" data-chapter="5">
+        <div class="card-num">Chapter V</div>
+        <div class="card-title">Christmas Eve 2018</div>
+        <div class="card-teaser">WEFUN founded with &#8361;50M. Seven years: &#8361;143B revenue, 6 acquisitions, IPO imminent.</div>
+        <div class="card-progress">
+          <span class="card-progress-dot dot-unvisited"></span>
+          <span class="card-progress-label">Unread</span>
+        </div>
+      </a>
 
-    <a href="chapters/7-convergence.html" class="chapter-card" data-chapter="7">
-      <div class="card-num">Chapter VII</div>
-      <div class="card-title">Convergence</div>
-      <div class="card-teaser">Partner model precedent, GREAT 2026 strategy, Lyreco's financial context, industry-wide rationalization. Two stories converging — with the full strategic picture.</div>
-      <div class="card-progress">
-        <span class="card-progress-dot dot-unvisited"></span>
-        <span class="card-progress-label">Unread</span>
-      </div>
-    </a>
+      <a href="chapters/6-people.html" class="chapter-card" data-chapter="6">
+        <div class="card-num">Chapter VI</div>
+        <div class="card-title">The People in the Room</div>
+        <div class="card-teaser">Helen Riley&rsquo;s 20-year career + recent deals. Eric Bigeard&rsquo;s legacy. Deep profiles.</div>
+        <div class="card-progress">
+          <span class="card-progress-dot dot-unvisited"></span>
+          <span class="card-progress-label">Unread</span>
+        </div>
+      </a>
 
-    <a href="chapters/8-february-26.html" class="chapter-card" data-chapter="8">
-      <div class="card-num">Chapter VIII</div>
-      <div class="card-title">February 26</div>
-      <div class="card-teaser">This is 70% relationship, 30% substance. Every minute of the meeting — planned, rehearsed, and ready.</div>
-      <div class="card-progress">
-        <span class="card-progress-dot dot-unvisited"></span>
-        <span class="card-progress-label">Unread</span>
-      </div>
-    </a>
+      <a href="chapters/7-convergence.html" class="chapter-card" data-chapter="7">
+        <div class="card-num">Chapter VII</div>
+        <div class="card-title">Convergence</div>
+        <div class="card-teaser">Partner model, GREAT 2026 strategy, financial context, industry rationalization.</div>
+        <div class="card-progress">
+          <span class="card-progress-dot dot-unvisited"></span>
+          <span class="card-progress-label">Unread</span>
+        </div>
+      </a>
 
+      <a href="chapters/8-february-26.html" class="chapter-card" data-chapter="8">
+        <div class="card-num">Chapter VIII</div>
+        <div class="card-title">February 26</div>
+        <div class="card-teaser">The meeting playbook. 70% relationship, 30% substance. Minute-by-minute.</div>
+        <div class="card-progress">
+          <span class="card-progress-dot dot-unvisited"></span>
+          <span class="card-progress-label">Unread</span>
+        </div>
+      </a>
+
+    </div>
   </div>
 </section>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <footer class="site-footer">
-  Confidential — Prepared for WEFUN Management — February 2026
+  Confidential &mdash; Prepared for WEFUN Management &mdash; March 2026
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
