@@ -78,6 +78,17 @@
         setLang(currentLang === 'en' ? 'kr' : 'en');
       });
       document.body.appendChild(fixedBtn);
+
+      // Hide fixed toggle when nav is visible (avoid duplicate)
+      var nav = document.querySelector('.hub-nav, .site-nav');
+      if (nav) {
+        var observer = new MutationObserver(function() {
+          var navVisible = nav.classList.contains('visible');
+          fixedBtn.style.opacity = navVisible ? '0' : '';
+          fixedBtn.style.pointerEvents = navVisible ? 'none' : '';
+        });
+        observer.observe(nav, { attributes: true, attributeFilter: ['class'] });
+      }
     }
   }
 

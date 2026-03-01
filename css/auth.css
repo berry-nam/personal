@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════ */
 
 /* ─── SECURITY: Hide all content until authenticated ─── */
-body:not(.wl-ok) > *:not(.auth-gate) {
+body:not(.wl-ok) > *:not(.auth-gate):not(.lang-toggle-fixed) {
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;

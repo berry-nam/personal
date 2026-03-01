@@ -156,12 +156,6 @@
 .lang-toggle-fixed:hover {
   border-color: var(--champagne);
 }
-/* Hide fixed toggle when nav is visible to avoid duplicate */
-.site-nav.visible ~ .lang-toggle-fixed,
-.hub-nav.visible ~ .lang-toggle-fixed {
-  opacity: 0;
-  pointer-events: none;
-}
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
