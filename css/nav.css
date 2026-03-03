@@ -174,5 +174,6 @@ body[data-view="wefun"] .progress-bar {
   .site-nav { padding: 0.8rem 1.2rem; }
   .nav-chapter-indicator { display: none; }
   .hub-nav { padding: 0.8rem 1.2rem; }
-  .hub-nav .nav-links { display: none; }
+  .hub-nav .nav-links { gap: 0.6rem; }
+  .hub-nav .nav-links > a { display: none; }
 }

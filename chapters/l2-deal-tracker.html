@@ -173,6 +173,86 @@
     color: var(--smoke);
     line-height: 1.6;
   }
+
+  /* ─── MOBILE RESPONSIVE ─── */
+  .chapter-content { overflow-x: hidden; }
+
+  .timeline-date,
+  .timeline-title,
+  .timeline-desc {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  @media (max-width: 768px) {
+    /* Meeting card */
+    .meeting-card { padding: 1.5rem; }
+
+    /* Meeting meta — collapse to single column */
+    .meeting-meta { grid-template-columns: 1fr; gap: 1rem; }
+
+    /* Contact grid — single column on mobile */
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-card { padding: 1.2rem; }
+    .contact-card:hover { transform: none; }
+
+    /* Timeline items — tighter spacing */
+    .timeline-date {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Status badges — allow wrapping */
+    .status-badge {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      white-space: nowrap;
+    }
+
+    /* Question list — reduce left padding for counter */
+    .question-list li {
+      padding: 1.2rem 1.2rem 1.2rem 2.8rem;
+    }
+    .question-list li::before {
+      left: 0.8rem;
+      top: 1.2rem;
+    }
+
+    /* Update note — tighter on mobile */
+    .update-note {
+      padding: 1.2rem;
+      font-size: 0.82rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* Extra-small screens */
+    .meeting-card { padding: 1.2rem; }
+    .meeting-meta-item { font-size: 0.92rem; }
+    .meeting-meta-label { font-size: 0.78rem; }
+
+    .contact-card { padding: 1rem; }
+    .contact-name { font-size: 1.1rem; }
+    .contact-role { font-size: 0.78rem; }
+    .contact-note { font-size: 0.92rem; }
+
+    .question-list li {
+      padding: 1rem 1rem 1rem 2.5rem;
+      font-size: 0.95rem;
+    }
+    .question-list li::before {
+      left: 0.6rem;
+      top: 1rem;
+    }
+
+    .update-note {
+      padding: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+  }
 </style>
 <link rel="stylesheet" href="../css/gate.css">
 </head>
