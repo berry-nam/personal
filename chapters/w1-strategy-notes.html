@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buyer's Playbook | WEFUN × Lyreco</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 9 (BUYER'S PLAYBOOK) SPECIFIC ─── */
+  .source-badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    background: rgba(212, 184, 122, 0.15);
+    border: 1px solid rgba(212, 184, 122, 0.25);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 1.2rem;
+  }
+
+  .strategy-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .strategy-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--champagne);
+  }
+  .strategy-card h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--pearl);
+  }
+  .strategy-card p {
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
+  }
+
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: var(--space-block) 0;
+  }
+  .principle-item {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    transition: border-color var(--dur-fast), transform var(--dur-fast);
+  }
+  .principle-item:hover {
+    border-color: rgba(212, 184, 122, 0.25);
+    transform: translateY(-3px);
+  }
+  .principle-item h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--champagne-light);
+  }
+  .principle-item p {
+    font-size: 1.05rem; color: var(--smoke); line-height: 1.7;
+  }
+</style>
+<link rel="stylesheet" href="../css/gate.css">
+</head>
+<body data-audience="wefun" data-slug="w1-strategy-notes" data-chapter="9">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter IX</span>
+    <span class="nav-chapter-title">Buyer's Playbook</span>
+  </div>
+  <div class="nav-controls">
+    <a href="#" class="nav-arrow prev" aria-label="Previous">←</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <a href="#" class="nav-arrow next" aria-label="Next">→</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter IX</div>
+  <h1 class="chapter-hero__title">Buyer's <em>Playbook</em></h1>
+  <p class="chapter-hero__subtitle">Strategic intelligence consolidated from all chapters</p>
+  <div class="chapter-hero__meta">Reading time · ~15 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ── INTRO ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Purpose</div>
+      <h2 class="section-title">One document. <em>Every strategic note.</em></h2>
+      <div class="section-body">
+        <p>This chapter consolidates all negotiation intelligence, strategic talking points, and acquisition coaching that was distributed across the shared briefing chapters. It exists as a single, WEFUN-exclusive reference — the buyer's private playbook for the Lyreco Asia acquisition.</p>
+        <p>Each section is tagged with its source chapter for cross-reference. Read this before any meeting. Return to it after every call.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ── FROM CHAPTER I — A BOOKSHOP IN VALENCIENNES ── -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="source-badge">From Chapter I — A Bookshop in Valenciennes</div>
+      <div class="section-label">"Why This Matters" — Meeting Prep</div>
+      <h2 class="section-title">Know the <em>weight</em> of what you're asking</h2>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>Understanding the Origins</h4>
+      <p>Understanding Lyreco's origins is essential for the February 26 meeting. When you sit across from Eric Bigeard and Helen Riley, you're sitting across from the living memory of this story.</p>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>The People Across the Table</h4>
+      <p>Eric Bigeard spent 22 years building Lyreco from &euro;15M to over &euro;2B. Helen Riley has been at the company for over 20 years. These are not mercenaries evaluating a financial transaction. These are custodians of a family's century of work. Every word you choose, every gesture you make, must acknowledge the weight of what they represent.</p>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <p>When you propose to acquire Lyreco's Asian operations, you are not buying a business unit. You are asking a family to trust you with a piece of their inheritance. Begin from that understanding, and everything else follows.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ── FROM CHAPTER II — THE GASPARD DYNASTY ──── -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="source-badge">From Chapter II — The Gaspard Dynasty</div>
+      <div class="section-label">Negotiation Intelligence</div>
+      <h2 class="section-title">You are negotiating <em>with a family</em></h2>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>Family Governance Is Active, Not Passive</h4>
+      <p>When you negotiate with Lyreco, you are negotiating with the Gaspards. The family is directly involved in operational governance, not merely passive shareholders.</p>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"The question for WEFUN: is the 4th generation ready to let go of both the chair and the throne — at least for Asia?"</div>
+      <div class="quote-attr">Strategic Assessment</div>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <p>The approach must be fundamentally different from a typical acquisition — this is about earning trust from a family that has maintained control for a century.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ── FROM CHAPTER III — THE BIGEARD ERA ──────── -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="source-badge">From Chapter III — The Bigeard Era</div>
+      <div class="section-label">"Win Bigeard" Strategy</div>
+      <h2 class="section-title">Win Bigeard, and <em>the path clears</em></h2>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>Why His Presence Is Extraordinary</h4>
+      <p>Eric Bigeard attending a first meeting with a potential acquirer in Seoul is extraordinary. This is board-level, family-level scrutiny. He is not here for financial due diligence — Helen Riley handles that. He is here to judge character. To assess whether WEFUN's management team is worthy of inheriting what he spent 30 years building. His approval is likely a prerequisite for the deal proceeding. Win Bigeard, and the path clears.</p>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>What He'll Be Evaluating</h4>
+      <p>When he sits across the table from WEFUN, he will be evaluating not just the numbers — but whether the acquiring team has the sophistication to handle a transaction of this magnitude.</p>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"Buy-Side M&A DNA — Why This Matters for WEFUN: Bigeard has experienced the full arc of M&A. He knows what a hostile bid feels like, what a poison pill costs, and what a break-up fee represents."</div>
+      <div class="quote-attr">Strategic Assessment</div>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <p><strong>Succession (HBO) Parallels as Negotiation Context:</strong> Understanding how the Gaspard family governance mirrors (and differs from) the Roy family dynamics provides insight into their decision-making framework. In <em>Succession</em>, selling was the end. For Lyreco Asia, selling could be the beginning — if WEFUN proves it's the right inheritor.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ── FROM CHAPTER IV — LYRECO GOES EAST ──────── -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="source-badge">From Chapter IV — Lyreco Goes East</div>
+      <div class="section-label">Acquisition Thesis & Timing</div>
+      <h2 class="section-title">The asymmetry that makes <em>this deal work</em></h2>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>Lounge Service = WEFUN's Proof of Concept</h4>
+      <p>The fact that Lyreco independently developed a welfare/wellness B2B offering in Korea validates WEFUN's entire thesis. They built "Lounge Service" — a workplace wellness product — without knowing that WEFUN had already built the platform they were trying to build.</p>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"What is peripheral to Lyreco is central to WEFUN. That asymmetry is what makes this deal logical for both sides."</div>
+      <div class="quote-attr">Core Thesis</div>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>Pitch Framing</h4>
+      <p>"Your Asian operations deserve a partner who lives in the market, speaks the language, and has already built the platform you were trying to build. We're not acquiring distressed assets — we're completing the vision you started."</p>
+    </div>
+
+    <div class="principle-grid" data-animate="fade-up">
+      <div class="principle-item">
+        <h4>Peripheral vs. Central</h4>
+        <p>Asia is a non-core region for Lyreco's European-focused strategy. For WEFUN, it's the entire addressable market. That mismatch creates value for both sides.</p>
+      </div>
+      <div class="principle-item">
+        <h4>Validation, Not Speculation</h4>
+        <p>Lyreco already invested in building a welfare product in Korea. WEFUN isn't pitching a theory — it's pointing to Lyreco's own experiments as proof of convergence.</p>
+      </div>
+      <div class="principle-item">
+        <h4>Completing the Vision</h4>
+        <p>Frame the acquisition as continuation, not disruption. WEFUN picks up where Lyreco's Asian ambitions left off — with a platform that's already at scale.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ── FROM CHAPTER V — CHRISTMAS EVE 2018 ─────── -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="source-badge">From Chapter V — Christmas Eve 2018</div>
+      <div class="section-label">Talking Points & Coaching</div>
+      <h2 class="section-title">Your culture is <em>your proof point</em></h2>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>The Employee Culture Question</h4>
+      <p>This matters immensely for the Lyreco conversation: when Helen Riley and Eric Bigeard evaluate whether WEFUN will treat Lyreco's 700 Asian employees well, WEFUN's own employee culture is the proof point.</p>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <p>WEFUN's employee satisfaction data (Blind reviews, unlimited PTO policy) should be highlighted as evidence of cultural alignment with Lyreco's employee-first PERA values.</p>
+    </div>
+
+    <div class="principle-grid" data-animate="fade-up">
+      <div class="principle-item">
+        <h4>Blind Reviews</h4>
+        <p>Anonymous employee satisfaction scores from Blind provide third-party validation that WEFUN's culture claims are real — not corporate PR.</p>
+      </div>
+      <div class="principle-item">
+        <h4>Unlimited PTO</h4>
+        <p>A tangible, concrete policy that signals WEFUN trusts its employees. This resonates directly with Lyreco's "Respect" pillar in the PERA framework.</p>
+      </div>
+      <div class="principle-item">
+        <h4>PERA Alignment</h4>
+        <p>Map every WEFUN culture proof point to Lyreco's Passion, Excellence, Respect, Agility framework. Speak their language back to them.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ── FROM CHAPTER VII — CONVERGENCE ──────────── -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="source-badge">From Chapter VII — Convergence</div>
+      <div class="section-label">IPO Narrative & Cross-Sell Strategy</div>
+      <h2 class="section-title">From Korean platform to <em>Asia-wide ecosystem</em></h2>
+    </div>
+
+    <div class="strategy-card" data-animate="fade-up">
+      <h4>Cross-Sell Mechanics</h4>
+      <p>WEFUN's 9,400+ clients get access to Lyreco's full catalog. Lyreco's MNC clients discover WEFUN's welfare platform. The same buyer — the 총무팀 (General Affairs team) — purchases both product lines. One invoice. One platform. Everything the office needs.</p>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"This transforms the IPO narrative from 'Korean platform' to 'Asia-wide ecosystem.'"</div>
+      <div class="quote-attr">IPO Thesis</div>
+    </div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">18%</div>
+        <div class="stat-label">Current Cross-Sell</div>
+        <div class="stat-sub">Today's baseline</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">50%</div>
+        <div class="stat-label">Target Cross-Sell</div>
+        <div class="stat-sub">Post-acquisition goal</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">9,400+</div>
+        <div class="stat-label">WEFUN Clients</div>
+        <div class="stat-sub">Immediate Lyreco catalog access</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">5</div>
+        <div class="stat-label">Asian Markets</div>
+        <div class="stat-sub">Korea + 4 Lyreco operations</div>
+      </div>
+    </div>
+
+    <div class="insight-block" data-animate="fade-up">
+      <p>Current cross-sell ratio: 18% &rarr; 50% target. The upside is enormous and immediate. This single metric — when backed by the shared-buyer logic of the 총무팀 — is the most compelling financial argument in the entire deal thesis.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CONSOLIDATED PRINCIPLES ── -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Consolidated</div>
+      <h2 class="section-title">The governing <em>principles</em></h2>
+      <div class="section-body">
+        <p>Across every chapter, the same strategic principles emerge repeatedly. These are the non-negotiable foundations of WEFUN's approach to the Lyreco Asia acquisition.</p>
+      </div>
+    </div>
+
+    <div class="card-grid" data-stagger-group>
+      <div class="play-card" data-stagger-child>
+        <div class="play-title">Respect the Legacy</div>
+        <div class="play-desc">You are asking a 100-year-old family to trust you with a piece of their inheritance. Every interaction must acknowledge the emotional weight of what Lyreco represents to the Gaspards.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-title">Win Bigeard First</div>
+        <div class="play-desc">His approval is the prerequisite. He is evaluating character, not spreadsheets. Demonstrate sophistication, humility, and genuine respect for what he built.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-title">Lead with Asymmetry</div>
+        <div class="play-desc">What is peripheral to Lyreco is central to WEFUN. Frame the deal as mutual benefit — not as WEFUN extracting value from a distressed seller.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-title">Culture as Proof</div>
+        <div class="play-desc">WEFUN's employee satisfaction data, unlimited PTO, and acquisition track record are the evidence that Lyreco's 700 Asian employees will be treated with respect.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-title">Continuation, Not Disruption</div>
+        <div class="play-desc">You are completing the vision Lyreco started. The pitch is stewardship and acceleration — not takeover and restructuring.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-title">The IPO Transformation</div>
+        <div class="play-desc">This deal transforms WEFUN's narrative from "Korean platform" to "Asia-wide ecosystem." The cross-sell thesis (18% to 50%) is the financial engine. The story is the multiplier.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CLOSING ── -->
+  <section class="closing">
+    <div data-animate="fade-up">
+      <div class="section-label section-label--center">The Bottom Line</div>
+      <div class="closing-title">This is not a financial transaction.<br>This is an act of <em>trust.</em></div>
+      <div class="closing-body">
+        <p>Every piece of strategic intelligence in this playbook points to the same conclusion: the Lyreco Asia acquisition will be won or lost on trust, not on price. The Gaspard family, Eric Bigeard, and Helen Riley must believe — viscerally, not intellectually — that WEFUN is the right steward for what they built.</p>
+        <p>Return to this document before every interaction. Let these principles govern every word, every gesture, every slide. The deal is won in the details.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  Confidential — 2026
+</footer>
+
+<script src="../js/auth.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/lang.js"></script>
+<script src="../js/scroll-engine.js"></script>
+</body>
+</html>

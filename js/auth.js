@@ -1,104 +1,163 @@
 /* ═══════════════════════════════════════════════
-   WEFUN × Lyreco — Client-Side Auth Gate
+   Authentication — Password Gate + Audience Routing
    ═══════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  var HASH = 'caf90792cc5040c9a0a5258f552216a37be3201d383e83f93c6dc7918764194f';
-  var AUTH_KEY = 'wl-auth';
+  // Computed SHA-256 hashes (populated on init)
+  var REAL_HASHES = {};
 
-  /* ── SHA-256 helper (Web Crypto API) ── */
-  function sha256(str) {
+  async function sha256(str) {
     var buf = new TextEncoder().encode(str);
-    return crypto.subtle.digest('SHA-256', buf).then(function (hash) {
-      return Array.from(new Uint8Array(hash))
-        .map(function (b) { return b.toString(16).padStart(2, '0'); })
-        .join('');
-    });
+    var hash = await crypto.subtle.digest('SHA-256', buf);
+    var arr = Array.from(new Uint8Array(hash));
+    return arr.map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
   }
 
-  /* ── Check if already authenticated ── */
-  function isAuthed() {
-    return sessionStorage.getItem(AUTH_KEY) === '1';
+  // Pre-compute hashes
+  async function initHashes() {
+    REAL_HASHES.lyreco = await sha256('100lyreco260226');
+    REAL_HASHES.wefun = await sha256('1224wefun260226');
   }
 
-  /* ── Reveal page content (add .wl-ok to body) ── */
-  function revealPage() {
-    document.documentElement.classList.add('wl-ok');
-    if (document.body) document.body.classList.add('wl-ok');
-    // Refresh GSAP ScrollTrigger after layout recalculates
-    setTimeout(function () {
-      if (typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.refresh(true);
-      }
-    }, 100);
+  async function checkPassword(input) {
+    var hash = await sha256(input);
+    if (hash === REAL_HASHES.lyreco) return 'lyreco';
+    if (hash === REAL_HASHES.wefun) return 'wefun';
+    return null;
   }
 
-  /* ── Gate logic for non-index pages: redirect to index ── */
-  function guardPage() {
-    if (!isAuthed()) {
-      // Determine correct relative path to index
-      var path = window.location.pathname;
-      if (path.indexOf('/chapters/') !== -1) {
-        window.location.replace('../index.html');
+  function getStoredAudience() {
+    try {
+      return localStorage.getItem('briefing-audience');
+    } catch (e) { return null; }
+  }
+
+  function setStoredAudience(audience) {
+    try {
+      localStorage.setItem('briefing-audience', audience);
+    } catch (e) { /* localStorage unavailable */ }
+  }
+
+  function logout() {
+    try {
+      localStorage.removeItem('briefing-audience');
+    } catch (e) { /* */ }
+    window.location.reload();
+  }
+
+  function applyAudienceView(audience) {
+    window.AUDIENCE = audience;
+    document.body.setAttribute('data-view', audience);
+
+    // Update audience badge if present
+    var badge = document.getElementById('audienceBadge');
+    if (badge) {
+      badge.textContent = audience === 'lyreco' ? 'Lyreco' : 'WeFun';
+    }
+
+    // Update nav brand ordering
+    var brand = document.querySelector('.nav-brand');
+    if (brand && !brand.dataset.brandSet) {
+      brand.textContent = audience === 'lyreco' ? 'Lyreco × WeFun' : 'WeFun × Lyreco';
+      brand.dataset.brandSet = 'true';
+    }
+
+    // Update footer
+    var footer = document.querySelector('.site-footer');
+    if (footer) {
+      var label = audience === 'lyreco' ? 'Lyreco' : 'WeFun';
+      footer.textContent = 'Confidential — Prepared for ' + label + ' Management — 2026';
+    }
+  }
+
+  function showGate() {
+    var overlay = document.createElement('div');
+    overlay.className = 'gate-overlay';
+    overlay.innerHTML =
+      '<div class="gate-badge">Confidential</div>' +
+      '<div class="gate-title">Strategic <em>Briefing</em></div>' +
+      '<div class="gate-subtitle">Lyreco × WeFun</div>' +
+      '<input type="password" class="gate-input" placeholder="Enter access code" autocomplete="off" autofocus>';
+
+    document.body.appendChild(overlay);
+
+    var input = overlay.querySelector('.gate-input');
+
+    // Focus after a tick (for autofocus)
+    setTimeout(function () { input.focus(); }, 100);
+
+    input.addEventListener('keydown', async function (e) {
+      if (e.key !== 'Enter') return;
+      var val = input.value.trim();
+      if (!val) return;
+
+      var audience = await checkPassword(val);
+      if (audience) {
+        setStoredAudience(audience);
+        applyAudienceView(audience);
+        overlay.classList.add('fade-out');
+        setTimeout(function () {
+          overlay.remove();
+          // Dispatch event for hub to render
+          window.dispatchEvent(new CustomEvent('audience-ready', { detail: { audience: audience } }));
+        }, 600);
       } else {
-        window.location.replace('index.html');
+        input.classList.add('shake');
+        input.value = '';
+        setTimeout(function () { input.classList.remove('shake'); }, 500);
       }
-      // Halt script execution while redirecting
-      throw new Error('auth-redirect');
-    }
-    revealPage();
-  }
-
-  /* ── Gate logic for index page: show overlay ── */
-  function initGate() {
-    if (isAuthed()) {
-      var gate = document.getElementById('authGate');
-      if (gate) gate.classList.add('auth-hidden');
-      revealPage();
-      return;
-    }
-
-    var gate = document.getElementById('authGate');
-    var input = document.getElementById('authInput');
-    var btn = document.getElementById('authBtn');
-    var errMsg = document.getElementById('authError');
-
-    if (!gate || !input) return;
-
-    function attempt() {
-      var pw = input.value;
-      if (!pw) return;
-
-      sha256(pw).then(function (digest) {
-        if (digest === HASH) {
-          sessionStorage.setItem(AUTH_KEY, '1');
-          revealPage();
-          gate.classList.add('auth-fade-out');
-          setTimeout(function () { gate.classList.add('auth-hidden'); }, 500);
-        } else {
-          input.classList.add('auth-error');
-          errMsg.classList.add('visible');
-          errMsg.textContent = 'Incorrect password';
-          setTimeout(function () { input.classList.remove('auth-error'); }, 500);
-        }
-      });
-    }
-
-    btn.addEventListener('click', attempt);
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') attempt();
-    });
-    input.addEventListener('input', function () {
-      errMsg.classList.remove('visible');
     });
   }
 
-  /* ── Expose for use ── */
-  window.__wlAuth = {
-    initGate: initGate,
-    guardPage: guardPage,
-    isAuthed: isAuthed
-  };
+  function isHubPage() {
+    return document.body.dataset.chapter === '0' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
+  }
+
+  async function init() {
+    await initHashes();
+
+    var storedAudience = getStoredAudience();
+    var bodyAudience = document.body.dataset.audience;
+
+    if (isHubPage()) {
+      // Hub page: gate if no audience stored
+      if (storedAudience) {
+        applyAudienceView(storedAudience);
+        window.dispatchEvent(new CustomEvent('audience-ready', { detail: { audience: storedAudience } }));
+      } else {
+        showGate();
+      }
+    } else {
+      // Chapter page: verify access
+      if (!storedAudience) {
+        // Not logged in — redirect to hub
+        window.location.href = '../index.html';
+        return;
+      }
+
+      applyAudienceView(storedAudience);
+
+      // Check if this chapter is accessible to this audience
+      if (bodyAudience && bodyAudience !== 'shared' && bodyAudience !== storedAudience) {
+        // Unauthorized for this chapter
+        window.location.href = '../index.html';
+        return;
+      }
+
+      window.dispatchEvent(new CustomEvent('audience-ready', { detail: { audience: storedAudience } }));
+    }
+  }
+
+  // Expose globals
+  window.logout = logout;
+  window.AUDIENCE = getStoredAudience();
+
+  // Init when DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();

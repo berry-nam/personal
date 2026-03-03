@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter IX — Deal Milestones | Lyreco × WeFun</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── CHAPTER 9 SPECIFIC — DEAL TRACKER ─── */
+  .meeting-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s;
+  }
+  .meeting-card:hover { border-color: rgba(212, 184, 122, 0.35); }
+  .meeting-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--champagne);
+  }
+
+  .meeting-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .meeting-meta-item {
+    font-size: 1.0rem;
+    color: var(--smoke);
+    line-height: 1.6;
+  }
+  .meeting-meta-label {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 0.3rem;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .status-badge--completed {
+    background: rgba(90, 232, 144, 0.12);
+    color: var(--success);
+    border: 1px solid rgba(90, 232, 144, 0.25);
+  }
+  .status-badge--completed::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+  }
+  .status-badge--projected {
+    background: rgba(212, 184, 122, 0.12);
+    color: var(--champagne);
+    border: 1px solid rgba(212, 184, 122, 0.25);
+  }
+  .status-badge--projected::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--champagne);
+    animation: pulse 1.5s infinite;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: var(--space-block) 0;
+  }
+  .contact-card {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    transition: border-color 0.4s, transform 0.4s;
+  }
+  .contact-card:hover {
+    border-color: rgba(212, 184, 122, 0.3);
+    transform: translateY(-3px);
+  }
+  .contact-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .contact-role {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 0.6rem;
+  }
+  .contact-note {
+    font-size: 1.0rem;
+    color: var(--smoke);
+    line-height: 1.6;
+  }
+
+  .question-list {
+    list-style: none;
+    counter-reset: question;
+    margin: var(--space-block) 0;
+  }
+  .question-list li {
+    counter-increment: question;
+    position: relative;
+    padding: 1.5rem 1.5rem 1.5rem 3.5rem;
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-small);
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    color: var(--smoke);
+    line-height: 1.7;
+    transition: border-color 0.3s;
+  }
+  .question-list li:hover {
+    border-color: rgba(212, 184, 122, 0.25);
+  }
+  .question-list li::before {
+    content: counter(question);
+    position: absolute;
+    left: 1.2rem;
+    top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--champagne);
+  }
+
+  .update-note {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 1.5rem;
+    background: rgba(212, 184, 122, 0.06);
+    border: 1px solid rgba(212, 184, 122, 0.12);
+    border-radius: var(--radius-small);
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--smoke);
+    line-height: 1.6;
+  }
+</style>
+<link rel="stylesheet" href="../css/gate.css">
+</head>
+<body data-audience="lyreco" data-slug="l2-deal-tracker" data-chapter="9">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">Lyreco &times; WeFun</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter IX</span>
+    <span class="nav-chapter-title">Deal Milestones</span>
+  </div>
+  <div class="nav-controls">
+    <a href="8-february-26.html" class="nav-arrow prev" aria-label="Previous">&larr;</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <span class="nav-arrow next" style="visibility: hidden;" aria-hidden="true">&rarr;</span>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter IX</div>
+  <h1 class="chapter-hero__title">Deal <em>Milestones</em></h1>
+  <p class="chapter-hero__subtitle">Timeline, contacts, and next steps</p>
+  <div class="chapter-hero__meta">Reading time &middot; ~5 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ══════════════════════════════════════
+       1. TIMELINE
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Timeline</div>
+
+      <div data-lang="en">
+        <h2 class="section-title">Deal <em>Timeline</em></h2>
+        <div class="section-body">
+          <p>Key milestones from first contact through projected closing. This timeline will be updated as the process advances.</p>
+        </div>
+      </div>
+      <div data-lang="kr">
+        <h2 class="section-title">딜 <em>타임라인</em></h2>
+        <div class="section-body">
+          <p>첫 접촉부터 예상 마감까지의 주요 마일스톤입니다. 이 타임라인은 프로세스 진행에 따라 업데이트됩니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline" data-stagger-group>
+
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">Late 2025</div>
+        <div data-lang="en">
+          <div class="timeline-title">Initial Exploratory Conversations</div>
+          <div class="timeline-desc">Preliminary discussions between WeFun and Lyreco to assess mutual interest and strategic alignment for a potential transaction involving Lyreco's Asian operations.</div>
+        </div>
+        <div data-lang="kr">
+          <div class="timeline-title">초기 탐색적 대화</div>
+          <div class="timeline-desc">Lyreco 아시아 사업부 관련 잠재적 거래에 대한 상호 관심과 전략적 적합성을 평가하기 위한 WeFun과 Lyreco 간의 예비 논의.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">February 26, 2026</div>
+        <div data-lang="en">
+          <div class="timeline-title">First Formal Meeting</div>
+          <div class="timeline-desc">WEFUN HQ, Gangnam, 10:30 AM KST. Relationship-building and strategic alignment session with Lyreco's M&A Director and Board Advisor.</div>
+        </div>
+        <div data-lang="kr">
+          <div class="timeline-title">첫 공식 미팅</div>
+          <div class="timeline-desc">위펀 본사, 강남, 오전 10시 30분 (KST). Lyreco M&A 디렉터 및 이사회 자문위원과의 관계 구축 및 전략적 정렬 세션.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">March &ndash; April 2026</div>
+        <div data-lang="en">
+          <div class="timeline-title">Follow-Up Discussions &amp; Preliminary Due Diligence</div>
+          <div class="timeline-desc">Continued dialogue to deepen understanding of both organizations. Exchange of preliminary financial and operational information under NDA.</div>
+        </div>
+        <div data-lang="kr">
+          <div class="timeline-title">후속 논의 및 예비 실사</div>
+          <div class="timeline-desc">양 조직에 대한 이해를 심화하기 위한 지속적인 대화. NDA 하에 예비 재무 및 운영 정보 교환.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">Q2 2026 <span class="status-badge status-badge--projected">Projected</span></div>
+        <div data-lang="en">
+          <div class="timeline-title">Formal Due Diligence Phase</div>
+          <div class="timeline-desc">Comprehensive review of financial statements, legal structure, employee arrangements, technology infrastructure, and regulatory requirements across all five Asian markets.</div>
+        </div>
+        <div data-lang="kr">
+          <div class="timeline-title">공식 실사 단계 (예정)</div>
+          <div class="timeline-desc">5개 아시아 시장 전반에 걸친 재무제표, 법적 구조, 직원 계약, 기술 인프라 및 규제 요건에 대한 종합 검토.</div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">Q3 &ndash; Q4 2026 <span class="status-badge status-badge--projected">Projected</span></div>
+        <div data-lang="en">
+          <div class="timeline-title">Definitive Agreement &amp; Closing</div>
+          <div class="timeline-desc">Negotiation and execution of the definitive purchase agreement. Regulatory filings and approvals. Transaction closing and transition planning activation.</div>
+        </div>
+        <div data-lang="kr">
+          <div class="timeline-title">최종 계약 및 거래 완료 (예정)</div>
+          <div class="timeline-desc">최종 매입 계약의 협상 및 체결. 규제 신고 및 승인. 거래 완료 및 전환 계획 실행.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       2. MEETING LOG
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Meeting Log</div>
+
+      <div data-lang="en">
+        <h2 class="section-title">Meeting <em>Record</em></h2>
+      </div>
+      <div data-lang="kr">
+        <h2 class="section-title">미팅 <em>기록</em></h2>
+      </div>
+    </div>
+
+    <div class="meeting-card" data-animate="fade-up">
+      <div data-lang="en">
+        <div class="meeting-meta">
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">Date</div>
+            February 26, 2026
+          </div>
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">Location</div>
+            WEFUN HQ, Gangnam-gu, Seoul
+          </div>
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">Status</div>
+            <span class="status-badge status-badge--completed">Completed</span>
+          </div>
+        </div>
+        <div class="meeting-meta">
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">WeFun Attendees</div>
+            Kim Heon (CEO), key management team
+          </div>
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">Lyreco Attendees</div>
+            Helen Riley (M&amp;A Director), Eric Bigeard (former CEO, Board Advisor)
+          </div>
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">Format</div>
+            First encounter &mdash; relationship building and strategic alignment
+          </div>
+        </div>
+      </div>
+      <div data-lang="kr">
+        <div class="meeting-meta">
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">날짜</div>
+            2026년 2월 26일
+          </div>
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">장소</div>
+            위펀 본사, 서울특별시 강남구
+          </div>
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">상태</div>
+            <span class="status-badge status-badge--completed">완료</span>
+          </div>
+        </div>
+        <div class="meeting-meta">
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">위펀 참석자</div>
+            김헌 (CEO), 주요 경영진
+          </div>
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">Lyreco 참석자</div>
+            Helen Riley (M&amp;A 디렉터), Eric Bigeard (전 CEO, 이사회 자문위원)
+          </div>
+          <div class="meeting-meta-item">
+            <div class="meeting-meta-label">형식</div>
+            첫 만남 &mdash; 관계 구축 및 전략적 정렬
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="update-note" data-animate="fade-up">
+      <div data-lang="en">This section will be updated as subsequent meetings occur.</div>
+      <div data-lang="kr">이 섹션은 후속 미팅이 진행됨에 따라 업데이트됩니다.</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       3. KEY CONTACTS — WEFUN TEAM
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Key Contacts</div>
+
+      <div data-lang="en">
+        <h2 class="section-title">WeFun <em>Team</em></h2>
+      </div>
+      <div data-lang="kr">
+        <h2 class="section-title">위펀 <em>팀</em></h2>
+      </div>
+    </div>
+
+    <div class="contact-grid" data-stagger-group>
+      <div class="contact-card" data-stagger-child>
+        <div class="contact-role">CEO &amp; Founder</div>
+        <div data-lang="en">
+          <div class="contact-name">Kim Heon</div>
+          <div class="contact-note">Primary point of contact for all deal-related communications.</div>
+        </div>
+        <div data-lang="kr">
+          <div class="contact-name">김헌</div>
+          <div class="contact-note">모든 딜 관련 커뮤니케이션의 주요 연락 담당자.</div>
+        </div>
+      </div>
+
+      <div class="contact-card" data-stagger-child>
+        <div class="contact-role">Management Team</div>
+        <div data-lang="en">
+          <div class="contact-name">Key Management Members</div>
+          <div class="contact-note">To be introduced during due diligence phase. Roles span operations, finance, and technology.</div>
+        </div>
+        <div data-lang="kr">
+          <div class="contact-name">주요 경영진</div>
+          <div class="contact-note">실사 단계에서 소개 예정. 운영, 재무, 기술 분야를 포괄합니다.</div>
+        </div>
+      </div>
+
+      <div class="contact-card" data-stagger-child>
+        <div class="contact-role">Advisory</div>
+        <div data-lang="en">
+          <div class="contact-name">Advisory Contacts</div>
+          <div class="contact-note">Available upon request. External legal and financial advisors to be confirmed.</div>
+        </div>
+        <div data-lang="kr">
+          <div class="contact-name">자문 연락처</div>
+          <div class="contact-note">요청 시 제공 가능. 외부 법률 및 재무 자문사 확정 예정.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       4. OUTSTANDING QUESTIONS
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Outstanding Questions</div>
+
+      <div data-lang="en">
+        <h2 class="section-title">Open <em>Items</em></h2>
+        <div class="section-body">
+          <p>Key questions to be addressed during the due diligence process. These will be tracked and resolved as the deal progresses.</p>
+        </div>
+      </div>
+      <div data-lang="kr">
+        <h2 class="section-title">미결 <em>사항</em></h2>
+        <div class="section-body">
+          <p>실사 과정에서 다루어야 할 핵심 질문들입니다. 딜 진행에 따라 추적 및 해결될 예정입니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <div data-lang="en">
+      <ol class="question-list" data-stagger-group>
+        <li data-stagger-child>Detailed financial projections for Asian operations post-integration</li>
+        <li data-stagger-child>Employee retention and transition planning framework</li>
+        <li data-stagger-child>Brand strategy: Lounge Service evolution timeline</li>
+        <li data-stagger-child>Regulatory approvals required across 5 Asian markets</li>
+        <li data-stagger-child>Technology platform integration roadmap</li>
+      </ol>
+    </div>
+    <div data-lang="kr">
+      <ol class="question-list" data-stagger-group>
+        <li data-stagger-child>통합 후 아시아 사업부 상세 재무 전망</li>
+        <li data-stagger-child>직원 유지 및 전환 계획 프레임워크</li>
+        <li data-stagger-child>브랜드 전략: 라운지 서비스 진화 타임라인</li>
+        <li data-stagger-child>5개 아시아 시장에 필요한 규제 승인</li>
+        <li data-stagger-child>기술 플랫폼 통합 로드맵</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       5. NEXT STEPS
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Next Steps</div>
+
+      <div data-lang="en">
+        <h2 class="section-title">Immediate <em>Actions</em></h2>
+      </div>
+      <div data-lang="kr">
+        <h2 class="section-title">즉시 <em>조치 사항</em></h2>
+      </div>
+    </div>
+
+    <div data-lang="en">
+      <div class="card-grid" data-stagger-group>
+        <div class="play-card" data-stagger-child>
+          <div class="play-title">Strategic Fit Assessment</div>
+          <div class="play-desc">Complete preliminary assessment of strategic fit between WeFun's platform ecosystem and Lyreco's Asian distribution infrastructure.</div>
+        </div>
+        <div class="play-card" data-stagger-child>
+          <div class="play-title">Follow-Up Meeting</div>
+          <div class="play-desc">Schedule follow-up meeting for detailed operational review covering financial performance, technology stack, and integration framework.</div>
+        </div>
+        <div class="play-card" data-stagger-child>
+          <div class="play-title">Financial Information Exchange</div>
+          <div class="play-desc">Exchange preliminary financial information under NDA. Establish data room protocols and access levels for both parties.</div>
+        </div>
+        <div class="play-card" data-stagger-child>
+          <div class="play-title">Joint Working Group</div>
+          <div class="play-desc">Establish joint working group for due diligence coordination. Define workstreams, assign leads, and set initial milestone schedule.</div>
+        </div>
+      </div>
+    </div>
+    <div data-lang="kr">
+      <div class="card-grid" data-stagger-group>
+        <div class="play-card" data-stagger-child>
+          <div class="play-title">전략적 적합성 평가</div>
+          <div class="play-desc">위펀의 플랫폼 생태계와 Lyreco 아시아 유통 인프라 간의 전략적 적합성에 대한 예비 평가를 완료합니다.</div>
+        </div>
+        <div class="play-card" data-stagger-child>
+          <div class="play-title">후속 미팅</div>
+          <div class="play-desc">재무 성과, 기술 스택, 통합 프레임워크를 다루는 상세 운영 검토를 위한 후속 미팅을 예약합니다.</div>
+        </div>
+        <div class="play-card" data-stagger-child>
+          <div class="play-title">재무 정보 교환</div>
+          <div class="play-desc">NDA 하에 예비 재무 정보를 교환합니다. 양측의 데이터룸 프로토콜 및 접근 수준을 설정합니다.</div>
+        </div>
+        <div class="play-card" data-stagger-child>
+          <div class="play-title">공동 워킹 그룹</div>
+          <div class="play-desc">실사 조율을 위한 공동 워킹 그룹을 구성합니다. 워크스트림 정의, 리드 배정, 초기 마일스톤 일정을 설정합니다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       FOOTER NOTE
+       ══════════════════════════════════════ -->
+  <section class="section" style="padding-bottom: 4rem;">
+    <div class="update-note" data-animate="fade-up">
+      <div data-lang="en">This document is updated as the partnership process progresses. Last updated: February 2026.</div>
+      <div data-lang="kr">이 문서는 파트너십 프로세스 진행에 따라 업데이트됩니다. 최종 업데이트: 2026년 2월.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  Confidential &mdash; 2026
+</footer>
+
+<script src="../js/auth.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/lang.js"></script>
+<script src="../js/scroll-engine.js"></script>
+</body>
+</html>

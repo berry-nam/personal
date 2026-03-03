@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter VI — Inside WeFun | Lyreco × WeFun</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/animations.css">
+<link rel="stylesheet" href="../css/nav.css">
+<link rel="stylesheet" href="../css/chapter.css">
+<style>
+  /* ─── L1 WEFUN PROFILE SPECIFIC ─── */
+
+  .dd-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    background: rgba(74, 114, 255, 0.1);
+    border: 1px solid rgba(74, 114, 255, 0.25);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--wefun-blue);
+    margin-bottom: 1.5rem;
+  }
+  .dd-badge::before {
+    content: ''; width: 5px; height: 5px;
+    border-radius: 50%; background: var(--wefun-blue);
+    animation: pulse 1.5s infinite;
+  }
+
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin: 2rem 0;
+    border: var(--border-subtle);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+  .pillar-item {
+    padding: 1.8rem 1.2rem;
+    text-align: center;
+    border-right: var(--border-subtle);
+    position: relative;
+  }
+  .pillar-item:last-child { border-right: none; }
+  .pillar-item::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .pillar-item:nth-child(1)::before { background: var(--wefun-blue); }
+  .pillar-item:nth-child(2)::before { background: var(--champagne); }
+  .pillar-item:nth-child(3)::before { background: var(--lyreco-red); }
+  .pillar-item:nth-child(4)::before { background: var(--success); }
+  .pillar-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .pillar-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .pillar-desc {
+    font-family: var(--font-mono);
+    font-size: 0.82rem; color: var(--smoke);
+    letter-spacing: 0.05em;
+  }
+
+  .ma-philosophy {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem; margin: 2rem 0;
+  }
+  .ma-principle {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-small);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .ma-principle::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--wefun-blue);
+  }
+  .ma-principle-title {
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 600;
+    color: var(--pearl);
+    margin-bottom: 0.4rem;
+  }
+  .ma-principle-desc {
+    font-size: 0.95rem; color: var(--smoke); line-height: 1.6;
+  }
+
+  .culture-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0;
+  }
+  .culture-tag {
+    padding: 0.35rem 0.9rem;
+    background: rgba(74, 114, 255, 0.1);
+    border-radius: var(--radius-pill);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--wefun-blue);
+  }
+
+  .governance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem; margin: 2rem 0;
+  }
+  .gov-item {
+    background: var(--ink-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-small);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .gov-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .gov-label {
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .gov-desc {
+    font-size: 0.9rem; color: var(--smoke); line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .pillar-grid { grid-template-columns: repeat(2, 1fr); }
+    .pillar-item:nth-child(2) { border-right: none; }
+    .ma-philosophy { grid-template-columns: 1fr; }
+    .governance-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="../css/gate.css">
+</head>
+<body data-audience="lyreco" data-slug="l1-wefun-profile" data-chapter="6">
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="site-nav" id="mainNav">
+  <a href="../index.html" class="nav-brand">Lyreco &times; WeFun</a>
+  <div class="nav-chapter-indicator">
+    <span class="nav-chapter-num">Chapter VI</span>
+    <span class="nav-chapter-title">Inside WeFun</span>
+  </div>
+  <div class="nav-controls">
+    <a href="5-christmas-eve.html" class="nav-arrow prev" aria-label="Previous">&larr;</a>
+    <a href="../index.html" class="nav-hub">Hub</a>
+    <a href="7-convergence.html" class="nav-arrow next" aria-label="Next">&rarr;</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="chapter-hero">
+  <div class="chapter-hero__label">Chapter VI</div>
+  <h1 class="chapter-hero__title">Inside <em>WeFun</em></h1>
+  <p class="chapter-hero__subtitle">A comprehensive profile of your potential partner</p>
+  <div class="chapter-hero__meta">Reading time &middot; ~12 min</div>
+  <div class="chapter-hero__scroll">
+    <div class="scroll-indicator">
+      <span>Begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ CONTENT ═══════════════ -->
+<main class="chapter-content">
+
+  <!-- ══════════════════════════════════════
+       1. ORIGINS
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <span class="dd-badge">Lyreco Due Diligence</span>
+      <div class="section-label">Origins</div>
+      <h2 class="section-title">Christmas Eve <em>2018</em></h2>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body" data-lang="en">
+        <p>Christmas Eve 2018. Kim Heon (<span style="color: var(--wefun-blue);">&#xAE40;&#xD5CC;</span>) incorporated WeFun on December 24, 2018, with initial capital of &#x20A9;50 million. While most founders start in January, Kim chose the most unlikely date &mdash; a signal of the urgency and conviction that would define the company.</p>
+        <p>WeFun began as a snack delivery service for offices &mdash; a simple idea that addressed a real gap in Korean workplace culture. From that basement in Gasan Digital Complex, a vision emerged: build the operating system for every workplace in Korea.</p>
+      </div>
+      <div class="section-body" data-lang="kr">
+        <p>2018&#xB144; &#xD06C;&#xB9AC;&#xC2A4;&#xB9C8;&#xC2A4; &#xC774;&#xBE0C;. &#xAE40;&#xD5CC; &#xB300;&#xD45C;&#xB294; 2018&#xB144; 12&#xC6D4; 24&#xC77C; &#xC790;&#xBCF8;&#xAE08; 5&#xCC9C;&#xB9CC; &#xC6D0;&#xC73C;&#xB85C; &#xC704;&#xD380;&#xC744; &#xC124;&#xB9BD;&#xD588;&#xC2B5;&#xB2C8;&#xB2E4;. &#xB300;&#xBD80;&#xBD84;&#xC758; &#xCC3D;&#xC5C5;&#xC790;&#xAC00; 1&#xC6D4;&#xC5D0; &#xC2DC;&#xC791;&#xD560; &#xB54C;, &#xAE40; &#xB300;&#xD45C;&#xB294; &#xAC00;&#xC7A5; &#xD2B9;&#xBCC4;&#xD55C; &#xB0A0;&#xC744; &#xD0DD;&#xD588;&#xC2B5;&#xB2C8;&#xB2E4; &mdash; &#xC774;&#xD6C4; &#xD68C;&#xC0AC;&#xB97C; &#xC815;&#xC758;&#xD560; &#xAE34;&#xBC15;&#xAC10;&#xACFC; &#xD655;&#xC2E0;&#xC758; &#xC2E0;&#xD638;&#xC600;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"While most founders start in January, Kim chose Christmas Eve &mdash; a signal of the urgency and conviction that would define everything that followed."</div>
+      <div class="quote-attr">Briefing Note &middot; Editorial</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       2. GROWTH TRAJECTORY
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Growth</div>
+      <h2 class="section-title">&#x20A9;50M to &#x20A9;143B<br>in <em>seven years</em></h2>
+    </div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">&#x20A9;50M &rarr; &#x20A9;143B</div>
+        <div class="stat-label">Revenue Journey</div>
+        <div class="stat-sub">Seed capital to annual revenue</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="87" data-suffix="%">0%</div>
+        <div class="stat-label">YoY Growth</div>
+        <div class="stat-sub">Year-over-year revenue growth</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="113" data-suffix="%">0%</div>
+        <div class="stat-label">CAGR</div>
+        <div class="stat-sub">Compound annual growth rate</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">7</div>
+        <div class="stat-label">Years</div>
+        <div class="stat-sub">Of continuous operation</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body" data-lang="en">
+        <p>From &#x20A9;50 million in seed capital to &#x20A9;143 billion in annual revenue in just seven years. That trajectory &mdash; an estimated 113% compound annual growth rate &mdash; places WeFun among the fastest-growing B2B platforms in Korean history.</p>
+        <p>The growth was not fueled by unsustainable marketing spend but by organic client expansion and strategic M&amp;A. Monthly P&amp;L breakeven was achieved in 2019, just months after founding. This is not a cash-burning startup &mdash; WeFun makes money.</p>
+      </div>
+      <div class="section-body" data-lang="kr">
+        <p>&#xC790;&#xBCF8;&#xAE08; 5&#xCC9C;&#xB9CC; &#xC6D0;&#xC5D0;&#xC11C; &#xC5F0;&#xB9E4;&#xCD9C; 1,430&#xC5B5; &#xC6D0;&#xAE4C;&#xC9C0; &#xB2E8; 7&#xB144;. &#xC774; &#xADA4;&#xC801;&#xC740; &mdash; &#xCD94;&#xC815; 113% &#xC5F0;&#xD3C9;&#xADE0; &#xC131;&#xC7A5;&#xB960; &mdash; &#xC704;&#xD380;&#xC744; &#xD55C;&#xAD6D; &#xC5ED;&#xC0AC;&#xC0C1; &#xAC00;&#xC7A5; &#xBE60;&#xB974;&#xAC8C; &#xC131;&#xC7A5;&#xD558;&#xB294; B2B &#xD50C;&#xB7AB;&#xD3FC; &#xC911; &#xD558;&#xB098;&#xB85C; &#xC790;&#xB9AC;&#xB9E4;&#xAE40;&#xD569;&#xB2C8;&#xB2E4;.</p>
+      </div>
+    </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80" alt="Business growth chart — representing WeFun's exponential revenue trajectory" loading="lazy">
+      <figcaption>113% CAGR &mdash; among the fastest B2B growth trajectories in Korean history</figcaption>
+    </figure>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       3. PLATFORM & SERVICES
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Platform</div>
+      <h2 class="section-title">Four pillars,<br><em>~100 services</em></h2>
+    </div>
+
+    <div class="pillar-grid" data-animate="fade-up">
+      <div class="pillar-item">
+        <div class="pillar-icon">&#x1F34E;</div>
+        <div class="pillar-name">Snack24</div>
+        <div class="pillar-desc">Office snack subscription &mdash; the founding product</div>
+      </div>
+      <div class="pillar-item">
+        <div class="pillar-icon">&#x2615;</div>
+        <div class="pillar-name">Coffee24</div>
+        <div class="pillar-desc">Premium coffee service for workplaces</div>
+      </div>
+      <div class="pillar-item">
+        <div class="pillar-icon">&#x1F371;</div>
+        <div class="pillar-name">Lunch24</div>
+        <div class="pillar-desc">Corporate meal solutions</div>
+      </div>
+      <div class="pillar-item">
+        <div class="pillar-icon">&#x1F381;</div>
+        <div class="pillar-name">Gift24</div>
+        <div class="pillar-desc">Corporate gifting platform</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body" data-lang="en">
+        <p>WeFun operates four core pillars: <strong style="color: var(--pearl);">Snack24</strong> (office snack subscription &mdash; the founding product), <strong style="color: var(--pearl);">Coffee24</strong> (premium coffee service for workplaces), <strong style="color: var(--pearl);">Lunch24</strong> (corporate meal solutions), and <strong style="color: var(--pearl);">Gift24</strong> (corporate gifting platform).</p>
+        <p>Beyond these pillars, WeFun has expanded to offer approximately 100 modular workplace services, creating a <strong style="color: var(--champagne);">"Total Workplace Platform"</strong> approach. The platform technology connects suppliers, logistics, and client offices through a unified system &mdash; one invoice, one dashboard, everything the office needs.</p>
+      </div>
+      <div class="section-body" data-lang="kr">
+        <p>&#xC704;&#xD380;&#xC740; &#xB124; &#xAC00;&#xC9C0; &#xD575;&#xC2EC; &#xCD95;&#xC73C;&#xB85C; &#xC6B4;&#xC601;&#xB429;&#xB2C8;&#xB2E4;: &#xC2A4;&#xB0B5;24 (&#xC0AC;&#xBB34;&#xC2E4; &#xAC04;&#xC2DD; &#xAD6C;&#xB3C5;), &#xCEE4;&#xD53C;24 (&#xD504;&#xB9AC;&#xBBF8;&#xC5C4; &#xCEE4;&#xD53C; &#xC11C;&#xBE44;&#xC2A4;), &#xB7F0;&#xCE5824 (&#xAE30;&#xC5C5; &#xC2DD;&#xC0AC; &#xC194;&#xB8E8;&#xC158;), &#xAE30;&#xD504;&#xD2B8;24 (&#xAE30;&#xC5C5; &#xC120;&#xBB3C; &#xD50C;&#xB7AB;&#xD3FC;). &#xC57D; 100&#xAC1C;&#xC758; &#xBAA8;&#xB4C8;&#xD615; &#xC9C1;&#xC7A5; &#xC11C;&#xBE44;&#xC2A4;&#xB85C; &#xD655;&#xC7A5;&#xD558;&#xC5EC; "&#xD1A0;&#xD0C8; &#xC6CC;&#xD06C;&#xD50C;&#xB808;&#xC774;&#xC2A4; &#xD50C;&#xB7AB;&#xD3FC;"&#xC744; &#xAD6C;&#xCD95;&#xD588;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+      </div>
+    </div>
+
+    <div class="card-grid" data-stagger-group>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">&#x1F34E;</div>
+        <div class="play-title">Employee Welfare</div>
+        <div class="play-desc">Snack24, Coffee24, Lunch24 &mdash; the core services making daily office life better. Over 9,400 B2B clients and 800,000 daily touchpoints across Korea.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">&#x1F381;</div>
+        <div class="play-title">Corporate Gifting SaaS</div>
+        <div class="play-desc">Gift24 digitized Korea's massive gifting culture (&#xC124;&#xB0A0;, &#xCD94;&#xC11D;, company milestones). Full catalog, personalization, delivery, and reporting on one platform.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">&#x1F3E2;</div>
+        <div class="play-title">Office Operations</div>
+        <div class="play-desc">Office supplies, cleaning, maintenance, safety equipment. <strong style="color: var(--champagne);">The overlap zone with Lyreco</strong> &mdash; the procurement decision-maker (&#xCD1D;&#xBB34;&#xD300;) is identical for both companies' products.</div>
+      </div>
+      <div class="play-card" data-stagger-child>
+        <div class="play-icon">&#x1F4D0;</div>
+        <div class="play-title">Space Management</div>
+        <div class="play-desc">Office design, renovation, digital signage (1,000+ screens). Making physical offices work better, not just the supplies in them.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       4. M&A TRACK RECORD
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Acquisitions</div>
+      <h2 class="section-title">6 strategic deals.<br><em>Enhancement, not absorption.</em></h2>
+    </div>
+
+    <div class="timeline" data-stagger-group>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">December 2023</div>
+        <div class="timeline-title">Woolin (&#xC6B0;&#xB9B0;)</div>
+        <div class="timeline-desc">#1 convenience store logistics operator. 1,500+ stores. Renamed WeFun Fulfillment &mdash; became the backbone of last-mile delivery.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">April 2024</div>
+        <div class="timeline-title">Next C&amp;C (&#xB125;&#xC2A4;&#xD2B8;&#xC528;&#xC564;&#xC528;)</div>
+        <div class="timeline-desc">#1 in-office caf&eacute; operator. Added barista capability and launched Coffee24. The coffee vertical grew +104% in 2024.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">July 2024</div>
+        <div class="timeline-title">Ilhwa Logis</div>
+        <div class="timeline-desc">Food logistics specialist. Merged with WeFun Fulfillment for enhanced cold-chain capability across the supply chain.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">August 2025</div>
+        <div class="timeline-title">Pudding</div>
+        <div class="timeline-desc">Foodtech B2B lunch subscription platform. Launched Lunch24 &mdash; expanding beyond snacks into full-service corporate meals.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">November 2025</div>
+        <div class="timeline-title">Snackfor (&#xC2A4;&#xB0B5;&#xD3EC;)</div>
+        <div class="timeline-desc">#2 snack subscription service. Acquired Kakao and HDC client portfolios. Consolidated market leadership &mdash; now undisputed #1.</div>
+      </div>
+      <div class="timeline-item" data-stagger-child>
+        <div class="timeline-date">January 2026</div>
+        <div class="timeline-title">Human Food + Human Food Service</div>
+        <div class="timeline-desc">220 workplaces, ~&#x20A9;47B revenue. First PE-partnered deal (Epic Platform + Hana S&amp;B). Demonstrates WeFun can structure sophisticated multi-party transactions.</div>
+      </div>
+    </div>
+
+    <div class="ma-philosophy" data-stagger-group>
+      <div class="ma-principle" data-stagger-child>
+        <div class="ma-principle-title">Capability Gap</div>
+        <div class="ma-principle-desc">Each acquisition added a specific capability that WeFun lacked &mdash; logistics, barista ops, cold-chain, meal service.</div>
+      </div>
+      <div class="ma-principle" data-stagger-child>
+        <div class="ma-principle-title">Team Retention</div>
+        <div class="ma-principle-desc">Acquired teams were retained and empowered. No mass layoffs, no cultural override.</div>
+      </div>
+      <div class="ma-principle" data-stagger-child>
+        <div class="ma-principle-title">Platform Connectivity</div>
+        <div class="ma-principle-desc">Integration focused on plugging into the WeFun platform, not absorbing the entity.</div>
+      </div>
+      <div class="ma-principle" data-stagger-child>
+        <div class="ma-principle-title">Proven Integration</div>
+        <div class="ma-principle-desc">Evidence of successful post-merger integration across all six deals. No failed acquisitions.</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body" data-lang="en">
+        <p>Six strategic acquisitions, each demonstrating a philosophy of <strong style="color: var(--champagne);">enhancement rather than absorption</strong>. This M&amp;A track record is directly relevant to Lyreco: it proves WeFun knows how to acquire, integrate, and grow &mdash; without destroying what made the acquired company valuable in the first place.</p>
+      </div>
+      <div class="section-body" data-lang="kr">
+        <p>6&#xAC74;&#xC758; &#xC804;&#xB7B5;&#xC801; &#xC778;&#xC218;, &#xAC01;&#xAC01; &#xD761;&#xC218;&#xAC00; &#xC544;&#xB2CC; &#xD5A5;&#xC0C1;&#xC758; &#xCCA0;&#xD559;&#xC744; &#xBCF4;&#xC5EC;&#xC90D;&#xB2C8;&#xB2E4;. &#xAC01; &#xC778;&#xC218;&#xB294; &#xD2B9;&#xC815; &#xC5ED;&#xB7C9; &#xACA9;&#xCC28;&#xB97C; &#xCD94;&#xAC00;&#xD588;&#xACE0;, &#xC778;&#xC218;&#xB41C; &#xD300;&#xC740; &#xC720;&#xC9C0;&#xB418;&#xC5B4; &#xC5ED;&#xD560;&#xC774; &#xAC15;&#xD654;&#xB418;&#xC5C8;&#xC2B5;&#xB2C8;&#xB2E4;.</p>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"WeFun's M&amp;A philosophy is enhancement, not absorption. Every acquired team was retained, empowered, and plugged into the platform ecosystem. This is how Lyreco Asia would be treated."</div>
+      <div class="quote-attr">Briefing Note &middot; Editorial</div>
+    </div>
+    <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: -1.5rem; margin-bottom: 2rem;">This is editorial framing written for this briefing &mdash; not a direct quotation.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       5. TEAM & CULTURE
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">People</div>
+      <h2 class="section-title">252 people.<br><em>Unlimited PTO.</em></h2>
+    </div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">252</div>
+        <div class="stat-label">Employees</div>
+        <div class="stat-sub">Growing team at K-Square 15F</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">#76</div>
+        <div class="stat-label">FT Asia-Pacific</div>
+        <div class="stat-sub">High-Growth Companies 2025</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number" data-counter="97" data-suffix="%">0%</div>
+        <div class="stat-label">Client Retention</div>
+        <div class="stat-sub">Once in, they almost never leave</div>
+      </div>
+    </div>
+
+    <div class="culture-tags" data-animate="fade-up">
+      <span class="culture-tag">&#xBCF5;&#xC9C0; &#xB05D;&#xD310;&#xC655; (Welfare champion)</span>
+      <span class="culture-tag">&#xC218;&#xD3C9;&#xC801;&#xC778; &#xBB38;&#xD654; (Horizontal culture)</span>
+      <span class="culture-tag">&#xC9C1;&#xC6D0; &#xC874;&#xC911;&#xC740; &#xAE30;&#xBCF8; (Respect is basic)</span>
+      <span class="culture-tag">&#xC778;&#xC0DD; &#xCD5C;&#xACE0; &#xB3D9;&#xB8CC; (Best colleagues of my life)</span>
+      <span class="culture-tag">Unlimited PTO</span>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body" data-lang="en">
+        <p>Strong employee satisfaction evidenced by Blind reviews &mdash; Korea's anonymous workplace review platform. <strong style="color: var(--pearl);">Unlimited PTO policy</strong> &mdash; unusual in Korean corporate culture where long hours are the norm.</p>
+        <p>The leadership team brings experienced management with diverse backgrounds. A company that sells workplace welfare to others practices what it preaches. These aren't planted reviews &mdash; they're consistent across dozens of employee testimonials.</p>
+        <p><em>A company's internal culture is the most reliable indicator of how it treats partners and clients.</em></p>
+      </div>
+      <div class="section-body" data-lang="kr">
+        <p>252&#xBA85;&#xC758; &#xC9C1;&#xC6D0;. Blind &#xB9AC;&#xBDF0;&#xB85C; &#xC785;&#xC99D;&#xB41C; &#xB192;&#xC740; &#xC9C1;&#xC6D0; &#xB9CC;&#xC871;&#xB3C4;. &#xD55C;&#xAD6D; &#xAE30;&#xC5C5; &#xBB38;&#xD654;&#xC5D0;&#xC11C; &#xC774;&#xB840;&#xC801;&#xC778; &#xBB34;&#xC81C;&#xD55C; &#xD734;&#xAC00; &#xC815;&#xCC45;.</p>
+      </div>
+    </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80" alt="Team collaboration in a modern office environment" loading="lazy">
+      <figcaption>252 employees, unlimited PTO, and a culture that practices what it sells</figcaption>
+    </figure>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       6. FINANCIAL POSITION
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Financial Position</div>
+      <h2 class="section-title">Funded. Profitable. <em>IPO-bound.</em></h2>
+    </div>
+
+    <div class="stat-grid" data-stagger-group>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">&#x20A9;33B</div>
+        <div class="stat-label">Total Raised</div>
+        <div class="stat-sub">Series A through C</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">&#x20A9;110B</div>
+        <div class="stat-label">Series C Valuation</div>
+        <div class="stat-sub">~&euro;76M post-money (Jul 2023)</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">&#x20A9;143.1B</div>
+        <div class="stat-label">FY2024 Revenue</div>
+        <div class="stat-sub">+87% year-over-year</div>
+      </div>
+      <div class="stat-card" data-stagger-child>
+        <div class="stat-number">2026</div>
+        <div class="stat-label">IPO Target</div>
+        <div class="stat-sub">KRX filing planned Apr 2026</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body" data-lang="en">
+        <p>Multiple funding rounds completed, culminating in a <strong style="color: var(--pearl);">&#x20A9;20 billion Series C</strong> (July 2023) at a &#x20A9;110 billion post-money valuation (~&euro;76M). Lead investors include institutional funds that validated both the business model and the growth trajectory.</p>
+        <p>The Series C valuation demonstrates institutional investor confidence. More importantly, WeFun has the financial capacity to close an acquisition of Lyreco Asia's scale. With strong unit economics and improving margins, the company is positioned to absorb and integrate significant new operations without financial strain.</p>
+        <p><strong style="color: var(--champagne);">IPO trajectory:</strong> Hana Securities appointed as lead underwriter (February 2024). Preliminary KRX examination filing planned for April 2026. Estimated IPO market cap target: &#x20A9;200&ndash;300 billion (~&euro;138&ndash;207M).</p>
+      </div>
+      <div class="section-body" data-lang="kr">
+        <p>&#xC5EC;&#xB7EC; &#xCC28;&#xB840;&#xC758; &#xD22C;&#xC790; &#xB77C;&#xC6B4;&#xB4DC; &#xC644;&#xB8CC;. &#xC2DC;&#xB9AC;&#xC988; C &#xBC38;&#xB958;&#xC5D0;&#xC774;&#xC158;&#xC740; &#xAE30;&#xAD00; &#xD22C;&#xC790;&#xC790;&#xC758; &#xC2E0;&#xB8B0;&#xB97C; &#xBCF4;&#xC5EC;&#xC90D;&#xB2C8;&#xB2E4;.</p>
+      </div>
+    </div>
+
+    <figure class="chapter-img" data-animate="fade-up">
+      <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80" alt="Stock market data — representing WeFun's upcoming IPO" loading="lazy">
+      <figcaption>IPO filing target: April 2026 &mdash; Hana Securities as lead underwriter</figcaption>
+    </figure>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       7. GOVERNANCE
+       ══════════════════════════════════════ -->
+  <section class="section">
+    <div data-animate="fade-up">
+      <div class="section-label">Governance</div>
+      <h2 class="section-title">Clean structure.<br><em>Transparent reporting.</em></h2>
+    </div>
+
+    <div class="governance-grid" data-stagger-group>
+      <div class="gov-item" data-stagger-child>
+        <div class="gov-icon">&#x1F3DB;</div>
+        <div class="gov-label">Clean Structure</div>
+        <div class="gov-desc">Straightforward corporate entity with clear subsidiary relationships</div>
+      </div>
+      <div class="gov-item" data-stagger-child>
+        <div class="gov-icon">&#x1F464;</div>
+        <div class="gov-label">CEO Kim Heon</div>
+        <div class="gov-desc">Founder-led with experienced management team across operations</div>
+      </div>
+      <div class="gov-item" data-stagger-child>
+        <div class="gov-icon">&#x1F4CA;</div>
+        <div class="gov-label">Institutional Board</div>
+        <div class="gov-desc">Board includes institutional investor representation from Series C</div>
+      </div>
+      <div class="gov-item" data-stagger-child>
+        <div class="gov-icon">&#x1F4CB;</div>
+        <div class="gov-label">Transparent Reporting</div>
+        <div class="gov-desc">Regular financial disclosure and IPO-grade reporting practices</div>
+      </div>
+    </div>
+
+    <div data-animate="fade-up">
+      <div class="section-body" data-lang="en">
+        <p>WeFun maintains a clean corporate structure with clear ownership lines. Key executives include <strong style="color: var(--pearl);">CEO Kim Heon</strong> at the helm, supported by an experienced management team with diverse backgrounds in technology, logistics, and corporate development.</p>
+        <p>The board includes institutional investor representation, ensuring governance standards that align with public market expectations. As WeFun prepares for its KRX listing, reporting practices have been elevated to IPO-grade transparency &mdash; a level of rigor that Lyreco's due diligence team will find reassuring.</p>
+      </div>
+      <div class="section-body" data-lang="kr">
+        <p>&#xAE54;&#xB054;&#xD55C; &#xAE30;&#xC5C5; &#xAD6C;&#xC870;. &#xC8FC;&#xC694; &#xC784;&#xC6D0;&#xC9C4;: &#xAE40;&#xD5CC; CEO, &#xACBD;&#xD5D8; &#xB9CE;&#xC740; &#xACBD;&#xC601;&#xC9C4;.</p>
+      </div>
+    </div>
+
+    <div class="quote-block" data-animate="fade-up">
+      <div class="quote-text">"A company preparing for a KRX listing operates at the highest standards of Korean corporate governance. WeFun's transparency is not aspirational &mdash; it's already operational."</div>
+      <div class="quote-attr">Briefing Note &middot; Editorial</div>
+    </div>
+    <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: -1.5rem; margin-bottom: 2rem;">This is editorial framing written for this briefing &mdash; not a direct quotation.</p>
+  </section>
+
+</main>
+
+<!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
+<div class="chapter-footer">
+  <a href="7-convergence.html" class="next-chapter-cta">
+    <span class="next-label">Next Chapter</span>
+    <span class="next-num">Chapter VII</span>
+    <span class="next-name">Convergence</span>
+    <span class="next-arrow">&rarr;</span>
+  </a>
+</div>
+
+<footer class="site-footer">
+  Confidential &mdash; 2026
+</footer>
+
+<script src="../js/auth.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../js/chapters.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/lang.js"></script>
+<script src="../js/scroll-engine.js"></script>
+</body>
+</html>

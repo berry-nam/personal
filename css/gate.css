@@ -1,0 +1,111 @@
+/* ═══════════════════════════════════════════════
+   Password Gate — Full-Viewport Overlay
+   ═══════════════════════════════════════════════ */
+
+.gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--ink);
+  background-image: radial-gradient(ellipse at 50% 40%, rgba(212, 184, 122, 0.06) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  opacity: 1;
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.gate-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gate-badge {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--lyreco-red);
+  border: 1px solid rgba(240, 77, 90, 0.35);
+  border-radius: var(--radius-pill);
+  padding: 0.5rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.gate-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lyreco-red);
+  animation: pulse 1.5s infinite;
+}
+
+.gate-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 700;
+  color: var(--pearl);
+  text-align: center;
+  line-height: var(--lh-heading);
+  margin-top: 0.5rem;
+}
+.gate-title em {
+  font-style: italic;
+  color: var(--champagne);
+}
+
+.gate-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--smoke);
+  margin-bottom: 1.5rem;
+}
+
+.gate-input {
+  width: min(360px, 80vw);
+  padding: 1rem 1.4rem;
+  background: var(--ink-soft);
+  border: 1px solid rgba(232, 229, 222, 0.15);
+  border-radius: var(--radius-small);
+  color: var(--pearl);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.gate-input::placeholder {
+  color: var(--smoke-light);
+  letter-spacing: 0.08em;
+}
+.gate-input:focus {
+  border-color: var(--champagne-dim);
+}
+
+/* Wrong password animation */
+.gate-input.shake {
+  animation: gateShake 0.5s ease;
+  border-color: var(--lyreco-red);
+}
+@keyframes gateShake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-8px); }
+  30% { transform: translateX(8px); }
+  45% { transform: translateX(-6px); }
+  60% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+  90% { transform: translateX(3px); }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .gate-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+  .gate-subtitle { font-size: 0.8rem; }
+}

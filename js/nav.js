@@ -1,11 +1,13 @@
 /* ═══════════════════════════════════════════════
    Navigation — Progress, Visibility, Chapter Tracking
+   Audience-Aware
    ═══════════════════════════════════════════════ */
 
 function initNav() {
   var progressBar = document.getElementById('progressBar');
   var nav = document.querySelector('.site-nav') || document.querySelector('.hub-nav');
-  var currentChapter = parseInt(document.body.dataset.chapter) || 0;
+  var slug = document.body.dataset.slug || '';
+  var audience = window.AUDIENCE || '';
 
   // ─── Progress Bar ───
   if (progressBar) {
@@ -31,7 +33,6 @@ function initNav() {
         }
       }, { passive: true });
     } else {
-      // Fallback: show after 400px
       window.addEventListener('scroll', function() {
         if (window.scrollY > 400) {
           nav.classList.add('visible');
@@ -42,31 +43,66 @@ function initNav() {
     }
   }
 
-  // ─── Mark chapter visited ───
-  if (currentChapter > 0) {
+  // ─── Mark chapter visited (audience-scoped) ───
+  if (slug && audience) {
     try {
-      localStorage.setItem('chapter-' + currentChapter + '-visited', 'true');
+      localStorage.setItem(audience + '-chapter-' + slug + '-visited', 'true');
     } catch (e) { /* localStorage unavailable */ }
   }
 
-  // ─── Disable prev on ch1, next on ch8 ───
-  if (currentChapter === 1) {
-    var prev = nav && nav.querySelector('.nav-arrow.prev');
-    if (prev) prev.style.visibility = 'hidden';
-  }
-  if (currentChapter === 8) {
-    var next = nav && nav.querySelector('.nav-arrow.next');
-    if (next) next.style.visibility = 'hidden';
+  // ─── Dynamic prev/next navigation ───
+  if (slug && audience && typeof getAdjacentChapters === 'function') {
+    var adj = getAdjacentChapters(slug, audience);
+    var prevArrow = nav && nav.querySelector('.nav-arrow.prev');
+    var nextArrow = nav && nav.querySelector('.nav-arrow.next');
+
+    if (prevArrow) {
+      if (adj.prev) {
+        prevArrow.style.visibility = 'visible';
+        prevArrow.href = adj.prev.slug + '.html';
+      } else {
+        prevArrow.style.visibility = 'hidden';
+      }
+    }
+
+    if (nextArrow) {
+      if (adj.next) {
+        nextArrow.style.visibility = 'visible';
+        nextArrow.href = adj.next.slug + '.html';
+      } else {
+        nextArrow.style.visibility = 'hidden';
+      }
+    }
+
+    // Update next chapter CTA at page bottom
+    var nextCta = document.querySelector('.next-chapter-cta');
+    if (nextCta && adj.next) {
+      nextCta.href = adj.next.slug + '.html';
+      var nextNum = nextCta.querySelector('.next-num');
+      var nextName = nextCta.querySelector('.next-name');
+      if (nextNum) {
+        var list = typeof getChaptersForAudience === 'function' ? getChaptersForAudience(audience) : [];
+        var nextIdx = -1;
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].slug === adj.next.slug) { nextIdx = i; break; }
+        }
+        nextNum.textContent = 'Chapter ' + toRoman(nextIdx + 1);
+      }
+      if (nextName) nextName.textContent = adj.next.title;
+    } else if (nextCta && !adj.next) {
+      nextCta.style.display = 'none';
+    }
   }
 }
 
 // ─── Hub: update chapter card visited states ───
 function initHubProgress() {
+  var audience = window.AUDIENCE || '';
   document.querySelectorAll('.chapter-card').forEach(function(card) {
-    var chNum = card.dataset.chapter;
-    if (chNum) {
+    var cardSlug = card.dataset.slug;
+    if (cardSlug && audience) {
       try {
-        var visited = localStorage.getItem('chapter-' + chNum + '-visited');
+        var visited = localStorage.getItem(audience + '-chapter-' + cardSlug + '-visited');
         var dot = card.querySelector('.card-progress-dot');
         var label = card.querySelector('.card-progress-label');
         if (visited && dot) {
@@ -79,10 +115,20 @@ function initHubProgress() {
   });
 }
 
-// Auto-init
-document.addEventListener('DOMContentLoaded', function() {
+// Auto-init — wait for audience-ready event
+window.addEventListener('audience-ready', function() {
   initNav();
-  if (document.querySelector('.chapter-grid')) {
+  if (document.querySelector('.chapter-grid') || document.getElementById('chapterGrid')) {
     initHubProgress();
+  }
+});
+
+// Fallback: also init on DOMContentLoaded if audience is already known
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.AUDIENCE) {
+    initNav();
+    if (document.querySelector('.chapter-grid') || document.getElementById('chapterGrid')) {
+      initHubProgress();
+    }
   }
 });

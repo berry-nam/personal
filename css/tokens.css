@@ -27,25 +27,24 @@
   --lyreco-red-dim:  rgba(240, 77, 90, 0.22);
   --success:         #5AE890;
 
-  /* ─── OPACITY VARIANTS (for inline style reduction) ─── */
-  --champagne-15:    rgba(212, 184, 122, 0.15);
-  --champagne-08:    rgba(212, 184, 122, 0.08);
-  --champagne-20:    rgba(212, 184, 122, 0.2);
-  --wefun-blue-15:   rgba(91, 138, 255, 0.15);
-  --wefun-blue-08:   rgba(91, 138, 255, 0.08);
-  --lyreco-red-15:   rgba(240, 77, 90, 0.15);
-  --lyreco-red-08:   rgba(240, 77, 90, 0.08);
-  --pg-navy:         #003F87;
-  --pg-blue:         #5B9BD5;
+  /* ─── ACCENT (default: champagne) ─── */
+  --accent:          var(--champagne);
+  --accent-light:    var(--champagne-light);
+  --accent-dim:      var(--champagne-dim);
+  --accent-glow:     var(--champagne-glow);
 
-  /* ─── INTERACTION ─── */
-  --lift-hover:      -3px;
+  /* Lyreco brand variants */
+  --lyreco-red-light: #F47A83;
+  --lyreco-red-glow:  rgba(240, 77, 90, 0.12);
+
+  /* WeFun brand variants */
+  --wefun-blue-light: #8AADFF;
+  --wefun-blue-glow:  rgba(91, 138, 255, 0.12);
 
   /* ─── TYPOGRAPHY ─── */
   --font-display:    'Playfair Display', Georgia, serif;
-  --font-body:       'DM Sans', 'Noto Sans KR', -apple-system, sans-serif;
+  --font-body:       'DM Sans', -apple-system, sans-serif;
   --font-mono:       'JetBrains Mono', monospace;
-  --font-kr:         'Noto Sans KR', -apple-system, sans-serif;
 
   --fs-hero:         clamp(3rem, 7vw, 6rem);
   --fs-chapter-hero: clamp(2.6rem, 5.5vw, 4.5rem);
@@ -120,25 +119,23 @@ body {
 a { color: inherit; }
 img { max-width: 100%; display: block; }
 
-/* ─── KOREAN LANGUAGE SUPPORT ─── */
-html[lang="ko"] body {
-  font-family: 'Noto Sans KR', 'DM Sans', -apple-system, sans-serif;
-  word-break: keep-all;
+/* ─── Audience Accent Overrides ─── */
+body[data-view="lyreco"] {
+  --accent: var(--lyreco-red);
+  --accent-light: var(--lyreco-red-light);
+  --accent-dim: var(--lyreco-red-dim);
+  --accent-glow: var(--lyreco-red-glow);
 }
-html[lang="ko"] .section-body,
-html[lang="ko"] .dash-section-sub,
-html[lang="ko"] .signal-read,
-html[lang="ko"] .tl-desc,
-html[lang="ko"] .read-text,
-html[lang="ko"] .card-teaser,
-html[lang="ko"] .deal-pos-stance,
-html[lang="ko"] .chapter-hero__subtitle {
-  word-break: keep-all;
-  line-height: 1.9;
+body[data-view="wefun"] {
+  --accent: var(--wefun-blue);
+  --accent-light: var(--wefun-blue-light);
+  --accent-dim: var(--wefun-blue-dim);
+  --accent-glow: var(--wefun-blue-glow);
 }
 
-/* ─── GLOBAL MOBILE SAFETY ─── */
-@media (max-width: 768px) {
-  table:not(.compare-table) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  svg:not(.venn-svg) { max-width: 100%; height: auto; }
-}
+/* ─── Language Toggle Visibility ─── */
+body[data-lang="kr"] [data-lang="en"] { display: none; }
+body[data-lang="en"] [data-lang="kr"] { display: none; }
+
+/* ─── WeFun-only elements hidden for Lyreco ─── */
+body[data-view="lyreco"] .wefun-only { display: none; }

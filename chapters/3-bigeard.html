@@ -2,14 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-<meta name="googlebot" content="noindex, nofollow">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Referrer-Policy" content="no-referrer">
-<script src="../js/auth.js"></script><script>window.__wlAuth.guardPage();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter III — The Bigeard Era | WEFUN × Lyreco</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/components.css">
@@ -139,19 +134,15 @@
     margin: 3rem 0;
   }
 
-  /* ─── MOBILE: CH3 ─── */
-  @media (max-width: 768px) {
-    .growth-visual { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+  @media (max-width: 600px) {
+    .growth-visual { flex-direction: column; gap: 1rem; }
     .growth-arrow-line { width: 2px; height: 40px; background: linear-gradient(180deg, var(--smoke), var(--champagne)); }
     .growth-arrow-line::after { right: -4px; top: auto; bottom: -4px; border: 5px solid transparent; border-top: 8px solid var(--champagne); border-left: 5px solid transparent; }
-    .growth-start .amount, .growth-end .amount { font-size: 1.6rem; }
-    .growth-multiplier { font-size: 1.2rem; }
-    .succession-note { padding: 1.2rem; }
-    .insight-block { padding: 1.2rem; }
   }
 </style>
+<link rel="stylesheet" href="../css/gate.css">
 </head>
-<body data-chapter="3">
+<body data-audience="shared" data-slug="3-bigeard" data-chapter="3">
 
 <div class="progress-bar" id="progressBar"></div>
 
@@ -159,7 +150,7 @@
   <a href="../index.html" class="nav-brand">WEFUN × Lyreco</a>
   <div class="nav-chapter-indicator">
     <span class="nav-chapter-num">Chapter III</span>
-    <span class="nav-chapter-title" data-ko="비가르 시대">The Bigeard Era</span>
+    <span class="nav-chapter-title">The Bigeard Era</span>
   </div>
   <div class="nav-controls">
     <a href="2-dynasty.html" class="nav-arrow prev" aria-label="Previous">&larr;</a>
@@ -171,12 +162,12 @@
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="chapter-hero">
   <div class="chapter-hero__label">Chapter III</div>
-  <h1 class="chapter-hero__title" data-ko="비가르 <em>시대</em>">The Bigeard <em>Era</em></h1>
-  <p class="chapter-hero__subtitle" data-ko="한 남자가 &euro;1,500만 프랑스 회사를 22년 만에 &euro;20억 글로벌 제국으로 키웠다. 그리고 자신의 의지로 떠났다.">One man took a &euro;15 million French company and turned it into a &euro;2 billion global empire in 22 years. Then he walked away on his own terms.</p>
-  <div class="chapter-hero__meta" data-ko="읽기 시간 · ~10분">Reading time · ~10 min</div>
+  <h1 class="chapter-hero__title">The Bigeard <em>Era</em></h1>
+  <p class="chapter-hero__subtitle">One man took a &euro;15 million French company and turned it into a &euro;2 billion global empire in 22 years. Then he walked away on his own terms.</p>
+  <div class="chapter-hero__meta">Reading time · ~10 min</div>
   <div class="chapter-hero__scroll">
     <div class="scroll-indicator">
-      <span data-ko="시작">Begin</span>
+      <span>Begin</span>
       <div class="scroll-line"></div>
     </div>
   </div>
@@ -188,18 +179,18 @@
   <!-- ── THE ARRIVAL ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="등장">The Arrival</div>
-      <h2 class="section-title" data-ko="스무 살 청년이 <em>걸어 들어오다</em>">A twenty-something <em>walks in</em></h2>
+      <div class="section-label">The Arrival</div>
+      <h2 class="section-title">A twenty-something <em>walks in</em></h2>
       <div class="section-body">
-        <p data-ko="에릭 자크 피에르 비가르는 1980년 20대 청년으로 리레코에 입사했다. 당시 회사는 프랑스 지방의 소규모 사무용품 유통업체에 불과했다. 지극히 지역적이고, 지극히 전통적이었다. 8년 후, 약 33세의 나이에 가스파르 가문은 그에게 회사 전체의 경영권을 맡겼다.">Eric Jacques Pierre Bigeard joined Lyreco in 1980 as a young man in his twenties. The company was still a modest French office-supplies distributor, firmly regional, firmly traditional. Eight years later, at approximately 33 years old, the Gaspard family handed him the keys to the entire operation.</p>
-        <p data-ko="이것은 파격적인 도박이었다. 비가르는 가스파르 가문 사람이 아니었다. 노련한 경영자도 아니었다. 그러나 가문은 그에게서 무언가를 보았다 &mdash; 끊임없는 추진력, 전략적 명확성, 그리고 팀 구축에 대한 거의 집착에 가까운 헌신. 그들의 판단은 옳았다.">It was an extraordinary bet. Bigeard was not a Gaspard. He was not even a seasoned executive. But the family saw something in him &mdash; a relentless drive, a strategic clarity, and an almost obsessive commitment to building teams. They were right.</p>
+        <p>Eric Jacques Pierre Bigeard joined Lyreco in 1980 as a young man in his twenties. The company was still a modest French office-supplies distributor, firmly regional, firmly traditional. Eight years later, at approximately 33 years old, the Gaspard family handed him the keys to the entire operation.</p>
+        <p>It was an extraordinary bet. Bigeard was not a Gaspard. He was not even a seasoned executive. But the family saw something in him &mdash; a relentless drive, a strategic clarity, and an almost obsessive commitment to building teams. They were right.</p>
       </div>
     </div>
   </section>
 
   <div class="atmos-img" data-animate="fade-up">
     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80" alt="Executive portrait silhouette — Eric Bigeard led Lyreco for 22 years" loading="lazy">
-    <span class="atmos-caption" data-ko="Eric Bigeard — 33세에 CEO, €20억 제국의 설계자">Eric Bigeard — CEO at 33, architect of a &euro;2 billion empire</span>
+    <span class="atmos-caption">Eric Bigeard — CEO at 33, architect of a &euro;2 billion empire</span>
   </div>
 
   <div class="divider"></div>
@@ -207,10 +198,10 @@
   <!-- ── REVENUE GROWTH ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="성장">The Growth</div>
-      <h2 class="section-title" data-ko="€1,500만에서 €20억으로<br><em>22년</em> 만에">&euro;15 million to &euro;2 billion<br>in <em>twenty-two years</em></h2>
+      <div class="section-label">The Growth</div>
+      <h2 class="section-title">&euro;15 million to &euro;2 billion<br>in <em>twenty-two years</em></h2>
       <div class="section-body">
-        <p data-ko="1988년 비가르의 CEO 취임 이후 전개된 것은 유럽 B2B 유통 역사상 가장 놀라운 성장 스토리 중 하나였다. 그는 이를 사무용품 업계의 <em>&ldquo;국제적 성공 신화&rdquo;</em>라고 불렀다 &mdash; 숫자가 스스로를 말해준다.">What followed Bigeard's appointment as CEO in 1988 was one of the most extraordinary growth stories in European B2B distribution. He called it <em>"the international success story"</em><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup> in office supplies &mdash; and the numbers speak for themselves.</p>
+        <p>What followed Bigeard's appointment as CEO in 1988 was one of the most extraordinary growth stories in European B2B distribution. He called it <em>"the international success story"</em><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup> in office supplies &mdash; and the numbers speak for themselves.</p>
       </div>
     </div>
 
@@ -219,7 +210,7 @@
 
     <figure class="chapter-img" data-animate="fade-up">
       <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80" alt="Business growth charts and data visualization evoking exponential revenue expansion" loading="lazy">
-      <figcaption data-ko="22년간 133배 매출 성장 &mdash; €1,500만 국내 기업에서 €20억+ 글로벌 기업으로">133&times; revenue growth over 22 years &mdash; from a &euro;15M national operation to a &euro;2B+ global enterprise</figcaption>
+      <figcaption>133&times; revenue growth over 22 years &mdash; from a &euro;15M national operation to a &euro;2B+ global enterprise</figcaption>
     </figure>
 
     <div class="growth-visual" data-animate="fade-up">
@@ -230,7 +221,7 @@
       <div class="growth-arrow">
         <div class="growth-multiplier">133&times;</div>
         <div class="growth-arrow-line"></div>
-        <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; color: var(--smoke); letter-spacing: 0.1em;" data-ko="22년">22 YEARS</div>
+        <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; color: var(--smoke); letter-spacing: 0.1em;">22 YEARS</div>
       </div>
       <div class="growth-end">
         <div class="amount">&euro;2B</div>
@@ -240,24 +231,24 @@
 
     <div data-animate="fade-up">
       <div class="section-body">
-        <p data-ko="성장 궤적: <span class='growth-highlight'>€1,500만 (1988)</span> → <span class='growth-highlight'>€9,000만 (1992)</span> → <span class='growth-highlight'>€3억5,000만 (1996)</span> → <span class='growth-highlight'>€9억 (2000)</span> → <span class='growth-highlight'>€15억 (2005)</span> → <span class='growth-highlight'>€20억 (2010)</span>">The trajectory: <span class="growth-highlight">&euro;15M (1988)</span> &rarr; <span class="growth-highlight">&euro;90M (1992)</span> &rarr; <span class="growth-highlight">&euro;350M (1996)</span> &rarr; <span class="growth-highlight">&euro;900M (2000)</span> &rarr; <span class="growth-highlight">&euro;1.5B (2005)</span> &rarr; <span class="growth-highlight">&euro;2B (2010)</span></p>
+        <p>The trajectory: <span class="growth-highlight">&euro;15M (1988)</span> &rarr; <span class="growth-highlight">&euro;90M (1992)</span> &rarr; <span class="growth-highlight">&euro;350M (1996)</span> &rarr; <span class="growth-highlight">&euro;900M (2000)</span> &rarr; <span class="growth-highlight">&euro;1.5B (2005)</span> &rarr; <span class="growth-highlight">&euro;2B (2010)</span></p>
       </div>
     </div>
 
     <div class="stat-grid" data-stagger-group>
       <div class="stat-card" data-stagger-child>
         <div class="stat-number" data-counter="133" data-suffix="&times;">0&times;</div>
-        <div class="stat-label" data-ko="매출 배수">Revenue Multiplier</div>
-        <div class="stat-sub" data-ko="재임 기간 €1,500만 → €20억">&euro;15M &rarr; &euro;2B under his watch</div>
+        <div class="stat-label">Revenue Multiplier</div>
+        <div class="stat-sub">&euro;15M &rarr; &euro;2B under his watch</div>
       </div>
       <div class="stat-card" data-stagger-child>
         <div class="stat-number">1 &rarr; 29</div>
-        <div class="stat-label" data-ko="진출국">Countries</div>
-        <div class="stat-sub" data-ko="프랑스 단일국에서 글로벌 진출">France-only to global presence</div>
+        <div class="stat-label">Countries</div>
+        <div class="stat-sub">France-only to global presence</div>
       </div>
       <div class="stat-card" data-stagger-child>
         <div class="stat-number" data-counter="22" data-suffix=" yrs">0</div>
-        <div class="stat-label" data-ko="CEO 재임 기간">Years as CEO</div>
+        <div class="stat-label">Years as CEO</div>
         <div class="stat-sub">1988 &ndash; 2010</div>
       </div>
     </div>
@@ -267,7 +258,7 @@
       <div id="expansion-network" style="position:relative; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.2rem 1.5rem; min-height: 520px;">
         <!-- Legend -->
         <div style="display:flex; gap:1.4rem; flex-wrap:wrap; margin-bottom:0.8rem; align-items:center;">
-          <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--smoke); opacity:0.5;" data-ko="국제 확장 · 1988–2010">International Expansion · 1988–2010</span>
+          <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--smoke); opacity:0.5;">International Expansion · 1988–2010</span>
           <div style="display:flex; gap:1rem; margin-left:auto; flex-wrap:wrap;">
             <span style="display:flex; align-items:center; gap:0.35rem; font-family:var(--font-mono); font-size:0.68rem; color:var(--champagne);"><span style="width:10px;height:10px;border-radius:50%;background:rgba(212,184,122,0.5);border:1.5px solid var(--champagne);display:inline-block;"></span>Origin</span>
             <span style="display:flex; align-items:center; gap:0.35rem; font-family:var(--font-mono); font-size:0.68rem; color:#7FB3FF;"><span style="width:10px;height:10px;border-radius:50%;background:rgba(91,138,255,0.3);border:1.5px solid #7FB3FF;display:inline-block;"></span>Europe</span>
@@ -277,7 +268,7 @@
         </div>
         <div id="expansion-graph-canvas" style="position:relative; width:100%;"></div>
       </div>
-      <div style="text-align:center; font-family:var(--font-mono); font-size:0.78rem; color:var(--smoke); opacity:0.45; margin-top:0.8rem; letter-spacing:0.08em;" data-ko="노드를 드래그하여 탐색 · 마우스를 올려 상세 정보 확인 · 노드 크기 = 전략적 비중">Drag nodes to explore · Hover for entry details · Node size = strategic weight</div>
+      <div style="text-align:center; font-family:var(--font-mono); font-size:0.78rem; color:var(--smoke); opacity:0.45; margin-top:0.8rem; letter-spacing:0.08em;">Drag nodes to explore · Hover for entry details · Node size = strategic weight</div>
     </div>
   </section>
 
@@ -286,22 +277,22 @@
   <!-- ── THE PHILOSOPHY ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="철학">The Philosophy</div>
-      <h2 class="section-title" data-ko="매출이 아니라. <em>사람.</em>">Not revenue. <em>People.</em></h2>
+      <div class="section-label">The Philosophy</div>
+      <h2 class="section-title">Not revenue. <em>People.</em></h2>
       <div class="section-body">
-        <p data-ko="Eric Bigeard에게 가장 위대한 업적이 무엇이냐고 물으면, 133배의 매출 성장을 언급하지 않을 것이다. 29개국 확장도 거론하지 않을 것이다. 그의 대답은 놀라울 만큼 인간적이다:">Ask Eric Bigeard about his greatest accomplishment and he will not mention the 133&times; revenue growth. He will not cite the 29-country expansion. His answer is disarmingly human:</p>
+        <p>Ask Eric Bigeard about his greatest accomplishment and he will not mention the 133&times; revenue growth. He will not cite the 29-country expansion. His answer is disarmingly human:</p>
       </div>
     </div>
 
     <div class="quote-block" data-animate="fade-up">
-      <div class="quote-text" data-ko="&ldquo;나의 가장 큰 업적은 견고하고 안정적인 팀을 만든 것이었습니다.&rdquo;">"My biggest achievement was the creation of a solid and stable team."</div>
-      <div class="quote-attr" data-ko="Eric Bigeard — OPI, &ldquo;Eric Bigeard 인터뷰&rdquo;, 2010년 12월 31일">Eric Bigeard — <a href="https://www.opi.net/news/analysis/eric-bigeard-interview/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, &ldquo;Eric Bigeard Interview&rdquo;</a>, December 31, 2010</div>
+      <div class="quote-text">"My biggest achievement was the creation of a solid and stable team."</div>
+      <div class="quote-attr">Eric Bigeard — <a href="https://www.opi.net/news/analysis/eric-bigeard-interview/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, &ldquo;Eric Bigeard Interview&rdquo;</a>, December 31, 2010</div>
     </div>
 
     <div data-animate="fade-up">
       <div class="section-body">
-        <p data-ko="이것은 기업적 겸양이 아니다. 사람이야말로 유일하게 지속 가능한 경쟁 우위라는 진정한 신념이다. 비가르는 충성이 요구되는 것이 아니라 얻어지는 경영 문화를 구축했다 &mdash; 경영진이 분기가 아닌 수십 년을 함께하는 문화. 이 철학은 리레코의 모든 계층에 스며들었고, 오늘날까지 그 문화적 DNA로 남아 있다.">This is not corporate modesty. It is a genuine belief that people are the only durable competitive advantage. Bigeard built a management culture where loyalty was earned, not demanded &mdash; where executives stayed for decades, not quarters. This philosophy permeated every level of Lyreco and remains its cultural DNA to this day.</p>
-        <p data-ko="리레코의 일부를 인수하려는 누구에게든, 이를 이해하는 것은 타협할 수 없는 전제조건이다. 가스파르 가문과 비가르는 어떤 매수자든 팀을 존중할 것인지를 가장 먼저 평가할 것이다.">For anyone seeking to acquire a piece of Lyreco, understanding this is non-negotiable. The Gaspard family and Bigeard will evaluate any buyer first and foremost on whether they will honor the team.</p>
+        <p>This is not corporate modesty. It is a genuine belief that people are the only durable competitive advantage. Bigeard built a management culture where loyalty was earned, not demanded &mdash; where executives stayed for decades, not quarters. This philosophy permeated every level of Lyreco and remains its cultural DNA to this day.</p>
+        <p>For anyone seeking to acquire a piece of Lyreco, understanding this is non-negotiable. The Gaspard family and Bigeard will evaluate any buyer first and foremost on whether they will honor the team.</p>
       </div>
     </div>
   </section>
@@ -311,18 +302,18 @@
   <!-- ── THE QUOTE ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="퇴장의 철학">The Exit Philosophy</div>
-      <h2 class="section-title" data-ko="<em>떠날 때</em>를 아는 것">Knowing when <em>to leave</em></h2>
+      <div class="section-label">The Exit Philosophy</div>
+      <h2 class="section-title">Knowing when <em>to leave</em></h2>
     </div>
 
     <div class="quote-block" data-animate="fade-up">
-      <div class="quote-text" data-ko="&ldquo;너무 많은 CEO들이 자리에 너무 오래 집착합니다. 저는 제가 사랑하는 회사에서 해고당하는 사람이 되고 싶지 않았습니다!&rdquo;">"Too many CEOs hold on to their jobs too long. I didn't want to be one of those that end up getting fired from the company I love!"</div>
-      <div class="quote-attr" data-ko="Eric Bigeard — OPI, &ldquo;리레코 한 시대의 끝&rdquo;, 2010년 12월">Eric Bigeard — <a href="https://www.opi.net/news/analysis/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, "End of an era at Lyreco"</a>, December 2010</div>
+      <div class="quote-text">"Too many CEOs hold on to their jobs too long. I didn't want to be one of those that end up getting fired from the company I love!"</div>
+      <div class="quote-attr">Eric Bigeard — <a href="https://www.opi.net/news/analysis/end-of-an-era-at-lyreco/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, "End of an era at Lyreco"</a>, December 2010</div>
     </div>
 
     <div data-animate="fade-up">
       <div class="section-body">
-        <p data-ko="비가르는 밀려나기를 기다리지 않았다. 그는 퇴임 10년 전부터 퇴장을 계획하기 시작했다. 회사가 정점에 있던 55세에 물러났다. 이는 창업 시대 CEO들 사이에서 극히 드문 자기 인식의 행위였다 &mdash; 환영받지 못한 후가 아니라, 여전히 필요로 할 때 떠나는 절제력.">Bigeard did not wait to be pushed. He began planning his exit a full decade before leaving. At age 55, with the company at its peak, he stepped down. It was an act of self-awareness that is extraordinarily rare among founding-era CEOs &mdash; the discipline to leave while you are still wanted, not after you have outstayed your welcome.</p>
+        <p>Bigeard did not wait to be pushed. He began planning his exit a full decade before leaving. At age 55, with the company at its peak, he stepped down. It was an act of self-awareness that is extraordinarily rare among founding-era CEOs &mdash; the discipline to leave while you are still wanted, not after you have outstayed your welcome.</p>
       </div>
     </div>
   </section>
@@ -332,75 +323,75 @@
   <!-- ── THE NEAR-MERGER ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="무산된 합병">The Near-Merger</div>
-      <h2 class="section-title" data-ko="Corporate Express <em>2008</em>">Corporate Express <em>2008</em></h2>
+      <div class="section-label">The Near-Merger</div>
+      <h2 class="section-title">Corporate Express <em>2008</em></h2>
       <div class="section-body">
-        <p data-ko="2008년, 비가르는 사무용품 산업 전체를 재편할 수 있었던 거래에 근접했다. 네덜란드 상장 글로벌 사무용품 대기업 Corporate Express가 포위 공격을 받고 있었다. Staples가 2월 19일 주당 €7.25에 적대적 인수를 개시했다. 방어에 급급하던 Corporate Express 이사회는 리레코로 눈을 돌렸다. 5월 21일, 그들은 독약 조항으로서 리레코를 <strong style='color: var(--pearl);'>€17억 3,100만</strong>에 인수한다고 발표했다. 비가르가 합병 법인의 CEO가 될 예정이었다. Corporate Express CEO Peter Ventress는 COO로 물러날 계획이었다. 가스파르 가문은 Corporate Express 지분 25%를 2년 보호예수 조건으로 받을 예정이었다.">In 2008, Bigeard came within reach of a deal that would have reshaped the entire office-supplies industry. <a href="https://en.wikipedia.org/wiki/Corporate_Express" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">Corporate Express</a> &mdash; a Dutch-listed global office supplies giant &mdash; was under siege. Staples had launched a hostile bid on February&nbsp;19 at &euro;7.25 per share. The Corporate Express board, scrambling for a defense, turned to Lyreco. On May&nbsp;21, they announced a <strong style="color: var(--pearl);">&euro;1.731 billion</strong> acquisition of Lyreco as a poison pill. Bigeard would become CEO of the combined entity. Peter Ventress, the Corporate Express CEO, would step down to COO. The Gaspard family would receive a 25% stake in Corporate Express with a 2-year lock-up.</p>
-        <p data-ko="Staples는 눈 하나 깜짝하지 않았다. 6월 3일 주당 €9.15로, 그리고 6월 11일 최종 €9.25로 인수가를 올렸다 &mdash; Corporate Express의 가치를 <strong style='color: var(--pearl);'>€16억 8,000만</strong>으로 평가한 것이다. 이사회는 수락했다. 리레코 거래는 무산되었다. Corporate Express는 8월 5일 상장 폐지되었다.">Staples didn&rsquo;t blink. They raised their bid to &euro;9.15/share on June&nbsp;3, then to a final &euro;9.25/share on June&nbsp;11 &mdash; valuing Corporate Express at <strong style="color: var(--pearl);">&euro;1.68 billion</strong>. The board accepted. The Lyreco deal was abandoned. Corporate Express was delisted August&nbsp;5.</p>
-        <p data-ko="리레코는 <strong style='color: var(--champagne);'>€3,000만 계약 해지 수수료</strong>를 받고 떠났다. 실패한 거래조차 수익을 남겼다.">Lyreco walked away with a <strong style="color: var(--champagne);">&euro;30 million break-up fee</strong>. Even the failed deal paid.</p>
+        <p>In 2008, Bigeard came within reach of a deal that would have reshaped the entire office-supplies industry. <a href="https://en.wikipedia.org/wiki/Corporate_Express" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">Corporate Express</a> &mdash; a Dutch-listed global office supplies giant &mdash; was under siege. Staples had launched a hostile bid on February&nbsp;19 at &euro;7.25 per share. The Corporate Express board, scrambling for a defense, turned to Lyreco. On May&nbsp;21, they announced a <strong style="color: var(--pearl);">&euro;1.731 billion</strong> acquisition of Lyreco as a poison pill. Bigeard would become CEO of the combined entity. Peter Ventress, the Corporate Express CEO, would step down to COO. The Gaspard family would receive a 25% stake in Corporate Express with a 2-year lock-up.</p>
+        <p>Staples didn&rsquo;t blink. They raised their bid to &euro;9.15/share on June&nbsp;3, then to a final &euro;9.25/share on June&nbsp;11 &mdash; valuing Corporate Express at <strong style="color: var(--pearl);">&euro;1.68 billion</strong>. The board accepted. The Lyreco deal was abandoned. Corporate Express was delisted August&nbsp;5.</p>
+        <p>Lyreco walked away with a <strong style="color: var(--champagne);">&euro;30 million break-up fee</strong>. Even the failed deal paid.</p>
       </div>
     </div>
 
     <!-- Deal fact strip -->
-    <div class="deal-fact-strip" data-animate="fade-up" style="margin: 2.5rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
+    <div data-animate="fade-up" style="margin: 2.5rem 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
       <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.5rem; text-align: center;">
-        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;" data-ko="리레코 인수 가치">Lyreco Acquisition Value</div>
+        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;">Lyreco Acquisition Value</div>
         <div style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--champagne);">&euro;1.731B</div>
         <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;">~$2.7B USD</div>
       </div>
       <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.5rem; text-align: center;">
-        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;" data-ko="비가르의 역할">Bigeard&rsquo;s Role</div>
+        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;">Bigeard&rsquo;s Role</div>
         <div style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--pearl);">CEO</div>
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;" data-ko="합병 법인의">of combined entity</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;">of combined entity</div>
       </div>
       <div style="background: var(--ink-card); border: 1px solid rgba(240,77,90,0.2); border-radius: var(--radius-card); padding: 1.5rem; text-align: center;">
-        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;" data-ko="계약 해지 수수료">Break-up Fee</div>
+        <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.6; margin-bottom: 0.5rem;">Break-up Fee</div>
         <div style="font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--lyreco-red);">&euro;30M</div>
-        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;" data-ko="리레코에 지급">paid to Lyreco</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;">paid to Lyreco</div>
       </div>
     </div>
 
     <!-- Timeline strip -->
     <div data-animate="fade-up" style="margin: 2rem 0; padding: 1.5rem; background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card); overflow-x: auto;">
-      <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1.2rem;" data-ko="거래 타임라인 &mdash; 2008">Deal Timeline &mdash; 2008</div>
-      <div style="display: flex; align-items: flex-start; gap: 0; min-width: 440px; position: relative;">
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1.2rem;">Deal Timeline &mdash; 2008</div>
+      <div style="display: flex; align-items: flex-start; gap: 0; min-width: 560px; position: relative;">
         <div style="position: absolute; top: 10px; left: 10px; right: 10px; height: 1px; background: rgba(212,184,122,0.2);"></div>
         <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
           <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(212,184,122,0.2); border: 1.5px solid rgba(212,184,122,0.5); margin: 0 auto 0.6rem;"></div>
           <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--champagne); margin-bottom: 0.2rem;">Feb 19</div>
-          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;" data-ko="Staples 입찰<br>€7.25/주">Staples bid<br>&euro;7.25/sh</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">Staples bid<br>&euro;7.25/sh</div>
         </div>
         <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
           <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(212,184,122,0.35); border: 1.5px solid var(--champagne); margin: 0 auto 0.6rem;"></div>
           <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--champagne); margin-bottom: 0.2rem;">May 21</div>
-          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;" data-ko="CE, 리레코 인수<br>€17.31억">CE buys Lyreco<br>&euro;1.731B</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">CE buys Lyreco<br>&euro;1.731B</div>
         </div>
         <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
           <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(240,77,90,0.1); border: 1.5px solid rgba(240,77,90,0.4); margin: 0 auto 0.6rem;"></div>
           <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--lyreco-red); margin-bottom: 0.2rem;">Jun 3</div>
-          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;" data-ko="Staples 인상<br>€9.15/주">Staples raises<br>&euro;9.15/sh</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">Staples raises<br>&euro;9.15/sh</div>
         </div>
         <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
           <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(240,77,90,0.2); border: 1.5px solid var(--lyreco-red); margin: 0 auto 0.6rem;"></div>
           <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--lyreco-red); margin-bottom: 0.2rem;">Jun 11</div>
-          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;" data-ko="거래 수락<br>€9.25/주">Deal accepted<br>&euro;9.25/sh</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">Deal accepted<br>&euro;9.25/sh</div>
         </div>
         <div style="flex: 1; text-align: center; position: relative; z-index: 1;">
           <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(91,138,255,0.1); border: 1.5px solid rgba(91,138,255,0.4); margin: 0 auto 0.6rem;"></div>
           <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--wefun-blue); margin-bottom: 0.2rem;">Aug 5</div>
-          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;" data-ko="CE 상장폐지<br>리레코 독립 유지">CE delisted<br>Lyreco free</div>
+          <div style="font-family: var(--font-mono); font-size: 0.62rem; color: var(--smoke); opacity: 0.6; line-height: 1.4;">CE delisted<br>Lyreco free</div>
         </div>
       </div>
     </div>
 
     <div class="section-body" data-animate="fade-up" style="margin-top: 1.5rem;">
-      <p data-ko="이 에피소드는 이 사람에 대해 결정적인 것을 보여준다: <strong style='color: var(--pearl);'>비가르는 최고 수준에서 M&amp;A를 이해한다.</strong> 그는 €17억 규모 거래의 당사자였다. 적대적 인수가 내부에서 어떤 느낌인지, 독약 조항의 대가가 무엇인지, 계약 해지 수수료가 무엇을 의미하는지 안다. 그는 거래 역학, 가치 평가 긴장, 두 조직 통합의 감정적 무게에 낯선 사람이 아니다.">The episode reveals something critical about the man: <strong style="color: var(--pearl);">Bigeard understands M&amp;A at the highest level.</strong> He has been the subject of a &euro;1.7 billion transaction. He knows what a hostile bid feels like from the inside, what a poison pill costs, and what a break-up fee represents. He is not a stranger to deal dynamics, valuation tension, or the emotional weight of combining two organizations.</p>
-      <p data-ko="그가 WEFUN과 마주 앉을 때, 숫자만 평가하는 것이 아닐 것이다 &mdash; 인수팀이 이 규모의 거래를 다룰 수 있는 역량을 갖추었는지를 평가할 것이다. 그는 전체 흐름을 목격했다. 이런 일들이 어떻게 끝나는지 정확히 알고 있다.">When he sits across the table from WEFUN, he will be evaluating not just the numbers &mdash; but whether the acquiring team has the sophistication to handle a transaction of this magnitude. He has seen the full arc. He knows how these things end.</p>
+      <p>The episode reveals something critical about the man: <strong style="color: var(--pearl);">Bigeard understands M&amp;A at the highest level.</strong> He has been the subject of a &euro;1.7 billion transaction. He knows what a hostile bid feels like from the inside, what a poison pill costs, and what a break-up fee represents. He is not a stranger to deal dynamics, valuation tension, or the emotional weight of combining two organizations.</p>
+      <p>In any partnership discussion, he evaluates not just the numbers &mdash; but whether the other side has the sophistication to handle a transaction of this magnitude. He has seen the full arc. He knows how these things end.</p>
     </div>
 
     <!-- Sources -->
     <div data-animate="fade-up" style="margin-top: 1.5rem; padding: 1rem 1.2rem; background: rgba(212,184,122,0.04); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-small);">
-      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.6rem;" data-ko="출처">Sources</div>
+      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.6rem;">Sources</div>
       <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--smoke); opacity: 0.65; line-height: 2;">
         <a href="https://archive.today/20120721035155/http://uk.reuters.com/article/innovationNews/idUKL2058429820080521" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Reuters, May 21 2008 &#8599;</a> &nbsp;&middot;&nbsp;
         <a href="https://www.rttnews.com/611397/corporate-express-to-buy-lyreco-sas-for-eur-1-731-bln-lifts-fy08-sales-forecast-update-1.aspx" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">RTTNews, &euro;1.731B announcement &#8599;</a> &nbsp;&middot;&nbsp;
@@ -412,65 +403,65 @@
 
     <figure class="chapter-img" data-animate="fade-up">
       <img src="https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=1200&q=80" alt="European cityscape with modern office buildings" loading="lazy">
-      <figcaption data-ko="암스테르담, 2008 &mdash; Corporate Express 본사. 비가르를 ~€30억+ 합병 법인의 CEO로 만들 뻔한 거래.">Amsterdam, 2008 &mdash; Corporate Express HQ. The deal that almost made Bigeard CEO of a ~&euro;3B+ combined entity.</figcaption>
+      <figcaption>Amsterdam, 2008 &mdash; Corporate Express HQ. The deal that almost made Bigeard CEO of a &euro;3B+ combined entity.</figcaption>
     </figure>
 
     <!-- ── SUCCESSION PARALLEL · THE HOSTILE BID ── -->
     <div class="pg-compare" data-animate="fade-up">
       <div class="pg-compare-header">
-        <span class="pg-compare-badge" data-ko="석세션 유사점 · 대화 소재">Succession Parallel &middot; Icebreaker</span>
+        <span class="pg-compare-badge">Succession Parallel &middot; Icebreaker</span>
       </div>
-      <div class="pg-compare-title" data-ko="GoJo 거래">The GoJo Deal</div>
-      <div class="pg-compare-subtitle" data-ko="Corporate Express 2008 vs. <em>석세션</em> 시리즈 피날레 &mdash; 가문이 모든 것을 잃을 뻔한 순간">Corporate Express 2008 vs. the <em>Succession</em> series finale &mdash; when the family almost loses everything</div>
+      <div class="pg-compare-title">The GoJo Deal</div>
+      <div class="pg-compare-subtitle">Corporate Express 2008 vs. the <em>Succession</em> series finale &mdash; when the family almost loses everything</div>
       <div class="pg-compare-body" style="margin-top: 1.2rem;">
-        <p data-ko="<em>석세션</em> 시리즈 피날레: <strong>Waystar Royco가 GoJo / Lukas Matsson에 매각된다.</strong> 가문은 지배권을 잃는다. 자녀들은 흩어진다. 제국은 외부인에게 넘어간다. 아무도 원하지 않았지만 모두가 예상한 결말이었다.">The <em>Succession</em> series finale: <strong>Waystar Royco is sold to GoJo / Lukas Matsson.</strong> The family loses control. The children scatter. The empire passes to a stranger. It was the ending nobody wanted but everyone saw coming.</p>
-        <p style="margin-top: 0.8rem;" data-ko="2008년, 리레코는 거의 같은 각본을 살았다. Corporate Express가 리레코에 €17.3억을 입찰했다 &mdash; 리레코를 원해서가 아니라, <strong>Staples의 적대적 인수에 대한 독약 조항</strong>으로서. 가스파르 가문은 합병 법인의 25%를 받을 예정이었다. 비가르는 €82억 그룹의 CEO가 될 수 있었다. 일생일대의 거래였다.">In 2008, Lyreco nearly lived the same script. Corporate Express bid &euro;1.73B for Lyreco &mdash; not because they wanted Lyreco, but as a <strong>poison pill against Staples&rsquo; hostile takeover</strong>. The Gaspards would have received 25% of the combined entity. Bigeard would have become CEO of an &euro;8.2B group. It was the deal of a lifetime.</p>
-        <p style="margin-top: 0.8rem;" data-ko="그러나 Staples가 입찰가를 올렸다. Corporate Express가 항복했다. 리레코 거래는 무너졌다. <strong>가스파르 가문은 로이 가문이 결코 얻지 못한 결말을 얻었다</strong> &mdash; 지배권을 유지할 두 번째 기회. 18년이 지난 지금, WEFUN이 다가온다. 이번에는 구원하러 올 Staples가 없다.">Then Staples raised their bid. Corporate Express capitulated. The Lyreco deal collapsed. <strong>The Gaspards got the ending the Roys never did</strong> &mdash; a second chance to stay in control. Now, 18 years later, WEFUN approaches. This time, there&rsquo;s no Staples riding to the rescue.</p>
+        <p>The <em>Succession</em> series finale: <strong>Waystar Royco is sold to GoJo / Lukas Matsson.</strong> The family loses control. The children scatter. The empire passes to a stranger. It was the ending nobody wanted but everyone saw coming.</p>
+        <p style="margin-top: 0.8rem;">In 2008, Lyreco nearly lived the same script. Corporate Express bid &euro;1.73B for Lyreco &mdash; not because they wanted Lyreco, but as a <strong>poison pill against Staples&rsquo; hostile takeover</strong>. The Gaspards would have received 25% of the combined entity. Bigeard would have become CEO of an &euro;8.2B group. It was the deal of a lifetime.</p>
+        <p style="margin-top: 0.8rem;">Then Staples raised their bid. Corporate Express capitulated. The Lyreco deal collapsed. <strong>The Gaspards got the ending the Roys never did</strong> &mdash; a second chance to stay in control. Now, 18 years later, WEFUN approaches. This time, there&rsquo;s no Staples riding to the rescue.</p>
       </div>
 
       <table class="compare-table">
         <thead>
           <tr>
             <th></th>
-            <th class="col-pg" data-ko="&#127909; 석세션 (HBO)">&#127909; Succession (HBO)</th>
+            <th class="col-pg">&#127909; Succession (HBO)</th>
             <th class="col-lyreco">Lyreco (2008)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td data-ko="거래">The Deal</td>
-            <td data-ko="Waystar가 GoJo / Lukas Matsson에 매각">Waystar sold to GoJo / Lukas Matsson</td>
-            <td data-ko="Corporate Express가 리레코에 €17.3억 입찰">Corporate Express bid &euro;1.73B for Lyreco</td>
+            <td>The Deal</td>
+            <td>Waystar sold to GoJo / Lukas Matsson</td>
+            <td>Corporate Express bid &euro;1.73B for Lyreco</td>
           </tr>
           <tr>
-            <td data-ko="동기">The Motive</td>
-            <td data-ko="Matsson이 콘텐츠 제국 + 미국 진출을 원함">Matsson wanted content empire + US entry</td>
-            <td data-ko="CE가 리레코를 Staples 대항 <strong>독약 조항</strong>으로 활용">CE used Lyreco as <strong>poison pill</strong> vs. Staples</td>
+            <td>The Motive</td>
+            <td>Matsson wanted content empire + US entry</td>
+            <td>CE used Lyreco as <strong>poison pill</strong> vs. Staples</td>
           </tr>
           <tr>
-            <td data-ko="가문 역할">Family Role</td>
-            <td data-ko="로이 가문, GoJo ~25% + 이사회 의석 확보">Roys would get ~25% of GoJo + board seats</td>
-            <td data-ko="가스파르 가문, Corely 통해 CE 25% 확보">Gaspards would get 25% of CE via Corely</td>
+            <td>Family Role</td>
+            <td>Roys would get ~25% of GoJo + board seats</td>
+            <td>Gaspards would get 25% of CE via Corely</td>
           </tr>
           <tr>
-            <td data-ko="선정 CEO">Chosen CEO</td>
-            <td data-ko="Kendall이 로비; 이사회는 Matsson의 선택을 채택">Kendall lobbied; board chose Matsson&rsquo;s pick</td>
-            <td data-ko="비가르가 €82억 합병 법인 CEO가 될 예정">Bigeard would become CEO of &euro;8.2B combined entity</td>
+            <td>Chosen CEO</td>
+            <td>Kendall lobbied; board chose Matsson&rsquo;s pick</td>
+            <td>Bigeard would become CEO of &euro;8.2B combined entity</td>
           </tr>
           <tr>
-            <td data-ko="붕괴">The Collapse</td>
-            <td data-ko="거래 성사 &mdash; <em>가문 지배권 상실</em>">Deal went through &mdash; <em>family lost control</em></td>
-            <td data-ko="거래 무산 &mdash; Staples가 더 높은 가격 제시, CE 인수">Deal collapsed &mdash; Staples outbid, bought CE instead</td>
+            <td>The Collapse</td>
+            <td>Deal went through &mdash; <em>family lost control</em></td>
+            <td>Deal collapsed &mdash; Staples outbid, bought CE instead</td>
           </tr>
           <tr>
-            <td data-ko="결과">Aftermath</td>
-            <td data-ko="로이 가문 흩어짐, 회사 흡수">Roys scattered, company absorbed</td>
-            <td data-ko="<strong>가스파르 가문이 리레코를 유지, Butler Capital 지분 매입, 100% 보유</strong>"><strong>Gaspards kept Lyreco, bought out Butler Capital, retained 100%</strong></td>
+            <td>Aftermath</td>
+            <td>Roys scattered, company absorbed</td>
+            <td><strong>Gaspards kept Lyreco, bought out Butler Capital, retained 100%</strong></td>
           </tr>
         </tbody>
       </table>
 
-      <div class="pg-talking-point" data-ko="&ldquo;로이 가문은 피날레에서 회사를 잃었다. 가스파르 가문은 2008년에 지켰다. 하지만 같은 질문이 남는다: <em>가문이 영원히 지킬 수 있는가?</em>&rdquo;">
+      <div class="pg-talking-point">
         &ldquo;The Roys lost their company in the finale. The Gaspards kept theirs in 2008. But the same question lingers: <em>can a family hold on forever?</em>&rdquo;
       </div>
     </div>
@@ -481,11 +472,11 @@
   <!-- ── THE DEPARTURE ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="퇴장">The Departure</div>
-      <h2 class="section-title" data-ko="2010년 말. <em>55세.</em>">End of 2010. <em>Age 55.</em></h2>
+      <div class="section-label">The Departure</div>
+      <h2 class="section-title">End of 2010. <em>Age 55.</em></h2>
       <div class="section-body">
-        <p data-ko="비가르는 2010년 말 리레코를 떠났다. 55세였다. 회사는 29개국에서 €20억 이상의 매출을 올리고 있었다. 그는 조직에서 30년을 보냈다 &mdash; 청년으로 들어와, 전설로 떠났다.">Bigeard left Lyreco at the end of 2010. He was 55 years old. The company was generating over &euro;2 billion in revenue across 29 countries. He had spent 30 years inside the organization &mdash; joining as a young man, leaving as a legend.</p>
-        <p data-ko="그는 침묵 속으로 은퇴하지 않았다. Georges Gaspard가 직접 감독이사회에 남아달라고 요청했고, 비가르는 동의했다. 그는 가문의 신뢰받는 조언자가 되었다 &mdash; 판돈이 가장 클 때 연락하는 사람.">He did not retire into silence. Georges Gaspard personally asked him to remain on the Supervisory Board, and Bigeard agreed. He became the family's trusted counsel &mdash; the person they call when the stakes are highest.</p>
+        <p>Bigeard left Lyreco at the end of 2010. He was 55 years old. The company was generating over &euro;2 billion in revenue across 29 countries. He had spent 30 years inside the organization &mdash; joining as a young man, leaving as a legend.</p>
+        <p>He did not retire into silence. Georges Gaspard personally asked him to remain on the Supervisory Board, and Bigeard agreed. He became the family's trusted counsel &mdash; the person they call when the stakes are highest.</p>
       </div>
     </div>
   </section>
@@ -495,10 +486,10 @@
   <!-- ── THE SUCCESSION ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="승계">The Succession</div>
-      <h2 class="section-title" data-ko="다음 <em>비가르</em>를 찾아서">Finding the next <em>Bigeard</em></h2>
+      <div class="section-label">The Succession</div>
+      <h2 class="section-title">Finding the next <em>Bigeard</em></h2>
       <div class="section-body">
-        <p data-ko="비가르는 10년 전부터 퇴임을 계획했지만, 후임자를 찾는 것은 고통스러운 과정이었다. 승계는 여러 리더를 거쳤고, 각각 그가 드리운 거대한 그림자와 씨름했다:">Bigeard planned his departure a decade in advance, but finding his replacement proved agonizing. The succession went through multiple leaders, each grappling with the immense shadow he cast:</p>
+        <p>Bigeard planned his departure a decade in advance, but finding his replacement proved agonizing. The succession went through multiple leaders, each grappling with the immense shadow he cast:</p>
       </div>
     </div>
 
@@ -509,7 +500,7 @@
       <div class="succession-note" data-stagger-child>
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
           <div>
-            <h4 style="margin-bottom: 0.1rem;" data-ko="Philippe Martinez">Philippe Martinez</h4>
+            <h4 style="margin-bottom: 0.1rem;">Philippe Martinez</h4>
             <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--champagne); opacity: 0.7; letter-spacing: 0.08em;">Jan 2011 &ndash; Aug 2011 &nbsp;&middot;&nbsp; <span style="color: var(--lyreco-red);">8 months</span></div>
           </div>
           <div style="display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0;">
@@ -517,8 +508,8 @@
             <a href="https://www.opi.net/magazines/lyreco-ceo-out-after-just-eight-months/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); text-decoration: none; border: 1px solid rgba(212,184,122,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">OPI &#8599;</a>
           </div>
         </div>
-        <p style="font-size: 1rem; margin-bottom: 0.6rem;" data-ko="<strong style='color: var(--pearl);'>조직에 맞지 않았던 외부인.</strong> Xerox에서 26년 &mdash; 1984년 영업사원으로 시작해 2008년 Xerox 프랑스 대표이사에 올랐다. ESC Rouen 졸업. 비가르가 직접 외부에서 선발한 후임자. 2011년 1월 1일 취임했으나 8월에 퇴임, &ldquo;즉시 효력&rdquo;으로 발표되었다. 공식 설명은 없었다 &mdash; 리레코 CEO 변경이 항상 OPI에 보도되는 업계에서, 침묵 자체가 의미심장했다."><strong style="color: var(--pearl);">The outsider who didn&rsquo;t fit.</strong> 26 years at Xerox &mdash; sales rep in 1984, Managing Director of Xerox France by 2008. ESC Rouen graduate. Bigeard&rsquo;s hand-picked successor from outside the company. Took the role January 1, 2011 and was gone by August, departure announced &ldquo;with immediate effect.&rdquo; No public explanation was ever given &mdash; in an industry where Lyreco CEO changes always surface in OPI, the silence itself was telling.</p>
-        <p style="font-size: 1rem; margin-bottom: 0.6rem;" data-ko="Martinez가 떠났을 때, 이사회에는 준비된 승계 계획이 없었다. 그들은 당시 유럽 &amp; 캐나다 MD로 재직 중이던 23년차 리레코 베테랑 <strong style='color: var(--pearl);'>Steve Law</strong>에게 임시 CEO를 맡아달라고 요청했다. Law는 깊은 조직 지식과 가스파르 가문의 신뢰를 가지고 있었다. 그는 &ldquo;외부에서 영입&rdquo;된 것이 아니라, 이미 내부에 있었고 단순히 승격된 것이다. CEO 직에서 은퇴한 비가르는 가문으로부터 전환기 동안 자문 지원을 개인적으로 요청받았다.">When Martinez left, the board had no succession plan ready. They turned to <strong style="color: var(--pearl);">Steve Law</strong> &mdash; a 23-year Lyreco veteran then serving as MD of Europe &amp; Canada &mdash; and asked him to step in as interim CEO. Law had deep institutional knowledge and the trust of the Gaspard family. He wasn&rsquo;t &ldquo;brought in from outside&rdquo; &mdash; he was already inside, and simply elevated. Bigeard, though retired from the CEO role, was personally asked by the family to provide advisory support during the transition.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;"><strong style="color: var(--pearl);">The outsider who didn&rsquo;t fit.</strong> 26 years at Xerox &mdash; sales rep in 1984, Managing Director of Xerox France by 2008. ESC Rouen graduate. Bigeard&rsquo;s hand-picked successor from outside the company. Took the role January 1, 2011 and was gone by August, departure announced &ldquo;with immediate effect.&rdquo; No public explanation was ever given &mdash; in an industry where Lyreco CEO changes always surface in OPI, the silence itself was telling.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;">When Martinez left, the board had no succession plan ready. They turned to <strong style="color: var(--pearl);">Steve Law</strong> &mdash; a 23-year Lyreco veteran then serving as MD of Europe &amp; Canada &mdash; and asked him to step in as interim CEO. Law had deep institutional knowledge and the trust of the Gaspard family. He wasn&rsquo;t &ldquo;brought in from outside&rdquo; &mdash; he was already inside, and simply elevated. Bigeard, though retired from the CEO role, was personally asked by the family to provide advisory support during the transition.</p>
         <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;"><span style="font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--champagne); opacity: 0.6;">After Lyreco:</span> Adecco Asia Commercial Director (Singapore, 2012) &rarr; Adecco France Directeur G&eacute;n&eacute;ral (2015)</p>
       </div>
 
@@ -526,7 +517,7 @@
       <div class="succession-note" data-stagger-child>
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
           <div>
-            <h4 style="margin-bottom: 0.1rem;" data-ko="Steve Law">Steve Law</h4>
+            <h4 style="margin-bottom: 0.1rem;">Steve Law</h4>
             <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--champagne); opacity: 0.7; letter-spacing: 0.08em;">Aug 2011 (interim) &rarr; Mar 2012 (permanent) &ndash; Dec 2014 &nbsp;&middot;&nbsp; <span style="color: var(--smoke);">~3.5 years</span></div>
           </div>
           <div style="display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0;">
@@ -534,7 +525,7 @@
             <a href="https://www.opi.net/news/law-steps-down-as-lyreco-ceo/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); text-decoration: none; border: 1px solid rgba(212,184,122,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">OPI &#8599;</a>
           </div>
         </div>
-        <p style="font-size: 1rem; margin-bottom: 0.6rem;" data-ko="<strong style='color: var(--pearl);'>배를 안정시킨 내부인.</strong> 영국인. 25년차 리레코 베테랑: 1988년 영국 마케팅 매니저로 입사, 영국 &amp; 아일랜드 MD, 이후 유럽 &amp; 캐나다 MD로 승진. Martinez 퇴임 후 이사회의 안전한 선택. 글로벌 전자상거래 플랫폼과 계약 리셀러 운영을 현대화했다. 2014년 말 깔끔하게 퇴임 &mdash; 승계 CEO 중 유일하게 질서 정연한 퇴임이었다."><strong style="color: var(--pearl);">The insider who steadied the ship.</strong> British. 25-year Lyreco veteran: joined 1988 as Marketing Manager UK, rose to MD of UK &amp; Ireland, then MD of Europe &amp; Canada. The board&rsquo;s safe pair of hands when Martinez departed. Modernized the global e-commerce platform and contract reseller operations. Left cleanly at end of 2014 &mdash; the only succession CEO whose departure was orderly.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;"><strong style="color: var(--pearl);">The insider who steadied the ship.</strong> British. 25-year Lyreco veteran: joined 1988 as Marketing Manager UK, rose to MD of UK &amp; Ireland, then MD of Europe &amp; Canada. The board&rsquo;s safe pair of hands when Martinez departed. Modernized the global e-commerce platform and contract reseller operations. Left cleanly at end of 2014 &mdash; the only succession CEO whose departure was orderly.</p>
         <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;"><span style="font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--champagne); opacity: 0.6;">After Lyreco:</span> Left the industry. Profile remains private.</p>
       </div>
 
@@ -542,7 +533,7 @@
       <div class="succession-note" data-stagger-child>
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
           <div>
-            <h4 style="margin-bottom: 0.1rem;" data-ko="Herv&eacute; Milcent">Herv&eacute; Milcent</h4>
+            <h4 style="margin-bottom: 0.1rem;">Herv&eacute; Milcent</h4>
             <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--champagne); opacity: 0.7; letter-spacing: 0.08em;">Jan 2015 &ndash; 2019 &nbsp;&middot;&nbsp; <span style="color: var(--smoke);">4.5 years</span></div>
           </div>
           <div style="display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0;">
@@ -550,7 +541,7 @@
             <a href="https://www.opi.net/news/region/002-europe/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); text-decoration: none; border: 1px solid rgba(212,184,122,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">OPI &#8599;</a>
           </div>
         </div>
-        <p style="font-size: 1rem; margin-bottom: 0.6rem;" data-ko="<strong style='color: var(--pearl);'>유령을 인정한 개혁자.</strong> 프랑스인. 비즈니스법 석사(파리 V) + Harvard HBS. 물류 및 운영 경력: La Poste/Chronopost (1988), M&eacute;diapost, 이후 Arvato/Bertelsmann에서 12년간 근무하며 이사회까지 승진. 2015년 1월 리레코에 합류. 첫해는 조용히 평가하며 보냈다. 이후 카테고리 기반 마케팅, PPE 인수를 추진 &mdash; 가장 주목할 만한 것은 2019년 1월 <strong style='color: var(--pearl);'>Broadview Holding</strong>(HAL Holding N.V.)으로부터 인수한 <strong style='color: var(--pearl);'>Intersafe &amp; Elacin</strong>; 합산 매출 €1억2,500만, 네덜란드, 벨기에, 프랑스, 독일 전역에 360명의 직원 &mdash; 그리고 전면적인 IT 인프라 개편."><strong style="color: var(--pearl);">The reformer who acknowledged the ghost.</strong> French. Master in Business Law (Paris V) + Harvard HBS. Career in logistics and operations: La Poste/Chronopost (1988), M&eacute;diapost, then 12 years at Arvato/Bertelsmann rising to Executive Board. Joined Lyreco January 2015. Spent the first year quietly assessing. Then launched category-based marketing, PPE acquisitions &mdash; most notably <strong style="color: var(--pearl);">Intersafe &amp; Elacin</strong>, acquired from <strong style="color: var(--pearl);">Broadview Holding</strong> (HAL Holding N.V.) in January 2019; combined &euro;125M turnover, 360 employees across Netherlands, Belgium, France, and Germany <span class="source-note"><a href="https://www.intersafe.eu/news/lyreco-group-announces-an-agreement-to-acquire-intersafe-and-elacin/" target="_blank" rel="noopener">Intersafe.eu</a></span> &mdash; and full IT infrastructure overhaul.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;"><strong style="color: var(--pearl);">The reformer who acknowledged the ghost.</strong> French. Master in Business Law (Paris V) + Harvard HBS. Career in logistics and operations: La Poste/Chronopost (1988), M&eacute;diapost, then 12 years at Arvato/Bertelsmann rising to Executive Board. Joined Lyreco January 2015. Spent the first year quietly assessing. Then launched category-based marketing, PPE acquisitions &mdash; most notably <strong style="color: var(--pearl);">Intersafe &amp; Elacin</strong>, acquired from <strong style="color: var(--pearl);">Broadview Holding</strong> (HAL Holding N.V.) in January 2019; combined &euro;125M turnover, 360 employees across Netherlands, Belgium, France, and Germany <span class="source-note"><a href="https://www.intersafe.eu/news/lyreco-group-announces-an-agreement-to-acquire-intersafe-and-elacin/" target="_blank" rel="noopener">Intersafe.eu</a></span> &mdash; and full IT infrastructure overhaul.</p>
         <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;"><span style="font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--champagne); opacity: 0.6;">After Lyreco:</span> Teleperformance MD France/Italy/Germany &rarr; <a href="https://www.solocal.com/ressources/actualites/herve-milcent-nomme-directeur-general-de-solocal" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">Solocal Group CEO</a> (Apr 2021)</p>
       </div>
 
@@ -558,7 +549,7 @@
       <div class="succession-note" data-stagger-child style="border-left-color: var(--wefun-blue);">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
           <div>
-            <h4 style="margin-bottom: 0.1rem;" data-ko="Gregory Li&eacute;nard">Gregory Li&eacute;nard</h4>
+            <h4 style="margin-bottom: 0.1rem;">Gregory Li&eacute;nard</h4>
             <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--wefun-blue); opacity: 0.9; letter-spacing: 0.08em;">2019 &ndash; Present &nbsp;&middot;&nbsp; <span style="color: var(--champagne);">Current CEO</span></div>
           </div>
           <div style="display: flex; gap: 0.6rem; align-items: center; flex-shrink: 0;">
@@ -566,26 +557,26 @@
             <a href="https://why.lyreco.com/news/lyreco-group-announces-new-ceo/" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--champagne); text-decoration: none; border: 1px solid rgba(212,184,122,0.25); border-radius: 4px; padding: 0.2rem 0.5rem; opacity: 0.85;">Announcement &#8599;</a>
           </div>
         </div>
-        <p style="font-size: 1rem; margin-bottom: 0.6rem;" data-ko="<strong style='color: var(--pearl);'>마침내 그 자리를 채운 사람.</strong> 28년 이상의 리레코 종신 근무자. 아시아 사업을 직접 구축했다 &mdash; 홍콩에 거주하며, 2004년 한국을 개척하고, 이후 싱가포르를 열었다. WEFUN이 활동하는 시장을 내부에서부터 이해한다."><strong style="color: var(--pearl);">The one who finally filled the shoes.</strong> 28+ year Lyreco lifer. Built the Asian operations personally &mdash; lived in Hong Kong, opened Korea in 2004, later Singapore. Understands the market WEFUN operates in from the inside out.</p>
-        <p style="font-size: 1rem; margin-bottom: 0.6rem;" data-ko="2021년, 비가르는 리레코에서 공개적으로 적극적인 자문 역할로 복귀했으며, OPI는 이를 Li&eacute;nard를 &ldquo;지원하기 위해&rdquo; 돌아온 것으로 보도했다. 구체적으로: 팬데믹 이후 혼란 속에서 리레코의 유럽 및 아시아 시장 입지를 공고히 하기 위한 전략적 논의에 Li&eacute;nard와 함께 참여했다. 이것은 이사회 형식이 아니었다 &mdash; 비가르는 승계 기간 내내 감독이사회에 있으면서 Martinez, Law, Milcent 누구에게도 이런 행동을 한 적이 없었다. 공개적 지지는 Li&eacute;nard에 한정된 것이었다. 창업자의 선택한 사람이 마침내 도착했다는 업계 신호였다.">In 2021, Bigeard publicly returned to an active advisory role at Lyreco, described in OPI as coming back &ldquo;in support&rdquo; of Li&eacute;nard. In concrete terms: he joined Li&eacute;nard in strategic discussions to help consolidate Lyreco&rsquo;s European and Asian market position amid post-pandemic disruption. This was not a board formality &mdash; Bigeard had been on the Supervisory Board throughout the succession years without ever doing this for Martinez, Law, or Milcent. The public endorsement was Li&eacute;nard-specific. It signalled to the industry that the founder&rsquo;s chosen man had finally arrived.</p>
-        <p style="font-size: 1rem; margin-bottom: 0.6rem;" data-ko="그의 가장 중요한 전략적 인수: 노르웨이, 스웨덴, 덴마크, 독일, 오스트리아, 폴란드에 걸친 <strong style='color: var(--pearl);'>Staples Solutions</strong> 사업 &mdash; 2021년 6월 <strong style='color: var(--pearl);'>Cerberus Capital Management</strong>로부터 매입. 약 1,600명의 직원이 리레코에 합류했다. 가족 소유 유통업체가 PE 펀드의 6개국 포트폴리오를 매입한 것 &mdash; Li&eacute;nard 하의 리레코가 영토를 방어하는 것이 아니라 <em>공격적으로 인수</em>하고 있다는 분명한 신호.">His most significant strategic acquisition: the <strong style="color: var(--pearl);">Staples Solutions</strong> business operations across Norway, Sweden, Denmark, Germany, Austria, and Poland &mdash; purchased from <strong style="color: var(--pearl);">Cerberus Capital Management</strong> in June 2021. Approximately 1,600 employees joined Lyreco. A family-owned distributor buying a PE fund&rsquo;s portfolio across six countries &mdash; a clear signal that Lyreco under Li&eacute;nard was not defending territory, but <em>acquiring</em> it. <span class="source-note"><a href="https://www.lyreco.com/group/people-behind/lyreco-successfully-acquires-staples-solutions-business-operations-central-nordic" target="_blank" rel="noopener">Lyreco Group</a> &middot; <a href="https://www.prnewswire.com/news-releases/staples-solutions-and-lyreco-sign-agreement-to-sell-norwegian-swedish-danish-german-austrian-and-polish-business-units-808934948.html" target="_blank" rel="noopener">PR Newswire</a></span></p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;"><strong style="color: var(--pearl);">The one who finally filled the shoes.</strong> 28+ year Lyreco lifer. Built the Asian operations personally &mdash; lived in Hong Kong, opened Korea in 2004, later Singapore. Understands the market WEFUN operates in from the inside out.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;">In 2021, Bigeard publicly returned to an active advisory role at Lyreco, described in OPI as coming back &ldquo;in support&rdquo; of Li&eacute;nard. In concrete terms: he joined Li&eacute;nard in strategic discussions to help consolidate Lyreco&rsquo;s European and Asian market position amid post-pandemic disruption. This was not a board formality &mdash; Bigeard had been on the Supervisory Board throughout the succession years without ever doing this for Martinez, Law, or Milcent. The public endorsement was Li&eacute;nard-specific. It signalled to the industry that the founder&rsquo;s chosen man had finally arrived.</p>
+        <p style="font-size: 1rem; margin-bottom: 0.6rem;">His most significant strategic acquisition: the <strong style="color: var(--pearl);">Staples Solutions</strong> business operations across Norway, Sweden, Denmark, Germany, Austria, and Poland &mdash; purchased from <strong style="color: var(--pearl);">Cerberus Capital Management</strong> in June 2021. Approximately 1,600 employees joined Lyreco. A family-owned distributor buying a PE fund&rsquo;s portfolio across six countries &mdash; a clear signal that Lyreco under Li&eacute;nard was not defending territory, but <em>acquiring</em> it. <span class="source-note"><a href="https://www.lyreco.com/group/people-behind/lyreco-successfully-acquires-staples-solutions-business-operations-central-nordic" target="_blank" rel="noopener">Lyreco Group</a> &middot; <a href="https://www.prnewswire.com/news-releases/staples-solutions-and-lyreco-sign-agreement-to-sell-norwegian-swedish-danish-german-austrian-and-polish-business-units-808934948.html" target="_blank" rel="noopener">PR Newswire</a></span></p>
       </div>
 
     </div>
 
     <div class="insight-block" data-animate="fade-up" style="border-left-color: var(--wefun-blue);">
-      <h4 data-ko="바이사이드 M&amp;A DNA &mdash; WEFUN에 이것이 중요한 이유">Buy-Side M&amp;A DNA &mdash; Why This Matters for WEFUN</h4>
-      <p data-ko="Milcent과 Li&eacute;nard 체제에서 리레코는 계속 인수했다 &mdash; 하지만 핵심적인 패턴이 있었다: PE 펀드와 금융 지주회사<em>로부터</em> 매입했지, 그 반대가 아니었다. Intersafe &amp; Elacin은 Broadview Holding(HAL Holding N.V.)에서 왔다. 6개국의 Staples Solutions는 Cerberus Capital Management에서 왔다. 리레코는 전략적 매수자였지, 매수 대상이 아니었다. 이것은 직접적으로 관련이 있다: WEFUN 자체의 Human Food 인수에도 PE 파트너 Epic Platform이 관여했다. 리레코가 WEFUN을 평가할 때, PE 기반 거래 구조에 처음인 것이 아니다. 그들은 정확히 이런 종류의 거래에서 바이사이드에 있었다.">Under Milcent and Li&eacute;nard, Lyreco continued acquiring &mdash; but with a crucial pattern: they bought <em>from</em> PE funds and financial holding companies, not the reverse. Intersafe &amp; Elacin came from Broadview Holding (HAL Holding N.V.). Staples Solutions across six countries came from Cerberus Capital Management. Lyreco was the strategic buyer, not the target. This is directly relevant: WEFUN&rsquo;s own Human Food acquisition involved PE partner Epic Platform. When Lyreco evaluates WEFUN, they are not newcomers to PE-originated deal structures. They have been on the buy-side of exactly this kind of transaction.</p>
+      <h4>Buy-Side M&amp;A Track Record</h4>
+      <p>Under Milcent and Li&eacute;nard, Lyreco continued acquiring &mdash; but with a crucial pattern: they bought <em>from</em> PE funds and financial holding companies, not the reverse. Intersafe &amp; Elacin came from Broadview Holding (HAL Holding N.V.). Staples Solutions across six countries came from Cerberus Capital Management. Lyreco was the strategic buyer, not the target. This is directly relevant: WEFUN&rsquo;s own Human Food acquisition involved PE partner Epic Platform. When Lyreco evaluates WEFUN, they are not newcomers to PE-originated deal structures. They have been on the buy-side of exactly this kind of transaction.</p>
     </div>
 
     <figure class="chapter-img" data-animate="fade-up">
       <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&q=80" alt="Business team in a corporate leadership transition setting" loading="lazy">
-      <figcaption data-ko="승계의 도전 &mdash; 비가르 퇴임 후 10년간 네 명의 CEO">The succession challenge &mdash; four CEOs in the decade after Bigeard&rsquo;s departure</figcaption>
+      <figcaption>The succession challenge &mdash; four CEOs in the decade after Bigeard&rsquo;s departure</figcaption>
     </figure>
 
     <div class="quote-block" data-animate="fade-up">
-      <div class="quote-text" data-ko="&ldquo;저는 Eric Bigeard의 유산을 과소평가했습니다. 여전히 오늘날, 그 유산을 살려두는 것이 매우 중요합니다. 에릭이 지난 25년간 이 회사를 만들었기 때문입니다.&rdquo;">"I underestimated the legacy of Eric Bigeard. Still today, it's very important to keep that legacy alive, because Eric had built this company over the past 25 years."</div>
-      <div class="quote-attr" data-ko="Herv&eacute; Milcent — OPI, &ldquo;빅 인터뷰: 새로운 (리레코) 세계&rdquo;, 2018년 7월">Herv&eacute; Milcent — <a href="https://www.opi.net/business/large-resellers/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, "Big Interview: A new (Lyreco) world"</a>, July 2018</div>
+      <div class="quote-text">"I underestimated the legacy of Eric Bigeard. Still today, it's very important to keep that legacy alive, because Eric had built this company over the past 25 years."</div>
+      <div class="quote-attr">Herv&eacute; Milcent — <a href="https://www.opi.net/business/large-resellers/big-interview-a-new-lyreco-world/" target="_blank" rel="noopener" style="color: inherit; opacity: 0.75; text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI, "Big Interview: A new (Lyreco) world"</a>, July 2018</div>
     </div>
   </section>
 
@@ -594,32 +585,32 @@
   <!-- ── THE RETURN ── -->
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="복귀">The Return</div>
-      <h2 class="section-title" data-ko="그는 진정으로 <em>떠나지</em> 않았다">He never truly <em>left</em></h2>
+      <div class="section-label">The Return</div>
+      <h2 class="section-title">He never truly <em>left</em></h2>
       <div class="section-body">
-        <p data-ko="비가르는 2010년 CEO에서 물러났지만 결코 완전히 단절되지 않았다. Georges Gaspard의 개인적인 요청으로 감독이사회에 합류했다 &mdash; CEO 위의 거버넌스 계층으로, 주요 전략적 결정을 감독하는 역할. 그 자리에서 세 명의 CEO가 승계 기간 동안 분투하는 것을 지켜보았고, 요청받으면 조언했지만 그 누구를 위해서도 공개적으로 나서지 않았다.">Bigeard stepped down as CEO in 2010 but never truly disconnected. At Georges Gaspard&rsquo;s personal request, he joined the Supervisory Board &mdash; the governance layer above the CEO, responsible for overseeing major strategic decisions. He watched three CEOs struggle through the succession years from that seat, advising when asked but never stepping forward publicly for any of them.</p>
-        <p data-ko="그러다 2021년, Gregory Li&eacute;nard 체제에서 무언가 바뀌었다. OPI는 비가르가 &ldquo;지원하기 위해&rdquo; 돌아왔다고 보도했다 &mdash; 수동적 이사회 멤버에서 적극적 전략 파트너로 이동한 것이다. 그와 Li&eacute;nard는 팬데믹 이후 시장 재편 과정에서 리레코의 유럽 입지를 공고히 하고 아시아 사업을 강화하는 데 함께 일했다. 리레코를 면밀히 주시하는 업계에 신호는 명확했다: 비가르가 이 CEO를 개인적으로 지지하고 있다. 전임자들 &mdash; Martinez도, Law도, Milcent도 &mdash; 이를 받지 못했다.">Then in 2021, under Gregory Li&eacute;nard, something changed. OPI reported that Bigeard had come back &ldquo;in support&rdquo; &mdash; meaning he moved from passive board member to active strategic partner. He and Li&eacute;nard worked together on consolidating Lyreco&rsquo;s European footprint and strengthening the Asian operations during the post-pandemic market reset. For an industry that watches Lyreco closely, the signal was unmistakable: Bigeard was backing this CEO personally. None of his predecessors &mdash; not Martinez, not Law, not Milcent &mdash; had received that.</p>
-        <p data-ko="리레코 외에, 그는 엔젤 투자자가 되었다. 2011년 벨기에 NFC 스타트업 Getyoo에 €60만을 투자했다. 소박한 투자였지만 &mdash; 은퇴 속으로 물러나지 않았음을 보여주는 것이다. 호기심을 유지하며, 현장에 남았다.">Beyond Lyreco, he became an angel investor. He backed Belgian NFC startup <a href="https://techcrunch.com/2011/07/14/getyoo-raises-a-e600000-seed-round-for-interactive-nfc-solutions/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">Getyoo</a> with &euro;600K in 2011. A modest bet &mdash; but one that shows he did not retreat into retirement. He stayed curious, stayed in the arena.</p>
+        <p>Bigeard stepped down as CEO in 2010 but never truly disconnected. At Georges Gaspard&rsquo;s personal request, he joined the Supervisory Board &mdash; the governance layer above the CEO, responsible for overseeing major strategic decisions. He watched three CEOs struggle through the succession years from that seat, advising when asked but never stepping forward publicly for any of them.</p>
+        <p>Then in 2021, under Gregory Li&eacute;nard, something changed. OPI reported that Bigeard had come back &ldquo;in support&rdquo; &mdash; meaning he moved from passive board member to active strategic partner. He and Li&eacute;nard worked together on consolidating Lyreco&rsquo;s European footprint and strengthening the Asian operations during the post-pandemic market reset. For an industry that watches Lyreco closely, the signal was unmistakable: Bigeard was backing this CEO personally. None of his predecessors &mdash; not Martinez, not Law, not Milcent &mdash; had received that.</p>
+        <p>Beyond Lyreco, he became an angel investor. He backed Belgian NFC startup <a href="https://techcrunch.com/2011/07/14/getyoo-raises-a-e600000-seed-round-for-interactive-nfc-solutions/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">Getyoo</a> with &euro;600K in 2011. A modest bet &mdash; but one that shows he did not retreat into retirement. He stayed curious, stayed in the arena.</p>
       </div>
     </div>
 
     <div class="insight-block" data-animate="fade-up">
-      <h4 data-ko="2월 26일 회의에 그의 참석이 의미하는 것">What His Presence at the February 26 Meeting Signals</h4>
-      <p data-ko="Eric Bigeard가 서울에서 잠재적 인수자와의 첫 회의에 참석하는 것은 이례적이다. 이것은 이사회 수준, 가문 수준의 검증이다. 그는 재무 실사를 위해 온 것이 아니다 &mdash; 그것은 Helen Riley가 담당한다. 그는 인품을 판단하기 위해 왔다. WEFUN의 경영진이 그가 30년간 쌓아온 것을 이어받을 자격이 있는지 평가하기 위해. 그의 승인은 거래 진행의 전제조건일 가능성이 높다. 비가르를 설득하면, 길이 열린다.">Eric Bigeard attending a first meeting with a potential acquirer in Seoul is extraordinary. This is board-level, family-level scrutiny. He is not here for financial due diligence &mdash; Helen Riley handles that. He is here to judge character. To assess whether WEFUN's management team is worthy of inheriting what he spent 30 years building. His approval is likely a prerequisite for the deal proceeding. Win Bigeard, and the path clears.</p>
+      <h4>What His Presence at the February 26 Meeting Signals</h4>
+      <p>Eric Bigeard's involvement in strategic discussions signals board-level, family-level scrutiny. He is not focused on financial due diligence &mdash; that's Helen Riley's domain. He is here to judge character and assess whether a potential partner is worthy of inheriting what he spent 30 years building. His approval is a prerequisite for any deal proceeding.</p>
     </div>
   </section>
 
   <!-- ── P&G PARALLEL · ICEBREAKER ── -->
   <div class="pg-compare" data-animate="fade-up">
     <div class="pg-compare-header">
-      <span class="pg-compare-badge" data-ko="P&amp;G 유사점 · 대화 소재">P&amp;G Parallel &middot; Icebreaker</span>
+      <span class="pg-compare-badge">P&amp;G Parallel &middot; Icebreaker</span>
     </div>
-    <div class="pg-compare-title" data-ko="전설적 CEO들: Bigeard &amp; Lafley">Legendary CEOs: Bigeard &amp; Lafley</div>
-    <div class="pg-compare-subtitle" data-ko="자신의 회사를 정의한 변혁적 리더들 &mdash; 그리고 뒤따른 승계 위기">Transformative leaders who defined their companies &mdash; and the succession crises that followed</div>
+    <div class="pg-compare-title">Legendary CEOs: Bigeard &amp; Lafley</div>
+    <div class="pg-compare-subtitle">Transformative leaders who defined their companies &mdash; and the succession crises that followed</div>
     <div class="pg-compare-body" style="margin-top: 1.2rem;">
-      <p data-ko="<strong>A.G. Lafley</strong>는 P&amp;G CEO로 두 번 재임했다: <em>2000&ndash;2009</em>와 <em>2013&ndash;2015</em>. 그는 <strong>&ldquo;소비자가 보스다&rdquo;</strong> 철학으로 P&amp;G를 변혁시켰고, 첫 번째 재임 기간 동안 매출을 거의 두 배로 늘렸으며, P&amp;G 현대사에서 가장 상징적인 리더가 되었다."><strong>A.G. Lafley</strong> served as P&amp;G CEO across two stints: <em>2000&ndash;2009</em> and <em>2013&ndash;2015</em>. He transformed P&amp;G with his <strong>&ldquo;Consumer is Boss&rdquo;</strong> philosophy, roughly doubled the company&rsquo;s revenue during his first tenure, and became the most iconic leader in P&amp;G&rsquo;s modern history.</p>
-      <p style="margin-top: 0.8rem;" data-ko="Eric Bigeard의 <em>22년</em> 리레코 재임은 놀라울 정도로 유사한 이야기를 들려준다. 그는 회사를 <strong>€1,500만에서 €20억</strong>으로 키웠다 &mdash; <em>133배</em> 증가. 두 사람 모두 본질적으로 <strong>&ldquo;사람의 리더&rdquo;</strong>였다. Lafley는 브랜드 매니저에게 권한을 부여하고 소비자에 집착하는 것으로 유명했다. 비가르는 가장 큰 업적이 <strong>&ldquo;견고하고 안정적인 팀&rdquo;</strong>이라고 말했다. 둘 다 통제가 아닌 권한 부여를 통해 이끌었다.">Eric Bigeard&rsquo;s <em>22-year</em> tenure at Lyreco tells a strikingly similar story. He took a company from <strong>&euro;15M to &euro;2B</strong> &mdash; a <em>133&times;</em> increase. Both men were <strong>&ldquo;people leaders&rdquo;</strong> at their core. Lafley was famous for empowering brand managers and obsessing over the consumer. Bigeard said his greatest achievement was <strong>&ldquo;a solid and stable team.&rdquo;</strong><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup> Both led through empowerment, not control.</p>
-      <p style="margin-top: 0.8rem;" data-ko="그리고 둘 다 <strong>같은 불가능한 도전</strong>에 직면했다: 승계. Lafley는 Bob McDonald를 후임으로 양성했지만 McDonald는 어려움을 겪었고 Lafley는 2013년 복귀해야 했다 &mdash; 비가르 자신의 어려운 승계 경험과 유사하다. P&amp;G의 CEO 회전문 &mdash; <em>McDonald → Lafley 복귀 → David Taylor → Jon Moeller</em> &mdash; 는 리레코의 것을 그대로 반영한다: <em>Martinez → Law → Milcent → Li&eacute;nard</em>. P&amp;G의 모든 전문 경영 인프라를 갖추고도 변혁적 CEO를 교체하는 것은 고통스러운 과정이었다. <strong>&ldquo;큰 신발&rdquo; 문제</strong>는 보편적이다.">And both faced the <strong>same impossible challenge</strong>: succession. Lafley groomed Bob McDonald as his replacement, but McDonald struggled and Lafley had to return in 2013 &mdash; echoing Bigeard&rsquo;s own experience of difficult succession. P&amp;G&rsquo;s CEO carousel &mdash; <em>McDonald &rarr; Lafley return &rarr; David Taylor &rarr; Jon Moeller</em> &mdash; mirrors Lyreco&rsquo;s own: <em>Martinez &rarr; Law &rarr; Milcent &rarr; Li&eacute;nard</em>. Even with all of P&amp;G&rsquo;s professional management infrastructure, replacing a transformative CEO proved agonizing. The <strong>&ldquo;big shoes&rdquo; problem</strong> is universal.</p>
+      <p><strong>A.G. Lafley</strong> served as P&amp;G CEO across two stints: <em>2000&ndash;2009</em> and <em>2013&ndash;2015</em>. He transformed P&amp;G with his <strong>&ldquo;Consumer is Boss&rdquo;</strong> philosophy, roughly doubled the company&rsquo;s revenue during his first tenure, and became the most iconic leader in P&amp;G&rsquo;s modern history.</p>
+      <p style="margin-top: 0.8rem;">Eric Bigeard&rsquo;s <em>22-year</em> tenure at Lyreco tells a strikingly similar story. He took a company from <strong>&euro;15M to &euro;2B</strong> &mdash; a <em>133&times;</em> increase. Both men were <strong>&ldquo;people leaders&rdquo;</strong> at their core. Lafley was famous for empowering brand managers and obsessing over the consumer. Bigeard said his greatest achievement was <strong>&ldquo;a solid and stable team.&rdquo;</strong><sup style="font-size: 0.6em; color: var(--champagne); cursor: help;" title="Source: OPI, Eric Bigeard Interview, December 31, 2010">&thinsp;[OPI]</sup> Both led through empowerment, not control.</p>
+      <p style="margin-top: 0.8rem;">And both faced the <strong>same impossible challenge</strong>: succession. Lafley groomed Bob McDonald as his replacement, but McDonald struggled and Lafley had to return in 2013 &mdash; echoing Bigeard&rsquo;s own experience of difficult succession. P&amp;G&rsquo;s CEO carousel &mdash; <em>McDonald &rarr; Lafley return &rarr; David Taylor &rarr; Jon Moeller</em> &mdash; mirrors Lyreco&rsquo;s own: <em>Martinez &rarr; Law &rarr; Milcent &rarr; Li&eacute;nard</em>. Even with all of P&amp;G&rsquo;s professional management infrastructure, replacing a transformative CEO proved agonizing. The <strong>&ldquo;big shoes&rdquo; problem</strong> is universal.</p>
     </div>
 
     <!-- ── CEO COMPARISON ── -->
@@ -633,64 +624,64 @@
       </thead>
       <tbody>
         <tr>
-          <td data-ko="재임 기간">Tenure</td>
+          <td>Tenure</td>
           <td><strong>2000&ndash;2009</strong>, then <em>2013&ndash;2015</em></td>
           <td><strong>1988&ndash;2010</strong> (22 years continuous)</td>
         </tr>
         <tr>
-          <td data-ko="CEO 취임 나이">Age at CEO</td>
-          <td data-ko="약 52세">~52 years old</td>
-          <td data-ko="<strong>약 33세</strong>"><strong>~33 years old</strong></td>
+          <td>Age at CEO</td>
+          <td>~52 years old</td>
+          <td><strong>~33 years old</strong></td>
         </tr>
         <tr>
-          <td data-ko="성장">Growth</td>
-          <td data-ko="매출 약 2배 증가">Revenue roughly doubled</td>
+          <td>Growth</td>
+          <td>Revenue roughly doubled</td>
           <td><strong>&euro;15M &rarr; &euro;2B</strong> (133&times;)</td>
         </tr>
         <tr>
-          <td data-ko="철학">Philosophy</td>
-          <td data-ko="&ldquo;소비자가 보스다&rdquo;">&ldquo;Consumer is Boss&rdquo;</td>
-          <td data-ko="&ldquo;팀이 나의 가장 큰 업적이다&rdquo;">&ldquo;The team is my greatest achievement&rdquo;</td>
+          <td>Philosophy</td>
+          <td>&ldquo;Consumer is Boss&rdquo;</td>
+          <td>&ldquo;The team is my greatest achievement&rdquo;</td>
         </tr>
         <tr>
-          <td data-ko="확장">Expansion</td>
-          <td data-ko="신흥 시장 (중국, 인도)">Emerging markets (China, India)</td>
+          <td>Expansion</td>
+          <td>Emerging markets (China, India)</td>
           <td><strong>1 &rarr; 29 countries</strong></td>
         </tr>
         <tr>
-          <td data-ko="승계">Succession</td>
-          <td data-ko="McDonald 어려움 → Lafley <em>복귀</em>">McDonald struggled &rarr; Lafley <em>returned</em></td>
+          <td>Succession</td>
+          <td>McDonald struggled &rarr; Lafley <em>returned</em></td>
           <td>Martinez &rarr; Law &rarr; Milcent &rarr; Li&eacute;nard</td>
         </tr>
         <tr>
-          <td data-ko="CEO 이후">Post-CEO</td>
-          <td data-ko="2013년 복귀 후 은퇴">Had to come back (2013), then retired</td>
-          <td data-ko="2021년 Li&eacute;nard &ldquo;지원을 위해&rdquo; 복귀">Returned 2021 "in support" of Li&eacute;nard</td>
+          <td>Post-CEO</td>
+          <td>Had to come back (2013), then retired</td>
+          <td>Returned 2021 "in support" of Li&eacute;nard</td>
         </tr>
         <tr>
-          <td data-ko="유산">Legacy</td>
-          <td data-ko="현대사 가장 상징적인 P&amp;G CEO">Most iconic P&amp;G CEO in modern history</td>
-          <td data-ko="리레코를 지역 기업에서 글로벌 리더로 성장시킴">Built Lyreco from regional to global leader</td>
+          <td>Legacy</td>
+          <td>Most iconic P&amp;G CEO in modern history</td>
+          <td>Built Lyreco from regional to global leader</td>
         </tr>
       </tbody>
     </table>
 
     <div class="pg-note-grid">
       <div class="pg-note">
-        <div class="pg-note-label" data-ko="변혁적 리더">Transformative Leaders</div>
-        <div class="pg-note-text" data-ko="비가르: 22년간 133배 성장. Lafley: P&amp;G 매출 2배 성장과 전략 재창조. 둘 다 자사의 한 시대를 정의했다.">Bigeard: 133&times; growth in 22 years. Lafley: doubled P&amp;G and reinvented its strategy. Both defined an era for their companies.</div>
+        <div class="pg-note-label">Transformative Leaders</div>
+        <div class="pg-note-text">Bigeard: 133&times; growth in 22 years. Lafley: doubled P&amp;G and reinvented its strategy. Both defined an era for their companies.</div>
       </div>
       <div class="pg-note">
-        <div class="pg-note-label" data-ko="승계 문제">The Succession Problem</div>
-        <div class="pg-note-text" data-ko="두 회사 모두 차기 리더를 찾는 데 어려움을 겪었다. P&amp;G는 Lafley 이후 네 명의 CEO를 거쳤다. 위대한 CEO는 긴 그림자를 드리운다.">Both companies struggled to find the next leader. P&amp;G cycled through four CEOs after Lafley. Great CEOs cast long shadows.</div>
+        <div class="pg-note-label">The Succession Problem</div>
+        <div class="pg-note-text">Both companies struggled to find the next leader. P&amp;G cycled through four CEOs after Lafley. Great CEOs cast long shadows.</div>
       </div>
       <div class="pg-note">
-        <div class="pg-note-label" data-ko="사람 중심 철학">People Philosophy</div>
-        <div class="pg-note-text" data-ko="Lafley: &ldquo;소비자가 보스다.&rdquo; 비가르: &ldquo;나의 가장 큰 업적은 팀이었다.&rdquo; 둘 다 통제가 아닌 권한 부여를 통해 이끌었다.">Lafley: &ldquo;Consumer is Boss.&rdquo; Bigeard: &ldquo;My biggest achievement was the team.&rdquo; Both led through empowerment, not control.</div>
+        <div class="pg-note-label">People Philosophy</div>
+        <div class="pg-note-text">Lafley: &ldquo;Consumer is Boss.&rdquo; Bigeard: &ldquo;My biggest achievement was the team.&rdquo; Both led through empowerment, not control.</div>
       </div>
     </div>
 
-    <div class="pg-talking-point" data-ko="&ldquo;P&amp;G조차도 &mdash; 모든 전문 경영 인프라를 갖추고도 &mdash; 변혁적 CEO를 교체하는 데 어려움을 겪었다. 전설의 그림자는 항상 길다.&rdquo;">
+    <div class="pg-talking-point">
       &ldquo;Even P&amp;G &mdash; with all its professional management infrastructure &mdash; struggled to replace a transformative CEO. The shadow of a legend is always long.&rdquo;
     </div>
   </div>
@@ -698,64 +689,64 @@
   <!-- ── SUCCESSION PARALLEL · LOGAN'S SHADOW ── -->
   <div class="pg-compare" data-animate="fade-up">
     <div class="pg-compare-header">
-      <span class="pg-compare-badge" data-ko="석세션 유사점 · 대화 소재">Succession Parallel &middot; Icebreaker</span>
+      <span class="pg-compare-badge">Succession Parallel &middot; Icebreaker</span>
     </div>
-    <div class="pg-compare-title" data-ko="로건의 그림자">Logan&rsquo;s Shadow</div>
-    <div class="pg-compare-subtitle" data-ko="불가능한 후계자 &mdash; 가장의 유산이 모든 상속자를 작아 보이게 만들 때">The impossible successor &mdash; when a patriarch&rsquo;s legacy makes every heir look small</div>
+    <div class="pg-compare-title">Logan&rsquo;s Shadow</div>
+    <div class="pg-compare-subtitle">The impossible successor &mdash; when a patriarch&rsquo;s legacy makes every heir look small</div>
     <div class="pg-compare-body" style="margin-top: 1.2rem;">
-      <p data-ko="<em>석세션</em>에서 Logan Roy는 퇴장 계획을 거부해 승계를 유혈극으로 만들었다. 비가르는 정반대를 했다 &mdash; <strong>10년 전부터</strong> 퇴장을 계획하고 정점에 있던 55세에 물러났다. 하지만 결과는 섬뜩할 정도로 비슷했다: <strong>그 이후 네 명의 CEO가 자리에 앉았고, 아무도 그 자리를 채우지 못했다.</strong>">In <em>Succession</em>, Logan Roy&rsquo;s refusal to plan his exit turned succession into a bloodbath. Bigeard did the opposite &mdash; he planned his exit <strong>a decade in advance</strong>, stepping down at 55 while still at the top. But the result was eerily similar: <strong>four CEOs in the chair after him, none able to fill it.</strong></p>
-      <p style="margin-top: 0.8rem;" data-ko="Martinez는 8개월을 버텼다. Law는 배를 안정시켰지만 과도기적이었다. Milcent은 공개적으로 <em>&ldquo;Eric Bigeard의 유산을 과소평가했다&rdquo;</em>고 인정했다. 오직 Li&eacute;nard만이 &mdash; 28년차 종신 근무자로 직접 아시아를 구축한 사람 &mdash; 어떤 로이 가문 자녀도 받지 못한 것을 얻었다: <strong>가장의 진정한 축복.</strong>">Martinez lasted 8 months. Law steadied the ship but was transitional. Milcent publicly admitted <em>&ldquo;I underestimated the legacy of Eric Bigeard.&rdquo;</em> Only Li&eacute;nard &mdash; a 28-year lifer who built Asia with his own hands &mdash; earned what no Roy child ever received: <strong>the patriarch&rsquo;s genuine blessing.</strong></p>
-      <p style="margin-top: 0.8rem;" data-ko="차이점? 비가르는 결국 한 명을 선택했다. 로건은 끝내 그러지 못했다.">The difference? Bigeard eventually chose one. Logan never could.</p>
+      <p>In <em>Succession</em>, Logan Roy&rsquo;s refusal to plan his exit turned succession into a bloodbath. Bigeard did the opposite &mdash; he planned his exit <strong>a decade in advance</strong>, stepping down at 55 while still at the top. But the result was eerily similar: <strong>four CEOs in the chair after him, none able to fill it.</strong></p>
+      <p style="margin-top: 0.8rem;">Martinez lasted 8 months. Law steadied the ship but was transitional. Milcent publicly admitted <em>&ldquo;I underestimated the legacy of Eric Bigeard.&rdquo;</em> Only Li&eacute;nard &mdash; a 28-year lifer who built Asia with his own hands &mdash; earned what no Roy child ever received: <strong>the patriarch&rsquo;s genuine blessing.</strong></p>
+      <p style="margin-top: 0.8rem;">The difference? Bigeard eventually chose one. Logan never could.</p>
     </div>
 
     <table class="compare-table">
       <thead>
         <tr>
           <th></th>
-          <th class="col-pg" data-ko="&#127909; 석세션 (HBO)">&#127909; Succession (HBO)</th>
+          <th class="col-pg">&#127909; Succession (HBO)</th>
           <th class="col-lyreco">Lyreco</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td data-ko="가장">The Patriarch</td>
-          <td data-ko="<strong>Logan Roy</strong> &mdash; 50년 이상 지휘"><strong>Logan Roy</strong> &mdash; 50+ years at the helm</td>
+          <td>The Patriarch</td>
+          <td><strong>Logan Roy</strong> &mdash; 50+ years at the helm</td>
           <td><strong>Eric Bigeard</strong> &mdash; 22 years, &euro;15M &rarr; &euro;2B</td>
         </tr>
         <tr>
-          <td data-ko="퇴장 방식">Exit Style</td>
-          <td data-ko="재직 중 사망 (떠날 계획 없었음)">Died in office (never planned to leave)</td>
-          <td data-ko="10년 전 퇴장 계획, 55세에 퇴임">Planned exit 10 years in advance, left at 55</td>
+          <td>Exit Style</td>
+          <td>Died in office (never planned to leave)</td>
+          <td>Planned exit 10 years in advance, left at 55</td>
         </tr>
         <tr>
-          <td data-ko="첫 번째 후계자">First Successor</td>
-          <td data-ko="Kendall &mdash; 지명 후 굴욕">Kendall &mdash; anointed then humiliated</td>
-          <td data-ko="Martinez &mdash; 8개월, &ldquo;즉시 효력&rdquo;으로 퇴임">Martinez &mdash; 8 months, departed &ldquo;with immediate effect&rdquo;</td>
+          <td>First Successor</td>
+          <td>Kendall &mdash; anointed then humiliated</td>
+          <td>Martinez &mdash; 8 months, departed &ldquo;with immediate effect&rdquo;</td>
         </tr>
         <tr>
-          <td data-ko="안정자">The Stabilizer</td>
-          <td data-ko="Frank Vernon &mdash; 충성스러운 내부인, CEO는 아님">Frank Vernon &mdash; loyal insider, never quite CEO</td>
-          <td data-ko="Steve Law &mdash; 25년 베테랑, 배를 안정시킴">Steve Law &mdash; 25-year veteran, steadied the ship</td>
+          <td>The Stabilizer</td>
+          <td>Frank Vernon &mdash; loyal insider, never quite CEO</td>
+          <td>Steve Law &mdash; 25-year veteran, steadied the ship</td>
         </tr>
         <tr>
-          <td data-ko="외부인">The Outsider</td>
-          <td data-ko="Rhea Jarrell &mdash; 영입되었으나 가문을 견디지 못함">Rhea Jarrell &mdash; brought in, couldn&rsquo;t survive the family</td>
-          <td data-ko="Milcent &mdash; &ldquo;비가르의 유산을 과소평가했다&rdquo;">Milcent &mdash; &ldquo;I underestimated Bigeard&rsquo;s legacy&rdquo;</td>
+          <td>The Outsider</td>
+          <td>Rhea Jarrell &mdash; brought in, couldn&rsquo;t survive the family</td>
+          <td>Milcent &mdash; &ldquo;I underestimated Bigeard&rsquo;s legacy&rdquo;</td>
         </tr>
         <tr>
-          <td data-ko="유령">The Ghost</td>
-          <td data-ko="로건의 그림자가 모든 후계자를 작아 보이게 만듦">Logan&rsquo;s shadow made every successor look small</td>
-          <td data-ko="비가르는 감독이사회에서 &mdash; 지켜보며, 기다리며">Bigeard on the Supervisory Board &mdash; watching, waiting</td>
+          <td>The Ghost</td>
+          <td>Logan&rsquo;s shadow made every successor look small</td>
+          <td>Bigeard on the Supervisory Board &mdash; watching, waiting</td>
         </tr>
         <tr>
-          <td data-ko="최종 선택">Final Choice</td>
-          <td data-ko="이사회가 선택한 것은… 아무도 없음 (회사 매각)">The board chose&hellip; no one (company sold)</td>
-          <td data-ko="Li&eacute;nard &mdash; 28년 종신 근무자, 2021년 비가르의 공개 지지 획득">Li&eacute;nard &mdash; 28-year lifer, earned Bigeard&rsquo;s 2021 endorsement</td>
+          <td>Final Choice</td>
+          <td>The board chose&hellip; no one (company sold)</td>
+          <td>Li&eacute;nard &mdash; 28-year lifer, earned Bigeard&rsquo;s 2021 endorsement</td>
         </tr>
       </tbody>
     </table>
 
-    <div class="pg-talking-point" data-ko="&ldquo;Logan Roy의 가장 큰 실패는 후계자를 결코 선택하지 않은 것이다. 비가르의 가장 큰 업적은 마침내 한 명을 선택한 것일 수 있다.&rdquo;">
+    <div class="pg-talking-point">
       &ldquo;Logan Roy&rsquo;s greatest failure was never choosing a successor. Bigeard&rsquo;s greatest achievement may have been finally choosing one.&rdquo;
     </div>
   </div>
@@ -765,11 +756,11 @@
   <div class="divider"></div>
   <section class="section">
     <div data-animate="fade-up">
-      <div class="section-label" data-ko="업계 기록">The Industry Record</div>
-      <h2 class="section-title" data-ko="모든 것이 <em>OPI</em>에서 시작된 이유">Why everything comes from <em>OPI</em></h2>
+      <div class="section-label">The Industry Record</div>
+      <h2 class="section-title">Why everything comes from <em>OPI</em></h2>
       <div class="section-body">
-        <p data-ko="사실상 모든 리레코 C레벨 이야기 &mdash; 모든 CEO 임명, 퇴임, 전략 발표 &mdash; 가 하나의 출처에서 나온다는 것을 눈치챘다면, 맞다. OPI(Office Products International)는 글로벌 사무용품 산업의 공식 업계지이다. 1991년 11월 창간, 2006년 CEO <strong style='color: var(--pearl);'>Steve Hilleard</strong>와 이사 <strong style='color: var(--pearl);'>Janet Bell</strong>에 의한 경영진 인수. 런던 본사. 110개국 이상에서 50,000명 이상의 독자.">If you&rsquo;ve noticed that virtually every C-level Lyreco story &mdash; every CEO appointment, every departure, every strategy reveal &mdash; comes from one source, you&rsquo;re right. <a href="https://www.opi.net/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI (Office Products International)</a> is the trade publication of record for the global office supplies industry. Founded November 1991, management buyout in 2006 by CEO <strong style="color: var(--pearl);">Steve Hilleard</strong> and Director <strong style="color: var(--pearl);">Janet Bell</strong>. London HQ. 50,000+ readers across 110+ countries.</p>
-        <p data-ko="이 관계는 구조적이다. OPI는 매년 <strong style='color: var(--pearl);'>유럽 사무용품 어워드(EOPA)</strong>를 주관한다 &mdash; 업계에서 가장 권위 있는 시상식 &mdash; 그리고 리레코가 가장 많은 수상을 한 기업이다. 새 리레코 CEO가 취임하면, 첫 주요 인터뷰는 OPI와 한다. 2018년 Herv&eacute; Milcent이 마침내 심층 인터뷰에 동의했을 때, Steve Hilleard는 프랑스 북부 리레코 본사로 직접 날아갔다. 이것은 거래적 관계가 아니다. 제도적 관계이다.">The relationship is structural. OPI organizes the annual <strong style="color: var(--pearl);">European Office Products Awards (EOPA)</strong> &mdash; the industry&rsquo;s most prestigious recognition event &mdash; and Lyreco is its most decorated winner. When a new Lyreco CEO takes the chair, their first major interview is with OPI. When Herv&eacute; Milcent finally agreed to speak in depth in 2018, Steve Hilleard flew to Lyreco&rsquo;s headquarters in northern France personally. That is not a transactional relationship. It is an institutional one.</p>
+        <p>If you&rsquo;ve noticed that virtually every C-level Lyreco story &mdash; every CEO appointment, every departure, every strategy reveal &mdash; comes from one source, you&rsquo;re right. <a href="https://www.opi.net/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.55);">OPI (Office Products International)</a> is the trade publication of record for the global office supplies industry. Founded November 1991, management buyout in 2006 by CEO <strong style="color: var(--pearl);">Steve Hilleard</strong> and Director <strong style="color: var(--pearl);">Janet Bell</strong>. London HQ. 50,000+ readers across 110+ countries.</p>
+        <p>The relationship is structural. OPI organizes the annual <strong style="color: var(--pearl);">European Office Products Awards (EOPA)</strong> &mdash; the industry&rsquo;s most prestigious recognition event &mdash; and Lyreco is its most decorated winner. When a new Lyreco CEO takes the chair, their first major interview is with OPI. When Herv&eacute; Milcent finally agreed to speak in depth in 2018, Steve Hilleard flew to Lyreco&rsquo;s headquarters in northern France personally. That is not a transactional relationship. It is an institutional one.</p>
       </div>
     </div>
 
@@ -777,22 +768,22 @@
     <div data-animate="fade-up" style="margin: 2rem 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
       <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.2rem; text-align: center;">
         <div style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.5rem;">EOPA 2025</div>
-        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--champagne); line-height: 1.3;" data-ko="올해의 리셀러">Reseller of the Year</div>
-        <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;" data-ko="2년 연속">2nd consecutive year</div>
+        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--champagne); line-height: 1.3;">Reseller of the Year</div>
+        <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--smoke); opacity: 0.5; margin-top: 0.3rem;">2nd consecutive year</div>
       </div>
       <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.2); border-radius: var(--radius-card); padding: 1.2rem; text-align: center;">
         <div style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.5rem;">EOPA 2024</div>
-        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--champagne); line-height: 1.3;" data-ko="올해의 리셀러 + 지속가능성 우수상">Reseller of the Year + Sustainability Excellence</div>
+        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--champagne); line-height: 1.3;">Reseller of the Year + Sustainability Excellence</div>
       </div>
       <div style="background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card); padding: 1.2rem; text-align: center;">
         <div style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 0.5rem;">EOPA 2023</div>
-        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--smoke); opacity: 0.7; line-height: 1.3;" data-ko="높은 평가 &mdash; Goodness 프로그램">Highly Commended &mdash; Goodness Programme</div>
+        <div style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--smoke); opacity: 0.7; line-height: 1.3;">Highly Commended &mdash; Goodness Programme</div>
       </div>
     </div>
 
     <!-- OPI article links -->
     <div data-animate="fade-up" style="margin: 1.5rem 0; padding: 1.5rem; background: var(--ink-card); border: 1px solid rgba(212,184,122,0.12); border-radius: var(--radius-card);">
-      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1rem;" data-ko="비가르 관련 주요 OPI 기사">Key OPI Articles on Bigeard</div>
+      <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1rem;">Key OPI Articles on Bigeard</div>
       <div style="display: flex; flex-direction: column; gap: 0.7rem;">
         <a href="https://www.opi.net/news/analysis/eric-bigeard-interview/" target="_blank" rel="noopener" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.6rem 0; border-bottom: 1px solid rgba(212,184,122,0.08);">
           <span style="font-family: var(--font-body); font-size: 0.95rem; color: var(--pearl);">&ldquo;Eric Bigeard Interview&rdquo;</span>
@@ -814,18 +805,18 @@
     </div>
 
     <div class="section-body" data-animate="fade-up" style="margin-top: 1rem;">
-      <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;" data-ko="OPI의 보도는 독립적 편집이지, 기업 광고가 아니다. 하지만 접근권은 구조적으로 특권적이다 &mdash; 리레코가 수상하는 시상식을 운영하고, 첫 인터뷰를 따낸다. 조사 목적으로, OPI를 리레코 경영진 역사에 대한 권위 있는 1차 자료로 취급하라. 비가르, Milcent, Li&eacute;nard, 그리고 승계에 대해 발행한 모든 것은 교차 검증 완료되었다.">OPI&rsquo;s coverage is independent editorial, not advertorial. But the access is structurally privileged &mdash; they run the awards Lyreco wins, and they get the first interviews. For your research purposes, treat OPI as the authoritative primary source on Lyreco&rsquo;s executive history. Everything they have published about Bigeard, Milcent, Li&eacute;nard, and the succession has been cross-referenced and verified.</p>
+      <p style="font-size: 0.95rem; color: var(--smoke); opacity: 0.75;">OPI&rsquo;s coverage is independent editorial, not advertorial. But the access is structurally privileged &mdash; they run the awards Lyreco wins, and they get the first interviews. For your research purposes, treat OPI as the authoritative primary source on Lyreco&rsquo;s executive history. Everything they have published about Bigeard, Milcent, Li&eacute;nard, and the succession has been cross-referenced and verified.</p>
     </div>
   </section>
 
   <div class="divider"></div>
 
   <!-- ── GO DEEPER CTA ── -->
-  <section class="section" style="text-align: center; padding-bottom: 2rem;">
+  <section class="section wefun-only" style="text-align: center; padding-bottom: 2rem;">
     <div data-animate="fade-up">
-      <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1rem;" data-ko="상세 프로필">Extended Profile</div>
-      <h2 class="section-title" style="margin-bottom: 1rem;" data-ko="전체 그림을 보고 싶으신가요?">Want the full picture?</h2>
-      <p class="section-body" style="max-width: 520px; margin: 0 auto 2rem; font-size: 1rem; color: var(--smoke); opacity: 0.8;" data-ko="Eric Bigeard 완전 보고서 &mdash; 그의 출신, Marcel Bigeard 질문, 모든 인수, CEO 이후의 삶, 그리고 회의에서 그의 참석이 진정으로 의미하는 것.">The complete Eric Bigeard dossier &mdash; his origins, the Marcel Bigeard question, every acquisition, his post-CEO life, and what his presence at the meeting truly signals.</p>
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); opacity: 0.5; margin-bottom: 1rem;">Extended Profile</div>
+      <h2 class="section-title" style="margin-bottom: 1rem;">Want the full picture?</h2>
+      <p class="section-body" style="max-width: 520px; margin: 0 auto 2rem; font-size: 1rem; color: var(--smoke); opacity: 0.8;">The complete Eric Bigeard dossier &mdash; his origins, the Marcel Bigeard question, every acquisition, his post-CEO life, and what his presence at the meeting truly signals.</p>
       <a href="3b-bigeard-profile.html" style="display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.9rem 2rem; background: rgba(212,184,122,0.1); border: 1px solid rgba(212,184,122,0.35); border-radius: var(--radius-card); text-decoration: none; font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.1em; color: var(--champagne); transition: background 0.2s, border-color 0.2s;" onmouseover="this.style.background='rgba(212,184,122,0.18)';this.style.borderColor='rgba(212,184,122,0.6)'" onmouseout="this.style.background='rgba(212,184,122,0.1)';this.style.borderColor='rgba(212,184,122,0.35)'">
         ERIC BIGEARD &mdash; FULL PROFILE &nbsp;&#8599;
       </a>
@@ -837,22 +828,24 @@
 <!-- ═══════════════ NEXT CHAPTER ═══════════════ -->
 <div class="chapter-footer">
   <a href="4-goes-east.html" class="next-chapter-cta">
-    <span class="next-label" data-ko="다음 챕터">Next Chapter</span>
+    <span class="next-label">Next Chapter</span>
     <span class="next-num">Chapter IV</span>
-    <span class="next-name" data-ko="리레코, 동쪽으로">Lyreco Goes East</span>
+    <span class="next-name">Lyreco Goes East</span>
     <span class="next-arrow">&rarr;</span>
   </a>
 </div>
 
 <footer class="site-footer">
-  <span data-ko="대외비 &mdash; WEFUN 경영진을 위해 준비 &mdash; 2026년 2월">Confidential &mdash; Prepared for WEFUN Management &mdash; February 2026</span>
+  Confidential &mdash; 2026
 </footer>
 
+<script src="../js/auth.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="../js/chapters.js"></script>
 <script src="../js/nav.js"></script>
+<script src="../js/lang.js"></script>
 <script src="../js/scroll-engine.js"></script>
 <script src="../js/viz/revenue-chart.js"></script>
 <script>
@@ -1119,6 +1112,5 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 }());
 </script>
-<script src="../js/lang.js"></script>
 </body>
 </html>
