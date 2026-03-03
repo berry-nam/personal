@@ -25,6 +25,7 @@
     <a href="#chapters">Chapters</a>
     <span class="audience-badge" id="audienceBadge"></span>
     <span class="lang-toggle" id="langToggle"></span>
+    <button class="nav-logout" onclick="logout()" title="Sign out">Sign Out</button>
   </div>
 </nav>
 
@@ -35,10 +36,7 @@
   <h1 class="hub-title">Where <em>Two Worlds</em><br>Converge</h1>
   <p class="hub-subtitle">A strategic partnership briefing</p>
   <div class="hub-details">
-    <span><span class="dot"></span>February 26, 2026</span>
-    <span><span class="dot"></span>10:30 AM KST</span>
-    <span><span class="dot"></span>WEFUN HQ, Gangnam</span>
-    <span><span class="dot"></span>First Encounter</span>
+    <span><span class="dot"></span>February 26, 2026 · 10:30 AM KST · WEFUN HQ, Gangnam · First Encounter</span>
   </div>
   <div class="hub-scroll-cue">
     <div class="scroll-indicator">
@@ -58,6 +56,11 @@
   <div class="chapter-grid" id="chapterGrid">
     <!-- Dynamically populated based on audience -->
   </div>
+</section>
+
+<!-- ═══════════════ INTEL FEED ═══════════════ -->
+<section id="intelFeed" class="intel-feed" style="display:none;">
+  <!-- Dynamically populated based on audience -->
 </section>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
@@ -121,7 +124,172 @@ window.addEventListener('audience-ready', function(e) {
   if (typeof initLang === 'function') {
     initLang();
   }
+
+  // ─── Render Intel Feed ───
+  renderIntelFeed(audience);
 });
+
+function renderIntelFeed(audience) {
+  var feed = document.getElementById('intelFeed');
+  if (!feed) return;
+
+  var NEWS = {
+    lyreco: [
+      {
+        tag: 'ma', tagLabel: 'M&A',
+        time: 'Jan 20, 2026',
+        title: { en: 'WeFun Completes Human Food Merger', kr: '위펀, 휴먼푸드 합병 완료' },
+        excerpt: {
+          en: 'WeFun finalized its acquisition of Human Food, adding ~€32M in revenue and 220 food-service sites. The deal strengthens WeFun\'s end-to-end workplace platform.',
+          kr: '위펀이 휴먼푸드 인수를 완료하여 약 €32M의 매출과 220개 급식 사이트를 추가했습니다. 이번 딜은 위펀의 종합 워크플레이스 플랫폼을 강화합니다.'
+        },
+        source: 'KED Global', url: 'https://www.kedglobal.com'
+      },
+      {
+        tag: 'market', tagLabel: 'MARKET',
+        time: 'Dec 2025',
+        title: { en: 'WeFun Wins 27th Korea Brand Award — Minister\'s Prize', kr: '위펀, 제27회 대한민국브랜드대상 산업부 장관상 수상' },
+        excerpt: {
+          en: 'WeFun\'s Snack24 received the Minister of Trade, Industry and Energy Award at Korea\'s national brand ceremony, recognizing its B2B subscription model as a category-defining brand.',
+          kr: '위펀의 스낵24가 대한민국브랜드대상에서 산업통상자원부 장관상을 수상하며 B2B 구독 모델의 카테고리 선도 브랜드로 인정받았습니다.'
+        },
+        source: 'VentureSquare', url: 'https://www.venturesquare.net/1021698'
+      },
+      {
+        tag: 'financial', tagLabel: 'FINANCIAL',
+        time: 'Feb 2026',
+        title: { en: 'WeFun Gift24 Corporate Demand Surges Ahead of Lunar New Year', kr: '위펀 선물24, 설 앞두고 기업 수요 급증' },
+        excerpt: {
+          en: 'WeFun\'s corporate gift SaaS platform "Gift24" reported a significant surge in enterprise inquiries ahead of the 2026 Lunar New Year, signaling expanding reach into corporate gifting.',
+          kr: '위펀의 기업용 선물 SaaS 플랫폼 "선물24"가 2026년 설을 앞두고 기업 문의가 크게 급증하며 기업 선물 시장으로의 확장을 보여주고 있습니다.'
+        },
+        source: 'WeFun IR', url: 'https://thevc.kr/wefun'
+      },
+      {
+        tag: 'financial', tagLabel: 'FINANCIAL',
+        time: 'Q4 2025',
+        title: { en: 'WeFun FY2025E Revenue Reaches €138M (₩2,000억)', kr: '위펀 FY2025E 매출 €138M (₩2,000억) 달성' },
+        excerpt: {
+          en: 'WeFun\'s FY2025E revenue reaches €138M (₩2,000억), with sustained rapid growth from FY2024\'s €99M. The company is advancing IPO preparations with Hana Securities.',
+          kr: '위펀의 FY2025E 매출이 €138M(₩2,000억)에 달하며 FY2024 €99M 대비 지속적인 고성장을 기록하고 있습니다. 하나증권과 IPO 준비를 진행 중입니다.'
+        },
+        source: 'THE VC', url: 'https://thevc.kr/wefun'
+      },
+      {
+        tag: 'industry', tagLabel: 'INDUSTRY',
+        time: 'Jan 2026',
+        title: { en: 'Korean B2B Workplace Services Market Hits ₩2.3T', kr: '한국 B2B 워크플레이스 서비스 시장 2.3조 원 돌파' },
+        excerpt: {
+          en: 'The Korean B2B workplace services market — spanning office supplies, snacks, beverages, and facility management — surpassed ₩2.3 trillion, growing 18% year-over-year.',
+          kr: '사무용품, 간식, 음료, 시설 관리를 포괄하는 한국 B2B 워크플레이스 서비스 시장이 전년 대비 18% 성장하며 2.3조 원을 돌파했습니다.'
+        },
+        source: 'Market Research', url: 'https://pitchbook.com/profiles/company/443047-42'
+      },
+      {
+        tag: 'esg', tagLabel: 'ESG',
+        time: 'Nov 2025',
+        title: { en: 'WeFun Expands to 10,000+ Enterprise Clients', kr: '위펀, 기업 고객 10,000사 돌파' },
+        excerpt: {
+          en: 'WeFun\'s B2B platform now serves over 10,000 enterprise clients with 100+ modular service categories, from Snack24 to Coffee24, Lunch24 and Gift24.',
+          kr: '위펀의 B2B 플랫폼이 스낵24부터 커피24, 런치24, 선물24까지 100개 이상의 모듈형 서비스로 10,000개 이상의 기업 고객에게 서비스를 제공하고 있습니다.'
+        },
+        source: 'WeFun Press', url: 'https://www.venturesquare.net/1021698'
+      }
+    ],
+    wefun: [
+      {
+        tag: 'industry', tagLabel: 'INDUSTRY',
+        time: '2026',
+        title: { en: 'Lyreco Celebrates 100th Anniversary', kr: '리레코 창립 100주년 기념' },
+        excerpt: {
+          en: 'From a bookshop in Valenciennes to a ₩4.35조 workplace solutions leader in 25+ countries — the Gaspard family marks a century of continuous operation.',
+          kr: '발랑시엔의 서점에서 25개국 이상의 ₩4.35조 규모 워크플레이스 솔루션 리더까지 — 가스파르 가문이 100년 연속 운영을 기념합니다.'
+        },
+        source: 'Lyreco Group', url: 'https://www.lyreco.com/group/'
+      },
+      {
+        tag: 'ma', tagLabel: 'M&A',
+        time: 'Mar 2025',
+        title: { en: 'Lyreco Acquires Zenith Hygiene & Shorrock Trichem', kr: '리레코, Zenith Hygiene 및 Shorrock Trichem 인수' },
+        excerpt: {
+          en: 'Lyreco acquired two leading UK hygiene distributors from Diversey (Solenis), expanding its workplace hygiene and cleaning solutions portfolio across Europe.',
+          kr: '리레코가 Diversey(Solenis)로부터 영국의 주요 위생 유통업체 2곳을 인수하여 유럽 전역의 워크플레이스 위생 및 청소 솔루션 포트폴리오를 확장했습니다.'
+        },
+        source: 'Tracxn', url: 'https://tracxn.com/d/acquisitions/acquisitions-by-lyreco/__q1AWyUKT7fKKE2B1waluQ9whGSgbxrEQDvTqvzO5DbU'
+      },
+      {
+        tag: 'esg', tagLabel: 'ESG',
+        time: '2025',
+        title: { en: 'Lyreco Earns EcoVadis Platinum — Top 1% Globally', kr: '리레코, EcoVadis 플래티넘 획득 — 전 세계 상위 1%' },
+        excerpt: {
+          en: 'Lyreco achieved EcoVadis Platinum status, ranking in the top 1% of 25,000 companies worldwide for sustainability. Also named to CDP\'s Supplier Engagement A-List (top 5%).',
+          kr: '리레코가 EcoVadis 플래티넘을 달성하여 전 세계 25,000개 기업 중 지속가능성 상위 1%에 올랐습니다. CDP 공급업체 참여 A-리스트(상위 5%)에도 선정되었습니다.'
+        },
+        source: 'Lyreco Group', url: 'https://www.lyreco.com/group/magazine'
+      },
+      {
+        tag: 'market', tagLabel: 'MARKET',
+        time: 'Jun 2025',
+        title: { en: 'Lyreco\'s Future of Work Conference in Brussels', kr: '리레코, 브뤼셀에서 미래 업무 컨퍼런스 개최' },
+        excerpt: {
+          en: 'Hundreds of workplace innovators and business leaders gathered in Brussels for Lyreco\'s 2025 Future of Work Conference, discussing collaborative and technology-driven workplace solutions.',
+          kr: '수백 명의 워크플레이스 혁신가와 비즈니스 리더들이 브뤼셀에서 리레코의 2025 미래 업무 컨퍼런스에 모여 협업 및 기술 기반 워크플레이스 솔루션을 논의했습니다.'
+        },
+        source: 'Lyreco Group', url: 'https://www.lyreco.com/group/embrace-change/future-work-now-highlights-lyrecos-groundbreaking-2025-conference'
+      },
+      {
+        tag: 'industry', tagLabel: 'INDUSTRY',
+        time: 'Q3 2025',
+        title: { en: 'Lyreco Unveils New Own-Brand Strategy', kr: '리레코, 새로운 자체 브랜드 전략 공개' },
+        excerpt: {
+          en: 'Lyreco announced a refreshed own-brand product strategy, consolidating its private-label portfolio to compete more effectively in the workplace consumables market.',
+          kr: '리레코가 자체 브랜드 제품 전략을 새롭게 발표하며, PB 포트폴리오를 통합하여 워크플레이스 소모품 시장에서 더 효과적으로 경쟁하겠다고 밝혔습니다.'
+        },
+        source: 'OPI', url: 'https://www.opi.net/news/region/002-europe/lyreco-unveils-new-own-brand-strategy/'
+      },
+      {
+        tag: 'financial', tagLabel: 'FINANCIAL',
+        time: 'FY 2025',
+        title: { en: 'Lyreco Asia Revenue: ₩1,175–1,247억 Across Five Markets', kr: '리레코 아시아 매출: 5개 시장에서 ₩1,175–1,247억' },
+        excerpt: {
+          en: 'Lyreco\'s five Asian markets (Hong Kong, Korea, Singapore, Malaysia, Thailand) generate ₩1,175–1,247억 combined — approximately 3% of group revenue.',
+          kr: '리레코의 아시아 5개 시장(홍콩, 한국, 싱가포르, 말레이시아, 태국) 합산 매출은 ₩1,175–1,247억으로, 그룹 매출의 약 3%에 해당합니다.'
+        },
+        source: 'Internal Analysis', url: 'https://www.lyreco.com/group/about/lyreco-international-footprint'
+      }
+    ]
+  };
+
+  var items = NEWS[audience] || [];
+  if (!items.length) return;
+
+  feed.style.display = '';
+  feed.innerHTML =
+    '<div class="intel-header">' +
+      '<span class="intel-status"></span>' +
+      '<span class="intel-label" data-lang="en">Recent Intelligence</span>' +
+      '<span class="intel-label" data-lang="kr">최신 인텔리전스</span>' +
+      '<span class="intel-count">' + items.length + ' items</span>' +
+    '</div>' +
+    '<div class="intel-grid">' +
+      items.map(function(item) {
+        var isLink = item.url && item.url !== '#';
+        var openTag = isLink ? '<a href="' + item.url + '" target="_blank" rel="noopener" class="intel-card">' : '<div class="intel-card">';
+        var closeTag = isLink ? '</a>' : '</div>';
+        return openTag +
+          '<div class="intel-card__top">' +
+            '<span class="intel-tag intel-tag--' + item.tag + '">' + item.tagLabel + '</span>' +
+            '<span class="intel-time">' + item.time + '</span>' +
+          '</div>' +
+          '<div class="intel-card__title" data-lang="en">' + item.title.en + '</div>' +
+          '<div class="intel-card__title" data-lang="kr">' + item.title.kr + '</div>' +
+          '<div class="intel-card__excerpt" data-lang="en">' + item.excerpt.en + '</div>' +
+          '<div class="intel-card__excerpt" data-lang="kr">' + item.excerpt.kr + '</div>' +
+          '<div class="intel-card__source">' + item.source + '</div>' +
+        closeTag;
+      }).join('') +
+    '</div>';
+}
 </script>
 </body>
 </html>

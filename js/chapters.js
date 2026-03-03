@@ -9,8 +9,8 @@ var CHAPTERS = {
       title: 'A Bookshop in Valenciennes',
       subtitle: 'Where a family legacy began — a century ago',
       readTime: '6 min',
-      teaser: 'In 1926, in a small town in northern France, Georges-Gaston Gaspard opened a bookshop. Four generations later, it became a €3 billion empire.',
-      teaserKr: '1926년, 프랑스 북부의 작은 마을에서 조르주-가스통 가스파르가 서점을 열었습니다. 4대에 걸쳐 30억 유로 제국이 되었습니다.',
+      teaser: 'In 1926, in a small town in northern France, Georges-Gaston Gaspard opened a bookshop. Four generations later, it became a <span class="cur-eur">€3 billion</span><span class="cur-krw">₩4.35조</span> empire.',
+      teaserKr: '1926년, 프랑스 북부의 작은 마을에서 조르주-가스통 가스파르가 서점을 열었습니다. 4대에 걸쳐 <span class="cur-eur">30억 유로</span><span class="cur-krw">₩4.35조</span> 제국이 되었습니다.',
     },
     {
       num: 2, slug: '2-dynasty', audience: 'shared', displayOrder: 2,
@@ -41,8 +41,8 @@ var CHAPTERS = {
       title: 'Christmas Eve 2018',
       subtitle: 'The founding of WEFUN and its extraordinary growth',
       readTime: '12 min',
-      teaser: 'Kim Heon incorporated WEFUN on December 24, 2018 with ₩50M. Seven years later: ₩143B revenue, 252 employees, 6 acquisitions.',
-      teaserKr: '김헌 대표는 2018년 12월 24일 자본금 5천만 원으로 위펀을 설립했습니다. 7년 후: 매출 1,430억 원, 252명, 6건의 인수.',
+      teaser: 'Kim Heon incorporated WEFUN on December 24, 2018 with <span class="cur-eur">€34K</span><span class="cur-krw">₩50M</span>. Seven years later: <span class="cur-eur">€138M</span><span class="cur-krw">₩2,000억</span> revenue, 800 employees, 6 acquisitions.',
+      teaserKr: '김헌 대표는 2018년 12월 24일 자본금 <span class="cur-eur">€34K</span><span class="cur-krw">5천만 원</span>으로 위펀을 설립했습니다. 7년 후: 매출 <span class="cur-eur">€138M</span><span class="cur-krw">2,000억 원</span>, 800명, 6건의 인수.',
     },
     {
       num: 7, slug: '7-convergence', audience: 'shared', displayOrder: 7,
@@ -85,8 +85,8 @@ var CHAPTERS = {
       title: 'Inside WeFun',
       subtitle: 'A comprehensive profile of your potential partner',
       readTime: '12 min',
-      teaser: 'From a Christmas Eve founding to ₩143B in revenue — WeFun\'s growth, platform, M&A track record, and the team behind it.',
-      teaserKr: '크리스마스 이브 창업부터 매출 1,430억 원까지 — 위펀의 성장, 플랫폼, M&A 실적, 그리고 팀.',
+      teaser: 'From a Christmas Eve founding to €138M in revenue — WeFun\'s growth, platform, M&A track record, and the team behind it.',
+      teaserKr: '크리스마스 이브 창업부터 매출 €138M까지 — 위펀의 성장, 플랫폼, M&A 실적, 그리고 팀.',
     },
     {
       num: 7, slug: '7-convergence', audience: 'shared', displayOrder: 7,

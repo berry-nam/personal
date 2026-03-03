@@ -1,6 +1,251 @@
 /* ═══════════════════════════════════════════════
-   Hub Page — Executive Dashboard & Deal Tracker
+   Hub Page — Hero, Chapter Grid & Deal Tracker
    ═══════════════════════════════════════════════ */
+
+/* ─── HERO ─── */
+.hub-hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  position: relative; padding: 4rem 2rem;
+}
+
+.hub-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 40%, rgba(212, 184, 122, 0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 70% 60%, rgba(91, 138, 255, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hub-hero > * { position: relative; }
+
+.hub-hero .conf-badge { margin-bottom: 2rem; }
+
+.hub-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-label);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--champagne);
+  margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s 0.3s forwards;
+}
+
+.hub-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-weight: 400; line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 1s 0.6s forwards;
+}
+.hub-title em { font-style: italic; color: var(--champagne); }
+
+.hub-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.75rem);
+  font-weight: 400; font-style: italic;
+  color: var(--smoke);
+  margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 1s 0.9s forwards;
+}
+
+.hub-details {
+  display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-nav);
+  letter-spacing: 0.1em;
+  color: var(--smoke); text-transform: uppercase;
+  opacity: 0; animation: fadeUp 1s 1.2s forwards;
+}
+.hub-details span { display: flex; align-items: center; gap: 0.5rem; }
+.hub-details .dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--champagne);
+}
+
+.hub-scroll-cue {
+  position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+  opacity: 0; animation: fadeUp 1s 1.6s forwards;
+}
+
+/* ─── CHAPTER INTRO TEXT ─── */
+.hub-intro {
+  max-width: 680px; margin: 0 auto;
+  text-align: center;
+  padding: var(--space-section) 2rem;
+  opacity: 0; animation: fadeUp 1s 1.8s forwards;
+}
+
+.hub-intro p {
+  font-size: 1.2rem; color: var(--pearl-muted);
+  line-height: var(--lh-body);
+}
+
+/* ─── DASHBOARD HEADER ─── */
+/* ─── INTEL FEED (Recent News) ─── */
+.intel-feed {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+.intel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.8rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(232, 229, 222, 0.08);
+}
+
+.intel-status {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px rgba(90, 232, 144, 0.5);
+  animation: pulse-dot 2s infinite;
+}
+
+.intel-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--smoke);
+}
+
+.intel-count {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: rgba(184, 180, 168, 0.5);
+  margin-left: auto;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1px;
+  background: rgba(232, 229, 222, 0.06);
+  border: 1px solid rgba(232, 229, 222, 0.06);
+}
+
+.intel-card {
+  background: var(--ink);
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: background 0.3s;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.intel-card:hover {
+  background: var(--ink-card);
+}
+
+.intel-card__top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.intel-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+}
+.intel-tag--market {
+  background: rgba(91, 138, 255, 0.15);
+  color: var(--wefun-blue);
+}
+.intel-tag--ma {
+  background: rgba(212, 184, 122, 0.15);
+  color: var(--champagne);
+}
+.intel-tag--esg {
+  background: rgba(90, 232, 144, 0.15);
+  color: var(--success);
+}
+.intel-tag--industry {
+  background: rgba(240, 77, 90, 0.15);
+  color: var(--lyreco-red);
+}
+.intel-tag--financial {
+  background: rgba(160, 120, 255, 0.15);
+  color: #A078FF;
+}
+
+.intel-time {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: rgba(184, 180, 168, 0.4);
+  letter-spacing: 0.05em;
+  margin-left: auto;
+}
+
+.intel-card__title {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--pearl);
+}
+
+.intel-card__excerpt {
+  font-size: 0.82rem;
+  color: var(--smoke);
+  line-height: 1.55;
+  flex-grow: 1;
+}
+
+.intel-card__source {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(184, 180, 168, 0.35);
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(232, 229, 222, 0.04);
+}
+
+.intel-card__source a {
+  color: rgba(184, 180, 168, 0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.intel-card__source a:hover {
+  color: var(--champagne);
+}
+
+/* ─── Severity/priority bar on left edge ─── */
+.intel-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: transparent;
+  transition: background 0.3s;
+}
+.intel-card:hover::before {
+  background: var(--champagne-dim);
+}
+
+@media (max-width: 768px) {
+  .intel-feed { padding: 0 1.2rem 4rem; }
+  .intel-grid { grid-template-columns: 1fr; }
+  .intel-card { padding: 1.2rem; }
+  .intel-card__title { font-size: 0.9rem; }
+}
 
 /* ─── DASHBOARD HEADER ─── */
 .dash-header {
@@ -815,8 +1060,10 @@
 .chapter-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 1.5rem;
   max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem 8rem;
 }
 
 .chapter-card {
@@ -1077,10 +1324,12 @@
 
   .roadmap-progress__labels { font-size: 0.62rem; }
 
-  .chapter-grid { grid-template-columns: 1fr; max-width: none; }
+  .hub-details { gap: 1.5rem; }
+  .chapter-grid { grid-template-columns: 1fr; max-width: none; padding: 0 1.2rem 4rem; }
   .chapter-card { padding: 1.2rem 1.4rem 1rem; }
   .card-title { font-size: 1.1rem; }
   .card-teaser { font-size: 0.85rem; }
+  .hub-intro { padding: 4rem 1.2rem; }
 }
 
 @media (max-width: 480px) {

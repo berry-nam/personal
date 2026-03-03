@@ -54,7 +54,7 @@
     // Update audience badge if present
     var badge = document.getElementById('audienceBadge');
     if (badge) {
-      badge.textContent = audience === 'lyreco' ? 'Lyreco' : 'WeFun';
+      badge.textContent = audience === 'lyreco' ? 'For Lyreco' : 'For WeFun';
     }
 
     // Update nav brand ordering

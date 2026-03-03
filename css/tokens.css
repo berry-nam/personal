@@ -137,5 +137,9 @@ body[data-view="wefun"] {
 body[data-lang="kr"] [data-lang="en"] { display: none; }
 body[data-lang="en"] [data-lang="kr"] { display: none; }
 
+/* ─── Currency Toggle by Audience ─── */
+body[data-view="lyreco"] .cur-krw { display: none; }
+body[data-view="wefun"] .cur-eur { display: none; }
+
 /* ─── WeFun-only elements hidden for Lyreco ─── */
 body[data-view="lyreco"] .wefun-only { display: none; }

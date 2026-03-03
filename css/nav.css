@@ -143,6 +143,26 @@
 .lang-toggle:hover { color: var(--champagne); border-color: var(--champagne-dim); }
 .lang-toggle:empty { display: none; }
 
+/* ─── LOGOUT BUTTON ─── */
+.nav-logout {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--smoke);
+  padding: 0.25rem 0.6rem;
+  border: 1px solid rgba(232, 229, 222, 0.12);
+  border-radius: var(--radius-pill);
+  background: none;
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+.nav-logout:hover {
+  color: var(--lyreco-red);
+  border-color: var(--lyreco-red-dim);
+}
+
 /* ─── PROGRESS BAR accent override ─── */
 body[data-view="lyreco"] .progress-bar,
 body[data-view="wefun"] .progress-bar {

@@ -292,6 +292,7 @@
   <div class="nav-controls">
     <a href="1-bookshop.html" class="nav-arrow prev" aria-label="Previous">&larr;</a>
     <a href="../index.html" class="nav-hub">Hub</a>
+    <button class="nav-logout" onclick="logout()" title="Sign out">Sign Out</button>
     <a href="3-bigeard.html" class="nav-arrow next" aria-label="Next">&rarr;</a>
   </div>
 </nav>
@@ -300,7 +301,7 @@
 <header class="chapter-hero">
   <div class="chapter-hero__label">Chapter II</div>
   <h1 class="chapter-hero__title">The Gaspard <em>Dynasty</em></h1>
-  <p class="chapter-hero__subtitle">Four generations. One hundred years. A single family's iron grip on a &euro;3 billion empire &mdash; and what that means for anyone who wants to do business with them.</p>
+  <p class="chapter-hero__subtitle">Four generations. One hundred years. A single family's iron grip on a <span class="cur-eur">&euro;3 billion</span><span class="cur-krw">₩4.35조</span> empire &mdash; and what that means for anyone who wants to do business with them.</p>
   <div class="chapter-hero__meta">Reading time · ~9 min</div>
   <div class="chapter-hero__scroll">
     <div class="scroll-indicator">
@@ -324,7 +325,7 @@
       <div class="section-label">The Structure</div>
       <h2 class="section-title">Corely SAS<br><em>The family's holding company</em></h2>
       <div class="section-body">
-        <p>At the apex of the Lyreco empire sits <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(201,169,110,0.4);">Corely SAS</a> &mdash; the Gaspard family's holding company. Corely is the sole shareholder of <a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Holding Lyreco France SAS</a> (&euro;157M capital, est. 2004), which in turn is the sole shareholder of Lyreco SAS. The Gaspard family's economic interest was estimated at approximately <strong style="color: var(--pearl);">84%</strong> during the 2008 Corporate Express acquisition, with the remaining <strong>~16%</strong> held through <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a> (&euro;10.5M capital, est. 1998) &mdash; a management participation vehicle for senior executives. <span class="source-note">Note: The exact current ownership split is unverifiable since France restricted beneficial ownership (RBE) access on July 31, 2024, following the CJEU privacy ruling of Nov 2022. The ~84/16% split dates from the 2008 Corporate Express deal.</span> This is not a dispersed public shareholding. This is concentrated, generational power.</p>
+        <p>At the apex of the Lyreco empire sits <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(201,169,110,0.4);">Corely SAS</a> &mdash; the Gaspard family's holding company. Corely is the sole shareholder of <a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Holding Lyreco France SAS</a> (<span class="cur-eur">&euro;157M</span><span class="cur-krw">₩2,277억</span> capital, est. 2004), which in turn is the sole shareholder of Lyreco SAS. The Gaspard family's economic interest was estimated at approximately <strong style="color: var(--pearl);">84%</strong> during the 2008 Corporate Express acquisition, with the remaining <strong>~16%</strong> held through <a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Lyreco Management SAS</a> (<span class="cur-eur">&euro;10.5M</span><span class="cur-krw">₩152억</span> capital, est. 1998) &mdash; a management participation vehicle for senior executives. <span class="source-note">Note: The exact current ownership split is unverifiable since France restricted beneficial ownership (RBE) access on July 31, 2024, following the CJEU privacy ruling of Nov 2022. The ~84/16% split dates from the 2008 Corporate Express deal.</span> This is not a dispersed public shareholding. This is concentrated, generational power.</p>
         <p>The leadership of Corely tells you everything about the family's structure:</p>
       </div>
     </div>
@@ -376,12 +377,12 @@
         <div style="flex: 2; min-width: 250px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid var(--champagne);">
           <div class="org-tier-label">~84% (2008 est.) &middot; Family Holding</div>
           <div class="org-tier-name" style="font-size: 1.1rem;"><a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Corely SAS</a></div>
-          <div class="org-tier-detail">Onnaing, France &middot; &euro;25.1M capital &middot; President: Georges Gaspard</div>
+          <div class="org-tier-detail">Onnaing, France &middot; <span class="cur-eur">&euro;25.1M</span><span class="cur-krw">₩364억</span> capital &middot; President: Georges Gaspard</div>
         </div>
         <div style="flex: 1; min-width: 180px; background: var(--ink-card); border: var(--border-subtle); border-radius: var(--radius-card); padding: 1.5rem; border-left: 3px solid rgba(232,229,222,0.2);">
           <div class="org-tier-label" style="color: var(--smoke);">~16% &middot; Management</div>
           <div class="org-tier-name" style="font-size: 1.1rem;"><a href="https://www.societe.com/societe/lyreco-management-421304312.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Lyreco Management SAS</a></div>
-          <div class="org-tier-detail">Senior executive equity vehicle &middot; &euro;10.5M capital</div>
+          <div class="org-tier-detail">Senior executive equity vehicle &middot; <span class="cur-eur">&euro;10.5M</span><span class="cur-krw">₩152억</span> capital</div>
         </div>
       </div>
       <!-- Tier 2: Intermediate holding -->
@@ -389,21 +390,21 @@
         <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr; sole shareholder</div>
         <div class="org-tier-label">Intermediate Holding</div>
         <div class="org-tier-name"><a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Holding Lyreco France SAS</a></div>
-        <div class="org-tier-detail">Marly, France &middot; &euro;157M capital &middot; Est. 2004 &middot; Sole shareholder: Corely &middot; Pr&eacute;sident: Lyreco SAS (since 2022) &middot; Former PE involvement (Butler Capital Partners 2004–2008)</div>
+        <div class="org-tier-detail">Marly, France &middot; <span class="cur-eur">&euro;157M</span><span class="cur-krw">₩2,277억</span> capital &middot; Est. 2004 &middot; Sole shareholder: Corely &middot; Pr&eacute;sident: Lyreco SAS (since 2022) &middot; Former PE involvement (Butler Capital Partners 2004–2008)</div>
       </div>
       <!-- Tier 3: Operating company -->
       <div class="org-tier" data-stagger-child style="position: relative;">
         <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr; sole shareholder</div>
         <div class="org-tier-label">Operating Company</div>
         <div class="org-tier-name"><a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: none;">Lyreco SAS</a></div>
-        <div class="org-tier-detail">Marly, France &middot; Share capital: &euro;65.2M &middot; President: Nathalie Gaspard &middot; Director-General: Georges Gaspard</div>
+        <div class="org-tier-detail">Marly, France &middot; Share capital: <span class="cur-eur">&euro;65.2M</span><span class="cur-krw">₩945억</span> &middot; President: Nathalie Gaspard &middot; Director-General: Georges Gaspard</div>
       </div>
       <!-- Tier 4: Global subsidiaries -->
       <div class="org-tier" data-stagger-child style="position: relative;">
         <div style="position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.82rem; color: var(--champagne-dim);">&darr;</div>
         <div class="org-tier-label">Global Operations</div>
         <div class="org-tier-name">25+ Country Subsidiaries</div>
-        <div class="org-tier-detail">Europe, Asia-Pacific, Middle East &middot; 10,000+ employees &middot; &euro;3B consolidated revenue</div>
+        <div class="org-tier-detail">Europe, Asia-Pacific, Middle East &middot; 10,000+ employees &middot; <span class="cur-eur">&euro;3B</span><span class="cur-krw">₩4.35조</span> consolidated revenue</div>
       </div>
     </div>
 
@@ -428,7 +429,7 @@
     <div class="insight-block" data-animate="fade-up" style="margin-top: 2rem;">
       <h4 style="font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--champagne-light); margin-bottom: 0.8rem;">Why three layers? The Butler Capital Partners story</h4>
       <p><strong>Holding Lyreco France SAS</strong> was created in <em>December 2004</em> specifically to accommodate a private equity investor. <strong>Butler Capital Partners</strong> &mdash; Walter Butler&rsquo;s Paris-based PE firm &mdash; took a minority stake in Lyreco through this new vehicle. Butler served as <em>pr&eacute;sident</em> of HLF from 2004 to 2008, giving the PE firm legal governance of the intermediate holding while the Gaspards retained majority control above via Corely.</p>
-      <p style="margin-top: 0.6rem;">By 2004, Bigeard had been CEO for 16 years. Revenue was ~&euro;1.5B across ~25 countries. The family needed growth capital for the final push but refused to go public. A PE minority stake was the solution: <strong>cash injection without losing control or listing on the stock exchange.</strong></p>
+      <p style="margin-top: 0.6rem;">By 2004, Bigeard had been CEO for 16 years. Revenue was ~<span class="cur-eur">&euro;1.5B</span><span class="cur-krw">₩2.18조</span> across ~25 countries. The family needed growth capital for the final push but refused to go public. A PE minority stake was the solution: <strong>cash injection without losing control or listing on the stock exchange.</strong></p>
       <p style="margin-top: 0.6rem;">When the Corporate Express deal collapsed in 2008, the Gaspards bought Butler out. But they kept HLF alive &mdash; dissolving it would have triggered capital gains tax, required transferring all Lyreco shares, and cost more in lawyers than it saved. Instead, they repurposed it:</p>
       <table style="width: 100%; margin: 1rem 0; font-size: 0.95rem; border-collapse: collapse;">
         <tbody>
@@ -446,7 +447,7 @@
           </tr>
         </tbody>
       </table>
-      <p>In 2020, capital was increased from &euro;15M to &euro;157M (&plus;&euro;142M) &mdash; likely to restructure internal group financing. The vehicle that started as a PE doorway became the permanent intermediate holding in the family&rsquo;s ownership chain.</p>
+      <p>In 2020, capital was increased from <span class="cur-eur">&euro;15M</span><span class="cur-krw">₩218억</span> to <span class="cur-eur">&euro;157M</span><span class="cur-krw">₩2,277억</span> (<span class="cur-eur">&plus;&euro;142M</span><span class="cur-krw">+₩2,059억</span>) &mdash; likely to restructure internal group financing. The vehicle that started as a PE doorway became the permanent intermediate holding in the family&rsquo;s ownership chain.</p>
       <p style="margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6;">Source: <a href="https://www.societe.com/societe/holding-lyreco-france-477704191.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">Societe.com &mdash; Holding Lyreco France SAS (477 704 191)</a></p>
     </div>
   </section>
@@ -488,7 +489,7 @@
           </div>
         </div>
         <p style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--smoke); opacity: 0.6; margin-top: 0.8rem; max-width: 500px;">
-          Lyreco Management SAS (&euro;10.5M capital, est. 1998) is a management participation vehicle — likely holding equity for senior executives. Exact beneficial ownership data restricted since July 2024.
+          Lyreco Management SAS (<span class="cur-eur">&euro;10.5M</span><span class="cur-krw">₩152억</span> capital, est. 1998) is a management participation vehicle — likely holding equity for senior executives. Exact beneficial ownership data restricted since July 2024.
           <br><a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">Source: Societe.com</a> &middot;
           <a href="https://find-and-update.company-information.service.gov.uk/company/00442696/persons-with-significant-control" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">UK Companies House PSC</a>
         </p>
@@ -541,8 +542,8 @@
           <div class="ft-node-gen">Generation III &middot; Patriarch</div>
           <div class="ft-node-name">Georges Andr&eacute; Daniel Gaspard</div>
           <div class="ft-node-role">
-            President of <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">Corely SAS</a> (&euro;25.1M capital)<br>
-            Director-General of <a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">Lyreco SAS</a> (&euro;65.1M capital)<br>
+            President of <a href="https://www.societe.com/societe/corely-430306126.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">Corely SAS</a> (<span class="cur-eur">&euro;25.1M</span><span class="cur-krw">₩364억</span> capital)<br>
+            Director-General of <a href="https://www.societe.com/societe/lyreco-400423968.html" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.45);">Lyreco SAS</a> (<span class="cur-eur">&euro;65.1M</span><span class="cur-krw">₩944억</span> capital)<br>
             <a href="https://www.lyreco.com/group/be/fr/pionniers-en-produits-pour-le-lieu-de-travail-depuis-1926" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.3);">Acquired Vermeire (Belgium, 1989)</a> — first international expansion<br>
             Renamed company to &ldquo;Lyreco&rdquo; in 2001
           </div>
@@ -612,7 +613,7 @@
       <div style="margin-top: 3rem; width: 100%; max-width: 700px;">
         <p style="font-family: var(--font-mono); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.12em; color: var(--champagne); text-transform: uppercase; text-align: center; margin-bottom: 1.5rem;">Professional CEO Succession &middot; Why the Gaspards Stepped Back</p>
         <p style="font-size: 1.0rem; color: var(--smoke); line-height: 1.7; text-align: center; margin-bottom: 2rem;">
-          The Gaspards made a deliberate choice: <strong style="color: var(--pearl);">own the company, but hire professionals to run it.</strong> Georges Gaspard retained the presidency and board control via Corely SAS, while delegating CEO operations to world-class managers. This separation of ownership and execution is how the family scaled from a French regional business to a €3B European leader.
+          The Gaspards made a deliberate choice: <strong style="color: var(--pearl);">own the company, but hire professionals to run it.</strong> Georges Gaspard retained the presidency and board control via Corely SAS, while delegating CEO operations to world-class managers. This separation of ownership and execution is how the family scaled from a French regional business to a <span class="cur-eur">€3B</span><span class="cur-krw">₩4.35조</span> European leader.
         </p>
 
         <div style="position: relative; padding-left: 2.5rem; border-left: 2px solid rgba(212,184,122,0.25);">
@@ -624,7 +625,7 @@
             <div class="ft-node-name">Eric Bigeard</div>
             <div class="ft-node-role" style="text-align: left;">
               Joined Lyreco in 1980 as a young professional. Appointed CEO at age 33 by Georges Gaspard in 1988.<br>
-              Grew revenue <strong style="color: var(--pearl);">&euro;15M &rarr; &euro;2B</strong> (133&times;). Expanded from 1 to 29 countries.<br>
+              Grew revenue <strong style="color: var(--pearl);"><span class="cur-eur">&euro;15M &rarr; &euro;2B</span><span class="cur-krw">₩218억 &rarr; ₩2.9조</span></strong> (133&times;). Expanded from 1 to 29 countries.<br>
               <a href="https://www.opi.net/news/analysis/bigeard-to-leave-lyreco/" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline; text-decoration-color: rgba(244,242,237,0.2);">Announced departure in 2010</a> after planning his exit 10 years in advance.
             </div>
             <div class="ft-expand" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease;">
@@ -777,10 +778,10 @@
     <div data-animate="fade-up" data-delay="0.1">
       <div class="investment-card">
         <h4>Corely Belgium SPRL &amp; Bratya SPRL</h4>
-        <p>Belgian investment vehicles managed by David Coti since 2015. Coti is an <a href="https://www.essec.edu/en/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">ESSEC</a> and Plekhanov University graduate &mdash; signaling the family hires world-class talent to manage its non-Lyreco assets. These entities invested <strong style="color: var(--pearl);">&euro;15 million + &euro;3.6 million in <a href="https://www.carmatsa.com/en/" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.3);">CARMAT</a></strong> &mdash; the French artificial heart company. This is not a family that plays it safe. They back visionary, high-risk ventures alongside their steady B2B cash cow.</p>
+        <p>Belgian investment vehicles managed by David Coti since 2015. Coti is an <a href="https://www.essec.edu/en/" target="_blank" rel="noopener" style="color: var(--champagne); text-decoration: underline; text-decoration-color: rgba(212,184,122,0.4);">ESSEC</a> and Plekhanov University graduate &mdash; signaling the family hires world-class talent to manage its non-Lyreco assets. These entities invested <strong style="color: var(--pearl);"><span class="cur-eur">&euro;15 million</span><span class="cur-krw">₩218억</span> + <span class="cur-eur">&euro;3.6 million</span><span class="cur-krw">₩52억</span> in <a href="https://www.carmatsa.com/en/" target="_blank" rel="noopener" style="color: var(--pearl); text-decoration: underline; text-decoration-color: rgba(232,229,222,0.3);">CARMAT</a></strong> &mdash; the French artificial heart company. This is not a family that plays it safe. They back visionary, high-risk ventures alongside their steady B2B cash cow.</p>
         <div style="margin-top: 1.2rem; padding: 1rem 1.2rem; background: rgba(240, 77, 90, 0.08); border: 1px solid rgba(240, 77, 90, 0.2); border-radius: var(--radius-small);">
           <p style="font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lyreco-red); font-weight: 600; margin-bottom: 0.5rem;">&#9888; UPDATE &mdash; CARMAT STATUS</p>
-          <p style="font-size: 1.0rem; color: var(--pearl-muted); line-height: 1.7; margin: 0;">CARMAT <a href="https://www.medicaldevice-network.com/news/french-artificial-heart-maker-carmat-files-for-insolvency/" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline;">filed for insolvency on June 30, 2025</a> at the Versailles Economic Affairs Court, unable to raise the &euro;35M it needed to continue operations. By October 14, 2025, the court <a href="https://www.marketscreener.com/news/carmat-says-imminent-liquidation-now-extremely-probable-ce7d5bdbdb88f326" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline;">pronounced judicial liquidation</a> after a takeover bid by chairman Pierre Bastid failed to secure funding. The company was delisted from Euronext. On December 1, 2025, a <a href="https://www.businesswire.com/news/home/20251201285797/fr" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">disposal plan</a> was approved, with Bastid&rsquo;s LOHAS S.&agrave;.r.l acquiring the remaining assets. The Gaspard entities&rsquo; &euro;18.6M investment was almost certainly wiped out &mdash; a reminder that this family&rsquo;s risk appetite is genuine, not performative.</p>
+          <p style="font-size: 1.0rem; color: var(--pearl-muted); line-height: 1.7; margin: 0;">CARMAT <a href="https://www.medicaldevice-network.com/news/french-artificial-heart-maker-carmat-files-for-insolvency/" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline;">filed for insolvency on June 30, 2025</a> at the Versailles Economic Affairs Court, unable to raise the <span class="cur-eur">&euro;35M</span><span class="cur-krw">₩508억</span> it needed to continue operations. By October 14, 2025, the court <a href="https://www.marketscreener.com/news/carmat-says-imminent-liquidation-now-extremely-probable-ce7d5bdbdb88f326" target="_blank" rel="noopener" style="color: var(--lyreco-red); text-decoration: underline;">pronounced judicial liquidation</a> after a takeover bid by chairman Pierre Bastid failed to secure funding. The company was delisted from Euronext. On December 1, 2025, a <a href="https://www.businesswire.com/news/home/20251201285797/fr" target="_blank" rel="noopener" style="color: var(--smoke); text-decoration: underline;">disposal plan</a> was approved, with Bastid&rsquo;s LOHAS S.&agrave;.r.l acquiring the remaining assets. The Gaspard entities&rsquo; <span class="cur-eur">&euro;18.6M</span><span class="cur-krw">₩270억</span> investment was almost certainly wiped out &mdash; a reminder that this family&rsquo;s risk appetite is genuine, not performative.</p>
         </div>
       </div>
     </div>
@@ -831,7 +832,7 @@
         <div class="stat-sub">4th generation now in position</div>
       </div>
       <div class="stat-card" data-stagger-child>
-        <div class="stat-number">&euro;65.2M</div>
+        <div class="stat-number"><span class="cur-eur">&euro;65.2M</span><span class="cur-krw">₩945억</span></div>
         <div class="stat-label">Lyreco Capital</div>
         <div class="stat-sub">Share capital of Lyreco SAS</div>
       </div>
@@ -935,7 +936,7 @@
         <tr>
           <td>Result</td>
           <td>World's #1 FMCG — $84B revenue</td>
-          <td>Europe's #1 B2B workplace — &euro;3B revenue</td>
+          <td>Europe's #1 B2B workplace — <span class="cur-eur">&euro;3B</span><span class="cur-krw">₩4.35조</span> revenue</td>
         </tr>
       </tbody>
     </table>
@@ -1068,20 +1069,20 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         label: 'Holding',
         nodes: [
-          { id: 'corely', label: 'Corely SAS', sublabel: 'Onnaing · Family holding · €25M capital', color: '#E63946', badge: 'Family' },
-          { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', sublabel: 'Est. 1998 · Executive equity · €10.5M capital', color: '#A0A0AC', wide: true }
+          { id: 'corely', label: 'Corely SAS', sublabel: 'Onnaing · Family holding · <span class="cur-eur">€25M</span><span class="cur-krw">₩363억</span> capital', color: '#E63946', badge: 'Family' },
+          { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', sublabel: 'Est. 1998 · Executive equity · <span class="cur-eur">€10.5M</span><span class="cur-krw">₩152억</span> capital', color: '#A0A0AC', wide: true }
         ]
       },
       {
         label: 'Intermediate',
         nodes: [
-          { id: 'hlf', label: 'Holding Lyreco France SAS', sublabel: 'Marly · €157M capital · Est. 2004', color: '#E63946', badge: '€157M', wide: true }
+          { id: 'hlf', label: 'Holding Lyreco France SAS', sublabel: 'Marly · <span class="cur-eur">€157M</span><span class="cur-krw">₩2,277억</span> capital · Est. 2004', color: '#E63946', badge: '<span class="cur-eur">€157M</span><span class="cur-krw">₩2,277억</span>', wide: true }
         ]
       },
       {
         label: 'Operating',
         nodes: [
-          { id: 'lyreco', label: 'Lyreco SAS', sublabel: 'Marly · €65.2M capital · €3B rev', color: '#4A72FF', badge: '€3B', wide: true }
+          { id: 'lyreco', label: 'Lyreco SAS', sublabel: 'Marly · <span class="cur-eur">€65.2M</span><span class="cur-krw">₩945억</span> capital · <span class="cur-eur">€3B</span><span class="cur-krw">₩4.35조</span> rev', color: '#4A72FF', badge: '<span class="cur-eur">€3B</span><span class="cur-krw">₩4.35조</span>', wide: true }
         ]
       },
       {
@@ -1113,25 +1114,25 @@ document.addEventListener('DOMContentLoaded', function() {
     { id: 'cg', label: 'Caroline Gaspard', type: 'person', icon: 'CG', detail: '4th generation. Georges\' daughter & Nathalie\'s sister. Deputy Director-General of Corely SAS.' },
     { id: 'ng', label: 'Nathalie Gaspard', type: 'person', icon: 'NG', detail: '4th generation. Georges\' daughter & Caroline\'s sister. President of Lyreco SAS. Announced successor in 2017.', url: 'https://www.linkedin.com/in/nathalie-gaspard-1388347/' },
     // ── Non-Family Key Executives ──
-    { id: 'eric', label: 'Eric Bigeard', type: 'person', icon: 'EB', detail: 'CEO 1988–2010 (22 years). Grew revenue €15M → €2B. Now on Supervisory Board at Georges\' personal request. On Decathlon France strategic committee.' },
+    { id: 'eric', label: 'Eric Bigeard', type: 'person', icon: 'EB', detail: 'CEO 1988–2010 (22 years). Grew revenue <span class="cur-eur">€15M</span><span class="cur-krw">₩218억</span> → <span class="cur-eur">€2B</span><span class="cur-krw">₩2.9조</span>. Now on Supervisory Board at Georges\' personal request. On Decathlon France strategic committee.' },
     { id: 'greg', label: 'Gregory Liénard', type: 'person', icon: 'GL', detail: 'CEO 2019–present. Built Asia operations personally. 28+ years at Lyreco. Posted in Canada, France, Singapore.', url: 'https://www.linkedin.com/in/gregorylienard/' },
     { id: 'helen', label: 'Helen Riley', type: 'person', icon: 'HR', detail: 'Group Development Director M&A since Sept 2025. At Lyreco since 2004. 20+ years. Your key negotiating counterpart on Feb 26.', url: 'https://www.linkedin.com/in/helen-riley-21a13018/' },
     // ── Corporate entities ──
-    { id: 'corely', label: 'Corely SAS', type: 'holding', icon: '🏛', sublabel: 'Onnaing', detail: 'Family holding company. Sole shareholder of Holding Lyreco France SAS (which in turn is sole shareholder of Lyreco SAS). Capital €25.1M. 2 shareholders, 3 subsidiaries. The "~84%" figure dates from the 2008 Corporate Express deal disclosure — current exact percentage unverifiable since France restricted beneficial ownership (RBE) access on July 31, 2024 (CJEU privacy ruling).', url: 'https://www.societe.com/societe/corely-430306126.html' },
-    { id: 'hlf', label: 'Holding Lyreco France', type: 'holding', icon: '🏛', sublabel: '€157M capital', detail: 'Intermediate holding company. Sole shareholder of Lyreco SAS. Its own sole shareholder = Corely. Président = Lyreco SAS (since Apr 2022) — the subsidiary manages the holding, common in French SAS structures. Capital €157M. Est. July 2004. Former PE involvement (Butler Capital Partners 2004–2008). Registered in Marly. Auditor: PwC.', url: 'https://www.societe.com/societe/holding-lyreco-france-477704191.html' },
-    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '€3B', detail: 'Operating company. €65.2M share capital. 25+ country subsidiaries. €3B consolidated revenue. Single shareholder: Holding Lyreco France SAS.', url: 'https://www.lyreco.com/group/' },
-    { id: 'corely-be', label: 'Corely Belgium', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment vehicle (SPRL). Managed by David Coti since 2015. Invested €15M in CARMAT.' },
-    { id: 'bratya', label: 'Bratya SPRL', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment entity. Co-invested €3.6M in CARMAT alongside Corely Belgium.' },
-    { id: 'carmat', label: 'CARMAT', type: 'company', icon: '❤️', detail: 'French artificial heart company. Judicially liquidated Oct 14, 2025 (Versailles court). Delisted from Euronext. Gaspard entities invested €15M + €3.6M — almost certainly wiped out.', url: 'https://www.marketscreener.com/news/carmat-says-imminent-liquidation-now-extremely-probable-ce7d5bdbdb88f326' },
+    { id: 'corely', label: 'Corely SAS', type: 'holding', icon: '🏛', sublabel: 'Onnaing', detail: 'Family holding company. Sole shareholder of Holding Lyreco France SAS (which in turn is sole shareholder of Lyreco SAS). Capital <span class="cur-eur">€25.1M</span><span class="cur-krw">₩364억</span>. 2 shareholders, 3 subsidiaries. The "~84%" figure dates from the 2008 Corporate Express deal disclosure — current exact percentage unverifiable since France restricted beneficial ownership (RBE) access on July 31, 2024 (CJEU privacy ruling).', url: 'https://www.societe.com/societe/corely-430306126.html' },
+    { id: 'hlf', label: 'Holding Lyreco France', type: 'holding', icon: '🏛', sublabel: '<span class="cur-eur">€157M</span><span class="cur-krw">₩2,277억</span> capital', detail: 'Intermediate holding company. Sole shareholder of Lyreco SAS. Its own sole shareholder = Corely. Président = Lyreco SAS (since Apr 2022) — the subsidiary manages the holding, common in French SAS structures. Capital <span class="cur-eur">€157M</span><span class="cur-krw">₩2,277억</span>. Est. July 2004. Former PE involvement (Butler Capital Partners 2004–2008). Registered in Marly. Auditor: PwC.', url: 'https://www.societe.com/societe/holding-lyreco-france-477704191.html' },
+    { id: 'lyreco', label: 'Lyreco SAS', type: 'company', icon: '📦', sublabel: '<span class="cur-eur">€3B</span><span class="cur-krw">₩4.35조</span>', detail: 'Operating company. <span class="cur-eur">€65.2M</span><span class="cur-krw">₩945억</span> share capital. 25+ country subsidiaries. <span class="cur-eur">€3B</span><span class="cur-krw">₩4.35조</span> consolidated revenue. Single shareholder: Holding Lyreco France SAS.', url: 'https://www.lyreco.com/group/' },
+    { id: 'corely-be', label: 'Corely Belgium', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment vehicle (SPRL). Managed by David Coti since 2015. Invested <span class="cur-eur">€15M</span><span class="cur-krw">₩218억</span> in CARMAT.' },
+    { id: 'bratya', label: 'Bratya SPRL', type: 'entity', icon: '🇧🇪', detail: 'Belgian investment entity. Co-invested <span class="cur-eur">€3.6M</span><span class="cur-krw">₩52억</span> in CARMAT alongside Corely Belgium.' },
+    { id: 'carmat', label: 'CARMAT', type: 'company', icon: '❤️', detail: 'French artificial heart company. Judicially liquidated Oct 14, 2025 (Versailles court). Delisted from Euronext. Gaspard entities invested <span class="cur-eur">€15M</span><span class="cur-krw">₩218억</span> + <span class="cur-eur">€3.6M</span><span class="cur-krw">₩52억</span> — almost certainly wiped out.', url: 'https://www.marketscreener.com/news/carmat-says-imminent-liquidation-now-extremely-probable-ce7d5bdbdb88f326' },
     { id: 'coti', label: 'David Coti', type: 'person', icon: 'DC', detail: 'Manager of Corely Belgium & Bratya SPRL. ESSEC & Plekhanov University graduate.' },
     { id: 'erypharm', label: 'Erypharm SAS', type: 'entity', icon: '💊', detail: 'Biotech company — cultured red blood cells. Georges Gaspard on supervisory board.', url: 'https://www.erypharm.com/en/home-page/' },
     { id: 'nataline', label: 'Nataline SC', type: 'entity', icon: '🏘', detail: 'Civil real estate company. Land/real estate rental. Located in Onnaing. Manager: Georges Gaspard.', url: 'https://www.societe.com/societe/nataline-432999043.html' },
-    { id: 'villa', label: 'Villa Geoanne', type: 'entity', icon: '🏡', detail: 'Real estate entity (Cap Martin). Capital €3M. Founded 1995. Managed by Annette Gaspard.', url: 'https://www.pappers.fr/entreprise/villa-geoanne-du-cap-martin-402728885' },
-    { id: 'opale', label: 'Opale Jumping', type: 'entity', icon: '🏇', detail: 'SCI (civil real estate company). Land/property leasing — likely equestrian property. Same Onnaing address as Corely. Manager: Nathalie Gaspard. Associate: Corely. Capital €1K. Est. May 2022.', url: 'https://www.societe.com/societe/opale-jumping-913752804.html' },
+    { id: 'villa', label: 'Villa Geoanne', type: 'entity', icon: '🏡', detail: 'Real estate entity (Cap Martin). Capital <span class="cur-eur">€3M</span><span class="cur-krw">₩44억</span>. Founded 1995. Managed by Annette Gaspard.', url: 'https://www.pappers.fr/entreprise/villa-geoanne-du-cap-martin-402728885' },
+    { id: 'opale', label: 'Opale Jumping', type: 'entity', icon: '🏇', detail: 'SCI (civil real estate company). Land/property leasing — likely equestrian property. Same Onnaing address as Corely. Manager: Nathalie Gaspard. Associate: Corely. Capital <span class="cur-eur">€1K</span><span class="cur-krw">₩145만</span>. Est. May 2022.', url: 'https://www.societe.com/societe/opale-jumping-913752804.html' },
     { id: 'impactivist', label: 'Impactivist SAS', type: 'entity', icon: '🌱', detail: 'Impact VC firm (Paris). Corely held Supervisory Board seat Aug 2022 – Nov 2024 (resigned). Invests in social/environmental tech companies. Previously known as Investir&+ SAS.', url: 'https://www.societe.com/societe/impactivist-sas-480654250.html' },
     { id: 'pwc', label: 'PwC', type: 'company', icon: '📊', sublabel: 'Auditors since 2016', detail: 'PricewaterhouseCoopers Audit SA — appointed July 2016 (replacing KPMG Audit, who served ~2008–2012). Deliberate Big Four upgrade during post-Bigeard governance restructuring. Co-auditors: Antoine Guéroult, Estelle Chermat.', url: 'https://www.societe.com/dirigeants/lyreco-400423968.html' },
-    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets · €81–86M', detail: 'Hong Kong (1996), Thailand (2002), Korea (2004), Singapore (2005), Malaysia (2005). €81–86M revenue (discrepancy: IM P&L shows €81–84M; IM headline & RFI show €86M — different accounting bases). 655 FTE. Built personally by Gregory Liénard.', url: 'https://www.lyreco.com/group/' },
-    { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', type: 'holding', icon: '🏢', sublabel: 'Est. ~16% stake', detail: 'Management equity participation vehicle. Est. 1998. €10.5M capital. ~16% stake (2008 estimate — exact current % unverifiable since RBE restricted Jul 2024). €86.5M revenue (2024) — likely management fee income. 250–499 employees. President: Nathalie Gaspard.', url: 'https://www.societe.com/societe/lyreco-management-421304312.html' }
+    { id: 'asia-ops', label: 'Asia Pacific', type: 'company', icon: '🌏', sublabel: '5 markets · <span class="cur-eur">€81–86M</span><span class="cur-krw">₩1,175–1,247억</span>', detail: 'Hong Kong (1996), Thailand (2002), Korea (2004), Singapore (2005), Malaysia (2005). <span class="cur-eur">€81–86M</span><span class="cur-krw">₩1,175–1,247억</span> revenue (discrepancy: IM P&L shows <span class="cur-eur">€81–84M</span><span class="cur-krw">₩1,175–1,218억</span>; IM headline & RFI show <span class="cur-eur">€86M</span><span class="cur-krw">₩1,247억</span> — different accounting bases). 655 FTE. Built personally by Gregory Liénard.', url: 'https://www.lyreco.com/group/' },
+    { id: 'lyreco-mgmt', label: 'Lyreco Management SAS', type: 'holding', icon: '🏢', sublabel: 'Est. ~16% stake', detail: 'Management equity participation vehicle. Est. 1998. <span class="cur-eur">€10.5M</span><span class="cur-krw">₩152억</span> capital. ~16% stake (2008 estimate — exact current % unverifiable since RBE restricted Jul 2024). <span class="cur-eur">€86.5M</span><span class="cur-krw">₩1,254억</span> revenue (2024) — likely management fee income. 250–499 employees. President: Nathalie Gaspard.', url: 'https://www.societe.com/societe/lyreco-management-421304312.html' }
   ];
 
   var links = [
@@ -1159,8 +1160,8 @@ document.addEventListener('DOMContentLoaded', function() {
     { source: 'corely', target: 'bratya', distance: 130 },
     { source: 'coti', target: 'corely-be', label: 'Manager', distance: 80 },
     { source: 'coti', target: 'bratya', label: 'Manager', distance: 80 },
-    { source: 'corely-be', target: 'carmat', label: '€15M', distance: 100 },
-    { source: 'bratya', target: 'carmat', label: '€3.6M', distance: 100 },
+    { source: 'corely-be', target: 'carmat', label: '<span class="cur-eur">€15M</span><span class="cur-krw">₩218억</span>', distance: 100 },
+    { source: 'bratya', target: 'carmat', label: '<span class="cur-eur">€3.6M</span><span class="cur-krw">₩52억</span>', distance: 100 },
     { source: 'lyreco', target: 'asia-ops', distance: 100 },
     { source: 'lyreco', target: 'pwc', label: 'Audits', distance: 130 },
     // ── Lyreco Management SAS ──
