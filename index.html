@@ -99,21 +99,55 @@ window.addEventListener('audience-ready', function(e) {
   // Render chapter cards
   if (grid) {
     grid.innerHTML = '';
+    grid.className = 'story-timeline'; // Replace chapter-grid class
+
+    // Add the central timeline line
+    var line = document.createElement('div');
+    line.className = 'timeline-spine';
+    grid.appendChild(line);
+
+    var lyrecoCount = 0;
+    var wefunCount = 0;
+    var convergenceCount = 0;
+
     chapters.forEach(function(ch, idx) {
-      var romanNum = toRoman(idx + 1);
+      var track = ch.track || 'convergence';
+      var trackLabel, trackNum;
+
+      if (track === 'lyreco') {
+        lyrecoCount++;
+        trackLabel = 'LYRECO';
+        trackNum = lyrecoCount;
+      } else if (track === 'wefun') {
+        wefunCount++;
+        trackLabel = 'WEFUN';
+        trackNum = wefunCount;
+      } else {
+        convergenceCount++;
+        trackLabel = '\u00d7';
+        trackNum = null;
+      }
+
       var href = 'chapters/' + ch.slug + '.html';
       var card = document.createElement('a');
       card.href = href;
-      card.className = 'chapter-card';
+      card.className = 'story-item story-item--' + track;
       card.dataset.slug = ch.slug;
+      card.dataset.track = track;
       card.innerHTML =
-        '<div class="card-num">Chapter ' + romanNum + '</div>' +
-        '<div class="card-title">' + ch.title + '</div>' +
-        '<div class="card-teaser" data-lang="en">' + ch.teaser + '</div>' +
-        (ch.teaserKr ? '<div class="card-teaser" data-lang="kr">' + ch.teaserKr + '</div>' : '') +
-        '<div class="card-progress">' +
-          '<span class="card-progress-dot dot-unvisited"></span>' +
-          '<span class="card-progress-label">Unread</span>' +
+        '<div class="story-dot"></div>' +
+        '<div class="story-card">' +
+          '<div class="story-card__header">' +
+            '<span class="story-track-label story-track--' + track + '">' + trackLabel + '</span>' +
+            (trackNum ? '<span class="story-track-num">' + trackNum + '</span>' : '') +
+          '</div>' +
+          '<div class="story-card__title">' + ch.title + '</div>' +
+          '<div class="story-card__teaser" data-lang="en">' + ch.teaser + '</div>' +
+          (ch.teaserKr ? '<div class="story-card__teaser" data-lang="kr">' + ch.teaserKr + '</div>' : '') +
+          '<div class="story-card__meta">' +
+            '<span class="story-card__time">' + (ch.readTime || '') + '</span>' +
+            '<span class="card-progress-dot dot-unvisited"></span>' +
+          '</div>' +
         '</div>';
       grid.appendChild(card);
     });

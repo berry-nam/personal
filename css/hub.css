@@ -84,6 +84,204 @@
   line-height: var(--lh-body);
 }
 
+/* ─── STORY TIMELINE (replaces chapter-grid) ─── */
+.story-timeline {
+  position: relative;
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+
+/* Central spine */
+.timeline-spine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(212, 184, 122, 0.2) 5%,
+    rgba(212, 184, 122, 0.15) 50%,
+    rgba(91, 138, 255, 0.15) 80%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+/* Each story item */
+.story-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  z-index: 1;
+}
+
+/* Dot on the spine */
+.story-dot {
+  position: absolute;
+  left: 50%;
+  top: 1.8rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid rgba(212, 184, 122, 0.3);
+  transform: translateX(-50%);
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.story-item:hover .story-dot {
+  border-color: var(--champagne);
+  box-shadow: 0 0 12px rgba(212, 184, 122, 0.3);
+  transform: translateX(-50%) scale(1.3);
+}
+
+.story-item--lyreco .story-dot {
+  border-color: rgba(212, 184, 122, 0.3);
+}
+.story-item--wefun .story-dot {
+  border-color: rgba(91, 138, 255, 0.3);
+}
+.story-item--convergence .story-dot {
+  border-color: rgba(160, 120, 255, 0.3);
+  width: 12px;
+  height: 12px;
+}
+
+/* ─── LEFT TRACK (Lyreco) ─── */
+.story-item--lyreco {
+  padding-right: calc(50% + 2rem);
+}
+.story-item--lyreco .story-card {
+  margin-left: auto;
+  text-align: right;
+}
+
+/* ─── RIGHT TRACK (WeFun) ─── */
+.story-item--wefun {
+  padding-left: calc(50% + 2rem);
+}
+.story-item--wefun .story-card {
+  text-align: left;
+}
+
+/* ─── CENTER TRACK (Convergence) ─── */
+.story-item--convergence {
+  padding-left: calc(25% + 1rem);
+  padding-right: calc(25% + 1rem);
+}
+.story-item--convergence .story-card {
+  text-align: center;
+}
+.story-item--convergence .story-card__header {
+  justify-content: center;
+}
+
+/* The card itself */
+.story-card {
+  background: var(--ink-card);
+  border: 1px solid rgba(232, 229, 222, 0.06);
+  border-radius: var(--radius-card);
+  padding: 1.5rem 1.8rem 1.2rem;
+  transition: all 0.4s var(--ease-out);
+  position: relative;
+}
+
+.story-item:hover .story-card {
+  border-color: rgba(212, 184, 122, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.story-item--wefun:hover .story-card {
+  border-color: rgba(91, 138, 255, 0.2);
+}
+
+.story-item--convergence:hover .story-card {
+  border-color: rgba(160, 120, 255, 0.2);
+}
+
+/* Card header with track label */
+.story-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.story-track-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+
+.story-track--lyreco {
+  color: var(--champagne);
+  background: rgba(212, 184, 122, 0.1);
+  border: 1px solid rgba(212, 184, 122, 0.15);
+}
+.story-track--wefun {
+  color: var(--wefun-blue);
+  background: rgba(91, 138, 255, 0.08);
+  border: 1px solid rgba(91, 138, 255, 0.15);
+}
+.story-track--convergence {
+  color: #A078FF;
+  background: rgba(160, 120, 255, 0.08);
+  border: 1px solid rgba(160, 120, 255, 0.12);
+}
+
+.story-track-num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: rgba(184, 180, 168, 0.4);
+  letter-spacing: 0.1em;
+}
+
+.story-card__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--pearl);
+  margin-bottom: 0.5rem;
+}
+
+.story-card__teaser {
+  font-size: 0.88rem;
+  color: var(--smoke);
+  line-height: 1.6;
+  margin-bottom: 0.6rem;
+}
+
+.story-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: rgba(184, 180, 168, 0.4);
+  letter-spacing: 0.08em;
+}
+
+.story-item--lyreco .story-card__meta {
+  justify-content: flex-end;
+}
+.story-item--convergence .story-card__meta {
+  justify-content: center;
+}
+
 /* ─── DASHBOARD HEADER ─── */
 /* ─── INTEL FEED (Recent News) ─── */
 .intel-feed {
@@ -1325,11 +1523,47 @@
   .roadmap-progress__labels { font-size: 0.62rem; }
 
   .hub-details { gap: 1.5rem; }
-  .chapter-grid { grid-template-columns: 1fr; max-width: none; padding: 0 1.2rem 4rem; }
   .chapter-card { padding: 1.2rem 1.4rem 1rem; }
   .card-title { font-size: 1.1rem; }
   .card-teaser { font-size: 0.85rem; }
   .hub-intro { padding: 4rem 1.2rem; }
+
+  /* ── Story Timeline: single column on mobile ── */
+  .story-timeline { padding: 1rem 1.2rem 4rem; }
+
+  .timeline-spine {
+    left: 1rem;
+  }
+
+  .story-dot {
+    left: 1rem;
+    top: 1.2rem;
+  }
+
+  .story-item--lyreco,
+  .story-item--wefun,
+  .story-item--convergence {
+    padding-left: 2.5rem;
+    padding-right: 0;
+  }
+
+  .story-item--lyreco .story-card,
+  .story-item--convergence .story-card {
+    text-align: left;
+  }
+
+  .story-item--lyreco .story-card__meta,
+  .story-item--convergence .story-card__meta {
+    justify-content: flex-start;
+  }
+
+  .story-item--convergence .story-card__header {
+    justify-content: flex-start;
+  }
+
+  .story-card { padding: 1.2rem 1.4rem 1rem; }
+  .story-card__title { font-size: 1.1rem; }
+  .story-card__teaser { font-size: 0.85rem; }
 }
 
 @media (max-width: 480px) {
