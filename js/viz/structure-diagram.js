@@ -3,6 +3,23 @@
    Shows ownership chains, holding structures, subsidiaries
    ═══════════════════════════════════════════════ */
 
+function stripCurrencyHtml(text) {
+  if (!text) return text;
+  var audience = window.AUDIENCE || 'lyreco';
+  if (audience === 'wefun') {
+    // Remove EUR spans, keep KRW content
+    text = text.replace(/<span class="cur-eur">[^<]*<\/span>/g, '');
+    text = text.replace(/<span class="cur-krw">([^<]*)<\/span>/g, '$1');
+  } else {
+    // Remove KRW spans, keep EUR content
+    text = text.replace(/<span class="cur-krw">[^<]*<\/span>/g, '');
+    text = text.replace(/<span class="cur-eur">([^<]*)<\/span>/g, '$1');
+  }
+  // Strip any remaining HTML tags for SVG safety
+  text = text.replace(/<[^>]+>/g, '');
+  return text.trim();
+}
+
 function createStructureDiagram(containerId, config) {
   var container = document.getElementById(containerId);
   if (!container) return;
@@ -64,16 +81,18 @@ function createStructureDiagram(containerId, config) {
 
       // Sublabel
       if (node.sublabel) {
-        html += '<text x="' + nx + '" y="' + (ny + 12) + '" text-anchor="middle" font-family="\'JetBrains Mono\', monospace" font-size="8" fill="' + color + '" letter-spacing="0.05em">' + node.sublabel + '</text>';
+        var cleanSub = stripCurrencyHtml(node.sublabel);
+        html += '<text x="' + nx + '" y="' + (ny + 12) + '" text-anchor="middle" font-family="\'JetBrains Mono\', monospace" font-size="8" fill="' + color + '" letter-spacing="0.05em">' + cleanSub + '</text>';
       }
 
       // Badge — top-right corner, fully inside box bounds
       if (node.badge) {
-        var bw = Math.max(32, node.badge.length * 7 + 10);
+        var cleanBadge = stripCurrencyHtml(node.badge);
+        var bw = Math.max(32, cleanBadge.length * 7 + 10);
         var bx = nx + boxW / 2 - bw - 4;
         var by = ny - boxH / 2 - 9;
         html += '<rect x="' + bx + '" y="' + by + '" width="' + bw + '" height="17" rx="8" fill="' + color + '"/>';
-        html += '<text x="' + (bx + bw / 2) + '" y="' + (by + 11) + '" text-anchor="middle" font-family="\'JetBrains Mono\', monospace" font-size="8" fill="#111115" font-weight="700">' + node.badge + '</text>';
+        html += '<text x="' + (bx + bw / 2) + '" y="' + (by + 11) + '" text-anchor="middle" font-family="\'JetBrains Mono\', monospace" font-size="8" fill="#111115" font-weight="700">' + cleanBadge + '</text>';
       }
     });
   });
@@ -96,7 +115,8 @@ function createStructureDiagram(containerId, config) {
 
     // Connection label
     if (conn.label) {
-      html += '<text x="' + ((from.x + to.x) / 2 + 8) + '" y="' + midY + '" font-family="\'JetBrains Mono\', monospace" font-size="8" fill="#A0A0AC" letter-spacing="0.05em">' + conn.label + '</text>';
+      var cleanConn = stripCurrencyHtml(conn.label);
+      html += '<text x="' + ((from.x + to.x) / 2 + 8) + '" y="' + midY + '" font-family="\'JetBrains Mono\', monospace" font-size="8" fill="#A0A0AC" letter-spacing="0.05em">' + cleanConn + '</text>';
     }
   });
 

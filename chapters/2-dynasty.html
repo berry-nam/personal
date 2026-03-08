@@ -292,6 +292,7 @@
     <span class="nav-chapter-title">The Gaspard Dynasty</span>
   </div>
   <div class="nav-controls">
+    <span class="lang-toggle"></span>
     <a href="1-bookshop.html" class="nav-arrow prev" aria-label="Previous">&larr;</a>
     <a href="../index.html" class="nav-hub">Hub</a>
     <button class="nav-logout" onclick="logout()" title="Sign out">Sign Out</button>
@@ -316,10 +317,6 @@
 <!-- ═══════════════ CONTENT ═══════════════ -->
 <main class="chapter-content">
 
-  <div class="atmos-img" data-animate="fade-up">
-    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1400&q=80" alt="A grand French estate — evoking the generational wealth and legacy of the Gaspard dynasty" loading="lazy">
-    <span class="atmos-caption">The Gaspard dynasty — four generations, one vision</span>
-  </div>
 
   <!-- ── THE STRUCTURE ── -->
   <section class="section">
@@ -334,19 +331,19 @@
 
     <div class="stat-grid" data-stagger-group>
       <div class="stat-card" data-stagger-child>
-        <img class="person-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&q=80" alt="Georges Gaspard (representative)" loading="lazy">
+        <div class="person-photo-placeholder" aria-label="Georges Gaspard — no verified photo available"><span class="person-initials">GG</span></div>
         <div class="stat-number">Georges Gaspard</div>
         <div class="stat-label">President of Corely SAS</div>
         <div class="stat-sub">3rd generation patriarch</div>
       </div>
       <div class="stat-card" data-stagger-child>
-        <img class="person-photo" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80" alt="Caroline Gaspard (representative)" loading="lazy">
+        <div class="person-photo-placeholder" aria-label="Caroline Gaspard — no verified photo available"><span class="person-initials">CG</span></div>
         <div class="stat-number">Caroline Gaspard</div>
         <div class="stat-label">Deputy Director-General</div>
         <div class="stat-sub">4th generation</div>
       </div>
       <div class="stat-card" data-stagger-child>
-        <img class="person-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80" alt="Nathalie Gaspard (representative)" loading="lazy">
+        <div class="person-photo-placeholder" aria-label="Nathalie Gaspard — no verified photo available"><span class="person-initials">NG</span></div>
         <div class="stat-number">Nathalie Gaspard</div>
         <div class="stat-label">Deputy Director-General</div>
         <div class="stat-sub">4th generation</div>
@@ -416,10 +413,6 @@
       </div>
     </div>
 
-    <figure class="chapter-img" data-animate="fade-up">
-      <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=1200&q=80" alt="A corporate boardroom — representing the governance structure of the Gaspard family's enterprise" loading="lazy">
-      <figcaption>Corely SAS → Holding Lyreco France → Lyreco SAS — the holding chain through which the Gaspard family maintains control (84% est. 2008)</figcaption>
-    </figure>
 
     <!-- Full Corporate Structure Wireframe -->
     <div data-animate="fade-up">
@@ -671,7 +664,7 @@
           <!-- Liénard -->
           <div class="ft-node non-family" style="margin-bottom: 0; text-align: left; min-width: auto; max-width: none; border-left: 3px solid rgba(244,242,237,0.3); padding: 1.2rem 1.5rem; cursor: pointer;" onclick="this.querySelector('.ft-expand').classList.toggle('expanded')">
             <div style="position: absolute; left: -0.6rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--pearl); border: 2px solid var(--ink);"></div>
-            <img class="person-photo" src="https://why.lyreco.com/app/uploads/2019/08/gregory-lienard-240x300.jpg" alt="Gregory Li&eacute;nard" loading="lazy" style="border-color: rgba(232, 229, 222, 0.2); width: 48px; height: 48px; margin-bottom: 0.5rem;">
+            <img class="person-photo" src="https://www.lyreco.com/group/sites/main/files/styles/original_sm/public/media/image/2025-11/get-2025-gregory-portraits_0.jpg?itok=EDux6Ej9" alt="Gregory Li&eacute;nard" loading="lazy" style="border-color: rgba(232, 229, 222, 0.2); width: 48px; height: 48px; margin-bottom: 0.5rem;">
             <div class="ft-node-gen" style="color: var(--pearl);">CEO #5 &middot; 2019&ndash;PRESENT</div>
             <div class="ft-node-name">Gregory Li&eacute;nard</div>
             <div class="ft-node-role" style="text-align: left;">
@@ -875,10 +868,6 @@
 
   <div class="divider"></div>
 
-  <figure class="chapter-img" data-animate="fade-up">
-    <img src="https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1200&q=80" alt="A modern glass corporate building — representing Lyreco Group headquarters near Valenciennes" loading="lazy">
-    <figcaption>Lyreco Group headquarters — Marly, near Valenciennes</figcaption>
-  </figure>
 
   <!-- ── P&G PARALLEL · ICEBREAKER ── -->
   <div class="pg-compare" data-animate="fade-up">

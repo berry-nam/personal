@@ -3,6 +3,19 @@
    Epstein-doc-explorer style corporate connections
    ═══════════════════════════════════════════════ */
 
+function stripCurrencyForSvg(text) {
+  if (!text) return text;
+  var audience = window.AUDIENCE || 'lyreco';
+  if (audience === 'wefun') {
+    text = text.replace(/<span class="cur-eur">[^<]*<\/span>/g, '');
+    text = text.replace(/<span class="cur-krw">([^<]*)<\/span>/g, '$1');
+  } else {
+    text = text.replace(/<span class="cur-krw">[^<]*<\/span>/g, '');
+    text = text.replace(/<span class="cur-eur">([^<]*)<\/span>/g, '$1');
+  }
+  return text.replace(/<[^>]+>/g, '').trim();
+}
+
 function createNetworkGraph(containerId, nodesData, linksData, options) {
   var container = document.getElementById(containerId);
   if (!container || typeof d3 === 'undefined') return;
@@ -70,7 +83,7 @@ function createNetworkGraph(containerId, nodesData, linksData, options) {
     .selectAll('text')
     .data(linksData.filter(function(d) { return d.label; }))
     .enter().append('text')
-    .text(function(d) { return d.label; })
+    .text(function(d) { return stripCurrencyForSvg(d.label); })
     .attr('font-size', '9px')
     .attr('font-family', "'JetBrains Mono', monospace")
     .attr('fill', opts.colors.textDim)
@@ -121,7 +134,7 @@ function createNetworkGraph(containerId, nodesData, linksData, options) {
   // Sublabel
   node.filter(function(d) { return d.sublabel; })
     .append('text')
-    .text(function(d) { return d.sublabel; })
+    .text(function(d) { return stripCurrencyForSvg(d.sublabel); })
     .attr('text-anchor', 'middle')
     .attr('dy', function(d) { return getRadius(d) + 26; })
     .attr('font-size', '8px')

@@ -11,7 +11,7 @@ function initLang() {
     stored = localStorage.getItem('briefing-lang');
   } catch (e) { /* */ }
 
-  var lang = stored || defaultLang;
+  var lang = (audience === 'wefun') ? 'kr' : (stored || defaultLang);
   applyLang(lang);
   renderToggle(lang);
 }

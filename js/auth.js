@@ -1,31 +1,23 @@
 /* ═══════════════════════════════════════════════
-   Authentication — Password Gate + Audience Routing
+   Authentication — Server-side Password Gate + Audience Routing
    ═══════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  // Computed SHA-256 hashes (populated on init)
-  var REAL_HASHES = {};
-
-  async function sha256(str) {
-    var buf = new TextEncoder().encode(str);
-    var hash = await crypto.subtle.digest('SHA-256', buf);
-    var arr = Array.from(new Uint8Array(hash));
-    return arr.map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
-  }
-
-  // Pre-compute hashes
-  async function initHashes() {
-    REAL_HASHES.lyreco = await sha256('100lyreco260226');
-    REAL_HASHES.wefun = await sha256('1224wefun260226');
-  }
-
   async function checkPassword(input) {
-    var hash = await sha256(input);
-    if (hash === REAL_HASHES.lyreco) return 'lyreco';
-    if (hash === REAL_HASHES.wefun) return 'wefun';
-    return null;
+    try {
+      var res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: input }),
+      });
+      if (!res.ok) return null;
+      var data = await res.json();
+      return data.audience || null;
+    } catch (e) {
+      return null;
+    }
   }
 
   function getStoredAudience() {
@@ -41,10 +33,12 @@
   }
 
   function logout() {
-    try {
-      localStorage.removeItem('briefing-audience');
-    } catch (e) { /* */ }
-    window.location.reload();
+    fetch('/api/logout', { method: 'POST' }).finally(function () {
+      try {
+        localStorage.removeItem('briefing-audience');
+      } catch (e) { /* */ }
+      window.location.reload();
+    });
   }
 
   function applyAudienceView(audience) {
@@ -78,7 +72,7 @@
     overlay.innerHTML =
       '<div class="gate-badge">Confidential</div>' +
       '<div class="gate-title">Strategic <em>Briefing</em></div>' +
-      '<div class="gate-subtitle">Lyreco × WeFun</div>' +
+      '<div class="gate-subtitle">Project Adam</div>' +
       '<input type="password" class="gate-input" placeholder="Enter access code" autocomplete="off" autofocus>';
 
     document.body.appendChild(overlay);
@@ -116,8 +110,6 @@
   }
 
   async function init() {
-    await initHashes();
-
     var storedAudience = getStoredAudience();
     var bodyAudience = document.body.dataset.audience;
 
@@ -132,8 +124,8 @@
     } else {
       // Chapter page: verify access
       if (!storedAudience) {
-        // Not logged in — redirect to hub
-        window.location.href = '../index.html';
+        // Not logged in — redirect to gate
+        window.location.href = '/gate.html';
         return;
       }
 
@@ -142,7 +134,7 @@
       // Check if this chapter is accessible to this audience
       if (bodyAudience && bodyAudience !== 'shared' && bodyAudience !== storedAudience) {
         // Unauthorized for this chapter
-        window.location.href = '../index.html';
+        window.location.href = '/gate.html';
         return;
       }
 
