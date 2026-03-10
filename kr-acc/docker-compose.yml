@@ -45,6 +45,8 @@ services:
       AGE_GRAPH_NAME: kr_acc
     env_file:
       - .env
+    volumes:
+      - ./etl:/app
     depends_on:
       db:
         condition: service_healthy
