@@ -2,9 +2,8 @@
 FROM node:22-alpine AS dev
 
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm install
 COPY . .
+RUN npm install
 CMD ["npx", "vite", "--host", "0.0.0.0"]
 
 # ── Build stage ───────────────────────────────────────────────────────────────
