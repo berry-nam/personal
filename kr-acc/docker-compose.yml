@@ -1,6 +1,6 @@
 services:
   db:
-    image: apache/age:PG16-v1.5.0-rc0
+    image: apache/age:release_PG16_1.6.0
     environment:
       POSTGRES_USER: kracc
       POSTGRES_PASSWORD: kracc
