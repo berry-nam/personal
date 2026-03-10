@@ -20,6 +20,13 @@ dev = [
     "pytest-asyncio>=0.24",
 ]
 
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = [
+    "integration: tests that call external APIs (require network + API key)",
+]
+
 [tool.ruff]
 line-length = 100
 target-version = "py312"
