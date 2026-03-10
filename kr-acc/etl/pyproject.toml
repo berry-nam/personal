@@ -1,0 +1,28 @@
+[project]
+name = "kr-acc-etl"
+version = "0.1.0"
+description = "Korean National Assembly Open Graph — ETL Pipelines"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = [
+    "prefect>=3.0",
+    "httpx>=0.28",
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg>=0.30",
+    "psycopg2-binary>=2.9",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.8",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]

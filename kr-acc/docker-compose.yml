@@ -1,0 +1,60 @@
+services:
+  db:
+    image: apache/age:PG16-v1.5.0-rc0
+    environment:
+      POSTGRES_USER: kracc
+      POSTGRES_PASSWORD: kracc
+      POSTGRES_DB: kracc
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kracc"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://kracc:kracc@db:5432/kracc
+      DATABASE_URL_SYNC: postgresql://kracc:kracc@db:5432/kracc
+      AGE_GRAPH_NAME: kr_acc
+      CORS_ORIGINS: '["http://localhost:5173"]'
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  etl-worker:
+    build:
+      context: ./etl
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://kracc:kracc@db:5432/kracc
+      DATABASE_URL_SYNC: postgresql://kracc:kracc@db:5432/kracc
+      AGE_GRAPH_NAME: kr_acc
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
