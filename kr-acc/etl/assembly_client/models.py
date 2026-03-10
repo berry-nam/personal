@@ -1,13 +1,24 @@
 """Pydantic models for raw API responses from 열린국회정보.
 
 Each model maps to a specific API endpoint's row fields.
-All fields default to empty string since the API may omit fields.
+All fields default to empty string since the API may omit or null fields.
 """
 
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 
 
-class RawLegislator(BaseModel):
+class NullToEmpty(BaseModel):
+    """Base model that coerces None values to empty strings."""
+
+    @model_validator(mode="before")
+    @classmethod
+    def coerce_none_to_empty(cls, data: dict) -> dict:
+        if isinstance(data, dict):
+            return {k: (v if v is not None else "") for k, v in data.items()}
+        return data
+
+
+class RawLegislator(NullToEmpty):
     """국회의원 인적사항 — legislator bio (nwvrqwxyaytdsfvhu)."""
 
     HG_NM: str = ""          # 한글 이름
@@ -28,7 +39,7 @@ class RawLegislator(BaseModel):
     JOB_RES_NM: str = ""     # 직책
 
 
-class RawBill(BaseModel):
+class RawBill(NullToEmpty):
     """의안 정보 — bill info (nzmimeepazxkubdpn)."""
 
     BILL_ID: str = ""        # 의안 ID
@@ -45,7 +56,7 @@ class RawBill(BaseModel):
     RST_PROPOSER: str = ""   # 대표발의자
 
 
-class RawBillReview(BaseModel):
+class RawBillReview(NullToEmpty):
     """법률안 심사정보 — bill review details (nojepdqqaweusdfbi)."""
 
     BILL_ID: str = ""
@@ -61,7 +72,7 @@ class RawBillReview(BaseModel):
     PLENARY_PROC_RESULT: str = ""
 
 
-class RawVoteSummary(BaseModel):
+class RawVoteSummary(NullToEmpty):
     """본회의 표결 정보 — plenary vote summary (ncocpbgebiallbyeq)."""
 
     BILL_ID: str = ""
@@ -76,7 +87,7 @@ class RawVoteSummary(BaseModel):
     RESULT: str = ""
 
 
-class RawVotePerMember(BaseModel):
+class RawVotePerMember(NullToEmpty):
     """본회의 표결결과 의원별 — per-member vote (nwbpacrgavhjryiph)."""
 
     BILL_ID: str = ""
@@ -87,7 +98,7 @@ class RawVotePerMember(BaseModel):
     VOTE_DATE: str = ""
 
 
-class RawCommittee(BaseModel):
+class RawCommittee(NullToEmpty):
     """위원회 현황 — committee info (nknaocmjlgzmoutew)."""
 
     CURR_COMMITTEE_ID: str = ""
