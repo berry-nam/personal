@@ -15,6 +15,9 @@ import type {
   PoliticianVoteRecord,
   VoteDetail,
   VoteSummary,
+  AssetSummary,
+  PoliticianCompanyOut,
+  PoliticalFundSummary,
 } from "@/types/api";
 
 // ── Politicians ──────────────────────────────────────────────────────────────
@@ -22,6 +25,7 @@ import type {
 export function usePoliticians(params: {
   party?: string;
   name?: string;
+  assembly_term?: number;
   page?: number;
   size?: number;
 }) {
@@ -106,6 +110,19 @@ export function useBills(params: {
   });
 }
 
+export function useBillPipeline(assemblyTerm?: number) {
+  return useQuery({
+    queryKey: ["bill-pipeline", assemblyTerm],
+    queryFn: async () => {
+      const { data } = await api.get<{ result: string; count: number }[]>(
+        "/bills/pipeline",
+        { params: assemblyTerm ? { assembly_term: assemblyTerm } : {} },
+      );
+      return data;
+    },
+  });
+}
+
 export function useBill(billId: string) {
   return useQuery({
     queryKey: ["bill", billId],
@@ -122,6 +139,7 @@ export function useBill(billId: string) {
 export function useVotes(params: {
   bill_id?: string;
   result?: string;
+  assembly_term?: number;
   date_from?: string;
   date_to?: string;
   page?: number;
@@ -195,6 +213,47 @@ export function useParties() {
       return data;
     },
     staleTime: 30 * 60 * 1000, // 30 min — rarely changes
+  });
+}
+
+// ── Assets & Companies & Funds ───────────────────────────────────────────────
+
+export function usePoliticianAssets(id: number) {
+  return useQuery({
+    queryKey: ["politician-assets", id],
+    queryFn: async () => {
+      const { data } = await api.get<AssetSummary[]>(
+        `/politicians/${id}/assets`,
+      );
+      return data;
+    },
+    enabled: id > 0,
+  });
+}
+
+export function usePoliticianCompanies(id: number) {
+  return useQuery({
+    queryKey: ["politician-companies", id],
+    queryFn: async () => {
+      const { data } = await api.get<PoliticianCompanyOut[]>(
+        `/politicians/${id}/companies`,
+      );
+      return data;
+    },
+    enabled: id > 0,
+  });
+}
+
+export function usePoliticianFunds(id: number) {
+  return useQuery({
+    queryKey: ["politician-funds", id],
+    queryFn: async () => {
+      const { data } = await api.get<PoliticalFundSummary[]>(
+        `/politicians/${id}/funds`,
+      );
+      return data;
+    },
+    enabled: id > 0,
   });
 }
 

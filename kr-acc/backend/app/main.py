@@ -3,6 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.assets import router as assets_router
 from app.api.bills import router as bills_router
 from app.api.graph import router as graph_router
 from app.api.parties import router as parties_router
@@ -34,6 +35,7 @@ def create_app() -> FastAPI:
     application.include_router(votes_router, prefix=api_prefix)
     application.include_router(graph_router, prefix=api_prefix)
     application.include_router(parties_router, prefix=api_prefix)
+    application.include_router(assets_router, prefix=api_prefix)
 
     @application.get("/health")
     async def health_check():

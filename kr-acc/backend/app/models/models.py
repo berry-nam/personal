@@ -2,7 +2,7 @@
 
 from datetime import date, datetime
 
-from sqlalchemy import Date, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
+from sqlalchemy import BigInteger, Date, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -41,6 +41,11 @@ class Politician(Base):
     committees: Mapped[dict | None] = mapped_column(JSONB)
     profile_url: Mapped[str | None] = mapped_column(Text)
     photo_url: Mapped[str | None] = mapped_column(Text)
+    eng_name: Mapped[str | None] = mapped_column(String(100))
+    bio: Mapped[str | None] = mapped_column(Text)
+    email: Mapped[str | None] = mapped_column(String(200))
+    homepage: Mapped[str | None] = mapped_column(Text)
+    office_address: Mapped[str | None] = mapped_column(String(300))
     birth_date: Mapped[date | None] = mapped_column(Date)
     gender: Mapped[str | None] = mapped_column(String(10))
     assembly_term: Mapped[int] = mapped_column(Integer, default=22)
@@ -116,3 +121,113 @@ class VoteRecord(Base):
 
     vote: Mapped["Vote"] = relationship(back_populates="records")
     politician: Mapped["Politician"] = relationship(back_populates="vote_records")
+
+
+# ── Asset Declarations (재산공개) ─────────────────────────────────────────────
+
+
+class AssetDeclaration(Base):
+    __tablename__ = "asset_declarations"
+    __table_args__ = (UniqueConstraint("politician_id", "report_year"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    politician_id: Mapped[int] = mapped_column(Integer, ForeignKey("politicians.id"))
+    report_year: Mapped[int] = mapped_column(Integer)
+    total_assets: Mapped[int | None] = mapped_column(BigInteger)
+    total_real_estate: Mapped[int | None] = mapped_column(BigInteger)
+    total_deposits: Mapped[int | None] = mapped_column(BigInteger)
+    total_securities: Mapped[int | None] = mapped_column(BigInteger)
+    total_crypto: Mapped[int | None] = mapped_column(BigInteger)
+    source: Mapped[str | None] = mapped_column(String(50))
+    raw_data: Mapped[dict | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default="now()")
+
+    politician: Mapped["Politician"] = relationship()
+    items: Mapped[list["AssetItem"]] = relationship(back_populates="declaration", cascade="all, delete-orphan")
+
+
+class AssetItem(Base):
+    __tablename__ = "asset_items"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    declaration_id: Mapped[int] = mapped_column(Integer, ForeignKey("asset_declarations.id", ondelete="CASCADE"))
+    category: Mapped[str] = mapped_column(String(50))
+    subcategory: Mapped[str | None] = mapped_column(String(100))
+    description: Mapped[str | None] = mapped_column(Text)
+    relation: Mapped[str | None] = mapped_column(String(20))
+    value_krw: Mapped[int | None] = mapped_column(BigInteger)
+    change_krw: Mapped[int | None] = mapped_column(BigInteger)
+    note: Mapped[str | None] = mapped_column(Text)
+
+    declaration: Mapped["AssetDeclaration"] = relationship(back_populates="items")
+
+
+# ── Companies (기업) ──────────────────────────────────────────────────────────
+
+
+class Company(Base):
+    __tablename__ = "companies"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    corp_code: Mapped[str | None] = mapped_column(String(20), unique=True)
+    corp_name: Mapped[str] = mapped_column(String(200))
+    stock_code: Mapped[str | None] = mapped_column(String(20))
+    industry: Mapped[str | None] = mapped_column(String(200))
+    ceo_name: Mapped[str | None] = mapped_column(String(100))
+    homepage: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default="now()")
+
+
+class PoliticianCompany(Base):
+    __tablename__ = "politician_companies"
+    __table_args__ = (UniqueConstraint("politician_id", "company_id", "relation_type", "source_year"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    politician_id: Mapped[int] = mapped_column(Integer, ForeignKey("politicians.id"))
+    company_id: Mapped[int] = mapped_column(Integer, ForeignKey("companies.id"))
+    relation_type: Mapped[str] = mapped_column(String(50))
+    detail: Mapped[str | None] = mapped_column(Text)
+    value_krw: Mapped[int | None] = mapped_column(BigInteger)
+    source: Mapped[str | None] = mapped_column(String(50))
+    source_year: Mapped[int | None] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default="now()")
+
+    politician: Mapped["Politician"] = relationship()
+    company: Mapped["Company"] = relationship()
+
+
+# ── Political Funds (정치자금) ────────────────────────────────────────────────
+
+
+class PoliticalFund(Base):
+    __tablename__ = "political_funds"
+    __table_args__ = (UniqueConstraint("politician_id", "fund_year", "fund_type"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    politician_id: Mapped[int] = mapped_column(Integer, ForeignKey("politicians.id"))
+    fund_year: Mapped[int] = mapped_column(Integer)
+    fund_type: Mapped[str | None] = mapped_column(String(50))
+    income_total: Mapped[int | None] = mapped_column(BigInteger)
+    expense_total: Mapped[int | None] = mapped_column(BigInteger)
+    balance: Mapped[int | None] = mapped_column(BigInteger)
+    source: Mapped[str | None] = mapped_column(String(50))
+    raw_data: Mapped[dict | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default="now()")
+
+    politician: Mapped["Politician"] = relationship()
+    items: Mapped[list["PoliticalFundItem"]] = relationship(back_populates="fund", cascade="all, delete-orphan")
+
+
+class PoliticalFundItem(Base):
+    __tablename__ = "political_fund_items"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    fund_id: Mapped[int] = mapped_column(Integer, ForeignKey("political_funds.id", ondelete="CASCADE"))
+    item_type: Mapped[str] = mapped_column(String(20))
+    category: Mapped[str | None] = mapped_column(String(100))
+    counterpart: Mapped[str | None] = mapped_column(String(200))
+    amount: Mapped[int] = mapped_column(BigInteger)
+    item_date: Mapped[date | None] = mapped_column(Date)
+    note: Mapped[str | None] = mapped_column(Text)
+
+    fund: Mapped["PoliticalFund"] = relationship(back_populates="items")

@@ -31,8 +31,11 @@ class RawLegislator(NullToEmpty):
     LINK_URL: str = ""       # 프로필 URL
     BTH_DATE: str = ""       # 생년월일
     SEX_GBN_NM: str = ""     # 성별
+    ENG_NM: str = ""         # 영문 이름
+    MEM_TITLE: str = ""      # 이력 (career history)
     E_MAIL: str = ""         # 이메일
     TEL_NO: str = ""         # 전화번호
+    HOMEPAGE: str = ""       # 홈페이지
     ASSEM_ADDR: str = ""     # 사무실 주소
     UNITS: str = ""          # 약력
     SEC_CD: str = ""         # 비서관 코드
@@ -73,18 +76,20 @@ class RawBillReview(NullToEmpty):
 
 
 class RawVoteSummary(NullToEmpty):
-    """본회의 표결 정보 — plenary vote summary (ncocpbgebiallbyeq)."""
+    """의안별 표결현황 — plenary vote summary (ncocpgfiaoituanbr)."""
 
     BILL_ID: str = ""
     BILL_NO: str = ""
     BILL_NAME: str = ""
-    VOTE_DATE: str = ""
-    MEMBER_TCNT: str = ""
-    YES_TCNT: str = ""
-    NO_TCNT: str = ""
-    BLANK_TCNT: str = ""
-    ABSENT_TCNT: str = ""
-    RESULT: str = ""
+    PROC_DT: str = ""           # 처리일 (vote date)
+    MEMBER_TCNT: str | int = ""  # 재적의원수
+    VOTE_TCNT: str | int = ""    # 투표의원수
+    YES_TCNT: str | int = ""     # 찬성
+    NO_TCNT: str | int = ""      # 반대
+    BLANK_TCNT: str | int = ""   # 기권
+    PROC_RESULT_CD: str = ""    # 처리결과
+    CURR_COMMITTEE: str = ""
+    LINK_URL: str = ""
 
 
 class RawVotePerMember(NullToEmpty):

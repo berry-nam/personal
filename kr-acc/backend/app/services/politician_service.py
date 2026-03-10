@@ -11,7 +11,7 @@ async def list_politicians(
     *,
     party: str | None = None,
     name: str | None = None,
-    assembly_term: int = 22,
+    assembly_term: int | None = None,
     page: int = 1,
     size: int = 20,
 ) -> tuple[list[Politician], int]:
@@ -20,10 +20,12 @@ async def list_politicians(
     Returns:
         Tuple of (politician list, total count).
     """
-    query = select(Politician).where(Politician.assembly_term == assembly_term)
-    count_query = select(func.count(Politician.id)).where(
-        Politician.assembly_term == assembly_term
-    )
+    query = select(Politician)
+    count_query = select(func.count(Politician.id))
+
+    if assembly_term is not None:
+        query = query.where(Politician.assembly_term == assembly_term)
+        count_query = count_query.where(Politician.assembly_term == assembly_term)
 
     if party:
         query = query.where(Politician.party == party)

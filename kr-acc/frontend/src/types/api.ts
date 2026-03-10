@@ -31,6 +31,7 @@ export interface PoliticianSummary {
   constituency: string | null;
   elected_count: number | null;
   photo_url: string | null;
+  assembly_term: number;
 }
 
 export interface PoliticianStats {
@@ -55,6 +56,11 @@ export interface PoliticianDetail {
   committees: string[] | null;
   profile_url: string | null;
   photo_url: string | null;
+  eng_name: string | null;
+  bio: string | null;
+  email: string | null;
+  homepage: string | null;
+  office_address: string | null;
   birth_date: string | null;
   gender: string | null;
   assembly_term: number;
@@ -135,6 +141,41 @@ export interface NeighborOut {
   name: string;
   party: string | null;
   weight: number;
+}
+
+// ── Assets & Companies & Funds ───────────────────────────────────────────────
+
+export interface AssetSummary {
+  report_year: number;
+  total_assets: number | null;
+  total_real_estate: number | null;
+  total_deposits: number | null;
+  total_securities: number | null;
+  total_crypto: number | null;
+}
+
+export interface CompanyOut {
+  id: number;
+  corp_code: string | null;
+  corp_name: string;
+  stock_code: string | null;
+  industry: string | null;
+}
+
+export interface PoliticianCompanyOut {
+  company: CompanyOut;
+  relation_type: string;
+  detail: string | null;
+  value_krw: number | null;
+  source: string | null;
+  source_year: number | null;
+}
+
+export interface PoliticalFundSummary {
+  fund_year: number;
+  fund_type: string | null;
+  income_total: number | null;
+  expense_total: number | null;
 }
 
 export interface PoliticianVoteRecord {

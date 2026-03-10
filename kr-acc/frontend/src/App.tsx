@@ -4,8 +4,9 @@ import Dashboard from "@/pages/Dashboard";
 import PoliticianList from "@/pages/PoliticianList";
 import PoliticianDetail from "@/pages/PoliticianDetail";
 import BillList from "@/pages/BillList";
+import BillDetail from "@/pages/BillDetail";
 import VoteList from "@/pages/VoteList";
-import GraphPage from "@/pages/GraphPage";
+import VoteDetail from "@/pages/VoteDetail";
 
 export default function App() {
   return (
@@ -16,9 +17,9 @@ export default function App() {
           <Route path="/politicians" element={<PoliticianList />} />
           <Route path="/politicians/:id" element={<PoliticianDetail />} />
           <Route path="/bills" element={<BillList />} />
-          <Route path="/bills/:billId" element={<BillList />} />
+          <Route path="/bills/:billId" element={<BillDetail />} />
           <Route path="/votes" element={<VoteList />} />
-          <Route path="/graph" element={<GraphPage />} />
+          <Route path="/votes/:voteId" element={<VoteDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>

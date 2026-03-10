@@ -58,6 +58,7 @@ class PoliticianSummary(BaseModel):
     constituency: str | None
     elected_count: int | None
     photo_url: str | None
+    assembly_term: int
 
 
 class PoliticianDetail(BaseModel):
@@ -75,6 +76,11 @@ class PoliticianDetail(BaseModel):
     committees: list[str] | None
     profile_url: str | None
     photo_url: str | None
+    eng_name: str | None
+    bio: str | None
+    email: str | None
+    homepage: str | None
+    office_address: str | None
     birth_date: date | None
     gender: str | None
     assembly_term: int
@@ -200,3 +206,107 @@ class NeighborOut(BaseModel):
     name: str
     party: str | None = None
     weight: int
+
+
+# ── Assets (재산공개) ────────────────────────────────────────────────────────
+
+
+class AssetItemOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    category: str
+    subcategory: str | None
+    description: str | None
+    relation: str | None
+    value_krw: int | None
+    change_krw: int | None
+    note: str | None
+
+
+class AssetDeclarationOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    report_year: int
+    total_assets: int | None
+    total_real_estate: int | None
+    total_deposits: int | None
+    total_securities: int | None
+    total_crypto: int | None
+    source: str | None
+    items: list[AssetItemOut] = []
+
+
+class AssetSummaryOut(BaseModel):
+    """Lightweight asset declaration for list/chart views."""
+    model_config = ConfigDict(from_attributes=True)
+
+    report_year: int
+    total_assets: int | None
+    total_real_estate: int | None
+    total_deposits: int | None
+    total_securities: int | None
+    total_crypto: int | None
+
+
+# ── Companies (기업) ─────────────────────────────────────────────────────────
+
+
+class CompanyOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    corp_code: str | None
+    corp_name: str
+    stock_code: str | None
+    industry: str | None
+
+
+class PoliticianCompanyOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    company: CompanyOut
+    relation_type: str
+    detail: str | None
+    value_krw: int | None
+    source: str | None
+    source_year: int | None
+
+
+# ── Political Funds (정치자금) ───────────────────────────────────────────────
+
+
+class PoliticalFundItemOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    item_type: str
+    category: str | None
+    counterpart: str | None
+    amount: int
+    item_date: date | None
+    note: str | None
+
+
+class PoliticalFundOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    fund_year: int
+    fund_type: str | None
+    income_total: int | None
+    expense_total: int | None
+    balance: int | None
+    source: str | None
+    items: list[PoliticalFundItemOut] = []
+
+
+class PoliticalFundSummaryOut(BaseModel):
+    """Lightweight fund summary for charts."""
+    model_config = ConfigDict(from_attributes=True)
+
+    fund_year: int
+    fund_type: str | None
+    income_total: int | None
+    expense_total: int | None

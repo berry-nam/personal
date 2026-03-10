@@ -22,7 +22,7 @@ router = APIRouter(prefix="/politicians", tags=["politicians"])
 async def list_politicians(
     party: str | None = None,
     name: str | None = None,
-    assembly_term: int = 22,
+    assembly_term: int | None = None,
     page: int = Query(1, ge=1),
     size: int = Query(20, ge=1, le=100),
     session: AsyncSession = Depends(get_session),

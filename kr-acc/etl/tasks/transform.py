@@ -36,8 +36,12 @@ def _parse_date(date_str: str) -> date | None:
     return None
 
 
-def _safe_int(value: str) -> int | None:
-    """Parse string to int, returning None on failure."""
+def _safe_int(value: str | int | None) -> int | None:
+    """Parse string or int to int, returning None on failure."""
+    if value is None:
+        return None
+    if isinstance(value, int):
+        return value
     if not value or not value.strip():
         return None
     try:
@@ -79,6 +83,11 @@ def transform_legislators(raw_rows: list[dict], assembly_term: int = 22) -> list
             "committees": _parse_committees(raw.CMITS),
             "profile_url": raw.LINK_URL or None,
             "photo_url": None,
+            "eng_name": raw.ENG_NM or None,
+            "bio": raw.MEM_TITLE or None,
+            "email": raw.E_MAIL or None,
+            "homepage": raw.HOMEPAGE or None,
+            "office_address": raw.ASSEM_ADDR or None,
             "birth_date": _parse_date(raw.BTH_DATE),
             "gender": raw.SEX_GBN_NM or None,
             "assembly_term": assembly_term,
@@ -168,23 +177,27 @@ def transform_vote_summaries(raw_rows: list[dict], assembly_term: int = 22) -> l
     results = []
     for row in raw_rows:
         raw = RawVoteSummary.model_validate(row)
-        if not raw.BILL_ID or not raw.VOTE_DATE:
+        if not raw.BILL_ID or not raw.PROC_DT:
             continue
-        vote_date = _parse_date(raw.VOTE_DATE)
+        vote_date = _parse_date(raw.PROC_DT)
         if not vote_date:
             continue
         # Generate a vote_id from bill_id + date
-        vote_id = f"{raw.BILL_ID}_{raw.VOTE_DATE}"
+        vote_id = f"{raw.BILL_ID}_{raw.PROC_DT}"
+        # Absent = total members - voters who showed up
+        member_total = _safe_int(raw.MEMBER_TCNT)
+        vote_total = _safe_int(raw.VOTE_TCNT)
+        absent = (member_total - vote_total) if member_total and vote_total else None
         results.append({
             "vote_id": vote_id,
             "bill_id": raw.BILL_ID,
             "vote_date": vote_date,
-            "total_members": _safe_int(raw.MEMBER_TCNT),
+            "total_members": member_total,
             "yes_count": _safe_int(raw.YES_TCNT),
             "no_count": _safe_int(raw.NO_TCNT),
             "abstain_count": _safe_int(raw.BLANK_TCNT),
-            "absent_count": _safe_int(raw.ABSENT_TCNT),
-            "result": raw.RESULT or None,
+            "absent_count": absent,
+            "result": raw.PROC_RESULT_CD or None,
             "assembly_term": assembly_term,
         })
     logger.info("Transformed %d/%d vote summaries", len(results), len(raw_rows))

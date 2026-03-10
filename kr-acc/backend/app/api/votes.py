@@ -19,7 +19,7 @@ async def list_votes(
     result: str | None = None,
     date_from: date | None = None,
     date_to: date | None = None,
-    assembly_term: int = 22,
+    assembly_term: int | None = None,
     page: int = Query(1, ge=1),
     size: int = Query(20, ge=1, le=100),
     session: AsyncSession = Depends(get_session),
@@ -38,6 +38,8 @@ async def list_votes(
     items = []
     for v in votes:
         item = VoteSummary.model_validate(v)
+        if not item.bill_name and v.bill:
+            item.bill_name = v.bill.bill_name
         items.append(item)
 
     return PaginatedResponse(

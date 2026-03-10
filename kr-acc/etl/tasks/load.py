@@ -41,10 +41,12 @@ async def load_politicians(records: list[dict], database_url: str) -> int:
                     INSERT INTO politicians
                         (assembly_id, name, name_hanja, party, constituency,
                          elected_count, committees, profile_url, photo_url,
+                         eng_name, bio, email, homepage, office_address,
                          birth_date, gender, assembly_term, updated_at)
                     VALUES
                         (:assembly_id, :name, :name_hanja, :party, :constituency,
                          :elected_count, CAST(:committees AS jsonb), :profile_url, :photo_url,
+                         :eng_name, :bio, :email, :homepage, :office_address,
                          :birth_date, :gender, :assembly_term, NOW())
                     ON CONFLICT (assembly_id) DO UPDATE SET
                         name = EXCLUDED.name,
@@ -54,6 +56,11 @@ async def load_politicians(records: list[dict], database_url: str) -> int:
                         elected_count = EXCLUDED.elected_count,
                         committees = EXCLUDED.committees,
                         profile_url = EXCLUDED.profile_url,
+                        eng_name = EXCLUDED.eng_name,
+                        bio = EXCLUDED.bio,
+                        email = EXCLUDED.email,
+                        homepage = EXCLUDED.homepage,
+                        office_address = EXCLUDED.office_address,
                         birth_date = EXCLUDED.birth_date,
                         gender = EXCLUDED.gender,
                         updated_at = NOW()
@@ -329,7 +336,7 @@ async def sync_age_politicians(database_url: str, graph_name: str = "kr_acc") ->
                 SELECT * FROM cypher('{graph_name}', $$
                     MATCH (pol:Politician {{assembly_id: '{assembly_id}'}}),
                           (par:Party {{name: '{_escape_cypher(party)}'}})
-                    MERGE (pol)-[:MEMBER_OF]->(par)
+                    MERGE (pol)-[\\:MEMBER_OF]->(par)
                     RETURN pol
                 $$) AS (v agtype)
             """
@@ -377,7 +384,7 @@ async def sync_age_co_sponsorship(
                 SELECT * FROM cypher('{graph_name}', $$
                     MATCH (a:Politician {{assembly_id: '{aid1}'}}),
                           (b:Politician {{assembly_id: '{aid2}'}})
-                    MERGE (a)-[r:CO_SPONSORED]->(b)
+                    MERGE (a)-[r\\:CO_SPONSORED]->(b)
                     SET r.weight = {shared_bills}
                     RETURN r
                 $$) AS (e agtype)

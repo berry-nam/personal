@@ -21,7 +21,7 @@ async def list_bills(
     result: str | None = None,
     date_from: date | None = None,
     date_to: date | None = None,
-    assembly_term: int = 22,
+    assembly_term: int | None = None,
     page: int = Query(1, ge=1),
     size: int = Query(20, ge=1, le=100),
     session: AsyncSession = Depends(get_session),
@@ -46,6 +46,15 @@ async def list_bills(
         size=size,
         pages=math.ceil(total / size) if total > 0 else 0,
     )
+
+
+@router.get("/pipeline", response_model=list[dict])
+async def bill_pipeline(
+    assembly_term: int | None = None,
+    session: AsyncSession = Depends(get_session),
+):
+    """Get bill pipeline stats — count per result category."""
+    return await bill_service.get_pipeline_stats(session, assembly_term=assembly_term)
 
 
 @router.get("/{bill_id}", response_model=BillDetail)
