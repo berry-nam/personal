@@ -3,7 +3,7 @@
 # ── Development ───────────────────────────────────────────────────────────────
 
 dev: ## Start all services in dev mode
-	docker compose up --build -d
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 
 prod: ## Start all services in production mode
 	COMPOSE_TARGET=prod docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
