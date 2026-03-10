@@ -44,7 +44,7 @@ async def load_politicians(records: list[dict], database_url: str) -> int:
                          birth_date, gender, assembly_term, updated_at)
                     VALUES
                         (:assembly_id, :name, :name_hanja, :party, :constituency,
-                         :elected_count, :committees::jsonb, :profile_url, :photo_url,
+                         :elected_count, CAST(:committees AS jsonb), :profile_url, :photo_url,
                          :birth_date, :gender, :assembly_term, NOW())
                     ON CONFLICT (assembly_id) DO UPDATE SET
                         name = EXCLUDED.name,
