@@ -4,10 +4,9 @@
 -- Enable AGE extension
 CREATE EXTENSION IF NOT EXISTS age;
 LOAD 'age';
-SET search_path = ag_catalog, "$user", public;
 
 -- ============================================================
--- Tables
+-- Tables (explicitly in public schema)
 -- ============================================================
 
 -- Parties (정당)
@@ -138,4 +137,5 @@ INSERT INTO parties (name, color_hex, assembly_term) VALUES
 -- Apache AGE graph
 -- ============================================================
 
+SET search_path = ag_catalog, "$user", public;
 SELECT create_graph('kr_acc');
