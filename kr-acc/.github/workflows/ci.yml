@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend-lint:
+    name: Backend lint + type-check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
+
+  backend-test:
+    name: Backend tests
+    runs-on: ubuntu-latest
+    needs: backend-lint
+    services:
+      db:
+        image: apache/age:PG16-v1.5.0-rc0
+        env:
+          POSTGRES_USER: kracc
+          POSTGRES_PASSWORD: kracc
+          POSTGRES_DB: kracc
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U kracc"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      DATABASE_URL: postgresql+asyncpg://kracc:kracc@localhost:5432/kracc
+      DATABASE_URL_SYNC: postgresql://kracc:kracc@localhost:5432/kracc
+      AGE_GRAPH_NAME: kr_acc
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ".[dev]"
+      - name: Init database
+        run: psql "$DATABASE_URL_SYNC" -f ../db/init.sql
+      - run: pytest -v --tb=short
+
+  etl-lint:
+    name: ETL lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: etl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
+
+  frontend-ci:
+    name: Frontend lint + type-check + build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx vite build
+
+  docker-build:
+    name: Docker build smoke test
+    runs-on: ubuntu-latest
+    needs: [backend-lint, etl-lint, frontend-ci]
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose build

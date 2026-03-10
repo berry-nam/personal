@@ -1,0 +1,23 @@
+# Production overrides — use with:
+#   COMPOSE_TARGET=prod docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+services:
+  backend:
+    build:
+      target: prod
+    volumes: [] # no bind mount in prod
+    restart: unless-stopped
+
+  etl-worker:
+    build:
+      target: prod
+    restart: unless-stopped
+
+  frontend:
+    build:
+      target: prod
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  db:
+    restart: unless-stopped

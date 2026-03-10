@@ -1,0 +1,46 @@
+.PHONY: dev prod down logs db-shell etl lint test build clean
+
+# ── Development ───────────────────────────────────────────────────────────────
+
+dev: ## Start all services in dev mode
+	docker compose up --build -d
+
+prod: ## Start all services in production mode
+	COMPOSE_TARGET=prod docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+
+down: ## Stop all services
+	docker compose down
+
+logs: ## Tail logs for all services
+	docker compose logs -f
+
+db-shell: ## Open psql shell
+	docker compose exec db psql -U kracc -d kracc
+
+# ── ETL ───────────────────────────────────────────────────────────────────────
+
+etl: ## Run ETL sync_all flow
+	docker compose exec etl-worker python -m flows.sync_all
+
+# ── Quality ───────────────────────────────────────────────────────────────────
+
+lint: ## Lint backend + ETL + frontend
+	cd backend && ruff check . && ruff format --check .
+	cd etl && ruff check . && ruff format --check .
+	cd frontend && npx tsc --noEmit
+
+test: ## Run backend tests
+	cd backend && pytest -v --tb=short
+
+build: ## Build frontend for production
+	cd frontend && npx vite build
+
+# ── Cleanup ───────────────────────────────────────────────────────────────────
+
+clean: ## Stop services and remove volumes
+	docker compose down -v
+
+help: ## Show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-12s\033[0m %s\n", $$1, $$2}'
+
+.DEFAULT_GOAL := help
