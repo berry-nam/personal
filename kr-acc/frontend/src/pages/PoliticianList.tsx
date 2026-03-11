@@ -7,7 +7,8 @@ import PartyBadge from "@/components/layout/PartyBadge";
 export default function PoliticianList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const partyFilter = searchParams.get("party") ?? undefined;
-  const [nameSearch, setNameSearch] = useState("");
+  const nameParam = searchParams.get("name") ?? "";
+  const [nameSearch, setNameSearch] = useState(nameParam);
   const [page, setPage] = useState(1);
 
   const { data, isLoading } = usePoliticians({

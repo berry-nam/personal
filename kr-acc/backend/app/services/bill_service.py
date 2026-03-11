@@ -63,6 +63,21 @@ async def get_bill(session: AsyncSession, bill_id: str) -> Bill | None:
     return result.scalar_one_or_none()
 
 
+async def get_bill_pipeline(
+    session: AsyncSession,
+    *,
+    assembly_term: int = 22,
+) -> list[dict]:
+    """Get bill counts grouped by status for the pipeline/funnel view."""
+    result = await session.execute(
+        select(Bill.status, func.count(Bill.id))
+        .where(Bill.assembly_term == assembly_term)
+        .group_by(Bill.status)
+    )
+    rows = result.all()
+    return [{"status": row[0] or "미분류", "count": row[1]} for row in rows]
+
+
 async def get_bills_by_politician(
     session: AsyncSession,
     politician_id: int,

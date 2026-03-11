@@ -8,6 +8,7 @@ import BillDetail from "@/pages/BillDetail";
 import VoteList from "@/pages/VoteList";
 import VoteDetail from "@/pages/VoteDetail";
 import GraphPage from "@/pages/GraphPage";
+import About from "@/pages/About";
 import NotFound from "@/pages/NotFound";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/votes" element={<VoteList />} />
           <Route path="/votes/:voteId" element={<VoteDetail />} />
           <Route path="/graph" element={<GraphPage />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

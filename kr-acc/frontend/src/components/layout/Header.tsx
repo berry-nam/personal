@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { to: "/bills", label: "법안" },
   { to: "/votes", label: "표결" },
   { to: "/graph", label: "네트워크" },
+  { to: "/about", label: "소개" },
 ] as const;
 
 export default function Header() {

@@ -145,3 +145,19 @@ export interface PoliticianVoteRecord {
   vote_result: string | null;
   overall_result: string | null;
 }
+
+export interface PipelineStage {
+  status: string;
+  count: number;
+}
+
+export interface PipelineData {
+  stages: PipelineStage[];
+}
+
+export interface StatsOverview {
+  politicians: number;
+  bills: number;
+  votes: number;
+  parties: { party: string; count: number }[];
+}

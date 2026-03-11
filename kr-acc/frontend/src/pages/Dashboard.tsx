@@ -1,5 +1,6 @@
-import { Link } from "react-router";
-import { usePoliticians, useBills, useVotes, useParties } from "@/api/queries";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { useStatsOverview, useBills, useVotes } from "@/api/queries";
 import { getPartyColor } from "@/lib/partyColors";
 import { formatDate } from "@/lib/format";
 import {
@@ -31,17 +32,25 @@ function StatCard({
 }
 
 export default function Dashboard() {
-  const politicians = usePoliticians({ page: 1, size: 1 });
+  const stats = useStatsOverview();
   const bills = useBills({ page: 1, size: 5 });
   const votes = useVotes({ page: 1, size: 5 });
-  const parties = useParties();
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
-  // Build party distribution data for pie chart
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    if (search.trim()) {
+      navigate(`/politicians?name=${encodeURIComponent(search.trim())}`);
+    }
+  }
+
+  // Party distribution for pie chart (now with real member counts)
   const partyData =
-    parties.data?.map((p) => ({
-      name: p.name,
-      value: 1, // placeholder — no member count from parties endpoint
-      color: getPartyColor(p.name),
+    stats.data?.parties.map((p) => ({
+      name: p.party,
+      value: p.count,
+      color: getPartyColor(p.party),
     })) ?? [];
 
   return (
@@ -49,71 +58,91 @@ export default function Dashboard() {
       <h1 className="text-2xl font-bold">대시보드</h1>
       <p className="mt-1 text-gray-500">제22대 국회 활동 현황</p>
 
+      {/* Search bar */}
+      <form onSubmit={handleSearch} className="mt-4">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            placeholder="의원명, 법안명, 위원회 검색..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="flex-1 rounded-md border border-gray-300 px-4 py-2 text-sm focus:border-gray-500 focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="rounded-md bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800"
+          >
+            검색
+          </button>
+        </div>
+      </form>
+
       {/* Summary stats */}
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard
           label="국회의원"
-          value={politicians.data?.total ?? "—"}
+          value={stats.data?.politicians ?? "—"}
           to="/politicians"
         />
         <StatCard
           label="발의 법안"
-          value={bills.data?.total ?? "—"}
+          value={stats.data?.bills ?? "—"}
           to="/bills"
         />
         <StatCard
           label="본회의 표결"
-          value={votes.data?.total ?? "—"}
+          value={stats.data?.votes ?? "—"}
           to="/votes"
         />
       </div>
 
       {/* Party breakdown with chart */}
-      {parties.data && parties.data.length > 0 && (
+      {partyData.length > 0 && (
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
           {/* Party pie chart */}
           <div className="rounded-lg border border-gray-200 bg-white p-5">
             <h2 className="text-sm font-semibold text-gray-700">정당 구성</h2>
-            {partyData.length > 0 && (
-              <div className="mt-3 h-52">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={partyData}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={45}
-                      outerRadius={80}
-                      paddingAngle={2}
-                    >
-                      {partyData.map((d) => (
-                        <Cell key={d.name} fill={d.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            )}
+            <div className="mt-3 h-52">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={partyData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={45}
+                    outerRadius={80}
+                    paddingAngle={2}
+                  >
+                    {partyData.map((d) => (
+                      <Cell key={d.name} fill={d.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => `${value}명`} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
-          {/* Party list */}
+          {/* Party list with counts */}
           <div className="rounded-lg border border-gray-200 bg-white p-5">
             <h2 className="text-sm font-semibold text-gray-700">정당</h2>
             <div className="mt-3 space-y-2">
-              {parties.data.map((p) => (
+              {partyData.map((p) => (
                 <Link
-                  key={p.id}
+                  key={p.name}
                   to={`/politicians?party=${encodeURIComponent(p.name)}`}
-                  className="flex items-center gap-3 rounded-md px-2 py-1.5 transition-colors hover:bg-gray-50"
+                  className="flex items-center justify-between rounded-md px-2 py-1.5 transition-colors hover:bg-gray-50"
                 >
-                  <span
-                    className="h-3 w-3 shrink-0 rounded-full"
-                    style={{ backgroundColor: getPartyColor(p.name) }}
-                  />
-                  <span className="text-sm">{p.name}</span>
+                  <span className="flex items-center gap-3">
+                    <span
+                      className="h-3 w-3 shrink-0 rounded-full"
+                      style={{ backgroundColor: p.color }}
+                    />
+                    <span className="text-sm">{p.name}</span>
+                  </span>
+                  <span className="text-sm font-medium text-gray-500">{p.value}명</span>
                 </Link>
               ))}
             </div>
@@ -128,7 +157,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-gray-700">최근 법안</h2>
             <Link to="/bills" className="text-xs text-gray-500 hover:text-gray-700">
-              전체보기 &rarr;
+              전체보기 →
             </Link>
           </div>
           <div className="mt-2 space-y-2">
@@ -165,7 +194,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-gray-700">최근 표결</h2>
             <Link to="/votes" className="text-xs text-gray-500 hover:text-gray-700">
-              전체보기 &rarr;
+              전체보기 →
             </Link>
           </div>
           <div className="mt-2 space-y-2">
@@ -201,7 +230,7 @@ export default function Dashboard() {
       {/* Quick links */}
       <div className="mt-8">
         <h2 className="text-sm font-semibold text-gray-700">탐색</h2>
-        <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <Link
             to="/graph"
             className="rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md"
@@ -212,12 +241,21 @@ export default function Dashboard() {
             </p>
           </Link>
           <Link
-            to="/bills"
+            to="/bills?view=pipeline"
             className="rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md"
           >
-            <p className="font-medium">법안 검색</p>
+            <p className="font-medium">법안 파이프라인</p>
             <p className="mt-1 text-sm text-gray-500">
-              키워드, 위원회, 처리 결과로 법안을 검색합니다
+              법안 진행 상태를 단계별로 확인합니다
+            </p>
+          </Link>
+          <Link
+            to="/about"
+            className="rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md"
+          >
+            <p className="font-medium">프로젝트 소개</p>
+            <p className="mt-1 text-sm text-gray-500">
+              kr-acc 데이터 출처와 법적 근거
             </p>
           </Link>
         </div>

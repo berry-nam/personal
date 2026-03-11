@@ -208,3 +208,33 @@ export function useCommittees() {
     staleTime: 30 * 60 * 1000,
   });
 }
+
+// ── Stats ───────────────────────────────────────────────────────────────────
+
+export function useStatsOverview() {
+  return useQuery({
+    queryKey: ["stats-overview"],
+    queryFn: async () => {
+      const { data } = await api.get<import("@/types/api").StatsOverview>(
+        "/stats/overview",
+      );
+      return data;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+}
+
+// ── Pipeline ────────────────────────────────────────────────────────────────
+
+export function useBillPipeline() {
+  return useQuery({
+    queryKey: ["bill-pipeline"],
+    queryFn: async () => {
+      const { data } = await api.get<import("@/types/api").PipelineData>(
+        "/bills/pipeline",
+      );
+      return data;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+}

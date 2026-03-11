@@ -48,6 +48,16 @@ async def list_bills(
     )
 
 
+@router.get("/pipeline")
+async def get_bill_pipeline(
+    assembly_term: int = 22,
+    session: AsyncSession = Depends(get_session),
+):
+    """Get bill counts grouped by status for pipeline/funnel visualization."""
+    stages = await bill_service.get_bill_pipeline(session, assembly_term=assembly_term)
+    return {"stages": stages}
+
+
 @router.get("/{bill_id}", response_model=BillDetail)
 async def get_bill(
     bill_id: str,
