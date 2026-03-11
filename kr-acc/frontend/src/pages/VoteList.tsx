@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import { useVotes } from "@/api/queries";
 import Pagination from "@/components/layout/Pagination";
 import { formatDate, formatNumber } from "@/lib/format";
@@ -58,9 +59,10 @@ export default function VoteList() {
           </p>
           <div className="mt-3 space-y-2">
             {data?.items.map((vote) => (
-              <div
+              <Link
                 key={vote.vote_id}
-                className="rounded-lg border border-gray-200 bg-white p-4"
+                to={`/votes/${vote.vote_id}`}
+                className="block rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
@@ -121,7 +123,7 @@ export default function VoteList() {
                     </div>
                   </div>
                 )}
-              </div>
+              </Link>
             ))}
           </div>
           {data && (
