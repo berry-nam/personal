@@ -463,7 +463,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 </div>
 
 <!-- TABS (6 tabs) -->
-<div class="tabs-wrap">
+<div class="tabs-wrap" style="position:relative">
+  <span class="design-note dn-blue">CDS Tab component, 6-tab layout, active underline</span>
   <div class="tabs">
     <div class="tab active" onclick="switchTab('overview',this)">개요</div>
     <div class="tab" onclick="switchTab('finance',this)">재무 <span class="tab-badge">8</span></div>
@@ -481,7 +482,9 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
   <div class="tab-panel active" id="panel-overview">
 
     <!-- 1. Revenue + Operating Profit Chart -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-green">ENPfsdt0005 주요매출계정 API</span>
+      <span class="design-note dn-blue" style="right:auto;left:-4px">Canvas line chart, devicePixelRatio</span>
       <div class="section-title"><span class="icon">📊</span> 매출 · 영업이익 추이</div>
       <div class="chart-controls">
         <div class="time-range">
@@ -503,7 +506,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- 2. Financial Summary Table -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-green">ENPfsdt0003 + ENPfsdt0004</span>
       <div class="section-title"><span class="icon">📋</span> 재무 요약</div>
       <table class="fin-table">
         <thead><tr><th>항목</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
@@ -519,7 +523,9 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- 3. Waterfall Chart -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-green">ENPfsdt0005 주요매출계정</span>
+      <span class="design-note dn-yellow" style="right:auto;left:-4px">Waterfall chart, positive=blue / negative=red</span>
       <div class="section-title"><span class="icon">🏗️</span> 매출 구성 워터폴</div>
       <div class="chart-container">
         <canvas id="waterfallChart" width="1100" height="260"></canvas>
@@ -529,6 +535,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- 4. Supply Chain Network Graph (Bloomberg Terminal) -->
     <div class="section" style="position:relative">
       <span class="design-note dn-yellow">Bloomberg Terminal style HTML/CSS network</span>
+      <span class="design-note dn-green" style="right:auto;left:-4px;top:16px">ENPcust + ENPsupp API</span>
       <div class="section-title"><span class="icon">🔗</span> 주요 구매처 · 판매처 네트워크</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div class="network-wrap" id="networkGraphWrap">
@@ -636,6 +643,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
     <!-- 6. Executives table/card toggle -->
     <div class="section" style="position:relative">
+      <span class="design-note dn-green">ENPmngr API</span>
+      <span class="design-note dn-yellow" style="right:auto;left:-4px">Table↔Card toggle, same pattern as network</span>
       <div class="section-title">
         <span class="icon">👥</span> 경영진
         <div style="margin-left:auto;display:flex;gap:4px">
@@ -668,7 +677,9 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- 7. Employee area chart -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-green">ENPemst API</span>
+      <span class="design-note dn-blue" style="right:auto;left:-4px">Canvas area chart, gradient fill</span>
       <div class="section-title"><span class="icon">👥</span> 인원현황</div>
       <div class="chart-container">
         <canvas id="employeeChart" width="1100" height="220"></canvas>
@@ -676,7 +687,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- 8. Tech/Patents (moved from tab) -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-green">KIPRIS API (외부, KoDATA 아님)</span>
       <div class="section-title"><span class="icon">🔬</span> 기술 · 특허 <span class="tab-badge" style="font-size:12px">5건</span></div>
       <div style="display:flex;flex-direction:column;gap:10px">
         <div style="padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;gap:12px">
@@ -708,7 +720,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- 9. News feed (moved from tab) -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-yellow">RSS feed aggregation, time-relative format</span>
       <div class="section-title"><span class="icon">📰</span> 최신 뉴스</div>
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius);transition:var(--transition);cursor:pointer" onmouseover="this.style.borderColor='var(--blue-200)';this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
@@ -730,7 +743,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- 10. Timeline -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-green">ENPhist API</span>
       <div class="section-title"><span class="icon">📅</span> 기업 연혁</div>
       <div class="timeline">
         <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-date">2025.01</div><div class="timeline-text">AI 기반 반도체 검사 솔루션 'HB-Vision' 출시</div></div>
@@ -743,7 +757,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- 11. Similar companies preview -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-yellow">업종·매출·지역 기반 유사도 매칭</span>
       <div class="similar-header">
         <div class="section-title" style="margin-bottom:0"><span class="icon">🏢</span> 유사 기업 추천</div>
         <a href="#" style="font-size:13px;color:var(--brand);text-decoration:none;font-weight:500" onclick="switchTab('similar',document.querySelectorAll('.tab')[3]);return false">전체 보기 →</a>
@@ -758,7 +773,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
     <!-- S1: Investment Indicators -->
     <div class="section paywall-section" style="position:relative">
-      <span class="design-note dn-green">ENPfsdt0003, ENPfsdt0004</span>
+      <span class="design-note dn-green">OpenDART 가치평가지표 API</span>
       <span class="design-note dn-red" style="right:auto;left:-4px">L2: 456🍪</span>
       <div class="section-title"><span class="icon">📈</span> 투자 지표</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
@@ -776,6 +791,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
     <!-- S2: Valuation Metrics -->
     <div class="section paywall-section" style="position:relative">
+      <span class="design-note dn-green">OpenDART PER/PBR/PSR</span>
+      <span class="design-note dn-yellow" style="right:auto;left:-4px;top:16px">PER/PBR/PSR tab toggle, horizontal bar vs 산업 평균</span>
       <div class="section-title"><span class="icon">📊</span> 가치평가지표</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
@@ -791,6 +808,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
     <!-- S3: Earnings -->
     <div class="section paywall-section" style="position:relative">
+      <span class="design-note dn-green">OpenDART 분기/연간 실적</span>
+      <span class="design-note dn-yellow" style="right:auto;left:-4px;top:16px">Bubble chart, gray=추정 blue=발표</span>
       <div class="section-title"><span class="icon">💰</span> 실적</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
@@ -815,6 +834,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
     <!-- S4: Financial Stacked Bars -->
     <div class="section paywall-section" style="position:relative">
+      <span class="design-note dn-yellow">Stacked bar: 매출(green) 영업이익(blue) 순이익(purple)</span>
       <div class="section-title"><span class="icon">📊</span> 재무</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
@@ -836,6 +856,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
     <!-- S5: Stability -->
     <div class="section paywall-section" style="position:relative">
+      <span class="design-note dn-green">OpenDART 부채비율/유동비율</span>
+      <span class="design-note dn-yellow" style="right:auto;left:-4px;top:16px">Line chart, dotted=projected, circle markers</span>
       <div class="section-title"><span class="icon">🛡️</span> 안정성</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
@@ -913,7 +935,9 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
   <!-- ═══ PEOPLE TAB ═══ -->
   <div class="tab-panel" id="panel-people">
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-green">ENPmngr + ENPrepe API</span>
+      <span class="design-note dn-blue" style="right:auto;left:-4px">Person card component, 48px avatar</span>
       <div class="section-title"><span class="icon">👥</span> 주요 인물 <span class="tab-badge" style="font-size:12px">12명</span></div>
       <div class="people-grid">
         <div class="person-card"><div class="person-avatar" style="background:var(--brand)">김</div><div><div class="person-name">김현우</div><div class="person-title">대표이사</div><div class="person-contact">연락처 보기 (15🍪)</div></div></div>
@@ -925,6 +949,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
       </div>
     </div>
     <div class="section paywall-section" style="position:relative">
+      <span class="design-note dn-red">L1: 60🍪 추가 열람</span>
       <span class="paywall-inline-badge">🔒 열람 시 60🍪 필요</span>
       <div>
         <div class="people-grid">
@@ -941,7 +966,9 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
   <!-- ═══ SIMILAR COMPANIES TAB (B7) ═══ -->
   <div class="tab-panel" id="panel-similar">
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-yellow">3-column grid, 18+ cards, filter chips</span>
+      <span class="design-note dn-blue" style="right:auto;left:-4px">sim-card component, match % badge</span>
       <div class="similar-header">
         <div class="section-title" style="margin-bottom:0"><span class="icon">🏢</span> 유사 기업 추천</div>
         <div class="view-toggle" id="similarViewToggle">
@@ -986,7 +1013,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- B. Revenue Comparison - Horizontal Bar Chart -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-yellow">Horizontal bar chart, animated 0→value</span>
       <div class="section-title"><span class="icon">📊</span> 매출 규모 비교</div>
       <div class="hbar-chart" id="revenueHBars">
         <div class="hbar-row">
@@ -1013,7 +1041,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- C. Key Metrics Card Grid -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-yellow">6-card metric grid, color-coded best/worst</span>
       <div class="section-title"><span class="icon">📈</span> 핵심 지표 비교</div>
       <div class="metric-card-grid" id="compMetricCards">
         <div class="metric-compare-card">
@@ -1056,7 +1085,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     </div>
 
     <!-- D. Improved Comparison Table -->
-    <div class="section">
+    <div class="section" style="position:relative">
+      <span class="design-note dn-blue">9-row comparison table, cell-level color coding</span>
       <div class="section-title"><span class="icon">📋</span> 경쟁사 비교 테이블</div>
       <table class="comp-table" id="compTable">
         <thead>

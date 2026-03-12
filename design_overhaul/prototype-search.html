@@ -238,6 +238,19 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .skeleton{background:linear-gradient(90deg,var(--slate-100) 25%,var(--slate-50) 50%,var(--slate-100) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
+/* ══ SUGGESTED FILTERS ══ */
+.suggested-filters{display:flex;align-items:center;gap:8px;padding:0 0 8px;flex-wrap:wrap}
+.sf-label{font-size:12px;font-weight:600;color:var(--text-muted);white-space:nowrap}
+.sf-chip{padding:7px 14px;border:1px solid transparent;border-radius:20px;font-size:12.5px;font-family:inherit;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,var(--blue-200),var(--purple-400),var(--amber-400)) border-box;color:var(--text);cursor:pointer;transition:var(--transition);white-space:nowrap}
+.sf-chip:hover{background:linear-gradient(var(--blue-50),var(--blue-50)) padding-box,linear-gradient(135deg,var(--blue-400),var(--purple-500),var(--amber-500)) border-box;transform:translateY(-1px);box-shadow:0 2px 8px rgba(5,73,204,.12)}
+.sf-chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.cmdk-suggested{padding:8px 0;border-bottom:1px solid var(--border)}
+.cmdk-sg-item{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:background .15s}
+.cmdk-sg-item:hover{background:var(--slate-50)}
+.cmdk-sg-icon{font-size:14px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--slate-100)}
+.cmdk-sg-text{flex:1;font-size:13px;color:var(--text)}
+.cmdk-sg-meta{font-size:11px;color:var(--text-muted);padding:2px 8px;background:var(--slate-100);border-radius:10px}
+
 /* ══ DESIGN NOTES ══ */
 .design-notes-toggle{position:fixed;bottom:24px;right:24px;z-index:400;padding:10px 18px;background:var(--slate-800);color:#fff;border:none;border-radius:var(--radius-lg);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:6px;transition:var(--transition)}
 .design-notes-toggle:hover{background:var(--slate-900)}
@@ -272,7 +285,8 @@ body.show-design-notes .design-note{display:block}
 <body>
 
 <!-- ══ NAVIGATION ══ -->
-<nav class="nav">
+<nav class="nav" style="position:relative">
+  <div class="design-note blue" style="top:100%;left:0;margin-top:4px">CDS NavBar component, Pretendard Variable 14px</div>
   <a href="#" class="nav-brand">
     <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#0549CC"/><circle cx="10" cy="11" r="2" fill="#fff"/><circle cx="18" cy="11" r="2" fill="#fff"/><circle cx="14" cy="17" r="1.5" fill="#fff"/><circle cx="9" cy="16" r="1.2" fill="#fff" opacity=".6"/><circle cx="19" cy="16" r="1.2" fill="#fff" opacity=".6"/></svg>
     CookieDeal
@@ -299,12 +313,25 @@ body.show-design-notes .design-note{display:block}
   </div>
 
   <!-- ── Hero Search Omnibox ── -->
-  <div class="hero-search">
+  <div class="hero-search" style="position:relative">
+    <div class="design-note yellow" style="top:-28px;left:0">Search-first UX, full-width omnibox, 1M+ 비상장 기업 탐색</div>
+    <div class="design-note blue" style="top:-28px;right:0">cmdk library, fuzzy search, keyboard-first interaction</div>
     <div class="omnibox" onclick="openCmdK()">
       <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9.5" cy="9.5" r="6.5"/><path d="M14.5 14.5L19 19"/></svg>
       <input class="omnibox-input" placeholder="기업명, 업종, 또는 조건을 입력하세요..." readonly onclick="openCmdK()">
       <div class="omnibox-kbd"><kbd>⌘</kbd><kbd>K</kbd></div>
     </div>
+  </div>
+
+  <!-- ── Suggested Filters ── -->
+  <div class="suggested-filters" style="position:relative">
+    <div class="design-note yellow" style="top:-28px;left:0">선제시 필터: Claude artifact 패턴, 검색 이력 기반 개인화 (Phase 2)</div>
+    <span class="sf-label">추천 탐색</span>
+    <button class="sf-chip" onclick="applySuggested(this)">🔥 AI·반도체 급성장 기업</button>
+    <button class="sf-chip" onclick="applySuggested(this)">📈 매출 100억+ 영업이익률 10%+</button>
+    <button class="sf-chip" onclick="applySuggested(this)">🏭 경기 제조업 50인 이상</button>
+    <button class="sf-chip" onclick="applySuggested(this)">💡 특허 10건+ 기술기업</button>
+    <button class="sf-chip" onclick="applySuggested(this)">🆕 최근 3년 내 설립 스타트업</button>
   </div>
 
   <!-- ── Filter Bar ── -->
@@ -334,7 +361,8 @@ body.show-design-notes .design-note{display:block}
   </div>
 
   <!-- ── Advanced Filters ── -->
-  <div class="advanced-panel">
+  <div class="advanced-panel" style="position:relative">
+    <div class="design-note yellow" style="top:4px;right:4px">Collapsible advanced panel, LinkedIn-style filter groups</div>
     <div class="advanced-grid">
       <div class="advanced-group">
         <div class="advanced-group-title">기업 속성</div>
@@ -401,6 +429,7 @@ body.show-design-notes .design-note{display:block}
   <!-- ══ RESULTS TABLE ══ -->
   <div class="results-wrap" style="position:relative">
     <div class="design-note blue" style="top:-28px;right:0">TanStack Virtual, density 32/40/52px rows</div>
+    <div class="design-note red" style="top:-28px;left:0">L1/L2 column gating, 🍪 badge per field</div>
     <table class="results-table" id="resultsTable">
       <thead>
         <tr>
@@ -435,7 +464,7 @@ body.show-design-notes .design-note{display:block}
 
 <!-- ══ SLIDE-OUT PANEL (Notion-style, no overlay) ══ -->
   <div class="panel" id="panel">
-    <div class="design-note green" style="top:60px;left:12px;z-index:10">420px fixed, 6-section: hero→grid→chart→heatmap→sankey→actions</div>
+    <div class="design-note blue" style="top:60px;left:12px;z-index:10">420px fixed, 6-section: hero→grid→chart→heatmap→sankey→actions</div>
     <div class="panel-header">
       <div class="panel-logo" id="panelLogo">HB</div>
       <div>
@@ -484,6 +513,14 @@ body.show-design-notes .design-note{display:block}
       <input class="cmdk-input" id="cmdkInput" placeholder="기업명, 업종, 또는 조건을 입력하세요..." oninput="filterCmdK(this.value)">
     </div>
     <div class="cmdk-body" id="cmdkBody">
+      <div class="cmdk-suggested" id="cmdkSuggested">
+        <div class="cmdk-group-label" style="padding:8px 16px 4px;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px">추천 검색</div>
+        <div class="cmdk-sg-item" onclick="applyCmdkSuggestion('AI·반도체 급성장 기업')"><span class="cmdk-sg-icon">🔥</span><span class="cmdk-sg-text">AI·반도체 급성장 기업</span><span class="cmdk-sg-meta">42개 기업</span></div>
+        <div class="cmdk-sg-item" onclick="applyCmdkSuggestion('매출 100억+ 영업이익률 10%+')"><span class="cmdk-sg-icon">📈</span><span class="cmdk-sg-text">매출 100억+ 영업이익률 10%+</span><span class="cmdk-sg-meta">1,203개 기업</span></div>
+        <div class="cmdk-sg-item" onclick="applyCmdkSuggestion('경기 제조업 50인 이상')"><span class="cmdk-sg-icon">🏭</span><span class="cmdk-sg-text">경기 제조업 50인 이상</span><span class="cmdk-sg-meta">3,456개 기업</span></div>
+        <div class="cmdk-sg-item" onclick="applyCmdkSuggestion('특허 10건+ 기술기업')"><span class="cmdk-sg-icon">💡</span><span class="cmdk-sg-text">특허 10건+ 기술기업</span><span class="cmdk-sg-meta">892개 기업</span></div>
+        <div class="cmdk-sg-item" onclick="applyCmdkSuggestion('최근 3년 내 설립 스타트업')"><span class="cmdk-sg-icon">🆕</span><span class="cmdk-sg-text">최근 3년 내 설립 스타트업</span><span class="cmdk-sg-meta">5,678개 기업</span></div>
+      </div>
       <div class="cmdk-group">
         <div class="cmdk-group-label">최근 검색</div>
         <div class="cmdk-item"><div class="cmdk-item-icon" style="background:var(--slate-100);color:var(--text-muted)">🕐</div><div class="cmdk-item-text"><div class="cmdk-item-title">서울 반도체 매출 100억 이상</div><div class="cmdk-item-sub">2,345개 결과 · 3일 전</div></div></div>
@@ -521,6 +558,18 @@ body.show-design-notes .design-note{display:block}
 <button class="design-notes-toggle" onclick="toggleDesignNotes(this)">📝 디자인 노트</button>
 
 <script>
+// ══ SUGGESTED FILTERS ══
+function applySuggested(btn){
+  document.querySelectorAll('.sf-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+}
+function applyCmdkSuggestion(text){
+  closeCmdK();
+  document.querySelectorAll('.sf-chip').forEach(c=>{
+    c.classList.toggle('active', c.textContent.includes(text.split(' ')[0]));
+  });
+}
+
 // ══ DESIGN NOTES ══
 function toggleDesignNotes(btn){
   btn.classList.toggle('active');
