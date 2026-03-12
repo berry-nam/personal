@@ -103,6 +103,28 @@ class RawVotePerMember(NullToEmpty):
     VOTE_DATE: str = ""
 
 
+class RawAllMember(NullToEmpty):
+    """역대 국회의원 인적사항 — all-time legislator bio (ALLNAMEMBER)."""
+
+    NAAS_CD: str = ""           # 의원 코드 (assembly_id)
+    NAAS_NM: str = ""           # 한글 이름
+    NAAS_CH_NM: str = ""        # 한자 이름
+    NAAS_EN_NM: str = ""        # 영문 이름
+    PLPT_NM: str = ""           # 정당명 (may contain "/" for multi-term)
+    ELECD_NM: str = ""          # 선거구
+    ELECD_DIV_NM: str = ""      # 선거구 구분 (지역구/비례대표)
+    CMIT_NM: str = ""           # 소속 위원회
+    RLCT_DIV_NM: str = ""       # 당선 횟수 (초선, 재선, etc.)
+    GTELT_ERACO: str = ""       # 대수 목록 (e.g. "제9대, 제10대")
+    NTR_DIV: str = ""           # 성별 (남/여)
+    BIRDY_DT: str = ""          # 생년월일
+    NAAS_PIC: str = ""          # 프로필 사진 URL
+    NAAS_TEL_NO: str = ""       # 전화번호
+    NAAS_EMAIL_ADDR: str = ""   # 이메일
+    NAAS_HP_URL: str = ""       # 홈페이지
+    BRF_HST: str = ""           # 약력
+
+
 class RawCommittee(NullToEmpty):
     """위원회 현황 — committee info (nknaocmjlgzmoutew)."""
 

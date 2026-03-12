@@ -5,6 +5,7 @@ import logging
 from prefect import task
 
 from assembly_client import (
+    ALL_MEMBERS,
     BILLS,
     COMMITTEES,
     LEGISLATORS,
@@ -52,6 +53,15 @@ async def extract_vote_members(api_key: str, bill_id: str) -> list[dict]:
     """Fetch per-member vote records for a specific bill."""
     async with AssemblyClient(api_key=api_key) as client:
         rows = await client.fetch_all(VOTE_PER_MEMBER, params={"BILL_ID": bill_id})
+    return rows
+
+
+@task(name="extract-all-legislators", retries=2, retry_delay_seconds=10)
+async def extract_all_legislators(api_key: str) -> list[dict]:
+    """Fetch all-time legislator records from ALLNAMEMBER endpoint."""
+    async with AssemblyClient(api_key=api_key) as client:
+        rows = await client.fetch_all(ALL_MEMBERS, size=300)
+    logger.info("Extracted %d all-time legislators", len(rows))
     return rows
 
 

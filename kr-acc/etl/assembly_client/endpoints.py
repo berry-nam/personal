@@ -19,3 +19,6 @@ VOTE_PER_MEMBER = "nwbpacrgavhjryiph"
 
 # 위원회 현황 — NOTE: endpoint slug TBD, currently broken
 COMMITTEES = "nknaocmjlgzmoutew"
+
+# 역대 국회의원 인적사항 (all-time legislator bio across all terms)
+ALL_MEMBERS = "ALLNAMEMBER"

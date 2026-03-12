@@ -59,7 +59,10 @@ class AssemblyClient:
         self._client: httpx.AsyncClient | None = None
 
     async def __aenter__(self) -> "AssemblyClient":
-        self._client = httpx.AsyncClient(timeout=self.timeout)
+        self._client = httpx.AsyncClient(
+            timeout=self.timeout,
+            headers={"User-Agent": "Mozilla/5.0 (kr-acc ETL)"},
+        )
         return self
 
     async def __aexit__(self, *args: Any) -> None:
@@ -105,7 +108,10 @@ class AssemblyClient:
             **params,
         }
 
-        client = self._client or httpx.AsyncClient(timeout=self.timeout)
+        client = self._client or httpx.AsyncClient(
+            timeout=self.timeout,
+            headers={"User-Agent": "Mozilla/5.0 (kr-acc ETL)"},
+        )
         own_client = self._client is None
 
         try:

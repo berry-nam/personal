@@ -13,7 +13,11 @@ import os
 from prefect import flow
 
 from flows.compute_co_sponsorship import compute_co_sponsorship
+from flows.scrape_likms_votes import scrape_likms_votes
+from flows.scrape_newstapa import scrape_newstapa
 from flows.sync_bills import sync_bills
+from flows.sync_companies import sync_companies
+from flows.sync_historical_politicians import sync_historical_politicians
 from flows.sync_politicians import sync_politicians
 from flows.sync_votes import sync_votes
 
@@ -51,7 +55,17 @@ async def sync_all(
         "politicians": 0, "committees": 0, "graph_nodes": 0,
         "bills": 0, "sponsor_links": 0,
         "vote_summaries": 0, "vote_records": 0,
+        "historical_politicians": 0,
     }
+
+    # Step 0: Sync historical politicians (terms 17-21) from ALLNAMEMBER
+    historical_terms = [t for t in terms if t < 22]
+    if historical_terms:
+        print("\n[0] Syncing historical politicians from ALLNAMEMBER...")
+        hist_result = await sync_historical_politicians(
+            api_key, database_url, target_terms=historical_terms
+        )
+        totals["historical_politicians"] = hist_result.get("historical_politicians", 0)
 
     for term in terms:
         print(f"\n{'─' * 40}")
@@ -80,9 +94,30 @@ async def sync_all(
     print("\nComputing co-sponsorship network (all terms)...")
     graph_result = await compute_co_sponsorship(database_url)
 
+    # Optional: Sync company data from DART
+    dart_key = os.environ.get("DART_API_KEY", "")
+    companies_synced = 0
+    if dart_key:
+        print("\nSyncing company data from DART...")
+        company_result = await sync_companies(dart_key, database_url)
+        companies_synced = company_result.get("companies_synced", 0)
+    else:
+        print("\nSkipping DART company sync (DART_API_KEY not set)")
+
+    # Scrape per-member vote records from LIKMS
+    print("\nScraping per-member votes from LIKMS...")
+    likms_result = await scrape_likms_votes(database_url)
+    likms_records = likms_result.get("records_upserted", 0)
+
+    # Scrape asset declarations from Newstapa
+    print("\nScraping asset declarations from Newstapa...")
+    newstapa_result = await scrape_newstapa(database_url)
+    newstapa_declarations = newstapa_result.get("declarations_upserted", 0)
+
     print("\n" + "=" * 60)
     print("ETL sync complete!")
     print(f"  Terms:       {terms}")
+    print(f"  Historical:  {totals['historical_politicians']}")
     print(f"  Politicians: {totals['politicians']}")
     print(f"  Committees:  {totals['committees']}")
     print(f"  Bills:       {totals['bills']}")
@@ -90,9 +125,18 @@ async def sync_all(
     print(f"  Votes:       {totals['vote_summaries']}")
     print(f"  Vote records:{totals['vote_records']}")
     print(f"  Graph edges: {graph_result['co_sponsorship_edges']}")
+    print(f"  Companies:   {companies_synced}")
+    print(f"  LIKMS votes: {likms_records}")
+    print(f"  Newstapa:    {newstapa_declarations}")
     print("=" * 60)
 
-    return {**totals, **graph_result}
+    return {
+        **totals,
+        **graph_result,
+        "companies_synced": companies_synced,
+        "likms_vote_records": likms_records,
+        "newstapa_declarations": newstapa_declarations,
+    }
 
 
 if __name__ == "__main__":

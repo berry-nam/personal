@@ -7,6 +7,7 @@ from datetime import date
 from prefect import task
 
 from assembly_client import (
+    RawAllMember,
     RawBill,
     RawCommittee,
     RawLegislator,
@@ -93,6 +94,100 @@ def transform_legislators(raw_rows: list[dict], assembly_term: int = 22) -> list
             "assembly_term": assembly_term,
         })
     logger.info("Transformed %d/%d legislators", len(results), len(raw_rows))
+    return results
+
+
+def _parse_term_numbers(gtelt_eraco: str) -> list[int]:
+    """Parse GTELT_ERACO like '제9대, 제10대' into [9, 10]."""
+    if not gtelt_eraco:
+        return []
+    terms = []
+    for part in gtelt_eraco.split(","):
+        part = part.strip()
+        match = re.search(r"제(\d+)대", part)
+        if match:
+            terms.append(int(match.group(1)))
+    return sorted(terms)
+
+
+def _latest_party(plpt_nm: str) -> str | None:
+    """Extract the latest party from '/' separated party names."""
+    if not plpt_nm:
+        return None
+    parts = [p.strip() for p in plpt_nm.split("/") if p.strip()]
+    return parts[-1] if parts else None
+
+
+def _gender_from_ntrdiv(ntrdiv: str) -> str | None:
+    """Map NTR_DIV (남/여) to gender string."""
+    if ntrdiv == "남":
+        return "남"
+    if ntrdiv == "여":
+        return "여"
+    return None
+
+
+@task(name="transform-all-legislators")
+def transform_all_legislators(
+    raw_rows: list[dict],
+    target_terms: list[int] | None = None,
+) -> list[dict]:
+    """Transform ALLNAMEMBER API data into DB-ready politician dicts.
+
+    Args:
+        raw_rows: Raw API response rows.
+        target_terms: Only include politicians who served in these terms.
+            If None, includes all.
+
+    Returns:
+        List of politician dicts ready for upsert.
+    """
+    results = []
+    seen_ids: set[str] = set()
+    for row in raw_rows:
+        raw = RawAllMember.model_validate(row)
+        if not raw.NAAS_CD or not raw.NAAS_NM:
+            logger.warning("Skipping all-member record with missing ID or name: %s", row)
+            continue
+
+        terms = _parse_term_numbers(raw.GTELT_ERACO)
+        if target_terms and not any(t in target_terms for t in terms):
+            continue
+
+        if raw.NAAS_CD in seen_ids:
+            continue
+        seen_ids.add(raw.NAAS_CD)
+
+        # Use the highest term they served in as assembly_term
+        highest_term = max(terms) if terms else None
+
+        results.append({
+            "assembly_id": raw.NAAS_CD,
+            "name": raw.NAAS_NM,
+            "name_hanja": raw.NAAS_CH_NM or None,
+            "party": _latest_party(raw.PLPT_NM),
+            "constituency": raw.ELECD_NM or None,
+            "elected_count": _parse_elected_count(raw.RLCT_DIV_NM),
+            "committees": [c.strip() for c in raw.CMIT_NM.split(",") if c.strip()]
+            if raw.CMIT_NM
+            else [],
+            "profile_url": raw.NAAS_HP_URL or None,
+            "photo_url": raw.NAAS_PIC or None,
+            "eng_name": raw.NAAS_EN_NM or None,
+            "bio": raw.BRF_HST or None,
+            "email": raw.NAAS_EMAIL_ADDR or None,
+            "homepage": raw.NAAS_HP_URL or None,
+            "office_address": None,
+            "birth_date": _parse_date(raw.BIRDY_DT),
+            "gender": _gender_from_ntrdiv(raw.NTR_DIV),
+            "assembly_term": highest_term,
+        })
+    logger.info(
+        "Transformed %d/%d all-time legislators (target terms: %s)",
+        len(results),
+        len(raw_rows),
+        target_terms,
+    )
     return results
 
 
