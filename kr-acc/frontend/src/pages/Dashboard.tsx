@@ -1,19 +1,23 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { Link, useNavigate } from "react-router";
 import useDocumentTitle from "@/lib/useDocumentTitle";
 import {
-  usePoliticians,
-  useBills,
-  useVotes,
-  useParties,
   useCoSponsorshipGraph,
   useBillPipeline,
-  useNeighbors,
   useTopSponsors,
+  useVotes,
+  usePartySeats,
+  useDemographics,
+  useVoteParticipation,
+  useBillTrend,
 } from "@/api/queries";
 import HeroGraph from "@/components/graph/HeroGraph";
+import PartyWaffleChart from "@/components/charts/PartyWaffleChart";
+import MiniDonut from "@/components/charts/MiniDonut";
+import MiniSparkline from "@/components/charts/MiniSparkline";
+import StackedBar from "@/components/charts/StackedBar";
 import { getPartyColor } from "@/lib/partyColors";
-import { formatNumber, formatDate } from "@/lib/format";
+import { formatNumber, formatDate, formatKrw } from "@/lib/format";
 import {
   BarChart,
   Bar,
@@ -43,214 +47,92 @@ function pct(n: number | null, total: number | null): number {
 export default function Dashboard() {
   useDocumentTitle();
   const navigate = useNavigate();
-  const [selectedNode, setSelectedNode] = useState<{
-    id: string;
-    name: string;
-    party: string | null;
-  } | null>(null);
 
-  // Graph data
-  const graphData = useCoSponsorshipGraph({
-    min_weight: 5,
-    limit: 300,
-  });
-
-  // Summary counts
-  const politicians = usePoliticians({ page: 1, size: 1 });
-  const bills = useBills({ page: 1, size: 1 });
-  const votesQuery = useVotes({ page: 1, size: 5 });
-  const parties = useParties();
+  // Data queries
+  const graphData = useCoSponsorshipGraph({ min_weight: 5, limit: 300 });
+  const partySeats = usePartySeats(22);
   const pipeline = useBillPipeline();
   const topSponsors = useTopSponsors({ assembly_term: 22, limit: 10 });
+  const votesQuery = useVotes({ page: 1, size: 8 });
+  const demographics = useDemographics(22);
+  const voteParticipation = useVoteParticipation(22);
+  const billTrend = useBillTrend(22);
 
-  // Neighbors for selected node
-  const neighbors = useNeighbors(selectedNode?.id ?? "", {
-    min_weight: 1,
-    limit: 8,
-  });
+  // Compute pipeline donut segments
+  const pipelineSegments = useMemo(() => {
+    if (!pipeline.data) return [];
+    return pipeline.data.map((d) => ({
+      name: d.result,
+      value: d.count,
+      color: RESULT_COLORS[d.result] ?? "#6B7280",
+    }));
+  }, [pipeline.data]);
 
-  // Find politician ID from graph node (assembly_id) to link to detail page
-  const selectedPoliticians = usePoliticians({
-    name: selectedNode?.name,
-    page: 1,
-    size: 1,
-  });
+  const pipelineTotal = pipelineSegments.reduce((s, d) => s + d.value, 0);
+  const passedCount =
+    pipeline.data?.reduce(
+      (s, d) =>
+        d.result === "원안가결" || d.result === "수정가결" ? s + d.count : s,
+      0,
+    ) ?? 0;
+  const passRate =
+    pipelineTotal > 0 ? ((passedCount / pipelineTotal) * 100).toFixed(1) : "0";
 
-  const selectedPolId = selectedPoliticians.data?.items[0]?.id;
+  // Proposer type breakdown from pipeline? We'll approximate with passed/pending
+  const proposerSegments = useMemo(() => {
+    if (!pipeline.data) return [];
+    const passed = pipeline.data
+      .filter((d) => d.result === "원안가결" || d.result === "수정가결")
+      .reduce((s, d) => s + d.count, 0);
+    const pending = pipeline.data
+      .filter((d) => d.result === "계류중")
+      .reduce((s, d) => s + d.count, 0);
+    const other = pipelineTotal - passed - pending;
+    return [
+      { label: "가결", value: passed, color: "#10B981" },
+      { label: "계류", value: pending, color: "#3B82F6" },
+      { label: "기타", value: other, color: "#9CA3AF" },
+    ];
+  }, [pipeline.data, pipelineTotal]);
 
-  function handleNodeClick(id: string, name: string, party: string | null) {
-    setSelectedNode((prev) =>
-      prev?.id === id ? null : { id, name, party },
-    );
-  }
+  // Bill trend sparkline data
+  const sparkData = useMemo(() => {
+    if (!billTrend.data) return [];
+    return billTrend.data.map((d) => ({
+      label: d.week ? d.week.slice(5, 10) : "",
+      value: d.count,
+    }));
+  }, [billTrend.data]);
 
-  // Party legend from graph data
-  const partyLegend = useMemo(() => {
-    if (!graphData.data) return [];
-    const counts = new Map<string, number>();
-    for (const n of graphData.data.nodes) {
-      const p = n.party ?? "무소속";
-      counts.set(p, (counts.get(p) ?? 0) + 1);
-    }
-    return [...counts.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 8);
-  }, [graphData.data]);
+  // Top sponsor max for proportional bars
+  const maxBillCount = topSponsors.data?.[0]?.bill_count ?? 1;
 
   return (
     <div>
-      {/* ── Hero: Graph Control Tower ───────────────────────────── */}
+      {/* ── A. Hero: Co-sponsorship Network ─────────────────────── */}
       <section className="relative overflow-hidden bg-gray-950">
-        {/* Header overlay */}
         <div className="pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-gray-950/80 to-transparent px-6 pb-16 pt-5">
-          <div className="pointer-events-auto max-w-7xl mx-auto flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <h1 className="text-lg font-bold text-white sm:text-xl">
-                공동발의 네트워크
-              </h1>
-              <p className="mt-1 text-xs text-gray-400">
-                의원 간 공동발의 관계 · 노드를 클릭하여 탐색
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              {/* Stats badges */}
-              <div className="flex gap-2">
-                <Link
-                  to="/politicians"
-                  className="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-                >
-                  정치인{" "}
-                  <span className="font-bold">
-                    {politicians.data
-                      ? formatNumber(politicians.data.total)
-                      : "—"}
-                  </span>
-                </Link>
-                <Link
-                  to="/bills"
-                  className="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-                >
-                  법안{" "}
-                  <span className="font-bold">
-                    {bills.data ? formatNumber(bills.data.total) : "—"}
-                  </span>
-                </Link>
-                <Link
-                  to="/votes"
-                  className="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-blue-300 backdrop-blur-sm transition-colors hover:bg-white/20"
-                >
-                  표결{" "}
-                  <span className="font-bold">
-                    {votesQuery.data
-                      ? formatNumber(votesQuery.data.total)
-                      : "—"}
-                  </span>
-                </Link>
-              </div>
-            </div>
+          <div className="pointer-events-auto mx-auto max-w-7xl">
+            <h1 className="text-lg font-bold text-white sm:text-xl">
+              22대 국회 306인의 입법 관계도
+            </h1>
+            <p className="mt-1 text-xs text-gray-400">
+              공동발의 기반 네트워크 · 노드 클릭으로 의원 프로필 이동
+            </p>
           </div>
         </div>
 
-        {/* Party legend overlay - bottom left */}
-        <div className="pointer-events-none absolute bottom-4 left-4 z-10">
-          <div className="pointer-events-auto flex flex-wrap gap-1.5">
-            {partyLegend.map(([party, count]) => (
-              <span
-                key={party}
-                className="flex items-center gap-1.5 rounded-md bg-gray-900/80 px-2 py-1 text-[10px] text-gray-300 backdrop-blur-sm"
-              >
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ backgroundColor: getPartyColor(party) }}
-                />
-                {party}
-                <span className="text-gray-500">{count}</span>
-              </span>
-            ))}
-          </div>
+        {/* "네트워크 전체보기" link */}
+        <div className="pointer-events-none absolute bottom-4 right-4 z-10">
+          <Link
+            to="/graph"
+            className="pointer-events-auto text-xs text-gray-400 transition-colors hover:text-white"
+          >
+            네트워크 전체보기 &rarr;
+          </Link>
         </div>
 
-        {/* Graph stats overlay - bottom right */}
-        {graphData.data && (
-          <div className="pointer-events-none absolute bottom-4 right-4 z-10 text-[10px] text-gray-500">
-            노드 {graphData.data.nodes.length} · 엣지{" "}
-            {graphData.data.edges.length}
-          </div>
-        )}
-
-        {/* Selected node info overlay - right side */}
-        {selectedNode && (
-          <div className="pointer-events-none absolute right-4 top-36 z-10 w-56 sm:top-16 sm:w-64">
-            <div className="pointer-events-auto rounded-xl border border-white/10 bg-gray-900/90 p-4 backdrop-blur-md">
-              <div className="flex items-center gap-3">
-                <div
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-                  style={{
-                    backgroundColor: getPartyColor(selectedNode.party),
-                  }}
-                >
-                  {selectedNode.name.charAt(0)}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-white">
-                    {selectedNode.name}
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    {selectedNode.party ?? "무소속"}
-                  </p>
-                </div>
-                <button
-                  onClick={() => setSelectedNode(null)}
-                  className="text-gray-500 hover:text-gray-300"
-                >
-                  &times;
-                </button>
-              </div>
-
-              {/* Neighbors */}
-              {neighbors.data && neighbors.data.length > 0 && (
-                <div className="mt-3 border-t border-white/10 pt-3">
-                  <p className="text-[10px] font-medium uppercase tracking-wider text-gray-500">
-                    공동발의 상위
-                  </p>
-                  <div className="mt-1.5 space-y-1">
-                    {neighbors.data.map((n) => (
-                      <div
-                        key={n.assembly_id}
-                        className="flex items-center justify-between text-xs"
-                      >
-                        <div className="flex items-center gap-1.5">
-                          <span
-                            className="h-1.5 w-1.5 rounded-full"
-                            style={{
-                              backgroundColor: getPartyColor(n.party),
-                            }}
-                          />
-                          <span className="text-gray-300">{n.name}</span>
-                        </div>
-                        <span className="text-gray-500">
-                          {n.weight}건
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {selectedPolId && (
-                <button
-                  onClick={() => navigate(`/politicians/${selectedPolId}`)}
-                  className="mt-3 w-full rounded-lg bg-white/10 py-1.5 text-xs font-medium text-white transition-colors hover:bg-white/20"
-                >
-                  프로필 보기 &rarr;
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* The graph itself */}
-        <div className="h-[300px] w-full sm:h-[520px]">
+        <div className="h-[250px] w-full sm:h-[400px]">
           {graphData.isLoading ? (
             <div className="flex h-full items-center justify-center">
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-700 border-t-gray-400" />
@@ -258,8 +140,15 @@ export default function Dashboard() {
           ) : graphData.data && graphData.data.nodes.length > 0 ? (
             <HeroGraph
               data={graphData.data}
-              selectedNodeId={selectedNode?.id ?? null}
-              onNodeClick={handleNodeClick}
+              selectedNodeId={null}
+              onNodeClick={(id) => {
+                // Find politician and navigate
+                const node = graphData.data?.nodes.find((n) => n.id === id);
+                if (node) {
+                  // Navigate via search — we'll use assembly_id
+                  navigate(`/politicians?name=${encodeURIComponent(node.name)}`);
+                }
+              }}
             />
           ) : (
             <div className="flex h-full items-center justify-center text-sm text-gray-600">
@@ -269,15 +158,92 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* ── Below the graph: surrounding data ───────────────────── */}
-      <div className="mx-auto max-w-7xl px-4 py-6">
-        {/* Top sponsors — horizontal scroll */}
+      <div className="mx-auto max-w-7xl px-4 py-6 space-y-8">
+        {/* ── B. Party Seat Waffle Chart ────────────────────────── */}
+        {partySeats.data && partySeats.data.length > 0 && (
+          <section>
+            <h2 className="text-lg font-semibold">22대 국회 의석 분포</h2>
+            <div className="mt-3 rounded-lg border border-gray-200 bg-white p-5">
+              <PartyWaffleChart data={partySeats.data} />
+            </div>
+          </section>
+        )}
+
+        {/* ── C. Key Metrics Row ───────────────────────────────── */}
+        <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {/* 법안 처리율 */}
+          <div className="flex flex-col items-center rounded-lg border border-gray-200 bg-white p-4">
+            <p className="text-xs font-medium text-gray-500">법안 처리율</p>
+            {pipelineSegments.length > 0 ? (
+              <MiniDonut
+                segments={pipelineSegments}
+                centerLabel={`${passRate}%`}
+                centerSub="가결"
+                size={100}
+              />
+            ) : (
+              <div className="flex h-[100px] items-center justify-center text-sm text-gray-300">
+                —
+              </div>
+            )}
+          </div>
+
+          {/* 평균 표결 참여율 */}
+          <div className="flex flex-col items-center rounded-lg border border-gray-200 bg-white p-4">
+            <p className="text-xs font-medium text-gray-500">평균 표결 참여율</p>
+            {voteParticipation.data ? (
+              <MiniDonut
+                segments={[
+                  {
+                    name: "참여",
+                    value: voteParticipation.data.avg_participation,
+                    color: "#3B82F6",
+                  },
+                  {
+                    name: "불참",
+                    value: 100 - voteParticipation.data.avg_participation,
+                    color: "#E5E7EB",
+                  },
+                ]}
+                centerLabel={`${voteParticipation.data.avg_participation}%`}
+                centerSub={`${formatNumber(voteParticipation.data.total_votes)}건`}
+                size={100}
+              />
+            ) : (
+              <div className="flex h-[100px] items-center justify-center text-sm text-gray-300">
+                —
+              </div>
+            )}
+          </div>
+
+          {/* 법안 현황 */}
+          <div className="flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-4">
+            <p className="mb-2 text-xs font-medium text-gray-500">법안 현황</p>
+            <StackedBar segments={proposerSegments} height={20} />
+          </div>
+
+          {/* 최근 발의 추이 */}
+          <div className="flex flex-col rounded-lg border border-gray-200 bg-white p-4">
+            <p className="mb-2 text-xs font-medium text-gray-500">
+              최근 발의 추이 (12주)
+            </p>
+            {sparkData.length > 0 ? (
+              <MiniSparkline data={sparkData} height={56} />
+            ) : (
+              <div className="flex h-14 items-center justify-center text-sm text-gray-300">
+                —
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* ── D. Top Sponsors ──────────────────────────────────── */}
         {topSponsors.data && topSponsors.data.length > 0 && (
-          <div className="mb-6">
+          <section>
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">22대 대표발의 TOP 10</h2>
               <Link
-                to="/politicians?term=22"
+                to="/politicians"
                 className="text-sm text-gray-400 hover:text-gray-600"
               >
                 전체 보기 &rarr;
@@ -293,32 +259,50 @@ export default function Dashboard() {
                   <span className="text-lg font-bold text-gray-300">
                     {i + 1}
                   </span>
-                  <div
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
-                    style={{ backgroundColor: getPartyColor(pol.party) }}
-                  >
-                    {pol.name.charAt(0)}
-                  </div>
-                  <div>
+                  {pol.photo_url ? (
+                    <img
+                      src={pol.photo_url}
+                      alt={pol.name}
+                      className="h-8 w-8 shrink-0 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
+                      style={{ backgroundColor: getPartyColor(pol.party) }}
+                    >
+                      {pol.name.charAt(0)}
+                    </div>
+                  )}
+                  <div className="min-w-0">
                     <p className="text-sm font-medium">{pol.name}</p>
                     <p className="text-[11px] text-gray-400">
                       {pol.party} · {formatNumber(pol.bill_count)}건
                     </p>
+                    {/* Proportional bar */}
+                    <div className="mt-1 h-1 w-24 overflow-hidden rounded-full bg-gray-100">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${(pol.bill_count / maxBillCount) * 100}%`,
+                          backgroundColor: getPartyColor(pol.party),
+                        }}
+                      />
+                    </div>
                   </div>
                 </Link>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Recent votes + Bill pipeline side by side */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+        {/* ── E. Recent Votes + Bill Pipeline ──────────────────── */}
+        <section className="grid grid-cols-1 gap-6 lg:grid-cols-5">
           {/* Recent votes — left 3 cols */}
           <div className="lg:col-span-3">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">최근 표결</h2>
               <Link
-                to="/votes"
+                to="/legislation?tab=votes"
                 className="text-sm text-gray-400 hover:text-gray-600"
               >
                 전체 보기 &rarr;
@@ -327,44 +311,65 @@ export default function Dashboard() {
             <div className="mt-3 space-y-2">
               {votesQuery.data?.items.map((vote) => {
                 const total = vote.total_members ?? 0;
-                const yesPct = pct(vote.yes_count, total);
-                const noPct = pct(vote.no_count, total);
+                const yes = vote.yes_count ?? 0;
+                const no = vote.no_count ?? 0;
+                const abstain = vote.abstain_count ?? 0;
+                const absent = vote.absent_count ?? 0;
                 const passed =
                   vote.result === "원안가결" || vote.result === "수정가결";
+                const controversial = total > 0 && no / total > 0.3;
 
                 return (
                   <Link
                     key={vote.vote_id}
-                    to={`/votes/${vote.vote_id}`}
+                    to={`/legislation/votes/${vote.vote_id}`}
                     className="group flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-2.5 transition-all hover:border-gray-300 hover:shadow-md"
                   >
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-gray-900 group-hover:text-blue-600">
+                        {controversial && (
+                          <span className="mr-1" title="반대 30% 이상">
+                            🔥
+                          </span>
+                        )}
                         {vote.bill_name ?? vote.bill_id}
                       </p>
                       <p className="mt-0.5 text-[11px] text-gray-400">
                         {formatDate(vote.vote_date)}
                       </p>
                     </div>
-                    <div className="hidden w-28 sm:block">
-                      <div className="flex h-1.5 overflow-hidden rounded-full bg-gray-100">
-                        {(vote.yes_count ?? 0) > 0 && (
+                    {/* 4-segment CSS stacked bar */}
+                    <div className="hidden w-32 sm:block">
+                      <div className="flex h-2 overflow-hidden rounded-full bg-gray-100">
+                        {yes > 0 && (
                           <div
                             className="bg-emerald-500"
-                            style={{ width: `${yesPct}%` }}
+                            style={{ width: `${pct(yes, total)}%` }}
                           />
                         )}
-                        {(vote.no_count ?? 0) > 0 && (
+                        {no > 0 && (
                           <div
                             className="bg-red-500"
-                            style={{ width: `${noPct}%` }}
+                            style={{ width: `${pct(no, total)}%` }}
+                          />
+                        )}
+                        {abstain > 0 && (
+                          <div
+                            className="bg-yellow-400"
+                            style={{ width: `${pct(abstain, total)}%` }}
+                          />
+                        )}
+                        {absent > 0 && (
+                          <div
+                            className="bg-gray-300"
+                            style={{ width: `${pct(absent, total)}%` }}
                           />
                         )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-base font-bold text-emerald-600">
-                        {yesPct}%
+                        {pct(yes, total)}%
                       </span>
                       {vote.result && (
                         <span
@@ -389,12 +394,12 @@ export default function Dashboard() {
             <h2 className="text-lg font-semibold">법안 처리 현황</h2>
             {pipeline.data && pipeline.data.length > 0 ? (
               <div className="mt-3 rounded-lg border border-gray-200 bg-white p-4">
-                <div className="h-56">
+                <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={pipeline.data}
                       layout="vertical"
-                      margin={{ left: 80, right: 8 }}
+                      margin={{ left: 80, right: 40 }}
                     >
                       <XAxis
                         type="number"
@@ -410,7 +415,22 @@ export default function Dashboard() {
                       <Tooltip
                         formatter={(v) => formatNumber(Number(v))}
                       />
-                      <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                      <Bar
+                        dataKey="count"
+                        radius={[0, 4, 4, 0]}
+                        label={{
+                          position: "right",
+                          fontSize: 10,
+                          fill: "#6B7280",
+                          formatter: (v: number) => {
+                            const p =
+                              pipelineTotal > 0
+                                ? ((v / pipelineTotal) * 100).toFixed(1)
+                                : "0";
+                            return `${p}%`;
+                          },
+                        }}
+                      >
                         {pipeline.data.map((d) => (
                           <Cell
                             key={d.result}
@@ -423,33 +443,70 @@ export default function Dashboard() {
                 </div>
               </div>
             ) : (
-              <div className="mt-3 flex h-56 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm text-gray-400">
+              <div className="mt-3 flex h-80 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm text-gray-400">
                 불러오는 중...
               </div>
             )}
           </div>
-        </div>
+        </section>
 
-        {/* Party breakdown */}
-        {parties.data && parties.data.length > 0 && (
-          <div className="mt-6">
-            <h2 className="text-lg font-semibold">정당</h2>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {parties.data.map((p) => (
-                <Link
-                  key={p.id}
-                  to={`/politicians?party=${encodeURIComponent(p.name)}`}
-                  className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm transition-all hover:border-gray-300 hover:shadow-md"
-                >
-                  <span
-                    className="h-2.5 w-2.5 rounded-full"
-                    style={{ backgroundColor: getPartyColor(p.name) }}
+        {/* ── F. Gender & Age Demographics ─────────────────────── */}
+        {demographics.data && (
+          <section className="rounded-lg border border-gray-200 bg-white p-5">
+            <h2 className="mb-4 text-lg font-semibold">22대 국회 인구통계</h2>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              {/* Gender ratio */}
+              <div>
+                <p className="mb-2 text-sm font-medium text-gray-600">
+                  성별 비율
+                </p>
+                {demographics.data.gender.length > 0 && (
+                  <StackedBar
+                    segments={demographics.data.gender.map((g) => ({
+                      label: g.gender,
+                      value: g.count,
+                      color: g.gender === "남" ? "#3B82F6" : "#EC4899",
+                    }))}
+                    height={28}
                   />
-                  {p.name}
-                </Link>
-              ))}
+                )}
+              </div>
+
+              {/* Age distribution — horizontal bars */}
+              <div>
+                <p className="mb-2 text-sm font-medium text-gray-600">
+                  연령대 분포
+                </p>
+                <div className="space-y-1.5">
+                  {demographics.data.age_brackets.map((ab) => {
+                    const maxCount = Math.max(
+                      ...demographics.data!.age_brackets.map((x) => x.count),
+                    );
+                    const width =
+                      maxCount > 0
+                        ? ((ab.count / maxCount) * 100).toFixed(0)
+                        : "0";
+                    return (
+                      <div key={ab.bracket} className="flex items-center gap-2">
+                        <span className="w-10 text-right text-xs text-gray-500">
+                          {ab.bracket}
+                        </span>
+                        <div className="flex-1">
+                          <div
+                            className="h-4 rounded bg-indigo-400 transition-all"
+                            style={{ width: `${width}%` }}
+                          />
+                        </div>
+                        <span className="w-8 text-xs text-gray-500">
+                          {ab.count}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
         )}
       </div>
     </div>

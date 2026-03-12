@@ -1,15 +1,15 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import Layout from "@/components/layout/Layout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const PoliticianList = lazy(() => import("@/pages/PoliticianList"));
 const PoliticianDetail = lazy(() => import("@/pages/PoliticianDetail"));
-const BillList = lazy(() => import("@/pages/BillList"));
+const LegislationPage = lazy(() => import("@/pages/LegislationPage"));
 const BillDetail = lazy(() => import("@/pages/BillDetail"));
-const VoteList = lazy(() => import("@/pages/VoteList"));
 const VoteDetail = lazy(() => import("@/pages/VoteDetail"));
+const AssetsOverview = lazy(() => import("@/pages/AssetsOverview"));
 const GraphPage = lazy(() => import("@/pages/GraphPage"));
 
 function LoadingSpinner() {
@@ -51,15 +51,15 @@ export default function App() {
               }
             />
             <Route
-              path="/bills"
+              path="/legislation"
               element={
                 <Suspense fallback={<LoadingSpinner />}>
-                  <BillList />
+                  <LegislationPage />
                 </Suspense>
               }
             />
             <Route
-              path="/bills/:billId"
+              path="/legislation/bills/:billId"
               element={
                 <Suspense fallback={<LoadingSpinner />}>
                   <BillDetail />
@@ -67,18 +67,18 @@ export default function App() {
               }
             />
             <Route
-              path="/votes"
+              path="/legislation/votes/:voteId"
               element={
                 <Suspense fallback={<LoadingSpinner />}>
-                  <VoteList />
+                  <VoteDetail />
                 </Suspense>
               }
             />
             <Route
-              path="/votes/:voteId"
+              path="/assets"
               element={
                 <Suspense fallback={<LoadingSpinner />}>
-                  <VoteDetail />
+                  <AssetsOverview />
                 </Suspense>
               }
             />
@@ -90,6 +90,11 @@ export default function App() {
                 </Suspense>
               }
             />
+            {/* Redirects for old routes */}
+            <Route path="/bills" element={<Navigate to="/legislation" replace />} />
+            <Route path="/bills/:billId" element={<Navigate to="/legislation" replace />} />
+            <Route path="/votes" element={<Navigate to="/legislation?tab=votes" replace />} />
+            <Route path="/votes/:voteId" element={<Navigate to="/legislation" replace />} />
           </Route>
         </Routes>
       </BrowserRouter>

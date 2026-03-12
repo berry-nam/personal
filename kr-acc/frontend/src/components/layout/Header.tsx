@@ -6,8 +6,8 @@ import { getPartyColor } from "@/lib/partyColors";
 const NAV_ITEMS = [
   { to: "/", label: "대시보드" },
   { to: "/politicians", label: "정치인" },
-  { to: "/bills", label: "법안" },
-  { to: "/votes", label: "표결" },
+  { to: "/legislation", label: "입법활동" },
+  { to: "/assets", label: "재산·자금" },
   { to: "/graph", label: "네트워크" },
 ] as const;
 
@@ -121,7 +121,7 @@ export default function Header() {
                   {billResults.data!.items.map((bill) => (
                     <button
                       key={bill.bill_id}
-                      onClick={() => navigate(`/bills/${bill.bill_id}`)}
+                      onClick={() => navigate(`/legislation/bills/${bill.bill_id}`)}
                       className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-gray-50"
                     >
                       <div className="min-w-0 flex-1">

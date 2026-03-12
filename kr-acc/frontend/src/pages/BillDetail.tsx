@@ -157,7 +157,7 @@ export default function BillDetail() {
             )}
             <div className="mt-3 flex items-center justify-between text-xs text-gray-400">
               <span>{formatDate(vote.vote_date)}</span>
-              <Link to={`/votes/${vote.vote_id}`} className="text-blue-500 hover:underline">
+              <Link to={`/legislation/votes/${vote.vote_id}`} className="text-blue-500 hover:underline">
                 의원별 표결 상세 &rarr;
               </Link>
             </div>

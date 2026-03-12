@@ -489,7 +489,7 @@ export default function PoliticianDetail() {
             {bills.data.items.map((b) => (
               <Link
                 key={b.bill_id}
-                to={`/bills/${b.bill_id}`}
+                to={`/legislation/bills/${b.bill_id}`}
                 className="block rounded-lg border p-3 transition-shadow hover:shadow-sm"
               >
                 <div className="flex items-start justify-between gap-2">

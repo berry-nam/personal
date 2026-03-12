@@ -167,7 +167,7 @@ export default function BillList() {
             {data?.items.map((bill) => (
               <Link
                 key={bill.bill_id}
-                to={`/bills/${bill.bill_id}`}
+                to={`/legislation/bills/${bill.bill_id}`}
                 className="block rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md"
               >
                 <div className="flex items-start justify-between gap-2">

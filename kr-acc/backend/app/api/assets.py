@@ -1,7 +1,7 @@
 """Asset declaration & political fund API endpoints."""
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -9,6 +9,7 @@ from app.database import get_session
 from app.models import (
     AssetDeclaration,
     Company,
+    Politician,
     PoliticalFund,
     PoliticianCompany,
 )
@@ -22,6 +23,101 @@ from app.schemas.schemas import (
 )
 
 router = APIRouter(tags=["assets"])
+
+
+@router.get("/assets/rankings")
+async def asset_rankings(
+    limit: int = Query(20, ge=1, le=100),
+    session: AsyncSession = Depends(get_session),
+) -> list[dict]:
+    """Top politicians by total assets (latest report year per politician)."""
+    # Subquery: latest report year per politician
+    latest_year = (
+        select(
+            AssetDeclaration.politician_id,
+            func.max(AssetDeclaration.report_year).label("max_year"),
+        )
+        .group_by(AssetDeclaration.politician_id)
+        .subquery()
+    )
+
+    result = await session.execute(
+        select(
+            Politician.id.label("politician_id"),
+            Politician.name,
+            Politician.party,
+            Politician.photo_url,
+            AssetDeclaration.total_assets,
+            AssetDeclaration.report_year,
+        )
+        .join(AssetDeclaration, AssetDeclaration.politician_id == Politician.id)
+        .join(
+            latest_year,
+            (latest_year.c.politician_id == AssetDeclaration.politician_id)
+            & (latest_year.c.max_year == AssetDeclaration.report_year),
+        )
+        .where(AssetDeclaration.total_assets.isnot(None))
+        .order_by(AssetDeclaration.total_assets.desc())
+        .limit(limit)
+    )
+    return [
+        {
+            "politician_id": row.politician_id,
+            "name": row.name,
+            "party": row.party,
+            "photo_url": row.photo_url,
+            "total_assets": row.total_assets,
+            "report_year": row.report_year,
+        }
+        for row in result.all()
+    ]
+
+
+@router.get("/assets/aggregate")
+async def asset_aggregate(
+    session: AsyncSession = Depends(get_session),
+) -> list[dict]:
+    """Aggregate asset categories by party (latest year per politician)."""
+    latest_year = (
+        select(
+            AssetDeclaration.politician_id,
+            func.max(AssetDeclaration.report_year).label("max_year"),
+        )
+        .group_by(AssetDeclaration.politician_id)
+        .subquery()
+    )
+
+    result = await session.execute(
+        select(
+            Politician.party,
+            func.sum(AssetDeclaration.total_assets).label("total_assets"),
+            func.sum(AssetDeclaration.total_real_estate).label("total_real_estate"),
+            func.sum(AssetDeclaration.total_deposits).label("total_deposits"),
+            func.sum(AssetDeclaration.total_securities).label("total_securities"),
+            func.sum(AssetDeclaration.total_crypto).label("total_crypto"),
+            func.count(Politician.id).label("count"),
+        )
+        .join(AssetDeclaration, AssetDeclaration.politician_id == Politician.id)
+        .join(
+            latest_year,
+            (latest_year.c.politician_id == AssetDeclaration.politician_id)
+            & (latest_year.c.max_year == AssetDeclaration.report_year),
+        )
+        .group_by(Politician.party)
+        .order_by(func.sum(AssetDeclaration.total_assets).desc())
+    )
+    return [
+        {
+            "party": row.party or "무소속",
+            "total_assets": row.total_assets or 0,
+            "total_real_estate": row.total_real_estate or 0,
+            "total_deposits": row.total_deposits or 0,
+            "total_securities": row.total_securities or 0,
+            "total_crypto": row.total_crypto or 0,
+            "count": row.count,
+        }
+        for row in result.all()
+    ]
 
 
 @router.get("/politicians/{politician_id}/assets", response_model=list[AssetSummaryOut])

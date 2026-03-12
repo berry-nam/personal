@@ -3,17 +3,23 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "./client";
 import type {
+  AssetAggregate,
+  AssetRanking,
   BillDetail,
   BillSummary,
+  BillTrendPoint,
   CommitteeOut,
+  Demographics,
   GraphData,
   NeighborOut,
   PaginatedResponse,
+  PartySeat,
   PartyOut,
   PoliticianDetail,
   PoliticianSummary,
   PoliticianVoteRecord,
   VoteDetail,
+  VoteParticipation,
   VoteSummary,
   AssetSummary,
   PoliticianCompanyOut,
@@ -292,6 +298,83 @@ export function useTopSponsors(params: {
       return data;
     },
     staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function usePartySeats(term: number = 22) {
+  return useQuery({
+    queryKey: ["party-seats", term],
+    queryFn: async () => {
+      const { data } = await api.get<PartySeat[]>("/stats/party-seats", {
+        params: { assembly_term: term },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useDemographics(term: number = 22) {
+  return useQuery({
+    queryKey: ["demographics", term],
+    queryFn: async () => {
+      const { data } = await api.get<Demographics>("/stats/demographics", {
+        params: { assembly_term: term },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useVoteParticipation(term: number = 22) {
+  return useQuery({
+    queryKey: ["vote-participation", term],
+    queryFn: async () => {
+      const { data } = await api.get<VoteParticipation>(
+        "/stats/vote-participation",
+        { params: { assembly_term: term } },
+      );
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function useBillTrend(term: number = 22) {
+  return useQuery({
+    queryKey: ["bill-trend", term],
+    queryFn: async () => {
+      const { data } = await api.get<BillTrendPoint[]>("/stats/bill-trend", {
+        params: { assembly_term: term },
+      });
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function useAssetRankings(limit: number = 20) {
+  return useQuery({
+    queryKey: ["asset-rankings", limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetRanking[]>("/assets/rankings", {
+        params: { limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAssetAggregate() {
+  return useQuery({
+    queryKey: ["asset-aggregate"],
+    queryFn: async () => {
+      const { data } = await api.get<AssetAggregate[]>("/assets/aggregate");
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
   });
 }
 

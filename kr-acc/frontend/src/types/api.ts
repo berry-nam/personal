@@ -178,6 +178,48 @@ export interface PoliticalFundSummary {
   expense_total: number | null;
 }
 
+// ── Stats & Dashboard ────────────────────────────────────────────────────────
+
+export interface PartySeat {
+  party: string;
+  count: number;
+  color_hex: string;
+}
+
+export interface Demographics {
+  gender: { gender: string; count: number }[];
+  age_brackets: { bracket: string; count: number }[];
+}
+
+export interface VoteParticipation {
+  avg_participation: number;
+  total_votes: number;
+}
+
+export interface BillTrendPoint {
+  week: string;
+  count: number;
+}
+
+export interface AssetRanking {
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+  total_assets: number;
+  report_year: number;
+}
+
+export interface AssetAggregate {
+  party: string;
+  total_assets: number;
+  total_real_estate: number;
+  total_deposits: number;
+  total_securities: number;
+  total_crypto: number;
+  count: number;
+}
+
 export interface PoliticianVoteRecord {
   vote_id: string;
   bill_id: string;

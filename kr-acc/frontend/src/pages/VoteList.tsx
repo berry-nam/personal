@@ -113,7 +113,7 @@ export default function VoteList() {
               return (
                 <Link
                   key={vote.vote_id}
-                  to={`/votes/${vote.vote_id}`}
+                  to={`/legislation/votes/${vote.vote_id}`}
                   className="group block rounded-lg border border-gray-200 bg-white px-4 py-3 transition-all hover:border-gray-300 hover:shadow-md"
                 >
                   {/* Header row */}

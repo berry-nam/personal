@@ -14,6 +14,7 @@ from app.api.bills import router as bills_router
 from app.api.graph import router as graph_router
 from app.api.parties import router as parties_router
 from app.api.politicians import router as politicians_router
+from app.api.stats import router as stats_router
 from app.api.votes import router as votes_router
 from app.config import settings
 
@@ -101,6 +102,7 @@ def create_app() -> FastAPI:
     application.include_router(votes_router, prefix=api_prefix)
     application.include_router(graph_router, prefix=api_prefix)
     application.include_router(parties_router, prefix=api_prefix)
+    application.include_router(stats_router, prefix=api_prefix)
     application.include_router(assets_router, prefix=api_prefix)
 
     @application.get("/health")
