@@ -347,6 +347,68 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .filter-chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
 .compare-link{font-size:12.5px;color:var(--brand);text-decoration:none;font-weight:500;display:inline-flex;align-items:center;gap:4px}
 
+/* ══ S2: Valuation — Yahoo Finance Style ══ */
+.val-summary{display:flex;gap:12px;margin-bottom:20px}
+.val-card{flex:1;background:var(--slate-50);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;text-align:center;transition:var(--transition)}
+.val-card:hover{border-color:var(--blue-200);box-shadow:var(--shadow-sm)}
+.val-card.highlight{background:var(--brand-bg);border-color:var(--blue-200)}
+.val-card-label{font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:6px;letter-spacing:.3px}
+.val-card-value{font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-1px;color:var(--text)}
+.val-card.highlight .val-card-value{color:var(--brand)}
+.val-card-value span{font-size:18px;font-weight:500;color:var(--text-sub);margin-left:1px}
+.val-card.highlight .val-card-value span{color:var(--blue-400)}
+.val-card-sub{font-size:12px;font-weight:600;margin-top:6px;display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:12px}
+.val-card-sub.positive{background:var(--emerald-50);color:var(--emerald-600)}
+.val-card-sub.negative{background:var(--red-50);color:var(--red-600)}
+.val-bars{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.val-bar-row{display:flex;align-items:center;gap:12px}
+.val-bar-label{min-width:120px;font-size:13px;font-weight:500;color:var(--text-sub);text-align:right;flex-shrink:0}
+.val-bar-track{flex:1;height:32px;background:var(--slate-100);border-radius:var(--radius);overflow:hidden;position:relative}
+.val-bar-fill{height:100%;border-radius:var(--radius);transition:width .8s cubic-bezier(.4,0,.2,1)}
+.val-bar-fill.brand{background:linear-gradient(90deg,var(--brand),var(--blue-400))}
+.val-bar-fill.gray{background:linear-gradient(90deg,var(--slate-400),var(--slate-300))}
+.val-bar-value{min-width:56px;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--text)}
+.val-insight{font-size:13px;color:var(--text-sub);padding:12px 16px;background:var(--slate-50);border-radius:var(--radius);border-left:3px solid var(--brand);line-height:1.65}
+
+/* ══ S3: Earnings — Yahoo Finance Style ══ */
+.earnings-grid{display:flex;gap:0;justify-content:center;margin-bottom:16px;padding:16px 0}
+.earnings-quarter{flex:1;max-width:180px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 12px}
+.eq-label{font-size:12.5px;font-weight:600;color:var(--text-sub);letter-spacing:.3px}
+.eq-bars{display:flex;align-items:flex-end;gap:6px;height:140px;padding:4px 0}
+.eq-bar{width:36px;border-radius:4px 4px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:8px;transition:height .6s cubic-bezier(.4,0,.2,1);position:relative;min-height:24px}
+.eq-bar span{font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.eq-bar.estimate{background:var(--slate-200);color:var(--slate-600)}
+.eq-bar.actual{background:var(--brand);color:#fff}
+.eq-values{display:flex;gap:6px;font-size:11.5px;font-variant-numeric:tabular-nums;margin-top:2px}
+.eq-values .est-val{color:var(--text-muted);font-weight:500}
+.eq-values .act-val{color:var(--brand);font-weight:700}
+.eq-beat{font-size:12px;font-weight:700;margin-top:4px;display:flex;align-items:center;gap:3px}
+.eq-beat.positive{color:var(--emerald-600)}
+.eq-beat.negative{color:var(--red-600)}
+.eq-beat .eq-icon{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700}
+.eq-beat.positive .eq-icon{background:var(--emerald-50);color:var(--emerald-600)}
+.eq-beat.negative .eq-icon{background:var(--red-50);color:var(--red-600)}
+.earnings-legend{display:flex;align-items:center;gap:16px;font-size:12.5px;color:var(--text-sub);padding:12px 16px;background:var(--slate-50);border-radius:var(--radius);flex-wrap:wrap}
+.el-item{display:flex;align-items:center;gap:5px;font-weight:500}
+.el-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.el-dot.gray{background:var(--slate-200)}
+.el-dot.blue{background:var(--brand)}
+.el-separator{width:1px;height:16px;background:var(--border);margin:0 4px}
+.el-summary{font-size:12.5px;color:var(--text-sub)}
+
+/* ══ Responsive additions for S2/S3 ══ */
+@media(max-width:768px){
+  .val-summary{flex-direction:column}
+  .val-card-value{font-size:26px}
+  .val-bar-label{min-width:80px;font-size:12px}
+  .earnings-grid{flex-wrap:wrap;gap:8px}
+  .earnings-quarter{min-width:140px;max-width:none}
+  .eq-bars{height:110px}
+  .eq-bar{width:30px}
+  .earnings-legend{flex-direction:column;align-items:flex-start;gap:8px}
+  .el-separator{display:none}
+}
+
 /* Design notes */
 .design-notes-toggle{position:fixed;bottom:24px;right:24px;z-index:500;padding:10px 18px;border-radius:24px;background:var(--brand);color:#fff;border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:6px;transition:var(--transition)}
 .design-notes-toggle:hover{background:var(--brand-hover);transform:translateY(-1px)}
@@ -790,35 +852,120 @@ body.show-design-notes .section{margin-top:18px}
       </div>
     </div>
 
-    <!-- S2: Valuation Metrics -->
-    <div class="section paywall-section" style="position:relative">
+    <!-- S2: Valuation Metrics — Yahoo Finance Style -->
+    <div class="section paywall-section" style="position:relative" id="valuation-section">
       <span class="design-note dn-green">OpenDART PER/PBR/PSR</span>
-      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">PER/PBR/PSR tab toggle, horizontal bar vs 산업 평균</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">Yahoo Finance style: summary cards + CSS bars + insight</span>
       <div class="section-title"><span class="icon">📊</span> 가치평가지표</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
-        <div class="chart-toggle" style="margin-bottom:12px">
-          <button class="chart-toggle-btn active">PER</button>
-          <button class="chart-toggle-btn">PBR</button>
-          <button class="chart-toggle-btn">PSR</button>
+        <!-- PER / PBR / PSR toggle -->
+        <div class="chart-toggle" id="valToggle" style="margin-bottom:16px">
+          <button class="chart-toggle-btn active" onclick="switchValuation('PER',this)">PER</button>
+          <button class="chart-toggle-btn" onclick="switchValuation('PBR',this)">PBR</button>
+          <button class="chart-toggle-btn" onclick="switchValuation('PSR',this)">PSR</button>
         </div>
-        <canvas id="valuationBars" width="1100" height="160"></canvas>
-        <a href="#" class="compare-link" style="margin-top:12px;display:inline-flex">종목끼리 비교하기 →</a>
+
+        <!-- Summary cards -->
+        <div class="val-summary">
+          <div class="val-card highlight">
+            <div class="val-card-label" id="valCardLabel1">현재 PER</div>
+            <div class="val-card-value" id="valCardValue1">12.8<span>x</span></div>
+            <div class="val-card-sub positive" id="valCardSub1">▼ 산업 대비 저평가</div>
+          </div>
+          <div class="val-card">
+            <div class="val-card-label" id="valCardLabel2">산업 평균 PER</div>
+            <div class="val-card-value" id="valCardValue2">15.4<span>x</span></div>
+          </div>
+        </div>
+
+        <!-- Horizontal comparison bars -->
+        <div class="val-bars">
+          <div class="val-bar-row">
+            <span class="val-bar-label">에이치비테크놀로지</span>
+            <div class="val-bar-track"><div class="val-bar-fill brand" id="valBar1" style="width:64%"></div></div>
+            <span class="val-bar-value" id="valBarVal1">12.8x</span>
+          </div>
+          <div class="val-bar-row">
+            <span class="val-bar-label">산업 평균</span>
+            <div class="val-bar-track"><div class="val-bar-fill gray" id="valBar2" style="width:77%"></div></div>
+            <span class="val-bar-value" id="valBarVal2">15.4x</span>
+          </div>
+        </div>
+
+        <!-- Insight -->
+        <div class="val-insight" id="valInsight">💡 현재 PER은 산업 평균 대비 <strong style="color:var(--emerald-600)">17% 저평가</strong> 상태입니다</div>
+
+        <a href="#" class="compare-link" style="margin-top:14px;display:inline-flex">종목끼리 비교하기 →</a>
       </div>
     </div>
 
-    <!-- S3: Earnings -->
-    <div class="section paywall-section" style="position:relative">
+    <!-- S3: Earnings — Yahoo Finance Style -->
+    <div class="section paywall-section" style="position:relative" id="earnings-section">
       <span class="design-note dn-green">OpenDART 분기/연간 실적</span>
-      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">Bubble chart, gray=추정 blue=발표</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">Yahoo Finance style: bar pairs + beat/miss + legend</span>
       <div class="section-title"><span class="icon">💰</span> 실적</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
-        <div style="display:flex;gap:8px;margin-bottom:12px">
+        <!-- Period & metric toggles -->
+        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
           <div class="chart-toggle"><button class="chart-toggle-btn active">분기</button><button class="chart-toggle-btn">연간</button></div>
           <div class="chart-toggle"><button class="chart-toggle-btn active">주당순이익</button><button class="chart-toggle-btn">매출</button></div>
         </div>
-        <canvas id="earningsChart" width="1100" height="200"></canvas>
+
+        <!-- Quarter bar pairs -->
+        <div class="earnings-grid">
+          <!-- Q1 '25 -->
+          <div class="earnings-quarter">
+            <div class="eq-label">Q1 '25</div>
+            <div class="eq-bars">
+              <div class="eq-bar estimate" style="height:68%"><span>480</span></div>
+              <div class="eq-bar actual" style="height:71%"><span>495</span></div>
+            </div>
+            <div class="eq-values"><span class="est-val">480</span><span class="act-val">495</span></div>
+            <div class="eq-beat positive">+3.1% <span class="eq-icon">✓</span></div>
+          </div>
+          <!-- Q2 '25 -->
+          <div class="earnings-quarter">
+            <div class="eq-label">Q2 '25</div>
+            <div class="eq-bars">
+              <div class="eq-bar estimate" style="height:73%"><span>510</span></div>
+              <div class="eq-bar actual" style="height:72%"><span>502</span></div>
+            </div>
+            <div class="eq-values"><span class="est-val">510</span><span class="act-val">502</span></div>
+            <div class="eq-beat negative">-1.6% <span class="eq-icon">✗</span></div>
+          </div>
+          <!-- Q3 '25 -->
+          <div class="earnings-quarter">
+            <div class="eq-label">Q3 '25</div>
+            <div class="eq-bars">
+              <div class="eq-bar estimate" style="height:77%"><span>540</span></div>
+              <div class="eq-bar actual" style="height:80%"><span>558</span></div>
+            </div>
+            <div class="eq-values"><span class="est-val">540</span><span class="act-val">558</span></div>
+            <div class="eq-beat positive">+3.3% <span class="eq-icon">✓</span></div>
+          </div>
+          <!-- Q4 '25 -->
+          <div class="earnings-quarter">
+            <div class="eq-label">Q4 '25</div>
+            <div class="eq-bars">
+              <div class="eq-bar estimate" style="height:83%"><span>580</span></div>
+              <div class="eq-bar actual" style="height:87%"><span>612</span></div>
+            </div>
+            <div class="eq-values"><span class="est-val">580</span><span class="act-val">612</span></div>
+            <div class="eq-beat positive">+5.5% <span class="eq-icon">✓</span></div>
+          </div>
+        </div>
+
+        <!-- Legend & summary -->
+        <div class="earnings-legend">
+          <span class="el-item"><span class="el-dot gray"></span> 추정</span>
+          <span class="el-item"><span class="el-dot blue"></span> 발표</span>
+          <span class="el-separator"></span>
+          <span class="el-summary">4분기 연속 <strong style="color:var(--emerald-600)">3회</strong> 어닝 서프라이즈</span>
+        </div>
+
+        <!-- Expandable historical table -->
         <div class="expandable-trigger" onclick="toggleExpand(this)">▼ 지난 실적 보기</div>
         <div class="expandable-content">
           <table class="fin-table" style="margin-top:8px">
@@ -827,6 +974,7 @@ body.show-design-notes .section{margin-top:18px}
               <tr><td>2025 Q4</td><td>580원</td><td>612원</td><td class="positive">+5.5%</td></tr>
               <tr><td>2025 Q3</td><td>540원</td><td>558원</td><td class="positive">+3.3%</td></tr>
               <tr><td>2025 Q2</td><td>510원</td><td>502원</td><td class="negative">-1.6%</td></tr>
+              <tr><td>2025 Q1</td><td>480원</td><td>495원</td><td class="positive">+3.1%</td></tr>
             </tbody>
           </table>
         </div>
@@ -1279,7 +1427,7 @@ function switchTab(tabId, el) {
   // Trigger chart drawing on tab switch
   if (tabId === 'finance') {
     setTimeout(function(){
-      drawValuationBars(); drawEarningsChart(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
+      drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
     }, 100);
   }
 }
@@ -1679,77 +1827,46 @@ function drawRadarChart() {
 
 // ══ FINANCE TAB CHARTS ══
 
-function drawValuationBars() {
-  var canvas = document.getElementById('valuationBars');
-  if (!canvas) return;
-  var W = 1100, H = 160;
-  var ctx = hiDPI(canvas, W, H);
-  ctx.clearRect(0, 0, W, H);
+// S2: Valuation toggle — switches PER/PBR/PSR data (pure CSS, no canvas)
+var valuationData = {
+  PER: { current: 12.8, avg: 15.4, maxScale: 20, pctDiff: 17, under: true },
+  PBR: { current: 1.2, avg: 1.8, maxScale: 3, pctDiff: 33, under: true },
+  PSR: { current: 2.1, avg: 1.9, maxScale: 4, pctDiff: 11, under: false }
+};
 
-  var items = [
-    {label:'에이치비테크놀로지',value:12.8,color:'#0549CC'},
-    {label:'산업 평균',value:15.4,color:'#9AA3B4'}
-  ];
-  var maxV = 20, barH = 32, startX = 200, barMaxW = W - startX - 80;
+function switchValuation(metric, btn) {
+  // Toggle button state
+  document.querySelectorAll('#valToggle .chart-toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
 
-  items.forEach(function(item, i) {
-    var y = 30 + i * (barH + 20);
-    var w = (item.value / maxV) * barMaxW;
-    ctx.fillStyle = '#374151'; ctx.font = '13px Pretendard Variable'; ctx.textAlign = 'right';
-    ctx.fillText(item.label, startX - 16, y + barH / 2 + 5);
-    var grad = ctx.createLinearGradient(startX, y, startX + w, y);
-    grad.addColorStop(0, item.color); grad.addColorStop(1, item.color + '88');
-    ctx.fillStyle = grad;
-    ctx.beginPath(); ctx.roundRect(startX, y, w, barH, 6); ctx.fill();
-    ctx.fillStyle = item.color; ctx.font = 'bold 13px Pretendard Variable'; ctx.textAlign = 'left';
-    ctx.fillText(item.value + 'x', startX + w + 10, y + barH / 2 + 5);
-  });
+  var d = valuationData[metric];
+  var currentPct = Math.round((d.current / d.maxScale) * 100);
+  var avgPct = Math.round((d.avg / d.maxScale) * 100);
+  var diffLabel = d.under ? '저평가' : '고평가';
+  var diffColor = d.under ? 'var(--emerald-600)' : 'var(--red-600)';
+  var subClass = d.under ? 'positive' : 'negative';
+  var arrow = d.under ? '▼' : '▲';
+
+  // Update summary cards
+  document.getElementById('valCardLabel1').textContent = '현재 ' + metric;
+  document.getElementById('valCardValue1').innerHTML = d.current + '<span>x</span>';
+  document.getElementById('valCardLabel2').textContent = '산업 평균 ' + metric;
+  document.getElementById('valCardValue2').innerHTML = d.avg + '<span>x</span>';
+  var sub1 = document.getElementById('valCardSub1');
+  sub1.className = 'val-card-sub ' + subClass;
+  sub1.textContent = arrow + ' 산업 대비 ' + diffLabel;
+
+  // Update bars
+  document.getElementById('valBar1').style.width = currentPct + '%';
+  document.getElementById('valBar2').style.width = avgPct + '%';
+  document.getElementById('valBarVal1').textContent = d.current + 'x';
+  document.getElementById('valBarVal2').textContent = d.avg + 'x';
+
+  // Update insight
+  document.getElementById('valInsight').innerHTML = '💡 현재 ' + metric + '은 산업 평균 대비 <strong style="color:' + diffColor + '">' + d.pctDiff + '% ' + diffLabel + '</strong> 상태입니다';
 }
 
-function drawEarningsChart() {
-  var canvas = document.getElementById('earningsChart');
-  if (!canvas) return;
-  var W = 1100, H = 200;
-  var ctx = hiDPI(canvas, W, H);
-  ctx.clearRect(0, 0, W, H);
-
-  var quarters = ['Q1 2025','Q2 2025','Q3 2025','Q4 2025'];
-  var estimates = [480, 510, 540, 580];
-  var actuals = [495, 502, 558, 612];
-  var startX = 120, stepX = 220, baseY = H - 36;
-
-  quarters.forEach(function(q, i) {
-    var x = startX + i * stepX;
-    // Estimate bubble (gray)
-    ctx.beginPath(); ctx.arc(x - 20, baseY - (estimates[i] / 700) * (baseY - 30), 18, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(156,163,175,0.3)'; ctx.fill();
-    ctx.strokeStyle = '#9AA3B4'; ctx.lineWidth = 1.5; ctx.stroke();
-    ctx.fillStyle = '#6B7689'; ctx.font = '11px Pretendard Variable'; ctx.textAlign = 'center';
-    ctx.fillText(estimates[i] + '', x - 20, baseY - (estimates[i] / 700) * (baseY - 30) + 4);
-    // Actual bubble (blue)
-    ctx.beginPath(); ctx.arc(x + 20, baseY - (actuals[i] / 700) * (baseY - 30), 18, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(5,73,204,0.2)'; ctx.fill();
-    ctx.strokeStyle = '#0549CC'; ctx.lineWidth = 1.5; ctx.stroke();
-    ctx.fillStyle = '#0549CC'; ctx.font = 'bold 11px Pretendard Variable';
-    ctx.fillText(actuals[i] + '', x + 20, baseY - (actuals[i] / 700) * (baseY - 30) + 4);
-    // Growth %
-    var growth = ((actuals[i] - estimates[i]) / estimates[i] * 100).toFixed(1);
-    ctx.fillStyle = growth >= 0 ? '#059669' : '#DC2626'; ctx.font = 'bold 11px Pretendard Variable';
-    ctx.fillText((growth >= 0 ? '+' : '') + growth + '%', x, baseY - (actuals[i] / 700) * (baseY - 30) - 26);
-    // Quarter label
-    ctx.fillStyle = '#6B7689'; ctx.font = '12px Pretendard Variable';
-    ctx.fillText(q, x, baseY + 18);
-  });
-
-  // Legend
-  ctx.beginPath(); ctx.arc(W - 200, 16, 8, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(156,163,175,0.3)'; ctx.fill(); ctx.strokeStyle = '#9AA3B4'; ctx.lineWidth = 1; ctx.stroke();
-  ctx.fillStyle = '#6B7689'; ctx.font = '12px Pretendard Variable'; ctx.textAlign = 'left';
-  ctx.fillText('추정', W - 186, 20);
-  ctx.beginPath(); ctx.arc(W - 130, 16, 8, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(5,73,204,0.2)'; ctx.fill(); ctx.strokeStyle = '#0549CC'; ctx.lineWidth = 1; ctx.stroke();
-  ctx.fillStyle = '#0549CC'; ctx.fillText('발표', W - 116, 20);
-}
+// S3: Earnings — pure HTML/CSS, no canvas needed (drawEarningsChart removed)
 
 function drawFinancialBars() {
   var canvas = document.getElementById('financialBars');
