@@ -18,6 +18,18 @@ from app.services import bill_service, politician_service, vote_service
 router = APIRouter(prefix="/politicians", tags=["politicians"])
 
 
+@router.get("/top-sponsors")
+async def top_sponsors(
+    assembly_term: int | None = None,
+    limit: int = Query(10, ge=1, le=50),
+    session: AsyncSession = Depends(get_session),
+):
+    """Get politicians ranked by primary-sponsored bills."""
+    return await politician_service.get_top_sponsors(
+        session, assembly_term=assembly_term, limit=limit
+    )
+
+
 @router.get("", response_model=PaginatedResponse)
 async def list_politicians(
     party: str | None = None,

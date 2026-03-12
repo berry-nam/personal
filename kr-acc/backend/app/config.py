@@ -19,6 +19,7 @@ class Settings(BaseSettings):
 
     # External APIs
     assembly_api_key: str = ""
+    dart_api_key: str = ""
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 

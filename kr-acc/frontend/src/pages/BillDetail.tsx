@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router";
 import { useBill, useVotes } from "@/api/queries";
 import { formatDate, formatNumber } from "@/lib/format";
+import useDocumentTitle from "@/lib/useDocumentTitle";
 import PartyBadge from "@/components/layout/PartyBadge";
 import { getPartyColor } from "@/lib/partyColors";
 import {
@@ -14,6 +15,7 @@ import {
 export default function BillDetail() {
   const { billId } = useParams<{ billId: string }>();
   const { data: bill, isLoading } = useBill(billId ?? "");
+  useDocumentTitle(bill?.bill_name ?? "법안");
   const votes = useVotes({ bill_id: billId ?? "", page: 1, size: 5 });
 
   if (isLoading) {

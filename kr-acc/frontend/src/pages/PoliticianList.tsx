@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
+import useDocumentTitle from "@/lib/useDocumentTitle";
 import { usePoliticians, useParties } from "@/api/queries";
 import Pagination from "@/components/layout/Pagination";
 import PartyBadge from "@/components/layout/PartyBadge";
@@ -8,6 +9,7 @@ import { getPartyColor } from "@/lib/partyColors";
 const TERMS = [22, 21, 20, 19, 18, 17];
 
 export default function PoliticianList() {
+  useDocumentTitle("정치인");
   const [searchParams, setSearchParams] = useSearchParams();
   const partyFilter = searchParams.get("party") ?? undefined;
   const termFilter = searchParams.get("term")

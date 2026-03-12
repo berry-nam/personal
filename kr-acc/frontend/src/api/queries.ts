@@ -267,3 +267,45 @@ export function useCommittees() {
     staleTime: 30 * 60 * 1000,
   });
 }
+
+// ── Rankings & Stats ────────────────────────────────────────────────────────
+
+export interface TopSponsor {
+  id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+  bill_count: number;
+}
+
+export function useTopSponsors(params: {
+  assembly_term?: number;
+  limit?: number;
+}) {
+  return useQuery({
+    queryKey: ["top-sponsors", params],
+    queryFn: async () => {
+      const { data } = await api.get<TopSponsor[]>(
+        "/politicians/top-sponsors",
+        { params },
+      );
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function usePlatformStats() {
+  return useQuery({
+    queryKey: ["platform-stats"],
+    queryFn: async () => {
+      const { data } = await api.get<{
+        politicians: number;
+        bills: number;
+        votes: number;
+      }>("/stats");
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}

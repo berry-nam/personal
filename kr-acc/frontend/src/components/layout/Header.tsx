@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { to: "/politicians", label: "정치인" },
   { to: "/bills", label: "법안" },
   { to: "/votes", label: "표결" },
+  { to: "/graph", label: "네트워크" },
 ] as const;
 
 export default function Header() {
@@ -53,13 +54,13 @@ export default function Header() {
 
   return (
     <header className="border-b border-gray-200 bg-white">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-4 px-4">
+      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 px-4 sm:gap-4">
         <Link to="/" className="shrink-0 text-xl font-bold tracking-tight">
           kr-acc
         </Link>
 
         {/* Search bar */}
-        <div ref={ref} className="relative mx-4 hidden flex-1 sm:block">
+        <div ref={ref} className="relative mx-2 min-w-0 flex-1 sm:mx-4 sm:block">
           <input
             type="text"
             placeholder="정치인·법안 검색..."
@@ -144,7 +145,7 @@ export default function Header() {
           )}
         </div>
 
-        <nav className="flex gap-1">
+        <nav className="flex shrink-0 gap-1 overflow-x-auto">
           {NAV_ITEMS.map(({ to, label }) => {
             const active =
               to === "/"

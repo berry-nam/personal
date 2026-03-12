@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router";
 import { useVote } from "@/api/queries";
 import { formatDate, formatNumber } from "@/lib/format";
+import useDocumentTitle from "@/lib/useDocumentTitle";
 import { getPartyColor } from "@/lib/partyColors";
 
 const RESULT_COLORS: Record<string, string> = {
@@ -18,6 +19,7 @@ function pct(n: number, total: number): number {
 export default function VoteDetail() {
   const { voteId } = useParams<{ voteId: string }>();
   const { data: vote, isLoading } = useVote(voteId ?? "");
+  useDocumentTitle(vote?.bill_name ? `표결: ${vote.bill_name}` : "표결");
 
   if (isLoading) {
     return (

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useCoSponsorshipGraph, useParties } from "@/api/queries";
+import useDocumentTitle from "@/lib/useDocumentTitle";
 import ForceGraph from "@/components/graph/ForceGraph";
 
 export default function GraphPage() {
+  useDocumentTitle("공동발의 네트워크");
   const [party, setParty] = useState<string | undefined>();
   const [minWeight, setMinWeight] = useState(5);
 

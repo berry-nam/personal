@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { useBills, useCommittees } from "@/api/queries";
+import useDocumentTitle from "@/lib/useDocumentTitle";
 import Pagination from "@/components/layout/Pagination";
 import { formatDate } from "@/lib/format";
 
@@ -8,6 +9,7 @@ const RESULT_OPTIONS = ["원안가결", "수정가결", "부결", "폐기", "철
 const PROPOSER_TYPES = ["의원", "정부", "위원장"];
 
 export default function BillList() {
+  useDocumentTitle("법안");
   const [keyword, setKeyword] = useState("");
   const [debouncedKeyword, setDebouncedKeyword] = useState("");
   const [result, setResult] = useState<string | undefined>();

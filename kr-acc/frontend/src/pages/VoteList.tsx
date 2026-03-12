@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import useDocumentTitle from "@/lib/useDocumentTitle";
 import { useVotes } from "@/api/queries";
 import Pagination from "@/components/layout/Pagination";
 import { formatDate, formatNumber } from "@/lib/format";
@@ -24,6 +25,7 @@ const TERM_OPTIONS = [
 ];
 
 export default function VoteList() {
+  useDocumentTitle("본회의 표결");
   const [result, setResult] = useState<string | undefined>();
   const [term, setTerm] = useState<number | undefined>();
   const [page, setPage] = useState(1);
@@ -96,8 +98,8 @@ export default function VoteList() {
             {formatNumber(data?.total ?? 0)}건
           </p>
 
-          {/* Vote cards — Polymarket-inspired */}
-          <div className="mt-3 space-y-3">
+          {/* Vote cards — compact Polymarket style */}
+          <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {data?.items.map((vote) => {
               const yesPct = pct(vote.yes_count, vote.total_members);
               const noPct = pct(vote.no_count, vote.total_members);
@@ -112,16 +114,16 @@ export default function VoteList() {
                 <Link
                   key={vote.vote_id}
                   to={`/votes/${vote.vote_id}`}
-                  className="group block rounded-xl border border-gray-200 bg-white p-5 transition-all hover:border-gray-300 hover:shadow-lg"
+                  className="group block rounded-lg border border-gray-200 bg-white px-4 py-3 transition-all hover:border-gray-300 hover:shadow-md"
                 >
                   {/* Header row */}
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-[15px] font-semibold leading-snug text-gray-900 group-hover:text-blue-600">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="truncate text-sm font-semibold text-gray-900 group-hover:text-blue-600">
                       {vote.bill_name ?? vote.bill_id}
                     </h3>
                     {vote.result && (
                       <span
-                        className={`shrink-0 rounded-md px-2.5 py-1 text-xs font-bold ${
+                        className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold ${
                           passed
                             ? "bg-emerald-50 text-emerald-600"
                             : "bg-red-50 text-red-500"
@@ -132,68 +134,50 @@ export default function VoteList() {
                     )}
                   </div>
 
-                  {/* Outcome rows — Polymarket style large percentages */}
-                  <div className="mt-4 space-y-2">
+                  {/* Compact outcome rows */}
+                  <div className="mt-2 space-y-1">
                     {/* 찬성 */}
-                    <div className="relative overflow-hidden rounded-lg bg-gray-50 px-4 py-2.5">
+                    <div className="relative overflow-hidden rounded bg-gray-50 px-3 py-1.5">
                       <div
                         className="absolute inset-y-0 left-0 bg-emerald-500/10"
                         style={{ width: `${yesPct}%` }}
                       />
                       <div className="relative flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-700">
-                          찬성
-                        </span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs text-gray-400">
-                            {formatNumber(vote.yes_count)}명
-                          </span>
-                          <span className="min-w-[3rem] text-right text-lg font-bold text-emerald-600">
-                            {yesPct}%
-                          </span>
+                        <span className="text-xs font-medium text-gray-600">찬성</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] text-gray-400">{formatNumber(vote.yes_count)}명</span>
+                          <span className="min-w-[2.5rem] text-right text-sm font-bold text-emerald-600">{yesPct}%</span>
                         </div>
                       </div>
                     </div>
 
                     {/* 반대 */}
-                    <div className="relative overflow-hidden rounded-lg bg-gray-50 px-4 py-2.5">
+                    <div className="relative overflow-hidden rounded bg-gray-50 px-3 py-1.5">
                       <div
                         className="absolute inset-y-0 left-0 bg-red-500/10"
                         style={{ width: `${noPct}%` }}
                       />
                       <div className="relative flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-700">
-                          반대
-                        </span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs text-gray-400">
-                            {formatNumber(vote.no_count)}명
-                          </span>
-                          <span className="min-w-[3rem] text-right text-lg font-bold text-red-500">
-                            {noPct}%
-                          </span>
+                        <span className="text-xs font-medium text-gray-600">반대</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] text-gray-400">{formatNumber(vote.no_count)}명</span>
+                          <span className="min-w-[2.5rem] text-right text-sm font-bold text-red-500">{noPct}%</span>
                         </div>
                       </div>
                     </div>
 
                     {/* 기권 (only show if > 0) */}
                     {(vote.abstain_count ?? 0) > 0 && (
-                      <div className="relative overflow-hidden rounded-lg bg-gray-50 px-4 py-2.5">
+                      <div className="relative overflow-hidden rounded bg-gray-50 px-3 py-1.5">
                         <div
                           className="absolute inset-y-0 left-0 bg-amber-500/10"
                           style={{ width: `${absPct}%` }}
                         />
                         <div className="relative flex items-center justify-between">
-                          <span className="text-sm font-medium text-gray-700">
-                            기권
-                          </span>
-                          <div className="flex items-center gap-3">
-                            <span className="text-xs text-gray-400">
-                              {formatNumber(vote.abstain_count)}명
-                            </span>
-                            <span className="min-w-[3rem] text-right text-lg font-bold text-amber-500">
-                              {absPct}%
-                            </span>
+                          <span className="text-xs font-medium text-gray-600">기권</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[11px] text-gray-400">{formatNumber(vote.abstain_count)}명</span>
+                            <span className="min-w-[2.5rem] text-right text-sm font-bold text-amber-500">{absPct}%</span>
                           </div>
                         </div>
                       </div>
@@ -201,11 +185,9 @@ export default function VoteList() {
                   </div>
 
                   {/* Footer meta */}
-                  <div className="mt-3 flex items-center justify-between text-xs text-gray-400">
+                  <div className="mt-2 flex items-center justify-between text-[11px] text-gray-400">
                     <span>{formatDate(vote.vote_date)}</span>
-                    <span>
-                      투표율 {turnout}% · 재적 {formatNumber(vote.total_members)}명
-                    </span>
+                    <span>투표율 {turnout}% · 재적 {formatNumber(vote.total_members)}명</span>
                   </div>
                 </Link>
               );

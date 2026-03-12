@@ -8,6 +8,7 @@ import {
   usePoliticianCompanies,
   usePoliticianFunds,
 } from "@/api/queries";
+import useDocumentTitle from "@/lib/useDocumentTitle";
 import PartyBadge from "@/components/layout/PartyBadge";
 import ForceGraph from "@/components/graph/ForceGraph";
 import { formatDate, formatNumber, formatKrw } from "@/lib/format";
@@ -38,6 +39,7 @@ export default function PoliticianDetail() {
   const { id } = useParams<{ id: string }>();
   const politicianId = Number(id);
   const { data: pol, isLoading } = usePolitician(politicianId);
+  useDocumentTitle(pol ? `${pol.name} (${pol.party ?? "무소속"})` : "정치인");
   const bills = usePoliticianBills(politicianId, { page: 1, size: 5 });
   const votes = usePoliticianVotes(politicianId, { page: 1, size: 5 });
   const neighbors = useNeighbors(pol?.assembly_id ?? "", {
