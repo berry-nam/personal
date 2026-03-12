@@ -117,11 +117,20 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .results-table tr{cursor:pointer;transition:var(--transition)}
 .results-table tbody tr:hover{background:var(--blue-50)}
 .results-table tbody tr.selected{background:var(--brand-bg);border-left:3px solid var(--brand)}
-/* Density modes */
-.results-table.compact td{padding:6px 14px;font-size:12.5px}
-.results-table.compact th{padding:7px 14px}
-.results-table.spacious td{padding:14px 14px;font-size:14px}
-.results-table.spacious th{padding:12px 14px}
+/* Density modes — 32 / 40 / 52px row heights */
+.results-table.compact td{padding:4px 12px;font-size:12px;line-height:1.3}
+.results-table.compact th{padding:5px 12px;font-size:11px}
+.results-table.compact .company-logo{width:24px;height:24px;font-size:10px;border-radius:4px}
+.results-table.compact .company-name{font-size:12px}
+.results-table.compact .company-type{display:none}
+.results-table.compact .industry-chip{padding:1px 6px;font-size:10.5px}
+.results-table.compact .sparkline{display:none}
+.results-table.compact .emp-growth{display:none}
+.results-table.spacious td{padding:16px 14px;font-size:14px;line-height:1.5}
+.results-table.spacious th{padding:14px 14px;font-size:13px}
+.results-table.spacious .company-logo{width:44px;height:44px;font-size:16px}
+.results-table.spacious .company-name{font-size:14.5px}
+.results-table.spacious .company-type{font-size:12px}
 /* Column styles */
 .td-check{width:44px;text-align:center}
 .td-check input{accent-color:var(--brand)}
@@ -199,16 +208,33 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .cmdk-footer{padding:10px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;font-size:11.5px;color:var(--text-muted)}
 .cmdk-footer kbd{font-family:inherit;font-size:11px;padding:1px 5px;border-radius:3px;border:1px solid var(--border);background:var(--slate-50)}
 
-/* ══ ADVANCED FILTERS PANEL ══ */
-.advanced-panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:8px;display:none}
+/* ══ ADVANCED FILTERS PANEL (Apollo-inspired) ══ */
+.advanced-panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:8px;display:none;overflow:hidden}
 .advanced-panel.show{display:block}
-.advanced-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.advanced-group{padding-bottom:12px}
-.advanced-group-title{font-size:12px;font-weight:600;color:var(--text-sub);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.advanced-group-title::before{content:'';width:3px;height:12px;border-radius:2px;background:var(--brand)}
-.advanced-item{display:flex;align-items:center;gap:8px;padding:6px 0}
-.advanced-item label{font-size:13px;color:var(--text);flex:1}
-.advanced-item select,.advanced-item input{font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--text);width:140px}
+.adv-header{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.adv-search{flex:1;display:flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--slate-50)}
+.adv-search svg{width:14px;height:14px;color:var(--text-muted);flex-shrink:0}
+.adv-search input{border:none;outline:none;background:transparent;font-family:inherit;font-size:12.5px;color:var(--text);flex:1}
+.adv-search input::placeholder{color:var(--text-muted)}
+.adv-active-count{font-size:12px;color:var(--brand);font-weight:600;padding:4px 10px;background:var(--brand-bg);border-radius:12px;white-space:nowrap}
+.adv-reset{font-size:12px;color:var(--text-muted);cursor:pointer;padding:4px 8px;border-radius:var(--radius-sm);border:none;background:none;font-family:inherit}
+.adv-reset:hover{color:var(--red-500);background:var(--red-50)}
+.advanced-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.advanced-group{padding:16px 20px;border-right:1px solid var(--border-light)}
+.advanced-group:last-child{border-right:none}
+.advanced-group-title{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.advanced-group-title .adv-count{font-size:10px;font-weight:600;padding:1px 6px;border-radius:8px;background:var(--brand-bg);color:var(--brand)}
+.advanced-item{display:flex;align-items:center;gap:8px;padding:7px 8px;margin:0 -8px;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition)}
+.advanced-item:hover{background:var(--slate-50)}
+.advanced-item label{font-size:13px;color:var(--text);flex:1;cursor:pointer;display:flex;align-items:center;gap:6px}
+.advanced-item select,.advanced-item input{font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--text);width:140px;transition:var(--transition)}
+.advanced-item select:focus,.advanced-item input:focus{border-color:var(--brand);box-shadow:0 0 0 2px rgba(5,73,204,.1)}
+.adv-lock{font-size:11px;color:var(--amber-600);display:flex;align-items:center;gap:3px}
+.adv-tag{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:500}
+.adv-tag.new{background:var(--emerald-50);color:var(--emerald-600)}
+.adv-tag.ai{background:var(--purple-50);color:var(--purple-500)}
+.adv-footer{padding:10px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--slate-50)}
+.adv-footer-text{font-size:12px;color:var(--text-muted);flex:1}
 
 /* ══ BULK BAR ══ */
 .bulk-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--slate-800);color:#fff;padding:10px 20px;border-radius:var(--radius-lg);display:none;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(17,24,39,.2);z-index:100;font-size:13px}
@@ -233,6 +259,38 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .saved-item:hover{background:var(--slate-50)}
 .saved-item-name{font-size:13px;font-weight:500;color:var(--text)}
 .saved-item-filters{font-size:11.5px;color:var(--text-muted);margin-top:2px}
+
+/* ── Column Settings Modal ── */
+.col-modal-overlay{position:fixed;inset:0;background:rgba(17,24,39,.35);z-index:600;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .15s}
+.col-modal-overlay.open{opacity:1;pointer-events:all}
+.col-modal{width:400px;background:#fff;border-radius:var(--radius-xl);box-shadow:0 20px 60px rgba(17,24,39,.2);overflow:hidden;transform:scale(.96);transition:transform .2s cubic-bezier(.4,0,.2,1)}
+.col-modal-overlay.open .col-modal{transform:scale(1)}
+.col-modal-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.col-modal-title{font-size:15px;font-weight:700}
+.col-modal-close{width:28px;height:28px;border-radius:var(--radius-sm);border:none;background:var(--slate-50);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text-sub)}
+.col-modal-close:hover{background:var(--slate-200)}
+.col-modal-body{padding:12px 20px;max-height:360px;overflow-y:auto}
+.col-toggle-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-light)}
+.col-toggle-item:last-child{border-bottom:none}
+.col-toggle-item label{flex:1;font-size:13px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:8px}
+.col-toggle-item input[type=checkbox]{accent-color:var(--brand);width:16px;height:16px;cursor:pointer}
+.col-toggle-item .col-drag{color:var(--text-muted);cursor:grab;font-size:14px}
+.col-modal-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+
+/* ── Export Menu ── */
+.export-menu{position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:4px;min-width:180px;display:none;z-index:50}
+.export-menu.show{display:block}
+.export-item{padding:8px 12px;font-size:13px;border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)}
+.export-item:hover{background:var(--slate-50)}
+.export-item .export-icon{width:20px;text-align:center;font-size:14px}
+.export-item-sub{font-size:11px;color:var(--text-muted);margin-left:auto}
+
+/* ── View Menu (enhanced) ── */
+.saved-views-item.active{background:var(--brand-bg);font-weight:500;color:var(--brand)}
+.saved-views-item .view-cols{font-size:10.5px;color:var(--text-muted);margin-top:2px}
+.saved-views-menu .view-divider{height:1px;background:var(--border-light);margin:4px 0}
+.saved-views-menu .view-action{padding:8px 12px;font-size:12px;color:var(--brand);font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px}
+.saved-views-menu .view-action:hover{background:var(--brand-bg);border-radius:var(--radius-sm)}
 
 /* ── Empty/loading states ── */
 .skeleton{background:linear-gradient(90deg,var(--slate-100) 25%,var(--slate-50) 50%,var(--slate-100) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px}
@@ -296,11 +354,6 @@ body.show-design-notes .design-note{display:block}
   <a href="#" class="nav-link">AI 분석</a>
   <a href="#" class="nav-link">마이페이지</a>
   <div class="nav-right">
-    <button class="nav-search-btn" onclick="openCmdK()">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
-      기업명, 업종, 조건 검색...
-      <kbd>⌘K</kbd>
-    </button>
     <div class="nav-avatar">남</div>
   </div>
 </nav>
@@ -360,30 +413,51 @@ body.show-design-notes .design-note{display:block}
     </button>
   </div>
 
-  <!-- ── Advanced Filters ── -->
+  <!-- ── Advanced Filters (Apollo-inspired) ── -->
   <div class="advanced-panel" style="position:relative">
-    <div class="design-note yellow" style="top:4px;right:4px">Collapsible advanced panel, LinkedIn-style filter groups</div>
+    <div class="design-note yellow" style="top:4px;right:4px">Apollo-inspired: searchable filters, lock icons, AI filters, active count</div>
+    <!-- Header with search + active count -->
+    <div class="adv-header">
+      <div class="adv-search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+        <input placeholder="필터 검색..." id="advFilterSearch" oninput="filterAdvanced(this.value)">
+      </div>
+      <span class="adv-active-count">3개 필터 활성</span>
+      <button class="adv-reset" onclick="resetAdvanced()">초기화</button>
+    </div>
+    <!-- Filter Groups -->
     <div class="advanced-grid">
       <div class="advanced-group">
-        <div class="advanced-group-title">기업 속성</div>
-        <div class="advanced-item"><label>직원수</label><select><option>전체</option><option>~50명</option><option>50~200명</option><option>200~1,000명</option><option>1,000명+</option></select></div>
-        <div class="advanced-item"><label>설립연도</label><input type="text" placeholder="2010 ~ 2024"></div>
-        <div class="advanced-item"><label>외감 여부</label><select><option>전체</option><option>외감 기업</option><option>비외감 기업</option></select></div>
-        <div class="advanced-item"><label>상장 여부</label><select><option>전체</option><option>유가증권</option><option>코스닥</option><option>비상장</option></select></div>
+        <div class="advanced-group-title">기업 속성 <span class="adv-count">2</span></div>
+        <div class="advanced-item" data-filter="직원수"><label>👥 직원수</label><select><option>전체</option><option>~50명</option><option selected>50~200명</option><option>200~1,000명</option><option>1,000명+</option></select></div>
+        <div class="advanced-item" data-filter="설립연도"><label>📅 설립연도</label><input type="text" placeholder="2010 ~ 2024"></div>
+        <div class="advanced-item" data-filter="외감 여부"><label>📋 외감 여부</label><select><option>전체</option><option>외감 기업</option><option>비외감 기업</option></select></div>
+        <div class="advanced-item" data-filter="상장 여부"><label>🏛 상장 여부</label><select><option>전체</option><option>유가증권</option><option>코스닥</option><option selected>비상장</option></select></div>
+        <div class="advanced-item" data-filter="기업 유사도" style="opacity:.7"><label>🔍 기업 유사도 <span class="adv-tag ai">AI</span></label><span class="adv-lock">🔒 Pro</span></div>
       </div>
       <div class="advanced-group">
-        <div class="advanced-group-title">재무 필터</div>
-        <div class="advanced-item"><label>영업이익</label><input type="text" placeholder="최소 ~ 최대 (억)"></div>
-        <div class="advanced-item"><label>자산총액</label><select><option>전체</option><option>~100억</option><option>100~500억</option><option>500억+</option></select></div>
-        <div class="advanced-item"><label>부채비율</label><select><option>전체</option><option>~100%</option><option>100~200%</option><option>200%+</option></select></div>
-        <div class="advanced-item"><label>매출 성장률</label><select><option>전체</option><option>10%+ 성장</option><option>20%+ 성장</option><option>감소 기업</option></select></div>
+        <div class="advanced-group-title">재무 필터 <span class="adv-count">1</span></div>
+        <div class="advanced-item" data-filter="영업이익"><label>💰 영업이익</label><input type="text" placeholder="최소 ~ 최대 (억)" value="10 ~ 100"></div>
+        <div class="advanced-item" data-filter="자산총액"><label>🏦 자산총액</label><select><option>전체</option><option>~100억</option><option>100~500억</option><option>500억+</option></select></div>
+        <div class="advanced-item" data-filter="부채비율"><label>📊 부채비율</label><select><option>전체</option><option>~100%</option><option>100~200%</option><option>200%+</option></select></div>
+        <div class="advanced-item" data-filter="매출 성장률"><label>📈 매출 성장률</label><select><option>전체</option><option>10%+ 성장</option><option>20%+ 성장</option><option>감소 기업</option></select></div>
+        <div class="advanced-item" data-filter="ROE"><label>🎯 ROE <span class="adv-tag new">New</span></label><select><option>전체</option><option>10%+</option><option>15%+</option><option>20%+</option></select></div>
+        <div class="advanced-item" data-filter="Buying Intent" style="opacity:.7"><label>🎪 투자 시그널 <span class="adv-tag ai">AI</span></label><span class="adv-lock">🔒 Pro</span></div>
       </div>
       <div class="advanced-group">
-        <div class="advanced-group-title">시그널 필터</div>
-        <div class="advanced-item"><label>최근 채용</label><select><option>전체</option><option>30일 이내</option><option>90일 이내</option></select></div>
-        <div class="advanced-item"><label>뉴스 멘션</label><select><option>전체</option><option>최근 30일</option><option>최근 90일</option></select></div>
-        <div class="advanced-item"><label>특허 등록</label><select><option>전체</option><option>최근 1년</option><option>최근 3년</option></select></div>
+        <div class="advanced-group-title">시그널 · 인텔리전스</div>
+        <div class="advanced-item" data-filter="최근 채용"><label>🧑‍💼 최근 채용</label><select><option>전체</option><option>30일 이내</option><option>90일 이내</option></select></div>
+        <div class="advanced-item" data-filter="뉴스 멘션"><label>📰 뉴스 멘션</label><select><option>전체</option><option>최근 30일</option><option>최근 90일</option></select></div>
+        <div class="advanced-item" data-filter="특허 등록"><label>💡 특허 등록</label><select><option>전체</option><option>최근 1년</option><option>최근 3년</option></select></div>
+        <div class="advanced-item" data-filter="자금조달"><label>💵 자금조달/투자유치 <span class="adv-tag new">New</span></label><select><option>전체</option><option>최근 6개월</option><option>최근 1년</option></select></div>
+        <div class="advanced-item" data-filter="대표자 변경" style="opacity:.7"><label>👤 대표자 변경 <span class="adv-tag ai">AI</span></label><span class="adv-lock">🔒 Pro</span></div>
+        <div class="advanced-item" data-filter="성장 예측" style="opacity:.7"><label>🚀 성장 예측 스코어 <span class="adv-tag ai">AI</span></label><span class="adv-lock">🔒 Pro</span></div>
       </div>
+    </div>
+    <!-- Footer -->
+    <div class="adv-footer">
+      <span class="adv-footer-text">🔒 Pro 필터는 <strong style="color:var(--amber-600)">CookieDeal Pro</strong> 구독 시 이용 가능</span>
+      <button class="btn-primary" style="font-size:12px;padding:6px 16px" onclick="document.querySelector('.advanced-panel').classList.remove('show')">필터 적용</button>
     </div>
   </div>
 
@@ -403,26 +477,39 @@ body.show-design-notes .design-note{display:block}
       <button class="density-btn" onclick="setDensity('spacious',this)">여유</button>
     </div>
     <div class="table-controls-right">
+      <!-- View Selector -->
       <div class="saved-views" style="position:relative">
-        <button class="ctrl-btn" onclick="this.nextElementSibling.classList.toggle('show')">
+        <button class="ctrl-btn" id="viewBtn" onclick="toggleViewMenu()">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="11" height="11" rx="2"/><path d="M1 5h11"/></svg>
-          뷰: 기본
+          <span id="viewLabel">뷰: 기본</span>
         </button>
-        <div class="saved-views-menu">
-          <div class="saved-views-item" onclick="this.parentElement.classList.remove('show')"><div class="dot" style="background:var(--brand)"></div> 기본 뷰</div>
-          <div class="saved-views-item" onclick="this.parentElement.classList.remove('show')"><div class="dot" style="background:var(--emerald-500)"></div> M&A 딜소싱</div>
-          <div class="saved-views-item" onclick="this.parentElement.classList.remove('show')"><div class="dot" style="background:var(--amber-500)"></div> 콜드콜 리스트</div>
-          <div class="saved-views-item" onclick="this.parentElement.classList.remove('show')"><div class="dot" style="background:var(--purple-500)"></div> 투자 분석</div>
+        <div class="saved-views-menu" id="viewMenu">
+          <div class="saved-views-item active" onclick="switchView('기본','기업명, 업종, 지역, 매출액, 영업이익, 직원수, 설립',this)"><div class="dot" style="background:var(--brand)"></div><div>기본 뷰<div class="view-cols">기업명, 업종, 지역, 매출액, 영업이익, 직원수, 설립</div></div></div>
+          <div class="saved-views-item" onclick="switchView('M&A 딜소싱','기업명, 매출액, 영업이익, 자산총계, 부채비율, EBITDA',this)"><div class="dot" style="background:var(--emerald-500)"></div><div>M&A 딜소싱<div class="view-cols">기업명, 매출액, 영업이익, 자산총계, 부채비율, EBITDA</div></div></div>
+          <div class="saved-views-item" onclick="switchView('콜드콜 리스트','기업명, 업종, 지역, 대표자, 전화번호, 최근 뉴스',this)"><div class="dot" style="background:var(--amber-500)"></div><div>콜드콜 리스트<div class="view-cols">기업명, 업종, 지역, 대표자, 전화번호, 최근 뉴스</div></div></div>
+          <div class="saved-views-item" onclick="switchView('투자 분석','기업명, 매출액, 성장률, 영업이익률, ROE, 부채비율',this)"><div class="dot" style="background:var(--purple-500)"></div><div>투자 분석<div class="view-cols">기업명, 매출액, 성장률, 영업이익률, ROE, 부채비율</div></div></div>
+          <div class="view-divider"></div>
+          <div class="view-action" onclick="document.getElementById('viewMenu').classList.remove('show')">+ 현재 뷰 저장</div>
         </div>
       </div>
-      <button class="ctrl-btn">
+      <!-- Column Settings -->
+      <button class="ctrl-btn" onclick="openColumnModal()">
         <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2h3M2 6.5h3M2 11h3M8 2h3M8 6.5h3M8 11h3"/></svg>
         열 설정
       </button>
-      <button class="ctrl-btn">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2v9l4-3 3 2 2-2"/></svg>
-        내보내기
-      </button>
+      <!-- Export -->
+      <div style="position:relative">
+        <button class="ctrl-btn" onclick="this.nextElementSibling.classList.toggle('show')">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2v9l4-3 3 2 2-2"/></svg>
+          내보내기
+        </button>
+        <div class="export-menu" id="exportMenu">
+          <div class="export-item" onclick="doExport('csv')"><span class="export-icon">📄</span> CSV 다운로드 <span class="export-item-sub">현재 필터 적용</span></div>
+          <div class="export-item" onclick="doExport('xlsx')"><span class="export-icon">📊</span> Excel 다운로드 <span class="export-item-sub">.xlsx</span></div>
+          <div class="export-item" onclick="doExport('clipboard')"><span class="export-icon">📋</span> 클립보드 복사 <span class="export-item-sub">테이블 데이터</span></div>
+          <div class="export-item" onclick="doExport('api')"><span class="export-icon">🔗</span> API 연동 <span class="export-item-sub">Webhook / Zapier</span></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -498,10 +585,26 @@ body.show-design-notes .design-note{display:block}
         <div id="panelHeatmap" style="display:grid;grid-template-columns:auto repeat(5,1fr);gap:2px;font-size:11.5px"></div>
       </div>
     </div>
-    <div class="panel-actions">
-      <button class="btn-outline" style="flex-shrink:0">저장</button>
-      <button class="btn-outline" style="flex-shrink:0">리스트 추가</button>
-      <a href="prototype-detail.html" class="btn-detail">상세 보기</a>
+    <div class="panel-actions" style="flex-wrap:wrap;gap:6px">
+      <button class="btn-outline" style="flex-shrink:0;position:relative" onclick="panelSave(this)">
+        <span class="save-icon">☆</span> 저장
+      </button>
+      <button class="btn-outline" style="flex-shrink:0;position:relative" onclick="panelListAdd(this)">
+        + 리스트 추가
+      </button>
+      <a href="prototype-detail.html" class="btn-detail" style="flex:1">상세 보기</a>
+    </div>
+    <!-- List picker (hidden) -->
+    <div class="panel-list-picker" id="panelListPicker" style="display:none;padding:12px 20px;border-top:1px solid var(--border);background:var(--slate-50)">
+      <div style="font-size:12px;font-weight:600;color:var(--text-sub);margin-bottom:8px">리스트 선택</div>
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="accent-color:var(--brand)"> 잠재 고객 리스트</label>
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="accent-color:var(--brand)"> M&A 후보</label>
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="accent-color:var(--brand)"> 투자 관심 기업</label>
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="accent-color:var(--brand)"> 경쟁사 모니터링</label>
+      <div style="display:flex;gap:6px;margin-top:8px">
+        <button class="btn-primary" style="font-size:12px;padding:6px 14px" onclick="confirmListAdd()">추가</button>
+        <button class="btn-outline" style="font-size:12px;padding:6px 14px" onclick="document.getElementById('panelListPicker').style.display='none'">취소</button>
+      </div>
     </div>
   </div>
 
@@ -552,6 +655,33 @@ body.show-design-notes .design-note{display:block}
   <button class="bulk-btn">내보내기 (CSV)</button>
   <button class="bulk-btn">태그 추가</button>
   <button class="bulk-btn" onclick="clearSelection()" style="border-color:rgba(255,255,255,.1)">선택 해제</button>
+</div>
+
+<!-- ══ COLUMN SETTINGS MODAL ══ -->
+<div class="col-modal-overlay" id="colModalOverlay" onclick="if(event.target===this)closeColumnModal()">
+  <div class="col-modal">
+    <div class="col-modal-header">
+      <span class="col-modal-title">열 설정</span>
+      <button class="col-modal-close" onclick="closeColumnModal()">×</button>
+    </div>
+    <div class="col-modal-body">
+      <div class="col-toggle-item"><span class="col-drag">⠿</span><label><input type="checkbox" checked disabled> 기업명</label></div>
+      <div class="col-toggle-item"><span class="col-drag">⠿</span><label><input type="checkbox" checked onchange="toggleColumn('업종',this.checked)"> 업종</label></div>
+      <div class="col-toggle-item"><span class="col-drag">⠿</span><label><input type="checkbox" checked onchange="toggleColumn('지역',this.checked)"> 지역</label></div>
+      <div class="col-toggle-item"><span class="col-drag">⠿</span><label><input type="checkbox" checked onchange="toggleColumn('매출액',this.checked)"> 매출액</label></div>
+      <div class="col-toggle-item"><span class="col-drag">⠿</span><label><input type="checkbox" checked onchange="toggleColumn('영업이익',this.checked)"> 영업이익</label></div>
+      <div class="col-toggle-item"><span class="col-drag">⠿</span><label><input type="checkbox" checked onchange="toggleColumn('직원수',this.checked)"> 직원수</label></div>
+      <div class="col-toggle-item"><span class="col-drag">⠿</span><label><input type="checkbox" checked onchange="toggleColumn('설립',this.checked)"> 설립연도</label></div>
+      <div class="col-toggle-item" style="opacity:.6"><span class="col-drag">⠿</span><label><input type="checkbox" onchange="toggleColumn('대표자',this.checked)"> 대표자</label><span style="font-size:11px;color:var(--amber-600)">🍪</span></div>
+      <div class="col-toggle-item" style="opacity:.6"><span class="col-drag">⠿</span><label><input type="checkbox" onchange="toggleColumn('자산총계',this.checked)"> 자산총계</label><span style="font-size:11px;color:var(--amber-600)">🍪</span></div>
+      <div class="col-toggle-item" style="opacity:.6"><span class="col-drag">⠿</span><label><input type="checkbox" onchange="toggleColumn('부채비율',this.checked)"> 부채비율</label><span style="font-size:11px;color:var(--amber-600)">🍪</span></div>
+      <div class="col-toggle-item" style="opacity:.6"><span class="col-drag">⠿</span><label><input type="checkbox" onchange="toggleColumn('특허수',this.checked)"> 특허수</label><span style="font-size:11px;color:var(--amber-600)">🍪</span></div>
+    </div>
+    <div class="col-modal-footer">
+      <button class="btn-outline" onclick="closeColumnModal()" style="font-size:12.5px;padding:7px 16px">닫기</button>
+      <button class="btn-primary" onclick="closeColumnModal()" style="font-size:12.5px;padding:7px 16px">적용</button>
+    </div>
+  </div>
 </div>
 
 <!-- ══ DESIGN NOTES TOGGLE ══ -->
@@ -813,6 +943,76 @@ function updateCount(){
   document.getElementById('result-count').textContent=chips===0?'1,043,287':'2,345';
 }
 
+// ══ VIEW SELECTOR ══
+function toggleViewMenu(){
+  document.getElementById('viewMenu').classList.toggle('show');
+  document.getElementById('exportMenu')?.classList.remove('show');
+}
+function switchView(name, cols, el){
+  document.querySelectorAll('.saved-views-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('viewLabel').textContent='뷰: '+name;
+  document.getElementById('viewMenu').classList.remove('show');
+  // Flash table to indicate view switch
+  const wrap=document.querySelector('.results-wrap');
+  wrap.style.opacity='0.5';wrap.style.transition='opacity .15s';
+  setTimeout(()=>{wrap.style.opacity='1'},200);
+}
+
+// ══ COLUMN SETTINGS ══
+function openColumnModal(){document.getElementById('colModalOverlay').classList.add('open')}
+function closeColumnModal(){document.getElementById('colModalOverlay').classList.remove('open')}
+function toggleColumn(name,show){
+  // Prototype: flash to indicate column toggle
+  const wrap=document.querySelector('.results-wrap');
+  wrap.style.outline=show?'2px solid var(--emerald-400)':'2px solid var(--red-400)';
+  wrap.style.outlineOffset='-2px';wrap.style.borderRadius='var(--radius-lg)';
+  setTimeout(()=>{wrap.style.outline='none'},600);
+}
+
+// ══ EXPORT ══
+function doExport(type){
+  document.getElementById('exportMenu').classList.remove('show');
+  const names={csv:'CSV 파일이',xlsx:'Excel 파일이',clipboard:'데이터가 클립보드에',api:'API 연동이'};
+  const bar=document.createElement('div');
+  bar.style.cssText='position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--slate-800);color:#fff;padding:10px 24px;border-radius:var(--radius-lg);font-size:13px;z-index:999;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:8px;animation:fadeIn .2s';
+  bar.innerHTML=`✅ ${names[type]} 준비되었습니다.`;
+  document.body.appendChild(bar);
+  setTimeout(()=>bar.remove(),2500);
+}
+
+// ══ PANEL SAVE / LIST ADD ══
+function panelSave(btn){
+  const icon=btn.querySelector('.save-icon');
+  if(icon.textContent==='☆'){
+    icon.textContent='★';icon.style.color='var(--amber-500)';
+    btn.style.borderColor='var(--amber-400)';btn.style.background='var(--amber-50)';
+    showToast('기업이 저장되었습니다');
+  } else {
+    icon.textContent='☆';icon.style.color='';
+    btn.style.borderColor='';btn.style.background='';
+    showToast('저장이 해제되었습니다');
+  }
+}
+function panelListAdd(btn){
+  const picker=document.getElementById('panelListPicker');
+  picker.style.display=picker.style.display==='none'?'block':'none';
+}
+function confirmListAdd(){
+  const checked=[...document.querySelectorAll('#panelListPicker input:checked')];
+  const names=checked.map(c=>c.parentElement.textContent.trim());
+  document.getElementById('panelListPicker').style.display='none';
+  if(names.length)showToast(names.join(', ')+' 에 추가됨');
+  else showToast('리스트를 선택해주세요');
+}
+function showToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--slate-800);color:#fff;padding:10px 24px;border-radius:var(--radius-lg);font-size:13px;z-index:999;box-shadow:var(--shadow-lg);animation:fadeIn .2s';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2000);
+}
+
 // ══ KEYBOARD ══
 document.addEventListener('keydown',e=>{
   if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openCmdK();}
@@ -820,6 +1020,27 @@ document.addEventListener('keydown',e=>{
     if(document.getElementById('cmdkOverlay').classList.contains('open')) closeCmdK();
     else closePanel();
   }
+});
+
+// ══ ADVANCED FILTER SEARCH ══
+function filterAdvanced(q){
+  const items=document.querySelectorAll('.advanced-item');
+  items.forEach(item=>{
+    const name=item.getAttribute('data-filter')||'';
+    const text=item.textContent.toLowerCase();
+    item.style.display=(q===''||text.includes(q.toLowerCase()))?'flex':'none';
+  });
+}
+function resetAdvanced(){
+  document.querySelectorAll('.advanced-panel select').forEach(s=>s.selectedIndex=0);
+  document.querySelectorAll('.advanced-panel input[type=text]').forEach(i=>i.value='');
+  document.querySelector('.adv-active-count').textContent='0개 필터 활성';
+}
+
+// ══ CLOSE DROPDOWNS ON OUTSIDE CLICK ══
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.saved-views'))document.getElementById('viewMenu')?.classList.remove('show');
+  if(!e.target.closest('[onclick*="exportMenu"]')&&!e.target.closest('.export-menu'))document.getElementById('exportMenu')?.classList.remove('show');
 });
 
 // ══ INIT ══
