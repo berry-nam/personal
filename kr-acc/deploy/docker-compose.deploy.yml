@@ -1,0 +1,61 @@
+# Production deployment compose — extends the main docker-compose.yml
+# Usage: docker compose -f docker-compose.yml -f deploy/docker-compose.deploy.yml up -d
+#
+# Required env vars:
+#   DOMAIN=your-domain.com
+#   ASSEMBLY_API_KEY=your_api_key
+#   DART_API_KEY=your_dart_key (optional)
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"  # HTTP/3
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      target: prod
+    volumes: []
+    environment:
+      DATABASE_URL: postgresql+asyncpg://kracc:${DB_PASSWORD:-kracc}@db:5432/kracc
+      DATABASE_URL_SYNC: postgresql://kracc:${DB_PASSWORD:-kracc}@db:5432/kracc
+      AGE_GRAPH_NAME: kr_acc
+      CORS_ORIGINS: '["https://${DOMAIN:-localhost}"]'
+    restart: unless-stopped
+
+  etl-worker:
+    build:
+      target: prod
+    environment:
+      DATABASE_URL: postgresql+asyncpg://kracc:${DB_PASSWORD:-kracc}@db:5432/kracc
+      DATABASE_URL_SYNC: postgresql://kracc:${DB_PASSWORD:-kracc}@db:5432/kracc
+      AGE_GRAPH_NAME: kr_acc
+      DART_API_KEY: ${DART_API_KEY:-}
+    restart: unless-stopped
+
+  frontend:
+    build:
+      target: prod
+    ports: []  # Override — Caddy handles external traffic
+    restart: unless-stopped
+
+  db:
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-kracc}
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

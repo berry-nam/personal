@@ -1,4 +1,4 @@
-.PHONY: dev prod down logs db-shell etl lint test build clean
+.PHONY: dev prod deploy down logs db-shell etl etl-newstapa etl-likms lint test build clean
 
 # ── Development ───────────────────────────────────────────────────────────────
 
@@ -7,6 +7,9 @@ dev: ## Start all services in dev mode
 
 prod: ## Start all services in production mode
 	COMPOSE_TARGET=prod docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+
+deploy: ## Deploy with Caddy HTTPS reverse proxy
+	docker compose -f docker-compose.yml -f deploy/docker-compose.deploy.yml up --build -d
 
 down: ## Stop all services
 	docker compose down
@@ -21,6 +24,15 @@ db-shell: ## Open psql shell
 
 etl: ## Run ETL sync_all flow
 	docker compose exec etl-worker python -m flows.sync_all
+
+etl-historical: ## Sync historical politicians (terms 17-21)
+	docker compose exec etl-worker python -c "import asyncio; from flows.sync_historical_politicians import sync_historical_politicians; asyncio.run(sync_historical_politicians())"
+
+etl-newstapa: ## Scrape asset declarations from Newstapa
+	docker compose exec etl-worker python -c "import asyncio; from flows.scrape_newstapa import scrape_newstapa; asyncio.run(scrape_newstapa())"
+
+etl-likms: ## Scrape per-member votes from LIKMS
+	docker compose exec etl-worker python -c "import asyncio; from flows.scrape_likms_votes import scrape_likms_votes; asyncio.run(scrape_likms_votes())"
 
 # ── Quality ───────────────────────────────────────────────────────────────────
 
