@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router";
-import { useVote } from "@/api/queries";
+import { useVote, useVoteBreakdown } from "@/api/queries";
 import { formatDate, formatNumber } from "@/lib/format";
 import { getPartyColor } from "@/lib/partyColors";
 import {
@@ -25,6 +25,7 @@ type VoteFilter = "all" | "찬성" | "반대" | "기권" | "불참";
 export default function VoteDetail() {
   const { voteId } = useParams<{ voteId: string }>();
   const { data: vote, isLoading } = useVote(voteId ?? "");
+  const { data: breakdownData } = useVoteBreakdown(voteId ?? "");
   const [filter, setFilter] = useState<VoteFilter>("all");
 
   if (isLoading) {
@@ -46,17 +47,8 @@ export default function VoteDetail() {
       ? vote.records
       : vote.records.filter((r) => r.vote_result === filter);
 
-  // Group by party for summary
-  const partyBreakdown = new Map<string, Record<string, number>>();
-  for (const r of vote.records) {
-    const party = r.politician_party ?? "무소속";
-    if (!partyBreakdown.has(party)) {
-      partyBreakdown.set(party, { 찬성: 0, 반대: 0, 기권: 0, 불참: 0 });
-    }
-    const counts = partyBreakdown.get(party)!;
-    const result = r.vote_result ?? "불참";
-    counts[result] = (counts[result] ?? 0) + 1;
-  }
+  // Use server-side breakdown if available, otherwise compute client-side
+  const breakdown = breakdownData?.breakdown;
 
   return (
     <div>
@@ -83,6 +75,12 @@ export default function VoteDetail() {
         {vote.total_members && (
           <span>재적 {formatNumber(vote.total_members)}명</span>
         )}
+        <Link
+          to={`/bills/${vote.bill_id}`}
+          className="text-blue-600 hover:underline"
+        >
+          법안 상세 →
+        </Link>
       </div>
 
       {/* Vote summary chart */}
@@ -122,45 +120,59 @@ export default function VoteDetail() {
         </div>
       </div>
 
-      {/* Party breakdown */}
-      {partyBreakdown.size > 0 && (
+      {/* Party heatmap */}
+      {breakdown && breakdown.length > 0 && (
         <div className="mt-6">
-          <h2 className="text-sm font-semibold text-gray-700">정당별 투표 현황</h2>
-          <div className="mt-2 overflow-x-auto">
+          <h2 className="text-sm font-semibold text-gray-700">정당별 투표 히트맵</h2>
+          <div className="mt-3 overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b text-left text-gray-500">
                   <th className="pb-2 font-medium">정당</th>
-                  <th className="pb-2 text-right font-medium text-green-600">찬성</th>
-                  <th className="pb-2 text-right font-medium text-red-600">반대</th>
-                  <th className="pb-2 text-right font-medium text-yellow-600">기권</th>
-                  <th className="pb-2 text-right font-medium text-gray-400">불참</th>
+                  <th className="pb-2 text-center font-medium">소속</th>
+                  <th className="pb-2 text-center font-medium text-green-600">찬성</th>
+                  <th className="pb-2 text-center font-medium text-red-600">반대</th>
+                  <th className="pb-2 text-center font-medium text-yellow-600">기권</th>
+                  <th className="pb-2 text-center font-medium text-gray-400">불참</th>
+                  <th className="pb-2 text-center font-medium">찬성률</th>
                 </tr>
               </thead>
               <tbody>
-                {[...partyBreakdown.entries()]
-                  .sort((a, b) => {
-                    const totalA = Object.values(a[1]).reduce((s, v) => s + v, 0);
-                    const totalB = Object.values(b[1]).reduce((s, v) => s + v, 0);
-                    return totalB - totalA;
-                  })
-                  .map(([party, counts]) => (
-                    <tr key={party} className="border-b last:border-0">
-                      <td className="py-2">
+                {breakdown.map((b) => {
+                  const participated = b.yes + b.no + b.abstain;
+                  const yesRate = participated > 0
+                    ? ((b.yes / participated) * 100).toFixed(0)
+                    : "—";
+                  return (
+                    <tr key={b.party} className="border-b last:border-0">
+                      <td className="py-2.5">
                         <span className="flex items-center gap-1.5">
                           <span
                             className="inline-block h-2.5 w-2.5 rounded-full"
-                            style={{ backgroundColor: getPartyColor(party) }}
+                            style={{ backgroundColor: getPartyColor(b.party) }}
                           />
-                          {party}
+                          {b.party}
                         </span>
                       </td>
-                      <td className="py-2 text-right">{counts["찬성"] ?? 0}</td>
-                      <td className="py-2 text-right">{counts["반대"] ?? 0}</td>
-                      <td className="py-2 text-right">{counts["기권"] ?? 0}</td>
-                      <td className="py-2 text-right">{counts["불참"] ?? 0}</td>
+                      <td className="py-2.5 text-center font-medium">{b.total}</td>
+                      <td className="py-2.5 text-center">
+                        <HeatCell value={b.yes} max={b.total} color="#22C55E" />
+                      </td>
+                      <td className="py-2.5 text-center">
+                        <HeatCell value={b.no} max={b.total} color="#EF4444" />
+                      </td>
+                      <td className="py-2.5 text-center">
+                        <HeatCell value={b.abstain} max={b.total} color="#F59E0B" />
+                      </td>
+                      <td className="py-2.5 text-center">
+                        <HeatCell value={b.absent} max={b.total} color="#9CA3AF" />
+                      </td>
+                      <td className="py-2.5 text-center text-xs font-medium text-gray-600">
+                        {yesRate === "—" ? yesRate : `${yesRate}%`}
+                      </td>
                     </tr>
-                  ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -221,5 +233,22 @@ export default function VoteDetail() {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Heat-colored cell: stronger color = higher proportion. */
+function HeatCell({ value, max, color }: { value: number; max: number; color: string }) {
+  const ratio = max > 0 ? value / max : 0;
+  const opacity = Math.max(0.08, ratio);
+  return (
+    <span
+      className="inline-block min-w-[2rem] rounded px-2 py-0.5 text-xs font-medium"
+      style={{
+        backgroundColor: `${color}${Math.round(opacity * 40).toString(16).padStart(2, "0")}`,
+        color: ratio > 0.4 ? color : "#6B7280",
+      }}
+    >
+      {value}
+    </span>
   );
 }

@@ -49,6 +49,18 @@ async def list_votes(
     )
 
 
+@router.get("/{vote_id}/breakdown")
+async def get_vote_breakdown(
+    vote_id: str,
+    session: AsyncSession = Depends(get_session),
+):
+    """Get party-level vote breakdown for a specific vote."""
+    breakdown = await vote_service.get_vote_breakdown(session, vote_id)
+    if not breakdown:
+        raise HTTPException(status_code=404, detail="Vote not found or has no records")
+    return {"breakdown": breakdown}
+
+
 @router.get("/{vote_id}", response_model=VoteDetail)
 async def get_vote(
     vote_id: str,

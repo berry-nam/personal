@@ -161,3 +161,16 @@ export interface StatsOverview {
   votes: number;
   parties: { party: string; count: number }[];
 }
+
+export interface VoteBreakdownEntry {
+  party: string;
+  yes: number;
+  no: number;
+  abstain: number;
+  absent: number;
+  total: number;
+}
+
+export interface VoteBreakdownResponse {
+  breakdown: VoteBreakdownEntry[];
+}

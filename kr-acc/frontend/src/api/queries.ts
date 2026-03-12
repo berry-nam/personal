@@ -150,6 +150,20 @@ export function useVote(voteId: string) {
   });
 }
 
+export function useVoteBreakdown(voteId: string) {
+  return useQuery({
+    queryKey: ["vote-breakdown", voteId],
+    queryFn: async () => {
+      const { data } =
+        await api.get<import("@/types/api").VoteBreakdownResponse>(
+          `/votes/${voteId}/breakdown`,
+        );
+      return data;
+    },
+    enabled: !!voteId,
+  });
+}
+
 // ── Graph ────────────────────────────────────────────────────────────────────
 
 export function useCoSponsorshipGraph(params: {

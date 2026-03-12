@@ -93,3 +93,45 @@ async def get_votes_by_politician(
             "overall_result": vote.result,
         })
     return results, total
+
+
+async def get_vote_breakdown(session: AsyncSession, vote_id: str) -> list[dict]:
+    """Get party-level vote breakdown for a specific vote.
+
+    Returns a list of dicts: [{party, yes, no, abstain, absent, total}].
+    """
+    from app.models import Politician
+
+    rows = (
+        await session.execute(
+            select(
+                Politician.party,
+                VoteRecord.vote_result,
+                func.count(VoteRecord.id),
+            )
+            .join(Politician, VoteRecord.politician_id == Politician.id)
+            .where(VoteRecord.vote_id == vote_id)
+            .group_by(Politician.party, VoteRecord.vote_result)
+        )
+    ).all()
+
+    parties: dict[str, dict[str, int]] = {}
+    for party, vote_result, count in rows:
+        key = party or "무소속"
+        if key not in parties:
+            parties[key] = {"찬성": 0, "반대": 0, "기권": 0, "불참": 0, "total": 0}
+        result_key = vote_result or "불참"
+        parties[key][result_key] = parties[key].get(result_key, 0) + count
+        parties[key]["total"] += count
+
+    return [
+        {
+            "party": party,
+            "yes": counts["찬성"],
+            "no": counts["반대"],
+            "abstain": counts["기권"],
+            "absent": counts["불참"],
+            "total": counts["total"],
+        }
+        for party, counts in sorted(parties.items(), key=lambda x: -x[1]["total"])
+    ]
