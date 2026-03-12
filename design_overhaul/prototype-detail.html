@@ -96,7 +96,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .tab-panel.active{display:block}
 
 /* Section cards */
-.section{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;position:relative}
+.section{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;position:relative;overflow:visible}
 .section-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .section-title .icon{font-size:18px}
 
@@ -350,8 +350,9 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 /* Design notes */
 .design-notes-toggle{position:fixed;bottom:24px;right:24px;z-index:500;padding:10px 18px;border-radius:24px;background:var(--brand);color:#fff;border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:6px;transition:var(--transition)}
 .design-notes-toggle:hover{background:var(--brand-hover);transform:translateY(-1px)}
-.design-note{display:none;position:absolute;top:-4px;right:-4px;z-index:50;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap;pointer-events:none;box-shadow:var(--shadow-sm)}
+.design-note{display:none;position:absolute;top:-12px;right:8px;z-index:50;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap;pointer-events:none;box-shadow:var(--shadow-sm)}
 body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
+body.show-design-notes .section{margin-top:18px}
 .dn-blue{background:var(--blue-100);color:var(--blue-700)}
 .dn-green{background:var(--emerald-50);color:var(--emerald-600);border:1px solid var(--emerald-400)}
 .dn-yellow{background:var(--amber-50);color:var(--amber-600);border:1px solid var(--amber-400)}
@@ -464,7 +465,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
 <!-- TABS (6 tabs) -->
 <div class="tabs-wrap" style="position:relative">
-  <span class="design-note dn-blue">CDS Tab component, 6-tab layout, active underline</span>
+  <span class="design-note dn-blue" style="top:auto;bottom:-12px;right:8px">CDS Tab component, 6-tab layout, active underline</span>
   <div class="tabs">
     <div class="tab active" onclick="switchTab('overview',this)">개요</div>
     <div class="tab" onclick="switchTab('finance',this)">재무 <span class="tab-badge">8</span></div>
@@ -484,7 +485,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- 1. Revenue + Operating Profit Chart -->
     <div class="section" style="position:relative">
       <span class="design-note dn-green">ENPfsdt0005 주요매출계정 API</span>
-      <span class="design-note dn-blue" style="right:auto;left:-4px">Canvas line chart, devicePixelRatio</span>
+      <span class="design-note dn-blue" style="right:auto;left:8px">Canvas line chart, devicePixelRatio</span>
       <div class="section-title"><span class="icon">📊</span> 매출 · 영업이익 추이</div>
       <div class="chart-controls">
         <div class="time-range">
@@ -525,7 +526,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- 3. Waterfall Chart -->
     <div class="section" style="position:relative">
       <span class="design-note dn-green">ENPfsdt0005 주요매출계정</span>
-      <span class="design-note dn-yellow" style="right:auto;left:-4px">Waterfall chart, positive=blue / negative=red</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px">Waterfall chart, positive=blue / negative=red</span>
       <div class="section-title"><span class="icon">🏗️</span> 매출 구성 워터폴</div>
       <div class="chart-container">
         <canvas id="waterfallChart" width="1100" height="260"></canvas>
@@ -535,7 +536,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- 4. Supply Chain Network Graph (Bloomberg Terminal) -->
     <div class="section" style="position:relative">
       <span class="design-note dn-yellow">Bloomberg Terminal style HTML/CSS network</span>
-      <span class="design-note dn-green" style="right:auto;left:-4px;top:16px">ENPcust + ENPsupp API</span>
+      <span class="design-note dn-green" style="right:auto;left:8px;top:4px">ENPcust + ENPsupp API</span>
       <div class="section-title"><span class="icon">🔗</span> 주요 구매처 · 판매처 네트워크</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div class="network-wrap" id="networkGraphWrap">
@@ -619,7 +620,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- 5. Shareholders -->
     <div class="section paywall-section" style="position:relative">
       <span class="design-note dn-green">ENPsthr0001 + ENPcapt0000</span>
-      <span class="design-note dn-red" style="right:auto;left:-4px">L2: 39🍪</span>
+      <span class="design-note dn-red" style="right:auto;left:8px">L2: 39🍪</span>
       <div class="section-title"><span class="icon">🥧</span> 주주현황</div>
       <span class="paywall-inline-badge">🔒 열람 시 39🍪 필요</span>
       <div>
@@ -644,7 +645,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- 6. Executives table/card toggle -->
     <div class="section" style="position:relative">
       <span class="design-note dn-green">ENPmngr API</span>
-      <span class="design-note dn-yellow" style="right:auto;left:-4px">Table↔Card toggle, same pattern as network</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px">Table↔Card toggle, same pattern as network</span>
       <div class="section-title">
         <span class="icon">👥</span> 경영진
         <div style="margin-left:auto;display:flex;gap:4px">
@@ -679,7 +680,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- 7. Employee area chart -->
     <div class="section" style="position:relative">
       <span class="design-note dn-green">ENPemst API</span>
-      <span class="design-note dn-blue" style="right:auto;left:-4px">Canvas area chart, gradient fill</span>
+      <span class="design-note dn-blue" style="right:auto;left:8px">Canvas area chart, gradient fill</span>
       <div class="section-title"><span class="icon">👥</span> 인원현황</div>
       <div class="chart-container">
         <canvas id="employeeChart" width="1100" height="220"></canvas>
@@ -774,7 +775,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- S1: Investment Indicators -->
     <div class="section paywall-section" style="position:relative">
       <span class="design-note dn-green">OpenDART 가치평가지표 API</span>
-      <span class="design-note dn-red" style="right:auto;left:-4px">L2: 456🍪</span>
+      <span class="design-note dn-red" style="right:auto;left:8px">L2: 456🍪</span>
       <div class="section-title"><span class="icon">📈</span> 투자 지표</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
@@ -792,7 +793,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- S2: Valuation Metrics -->
     <div class="section paywall-section" style="position:relative">
       <span class="design-note dn-green">OpenDART PER/PBR/PSR</span>
-      <span class="design-note dn-yellow" style="right:auto;left:-4px;top:16px">PER/PBR/PSR tab toggle, horizontal bar vs 산업 평균</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">PER/PBR/PSR tab toggle, horizontal bar vs 산업 평균</span>
       <div class="section-title"><span class="icon">📊</span> 가치평가지표</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
@@ -809,7 +810,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- S3: Earnings -->
     <div class="section paywall-section" style="position:relative">
       <span class="design-note dn-green">OpenDART 분기/연간 실적</span>
-      <span class="design-note dn-yellow" style="right:auto;left:-4px;top:16px">Bubble chart, gray=추정 blue=발표</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">Bubble chart, gray=추정 blue=발표</span>
       <div class="section-title"><span class="icon">💰</span> 실적</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
@@ -857,7 +858,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <!-- S5: Stability -->
     <div class="section paywall-section" style="position:relative">
       <span class="design-note dn-green">OpenDART 부채비율/유동비율</span>
-      <span class="design-note dn-yellow" style="right:auto;left:-4px;top:16px">Line chart, dotted=projected, circle markers</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">Line chart, dotted=projected, circle markers</span>
       <div class="section-title"><span class="icon">🛡️</span> 안정성</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
@@ -937,7 +938,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
   <div class="tab-panel" id="panel-people">
     <div class="section" style="position:relative">
       <span class="design-note dn-green">ENPmngr + ENPrepe API</span>
-      <span class="design-note dn-blue" style="right:auto;left:-4px">Person card component, 48px avatar</span>
+      <span class="design-note dn-blue" style="right:auto;left:8px">Person card component, 48px avatar</span>
       <div class="section-title"><span class="icon">👥</span> 주요 인물 <span class="tab-badge" style="font-size:12px">12명</span></div>
       <div class="people-grid">
         <div class="person-card"><div class="person-avatar" style="background:var(--brand)">김</div><div><div class="person-name">김현우</div><div class="person-title">대표이사</div><div class="person-contact">연락처 보기 (15🍪)</div></div></div>
@@ -968,7 +969,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
   <div class="tab-panel" id="panel-similar">
     <div class="section" style="position:relative">
       <span class="design-note dn-yellow">3-column grid, 18+ cards, filter chips</span>
-      <span class="design-note dn-blue" style="right:auto;left:-4px">sim-card component, match % badge</span>
+      <span class="design-note dn-blue" style="right:auto;left:8px">sim-card component, match % badge</span>
       <div class="similar-header">
         <div class="section-title" style="margin-bottom:0"><span class="icon">🏢</span> 유사 기업 추천</div>
         <div class="view-toggle" id="similarViewToggle">
