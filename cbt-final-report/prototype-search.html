@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CookieDeal — 기업탐색</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  /* ── Primary Blue (#0549cc) scale ── */
+  --blue-50:#EBF1FB;--blue-100:#C8D9F5;--blue-200:#9BBBEE;
+  --blue-300:#6D9DE7;--blue-400:#3A7ADF;--blue-500:#0549CC;
+  --blue-600:#043EB0;--blue-700:#033293;--blue-800:#022777;--blue-900:#011C5A;
+  /* ── Neutral (blue-tinted slate) ── */
+  --slate-50:#F7F8FA;--slate-100:#EFF1F5;--slate-200:#E0E4EB;
+  --slate-300:#CCD2DB;--slate-400:#9AA3B4;--slate-500:#6B7689;
+  --slate-600:#4A5567;--slate-700:#374151;--slate-800:#1F2937;--slate-900:#111827;
+  /* ── Accent & Semantic ── */
+  --amber-400:#FBBF24;--amber-500:#F59E0B;--amber-600:#D97706;
+  --emerald-50:#ECFDF5;--emerald-400:#34D399;--emerald-500:#10B981;--emerald-600:#059669;
+  --red-50:#FEF2F2;--red-400:#F87171;--red-500:#EF4444;--red-600:#DC2626;
+  --purple-50:#F5F3FF;--purple-400:#A78BFA;--purple-500:#8B5CF6;
+  --teal-50:#F0FDFA;--teal-400:#2DD4BF;--teal-500:#14B8A6;
+  /* ── Aliases ── */
+  --brand:var(--blue-500);--brand-hover:var(--blue-600);--brand-light:var(--blue-400);
+  --brand-bg:var(--blue-50);--brand-badge:var(--blue-100);
+  --bg:var(--slate-50);--bg-card:#fff;
+  --text:var(--slate-900);--text-sub:var(--slate-500);--text-muted:var(--slate-400);
+  --border:var(--slate-200);--border-light:var(--slate-100);
+  --shadow-sm:0 1px 2px rgba(17,24,39,.04);
+  --shadow:0 1px 3px rgba(17,24,39,.06),0 1px 2px rgba(17,24,39,.04);
+  --shadow-md:0 4px 6px -1px rgba(17,24,39,.06),0 2px 4px -2px rgba(17,24,39,.04);
+  --shadow-lg:0 10px 25px -5px rgba(17,24,39,.08);
+  --radius:8px;--radius-sm:6px;--radius-lg:12px;--radius-xl:16px;
+  --transition:.15s cubic-bezier(.4,0,.2,1);
+  --nav-h:56px;--filter-h:52px;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:14px}
+
+/* ══ NAV ══ */
+.nav{position:sticky;top:0;z-index:200;height:var(--nav-h);background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:8px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--brand);margin-right:28px;text-decoration:none}
+.nav-brand svg{width:28px;height:28px}
+.nav-link{font-size:13.5px;font-weight:500;color:var(--text-sub);padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);text-decoration:none}
+.nav-link:hover,.nav-link.active{color:var(--brand);background:var(--brand-bg)}
+.nav-link.active{font-weight:600}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.nav-search-btn{display:flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;color:var(--text-muted);cursor:pointer;background:var(--slate-50);transition:var(--transition)}
+.nav-search-btn:hover{border-color:var(--blue-300);color:var(--text-sub)}
+.nav-search-btn kbd{font-family:inherit;font-size:11px;padding:2px 6px;border-radius:4px;border:1px solid var(--border);background:#fff;color:var(--text-muted)}
+.nav-avatar{width:32px;height:32px;border-radius:50%;background:var(--blue-100);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--brand);cursor:pointer}
+
+/* ══ PAGE LAYOUT ══ */
+.page{max-width:1440px;margin:0 auto;padding:0 24px}
+.page-header{padding:20px 0 12px;display:flex;align-items:center;gap:12px}
+.page-title{font-size:20px;font-weight:700;color:var(--text)}
+.page-count{font-size:13px;color:var(--text-muted);font-weight:400}
+
+/* ══ FILTER BAR ══ */
+.filter-bar{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.filter-select{display:flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;color:var(--text);cursor:pointer;background:#fff;transition:var(--transition);font-family:inherit;min-width:0}
+.filter-select:hover{border-color:var(--blue-300)}
+.filter-select.has-value{border-color:var(--brand);background:var(--brand-bg);color:var(--brand);font-weight:500}
+.filter-select svg{width:14px;height:14px;opacity:.5;flex-shrink:0}
+.filter-divider{width:1px;height:28px;background:var(--border);margin:0 4px}
+.filter-advanced-btn{display:flex;align-items:center;gap:4px;padding:7px 14px;border:1px dashed var(--border);border-radius:var(--radius);font-size:13px;color:var(--text-sub);cursor:pointer;background:transparent;transition:var(--transition);font-family:inherit}
+.filter-advanced-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-bg)}
+
+/* ── Chips row ── */
+.chips-row{display:flex;align-items:center;gap:6px;padding:4px 0 8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 12px;border-radius:20px;font-size:12.5px;font-weight:500;background:var(--brand-bg);color:var(--brand);border:1px solid var(--blue-200);cursor:default;transition:var(--transition)}
+.chip-remove{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;line-height:1;color:var(--blue-400);transition:var(--transition)}
+.chip-remove:hover{background:var(--blue-200);color:var(--blue-700)}
+.chip-count{margin-left:auto;font-size:13px;color:var(--text-sub);font-weight:600}
+.chip-count strong{color:var(--brand);font-variant-numeric:tabular-nums}
+.chip-clear{font-size:12px;color:var(--text-muted);cursor:pointer;padding:4px 8px;border-radius:var(--radius-sm)}
+.chip-clear:hover{color:var(--red-500);background:var(--red-50)}
+
+/* ══ TABLE CONTROLS ══ */
+.table-controls{display:flex;align-items:center;gap:8px;padding:8px 0;flex-wrap:wrap}
+.density-toggle{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.density-btn{padding:5px 12px;font-size:12px;font-family:inherit;border:none;background:#fff;color:var(--text-sub);cursor:pointer;transition:var(--transition);border-right:1px solid var(--border)}
+.density-btn:last-child{border-right:none}
+.density-btn.active{background:var(--brand);color:#fff;font-weight:500}
+.density-btn:hover:not(.active){background:var(--slate-50)}
+.table-controls-right{margin-left:auto;display:flex;gap:6px}
+.ctrl-btn{padding:5px 12px;font-size:12px;font-family:inherit;border:1px solid var(--border);border-radius:var(--radius);background:#fff;color:var(--text-sub);cursor:pointer;display:flex;align-items:center;gap:4px;transition:var(--transition)}
+.ctrl-btn:hover{border-color:var(--blue-300);color:var(--brand)}
+.saved-views{position:relative}
+.saved-views-menu{position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:4px;min-width:200px;display:none;z-index:50}
+.saved-views-menu.show{display:block}
+.saved-views-item{padding:8px 12px;font-size:13px;border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;gap:8px}
+.saved-views-item:hover{background:var(--slate-50)}
+.saved-views-item .dot{width:8px;height:8px;border-radius:50%}
+
+/* ══ RESULTS TABLE ══ */
+.results-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:24px}
+.results-table{width:100%;border-collapse:collapse}
+.results-table th{background:var(--slate-50);font-size:12px;font-weight:600;color:var(--text-sub);text-transform:none;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:5}
+.results-table th:first-child{width:44px;text-align:center}
+.results-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-variant-numeric:tabular-nums}
+.results-table tr{cursor:pointer;transition:var(--transition)}
+.results-table tbody tr:hover{background:var(--blue-50)}
+.results-table tbody tr.selected{background:var(--brand-bg);border-left:3px solid var(--brand)}
+/* Density modes */
+.results-table.compact td{padding:6px 14px;font-size:12.5px}
+.results-table.compact th{padding:7px 14px}
+.results-table.spacious td{padding:14px 14px;font-size:14px}
+.results-table.spacious th{padding:12px 14px}
+/* Column styles */
+.td-check{width:44px;text-align:center}
+.td-check input{accent-color:var(--brand)}
+.company-cell{display:flex;align-items:center;gap:10px;min-width:200px}
+.company-logo{width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.company-info{min-width:0}
+.company-name{font-weight:600;font-size:13.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.company-type{font-size:11px;color:var(--text-muted);margin-top:1px}
+.industry-chip{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11.5px;font-weight:500;white-space:nowrap}
+.region-text{font-size:13px;color:var(--text-sub)}
+.revenue-cell{display:flex;align-items:center;gap:8px}
+.revenue-val{font-weight:600;font-size:13.5px;white-space:nowrap}
+.sparkline{flex-shrink:0}
+.profit-cell{white-space:nowrap}
+.profit-val{font-weight:500;font-size:13px}
+.trend-up{color:var(--emerald-600)}
+.trend-down{color:var(--red-600)}
+.emp-cell{font-size:13px}
+.emp-growth{font-size:11px;font-weight:500;margin-left:4px}
+.year-cell{font-size:12.5px;color:var(--text-sub);font-variant-numeric:tabular-nums}
+/* Row actions on hover */
+.row-actions{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;gap:4px;opacity:0;transition:var(--transition);pointer-events:none}
+.results-table tbody tr:hover .row-actions{opacity:1;pointer-events:all}
+.row-action-btn{padding:4px 10px;font-size:11.5px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--text-sub);cursor:pointer;font-family:inherit;white-space:nowrap;transition:var(--transition)}
+.row-action-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-bg)}
+.td-actions-placeholder{width:200px}
+
+/* ══ SLIDE-OUT PANEL ══ */
+.panel-overlay{position:fixed;inset:0;background:rgba(17,24,39,.15);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
+.panel-overlay.open{opacity:1;pointer-events:all}
+.panel{position:fixed;top:0;right:0;width:440px;height:100vh;background:#fff;border-left:1px solid var(--border);box-shadow:-8px 0 30px rgba(17,24,39,.08);z-index:301;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column}
+.panel-overlay.open .panel{transform:translateX(0)}
+.panel-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;position:sticky;top:0;background:#fff;z-index:5}
+.panel-logo{width:44px;height:44px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff}
+.panel-company-name{font-size:16px;font-weight:700}
+.panel-company-type{font-size:12px;color:var(--text-muted)}
+.panel-close{margin-left:auto;width:32px;height:32px;border-radius:var(--radius-sm);border:none;background:var(--slate-50);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text-sub);transition:var(--transition)}
+.panel-close:hover{background:var(--slate-200)}
+.panel-detail-link{display:flex;align-items:center;gap:4px;font-size:12.5px;color:var(--brand);text-decoration:none;margin-top:2px;font-weight:500}
+.panel-detail-link:hover{text-decoration:underline}
+.panel-body{padding:20px;flex:1}
+.panel-section{margin-bottom:20px}
+.panel-section-title{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.panel-kv{padding:6px 0}
+.panel-kv-label{font-size:11.5px;color:var(--text-muted)}
+.panel-kv-value{font-size:13px;font-weight:500;color:var(--text);margin-top:1px}
+.panel-chart{background:var(--slate-50);border-radius:var(--radius);padding:16px;text-align:center}
+.panel-chart-title{font-size:12px;font-weight:600;color:var(--text-sub);margin-bottom:8px}
+.panel-actions{position:sticky;bottom:0;padding:12px 20px;border-top:1px solid var(--border);background:#fff;display:flex;gap:8px}
+.btn-primary{padding:8px 20px;background:var(--brand);color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--transition)}
+.btn-primary:hover{background:var(--brand-hover)}
+.btn-outline{padding:8px 20px;background:#fff;color:var(--text-sub);border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:var(--transition)}
+.btn-outline:hover{border-color:var(--brand);color:var(--brand)}
+.btn-detail{flex:1;padding:8px 20px;background:var(--brand);color:#fff;border:none;border-radius:var(--radius);font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;text-align:center;transition:var(--transition)}
+.btn-detail:hover{background:var(--brand-hover)}
+
+/* ══ ⌘K MODAL ══ */
+.cmdk-overlay{position:fixed;inset:0;background:rgba(17,24,39,.4);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding-top:min(20vh,160px);opacity:0;pointer-events:none;transition:opacity .15s}
+.cmdk-overlay.open{opacity:1;pointer-events:all}
+.cmdk{width:560px;background:#fff;border-radius:var(--radius-xl);box-shadow:0 20px 60px rgba(17,24,39,.2);overflow:hidden;transform:scale(.96);transition:transform .2s cubic-bezier(.4,0,.2,1)}
+.cmdk-overlay.open .cmdk{transform:scale(1)}
+.cmdk-input-wrap{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.cmdk-input-wrap svg{width:20px;height:20px;color:var(--text-muted);flex-shrink:0}
+.cmdk-input{flex:1;border:none;outline:none;font-size:16px;font-family:inherit;color:var(--text);background:transparent}
+.cmdk-input::placeholder{color:var(--text-muted)}
+.cmdk-body{max-height:360px;overflow-y:auto;padding:8px}
+.cmdk-group{padding:8px 0}
+.cmdk-group-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;padding:4px 12px 8px}
+.cmdk-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;transition:var(--transition)}
+.cmdk-item:hover,.cmdk-item.active{background:var(--brand-bg)}
+.cmdk-item-icon{width:32px;height:32px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.cmdk-item-text{flex:1;min-width:0}
+.cmdk-item-title{font-size:13.5px;font-weight:500;color:var(--text)}
+.cmdk-item-sub{font-size:12px;color:var(--text-muted);margin-top:1px}
+.cmdk-item-badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
+.cmdk-footer{padding:10px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;font-size:11.5px;color:var(--text-muted)}
+.cmdk-footer kbd{font-family:inherit;font-size:11px;padding:1px 5px;border-radius:3px;border:1px solid var(--border);background:var(--slate-50)}
+
+/* ══ ADVANCED FILTERS PANEL ══ */
+.advanced-panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:8px;display:none}
+.advanced-panel.show{display:block}
+.advanced-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.advanced-group{padding-bottom:12px}
+.advanced-group-title{font-size:12px;font-weight:600;color:var(--text-sub);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.advanced-group-title::before{content:'';width:3px;height:12px;border-radius:2px;background:var(--brand)}
+.advanced-item{display:flex;align-items:center;gap:8px;padding:6px 0}
+.advanced-item label{font-size:13px;color:var(--text);flex:1}
+.advanced-item select,.advanced-item input{font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--text);width:140px}
+
+/* ══ BULK BAR ══ */
+.bulk-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--slate-800);color:#fff;padding:10px 20px;border-radius:var(--radius-lg);display:none;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(17,24,39,.2);z-index:100;font-size:13px}
+.bulk-bar.show{display:flex}
+.bulk-bar .count{font-weight:600;color:var(--blue-200)}
+.bulk-btn{padding:6px 14px;border-radius:var(--radius);border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font-size:12.5px;cursor:pointer;font-family:inherit;transition:var(--transition)}
+.bulk-btn:hover{background:rgba(255,255,255,.1)}
+.bulk-btn.primary{background:var(--brand);border-color:var(--brand)}
+
+/* ══ PAGINATION ══ */
+.pagination{display:flex;align-items:center;justify-content:center;gap:4px;padding:16px 0}
+.page-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:var(--radius);background:#fff;color:var(--text-sub);font-size:13px;cursor:pointer;font-family:inherit;transition:var(--transition)}
+.page-btn.active{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600}
+.page-btn:hover:not(.active):not(:disabled){border-color:var(--blue-300);color:var(--brand)}
+.page-btn:disabled{opacity:.4;cursor:default}
+
+/* ── Saved searches dropdown ── */
+.saved-dropdown{display:none;position:absolute;top:calc(100% + 4px);left:0;width:320px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:50;overflow:hidden}
+.saved-dropdown.show{display:block}
+.saved-dropdown-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--text-sub)}
+.saved-item{padding:10px 16px;cursor:pointer;transition:var(--transition)}
+.saved-item:hover{background:var(--slate-50)}
+.saved-item-name{font-size:13px;font-weight:500;color:var(--text)}
+.saved-item-filters{font-size:11.5px;color:var(--text-muted);margin-top:2px}
+
+/* ── Empty/loading states ── */
+.skeleton{background:linear-gradient(90deg,var(--slate-100) 25%,var(--slate-50) 50%,var(--slate-100) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ══ DESIGN NOTES ══ */
+.design-notes-toggle{position:fixed;bottom:24px;right:24px;z-index:400;padding:10px 18px;background:var(--slate-800);color:#fff;border:none;border-radius:var(--radius-lg);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:6px;transition:var(--transition)}
+.design-notes-toggle:hover{background:var(--slate-900)}
+.design-notes-toggle.active{background:var(--brand);box-shadow:0 0 0 3px rgba(5,73,204,.3)}
+.design-note{display:none;position:absolute;z-index:50;padding:6px 10px;border-radius:var(--radius-sm);font-size:11px;font-weight:500;line-height:1.4;max-width:280px;pointer-events:none;white-space:normal}
+body.show-design-notes .design-note{display:block}
+.design-note.blue{background:rgba(5,73,204,.08);color:var(--blue-700);border:1px solid rgba(5,73,204,.2)}
+.design-note.green{background:rgba(16,185,129,.08);color:var(--emerald-600);border:1px solid rgba(16,185,129,.2)}
+.design-note.yellow{background:rgba(245,158,11,.08);color:var(--amber-600);border:1px solid rgba(245,158,11,.2)}
+.design-note.red{background:rgba(239,68,68,.08);color:var(--red-600);border:1px solid rgba(239,68,68,.2)}
+.design-note::before{font-weight:700;margin-right:4px}
+.design-note.blue::before{content:'🔵'}
+.design-note.green::before{content:'🟢'}
+.design-note.yellow::before{content:'🟡'}
+.design-note.red::before{content:'🔴'}
+
+/* ── Responsive ── */
+@media(max-width:1024px){
+  .advanced-grid{grid-template-columns:1fr 1fr}
+  .panel{width:100%}
+}
+@media(max-width:768px){
+  .nav{padding:0 12px}
+  .nav-link:not(.active){display:none}
+  .page{padding:0 12px}
+  .filter-bar{padding:10px 12px}
+  .company-cell{min-width:160px}
+  .td-actions-placeholder{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAVIGATION ══ -->
+<nav class="nav">
+  <a href="#" class="nav-brand">
+    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#0549CC"/><circle cx="10" cy="11" r="2" fill="#fff"/><circle cx="18" cy="11" r="2" fill="#fff"/><circle cx="14" cy="17" r="1.5" fill="#fff"/><circle cx="9" cy="16" r="1.2" fill="#fff" opacity=".6"/><circle cx="19" cy="16" r="1.2" fill="#fff" opacity=".6"/></svg>
+    CookieDeal
+  </a>
+  <a href="#" class="nav-link active">기업탐색</a>
+  <a href="#" class="nav-link">리스트</a>
+  <a href="#" class="nav-link">AI 분석</a>
+  <a href="#" class="nav-link">마이페이지</a>
+  <div class="nav-right">
+    <button class="nav-search-btn" onclick="openCmdK()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
+      기업명, 업종, 조건 검색...
+      <kbd>⌘K</kbd>
+    </button>
+    <div class="nav-avatar">남</div>
+  </div>
+</nav>
+
+<!-- ══ PAGE ══ -->
+<div class="page">
+  <div class="page-header">
+    <h1 class="page-title">기업탐색</h1>
+    <span class="page-count">1,043,287개 기업</span>
+  </div>
+
+  <!-- ── Filter Bar ── -->
+  <div class="filter-bar" style="position:relative">
+    <div class="design-note yellow" style="top:-32px;left:0">LinkedIn Sales Navigator pattern, cmdk library for ⌘K</div>
+    <button class="filter-select has-value" onclick="this.classList.toggle('has-value')">
+      업종: 반도체/전자
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <button class="filter-select" onclick="toggleFilter(this,'지역: 서울')">
+      지역
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <button class="filter-select has-value">
+      매출: 100억~500억
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <button class="filter-select">
+      기업유형
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="filter-divider"></div>
+    <button class="filter-advanced-btn" onclick="document.querySelector('.advanced-panel').classList.toggle('show')">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4h12M4 8h8M6 12h4"/></svg>
+      고급 필터
+    </button>
+  </div>
+
+  <!-- ── Advanced Filters ── -->
+  <div class="advanced-panel">
+    <div class="advanced-grid">
+      <div class="advanced-group">
+        <div class="advanced-group-title">기업 속성</div>
+        <div class="advanced-item"><label>직원수</label><select><option>전체</option><option>~50명</option><option>50~200명</option><option>200~1,000명</option><option>1,000명+</option></select></div>
+        <div class="advanced-item"><label>설립연도</label><input type="text" placeholder="2010 ~ 2024"></div>
+        <div class="advanced-item"><label>외감 여부</label><select><option>전체</option><option>외감 기업</option><option>비외감 기업</option></select></div>
+        <div class="advanced-item"><label>상장 여부</label><select><option>전체</option><option>유가증권</option><option>코스닥</option><option>비상장</option></select></div>
+      </div>
+      <div class="advanced-group">
+        <div class="advanced-group-title">재무 필터</div>
+        <div class="advanced-item"><label>영업이익</label><input type="text" placeholder="최소 ~ 최대 (억)"></div>
+        <div class="advanced-item"><label>자산총액</label><select><option>전체</option><option>~100억</option><option>100~500억</option><option>500억+</option></select></div>
+        <div class="advanced-item"><label>부채비율</label><select><option>전체</option><option>~100%</option><option>100~200%</option><option>200%+</option></select></div>
+        <div class="advanced-item"><label>매출 성장률</label><select><option>전체</option><option>10%+ 성장</option><option>20%+ 성장</option><option>감소 기업</option></select></div>
+      </div>
+      <div class="advanced-group">
+        <div class="advanced-group-title">시그널 필터</div>
+        <div class="advanced-item"><label>최근 채용</label><select><option>전체</option><option>30일 이내</option><option>90일 이내</option></select></div>
+        <div class="advanced-item"><label>뉴스 멘션</label><select><option>전체</option><option>최근 30일</option><option>최근 90일</option></select></div>
+        <div class="advanced-item"><label>특허 등록</label><select><option>전체</option><option>최근 1년</option><option>최근 3년</option></select></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Active Chips ── -->
+  <div class="chips-row">
+    <div class="chip">업종: 반도체/전자 <span class="chip-remove" onclick="this.parentElement.remove();updateCount()">×</span></div>
+    <div class="chip">매출: 100억~500억 <span class="chip-remove" onclick="this.parentElement.remove();updateCount()">×</span></div>
+    <span class="chip-clear" onclick="clearChips()">모든 필터 지우기</span>
+    <span class="chip-count">검색 결과 <strong id="result-count">2,345</strong>개</span>
+  </div>
+
+  <!-- ── Table Controls ── -->
+  <div class="table-controls">
+    <div class="density-toggle">
+      <button class="density-btn" onclick="setDensity('compact',this)">컴팩트</button>
+      <button class="density-btn active" onclick="setDensity('comfortable',this)">보통</button>
+      <button class="density-btn" onclick="setDensity('spacious',this)">여유</button>
+    </div>
+    <div class="table-controls-right">
+      <div class="saved-views" style="position:relative">
+        <button class="ctrl-btn" onclick="this.nextElementSibling.classList.toggle('show')">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="1" width="11" height="11" rx="2"/><path d="M1 5h11"/></svg>
+          뷰: 기본
+        </button>
+        <div class="saved-views-menu">
+          <div class="saved-views-item" onclick="this.parentElement.classList.remove('show')"><div class="dot" style="background:var(--brand)"></div> 기본 뷰</div>
+          <div class="saved-views-item" onclick="this.parentElement.classList.remove('show')"><div class="dot" style="background:var(--emerald-500)"></div> M&A 딜소싱</div>
+          <div class="saved-views-item" onclick="this.parentElement.classList.remove('show')"><div class="dot" style="background:var(--amber-500)"></div> 콜드콜 리스트</div>
+          <div class="saved-views-item" onclick="this.parentElement.classList.remove('show')"><div class="dot" style="background:var(--purple-500)"></div> 투자 분석</div>
+        </div>
+      </div>
+      <button class="ctrl-btn">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2h3M2 6.5h3M2 11h3M8 2h3M8 6.5h3M8 11h3"/></svg>
+        열 설정
+      </button>
+      <button class="ctrl-btn">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2v9l4-3 3 2 2-2"/></svg>
+        내보내기
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ RESULTS TABLE ══ -->
+  <div class="results-wrap" style="position:relative">
+    <div class="design-note blue" style="top:-28px;right:0">TanStack Virtual, density 32/40/52px rows</div>
+    <table class="results-table" id="resultsTable">
+      <thead>
+        <tr>
+          <th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th>
+          <th>기업명</th>
+          <th>업종</th>
+          <th>지역</th>
+          <th>매출액</th>
+          <th>영업이익</th>
+          <th>직원수</th>
+          <th>설립</th>
+          <th style="width:1px"></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- ── Pagination ── -->
+  <div class="pagination">
+    <button class="page-btn" disabled>‹</button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <button class="page-btn">3</button>
+    <button class="page-btn">4</button>
+    <button class="page-btn">5</button>
+    <button class="page-btn">...</button>
+    <button class="page-btn">94</button>
+    <button class="page-btn">›</button>
+  </div>
+</div>
+
+<!-- ══ SLIDE-OUT PANEL ══ -->
+<div class="panel-overlay" id="panelOverlay" onclick="if(event.target===this)closePanel()">
+  <div class="panel" id="panel">
+    <div class="design-note green" style="top:60px;left:12px;z-index:10">420px fixed, 6-section: hero→grid→chart→heatmap→sankey→actions</div>
+    <div class="panel-header">
+      <div class="panel-logo" id="panelLogo">HB</div>
+      <div>
+        <div class="panel-company-name" id="panelName">에이치비테크놀로지</div>
+        <div class="panel-company-type" id="panelType">주식회사 · 반도체 장비</div>
+        <a href="prototype-detail.html" class="panel-detail-link">상세 보기 →</a>
+      </div>
+      <button class="panel-close" onclick="closePanel()">×</button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-section">
+        <div class="panel-section-title">기본 정보</div>
+        <div class="panel-grid">
+          <div class="panel-kv"><div class="panel-kv-label">대표자</div><div class="panel-kv-value" id="panelCeo">김현우</div></div>
+          <div class="panel-kv"><div class="panel-kv-label">설립일</div><div class="panel-kv-value" id="panelFounded">2011.03.15</div></div>
+          <div class="panel-kv"><div class="panel-kv-label">업종</div><div class="panel-kv-value" id="panelIndustry">반도체 검사장비 제조</div></div>
+          <div class="panel-kv"><div class="panel-kv-label">기업 유형</div><div class="panel-kv-value">비상장 / 주식회사</div></div>
+          <div class="panel-kv"><div class="panel-kv-label">직원수</div><div class="panel-kv-value" id="panelEmp">187명</div></div>
+          <div class="panel-kv"><div class="panel-kv-label">소재지</div><div class="panel-kv-value" id="panelAddr">서울 강남구 테헤란로 127</div></div>
+          <div class="panel-kv" style="grid-column:span 2"><div class="panel-kv-label">주요 생산품</div><div class="panel-kv-value" id="panelProducts">반도체 검사장비, 웨이퍼 프로버, 테스트 핸들러</div></div>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-section-title">매출 · 영업이익 추이</div>
+        <div class="panel-chart">
+          <canvas id="panelChart" width="380" height="180"></canvas>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-section-title">손익 요약</div>
+        <div id="panelHeatmap" style="display:grid;grid-template-columns:auto repeat(5,1fr);gap:2px;font-size:11.5px"></div>
+      </div>
+    </div>
+    <div class="panel-actions">
+      <button class="btn-outline" style="flex-shrink:0">저장</button>
+      <button class="btn-outline" style="flex-shrink:0">리스트 추가</button>
+      <a href="prototype-detail.html" class="btn-detail">상세 보기</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ⌘K COMMAND PALETTE ══ -->
+<div class="cmdk-overlay" id="cmdkOverlay" onclick="if(event.target===this)closeCmdK()">
+  <div class="cmdk">
+    <div class="cmdk-input-wrap">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg>
+      <input class="cmdk-input" id="cmdkInput" placeholder="기업명, 업종, 또는 조건을 입력하세요..." oninput="filterCmdK(this.value)">
+    </div>
+    <div class="cmdk-body" id="cmdkBody">
+      <div class="cmdk-group">
+        <div class="cmdk-group-label">최근 검색</div>
+        <div class="cmdk-item"><div class="cmdk-item-icon" style="background:var(--slate-100);color:var(--text-muted)">🕐</div><div class="cmdk-item-text"><div class="cmdk-item-title">서울 반도체 매출 100억 이상</div><div class="cmdk-item-sub">2,345개 결과 · 3일 전</div></div></div>
+        <div class="cmdk-item"><div class="cmdk-item-icon" style="background:var(--slate-100);color:var(--text-muted)">🕐</div><div class="cmdk-item-text"><div class="cmdk-item-title">에이치비테크놀로지</div><div class="cmdk-item-sub">기업 프로필 · 1주 전</div></div></div>
+      </div>
+      <div class="cmdk-group">
+        <div class="cmdk-group-label">저장된 검색</div>
+        <div class="cmdk-item"><div class="cmdk-item-icon" style="background:var(--blue-50);color:var(--brand)">★</div><div class="cmdk-item-text"><div class="cmdk-item-title">B2B 영업 — 서울 SI 기업</div><div class="cmdk-item-sub">업종: SW, 지역: 서울, 매출: 100억+</div></div><span class="cmdk-item-badge" style="background:var(--blue-50);color:var(--brand)">1,203</span></div>
+        <div class="cmdk-item"><div class="cmdk-item-icon" style="background:var(--blue-50);color:var(--brand)">★</div><div class="cmdk-item-text"><div class="cmdk-item-title">투자 리서치 — 바이오 성장기업</div><div class="cmdk-item-sub">업종: 바이오, 매출 성장률: 20%+</div></div><span class="cmdk-item-badge" style="background:var(--emerald-50);color:var(--emerald-600)">456</span></div>
+      </div>
+      <div class="cmdk-group">
+        <div class="cmdk-group-label">인기 검색</div>
+        <div class="cmdk-item"><div class="cmdk-item-icon" style="background:var(--amber-400);color:#fff;font-size:12px">🔥</div><div class="cmdk-item-text"><div class="cmdk-item-title">2차전지 관련 기업</div><div class="cmdk-item-sub">12,340개 기업</div></div></div>
+        <div class="cmdk-item"><div class="cmdk-item-icon" style="background:var(--amber-400);color:#fff;font-size:12px">🔥</div><div class="cmdk-item-text"><div class="cmdk-item-title">AI/반도체 스타트업</div><div class="cmdk-item-sub">3,456개 기업</div></div></div>
+      </div>
+    </div>
+    <div class="cmdk-footer">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> 이동</span>
+      <span><kbd>Enter</kbd> 선택</span>
+      <span><kbd>Esc</kbd> 닫기</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BULK ACTION BAR ══ -->
+<div class="bulk-bar" id="bulkBar">
+  <span class="count" id="bulkCount">3</span>개 기업 선택됨
+  <button class="bulk-btn">리스트에 추가</button>
+  <button class="bulk-btn">내보내기 (CSV)</button>
+  <button class="bulk-btn">태그 추가</button>
+  <button class="bulk-btn" onclick="clearSelection()" style="border-color:rgba(255,255,255,.1)">선택 해제</button>
+</div>
+
+<!-- ══ DESIGN NOTES TOGGLE ══ -->
+<button class="design-notes-toggle" onclick="toggleDesignNotes(this)">📝 디자인 노트</button>
+
+<script>
+// ══ DESIGN NOTES ══
+function toggleDesignNotes(btn){
+  btn.classList.toggle('active');
+  document.body.classList.toggle('show-design-notes');
+}
+
+// ══ DATA ══
+const COMPANIES = [
+  {name:'에이치비테크놀로지',type:'(주)',industry:'반도체 장비',cat:'제조업',region:'서울 강남',revenue:342,trend:[280,295,310,328,342],profit:28,profitG:12.5,emp:187,empG:8,year:2011,products:'반도체 검사장비, 웨이퍼 프로버',ceo:'김현우',addr:'서울 강남구 테헤란로 127',color:'#0549CC'},
+  {name:'넥스트인포시스템즈',type:'(주)',industry:'SW 개발',cat:'정보통신업',region:'성남 분당',revenue:128,trend:[85,95,105,118,128],profit:15,profitG:18.2,emp:95,empG:15,year:2015,products:'ERP 솔루션, 클라우드 플랫폼',ceo:'박성민',addr:'성남시 분당구 판교로 242',color:'#059669'},
+  {name:'그린에너텍',type:'(주)',industry:'신재생에너지',cat:'제조업',region:'부산 해운대',revenue:567,trend:[420,455,490,530,567],profit:42,profitG:8.3,emp:312,empG:5,year:2008,products:'태양광 모듈, ESS',ceo:'이정호',addr:'부산 해운대구 센텀중앙로 48',color:'#D97706'},
+  {name:'코리아푸드텍',type:'(주)',industry:'식품 제조',cat:'제조업',region:'인천 남동',revenue:89,trend:[72,78,81,85,89],profit:7,profitG:4.1,emp:64,empG:3,year:2018,products:'건강기능식품, HMR',ceo:'최영수',addr:'인천 남동구 남동대로 123',color:'#DC2626'},
+  {name:'스마트로지스',type:'(주)',industry:'물류 IT',cat:'정보통신업',region:'서울 영등포',revenue:213,trend:[145,168,185,198,213],profit:18,profitG:14.7,emp:142,empG:12,year:2013,products:'물류관리 플랫폼, WMS',ceo:'정현우',addr:'서울 영등포구 여의나루로 76',color:'#8B5CF6'},
+  {name:'바이오싸이언스코리아',type:'(주)',industry:'바이오 연구',cat:'전문과학기술',region:'대전 유성',revenue:76,trend:[35,42,55,64,76],profit:-5,profitG:-999,emp:53,empG:22,year:2019,products:'항체 치료제, 진단키트',ceo:'한미영',addr:'대전 유성구 과학로 169',color:'#0D9488'},
+  {name:'대한정밀공업',type:'(주)',industry:'기계부품',cat:'제조업',region:'경기 안산',revenue:445,trend:[410,418,425,438,445],profit:31,profitG:3.2,emp:267,empG:1,year:1995,products:'정밀 절삭공구, CNC 부품',ceo:'오태환',addr:'경기 안산시 단원구 산단로 89',color:'#64748B'},
+  {name:'인피닉스AI',type:'(주)',industry:'AI 솔루션',cat:'정보통신업',region:'서울 서초',revenue:52,trend:[12,22,32,42,52],profit:-12,profitG:-999,emp:38,empG:35,year:2020,products:'AI 영상분석, MLOps 플랫폼',ceo:'김태준',addr:'서울 서초구 반포대로 201',color:'#6366F1'},
+  {name:'한일화학',type:'(주)',industry:'화학 소재',cat:'제조업',region:'울산 울주',revenue:678,trend:[620,638,650,668,678],profit:55,profitG:5.8,emp:423,empG:2,year:1987,products:'특수 코팅제, 접착소재',ceo:'박광일',addr:'울산 울주군 온산읍 화학로 45',color:'#B45309'},
+  {name:'퓨처모빌리티',type:'(주)',industry:'자동차부품',cat:'제조업',region:'경기 화성',revenue:891,trend:[720,765,810,855,891],profit:67,profitG:9.1,emp:534,empG:6,year:2003,products:'전장부품, 배터리 모듈',ceo:'윤재현',addr:'경기 화성시 동탄대로 512',color:'#0549CC'},
+  {name:'동아엘텍',type:'(주)',industry:'전자부품',cat:'제조업',region:'경기 수원',revenue:234,trend:[195,205,218,225,234],profit:19,profitG:7.4,emp:156,empG:4,year:2009,products:'PCB, 센서 모듈',ceo:'이동훈',addr:'경기 수원시 영통구 신원로 88',color:'#059669'},
+  {name:'미래산업',type:'(주)',industry:'산업용 로봇',cat:'제조업',region:'경남 창원',revenue:321,trend:[255,278,295,310,321],profit:25,profitG:10.6,emp:198,empG:7,year:2001,products:'협동 로봇, 자동화 라인',ceo:'서진우',addr:'경남 창원시 성산구 공단로 234',color:'#DC2626'},
+  {name:'클라우드브릿지',type:'(주)',industry:'클라우드',cat:'정보통신업',region:'서울 강남',revenue:167,trend:[78,98,125,148,167],profit:8,profitG:25.3,emp:112,empG:28,year:2017,products:'MSP, 클라우드 마이그레이션',ceo:'강민서',addr:'서울 강남구 역삼로 165',color:'#8B5CF6'},
+  {name:'성우메디칼',type:'(주)',industry:'의료기기',cat:'제조업',region:'서울 금천',revenue:198,trend:[150,162,175,188,198],profit:22,profitG:11.3,emp:134,empG:9,year:2012,products:'초음파 진단기, 수술 로봇',ceo:'남기철',addr:'서울 금천구 가산디지털로 100',color:'#0D9488'},
+  {name:'케이솔라에너지',type:'(주)',industry:'태양광',cat:'제조업',region:'충남 아산',revenue:412,trend:[310,340,365,390,412],profit:34,profitG:6.7,emp:245,empG:5,year:2010,products:'태양광 셀, 인버터',ceo:'백승현',addr:'충남 아산시 음봉면 산업로 567',color:'#D97706'}
+];
+
+const INDUSTRY_COLORS = {
+  '반도체 장비':'background:var(--blue-50);color:var(--blue-600)',
+  'SW 개발':'background:var(--emerald-50);color:var(--emerald-600)',
+  '신재생에너지':'background:#FFF7ED;color:#C2410C',
+  '식품 제조':'background:var(--red-50);color:var(--red-600)',
+  '물류 IT':'background:var(--purple-50);color:var(--purple-500)',
+  '바이오 연구':'background:var(--teal-50);color:var(--teal-500)',
+  '기계부품':'background:var(--slate-100);color:var(--slate-600)',
+  'AI 솔루션':'background:#EEF2FF;color:#4F46E5',
+  '화학 소재':'background:#FFF7ED;color:#B45309',
+  '자동차부품':'background:var(--blue-50);color:var(--blue-600)',
+  '전자부품':'background:var(--emerald-50);color:var(--emerald-600)',
+  '산업용 로봇':'background:var(--red-50);color:var(--red-600)',
+  '클라우드':'background:var(--purple-50);color:var(--purple-500)',
+  '의료기기':'background:var(--teal-50);color:var(--teal-500)',
+  '태양광':'background:#FFF7ED;color:#C2410C'
+};
+
+// ══ RENDER TABLE ══
+function renderTable(){
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = COMPANIES.map((c,i) => {
+    const initials = c.name.substring(0,2);
+    const spark = makeSpark(c.trend);
+    const profitClass = c.profit >= 0 ? 'trend-up' : 'trend-down';
+    const profitArrow = c.profit >= 0 ? '▲' : '▼';
+    const profitGText = c.profitG === -999 ? '적자' : (c.profitG >= 0 ? '+'+c.profitG+'%' : c.profitG+'%');
+    const empGClass = c.empG >= 0 ? 'trend-up' : 'trend-down';
+    const chipStyle = INDUSTRY_COLORS[c.industry] || 'background:var(--slate-100);color:var(--slate-600)';
+    return `<tr onclick="openPanel(${i})" style="position:relative">
+      <td class="td-check"><input type="checkbox" onclick="event.stopPropagation();updateBulk()" data-idx="${i}"></td>
+      <td><div class="company-cell">
+        <div class="company-logo" style="background:${c.color}">${initials}</div>
+        <div class="company-info"><div class="company-name">${c.name}</div><div class="company-type">${c.type} · ${c.cat}</div></div>
+      </div></td>
+      <td><span class="industry-chip" style="${chipStyle}">${c.industry}</span></td>
+      <td class="region-text">${c.region}</td>
+      <td><div class="revenue-cell"><span class="revenue-val">${c.revenue}억</span>${spark}</div></td>
+      <td class="profit-cell"><span class="profit-val ${profitClass}">${c.profit >= 0 ? '' : ''}${c.profit}억</span> <span class="emp-growth ${profitClass}" style="font-size:11px">${profitArrow} ${profitGText}</span></td>
+      <td class="emp-cell">${c.emp}명 <span class="emp-growth ${empGClass}">+${c.empG}%</span></td>
+      <td class="year-cell">${c.year}</td>
+      <td style="position:relative"><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel(${i})">빠른 보기</button></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function makeSpark(data){
+  const w=48,h=20,max=Math.max(...data),min=Math.min(...data),range=max-min||1;
+  const pts=data.map((v,i)=>`${(i/(data.length-1))*w},${h-((v-min)/range)*h}`).join(' ');
+  const up=data[data.length-1]>=data[0];
+  const col=up?'var(--emerald-500)':'var(--red-500)';
+  return `<svg class="sparkline" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+// ══ DENSITY ══
+function setDensity(mode,btn){
+  document.querySelectorAll('.density-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const table=document.getElementById('resultsTable');
+  table.classList.remove('compact','spacious');
+  if(mode==='compact')table.classList.add('compact');
+  if(mode==='spacious')table.classList.add('spacious');
+}
+
+// ══ PANEL ══
+let currentPanelIdx = -1;
+
+function openPanel(idx){
+  const c=COMPANIES[idx];
+  // Update row selection highlight
+  document.querySelectorAll('#tableBody tr').forEach(r=>r.classList.remove('selected'));
+  document.querySelectorAll('#tableBody tr')[idx]?.classList.add('selected');
+  // Populate panel content
+  document.getElementById('panelLogo').textContent=c.name.substring(0,2);
+  document.getElementById('panelLogo').style.background=c.color;
+  document.getElementById('panelName').textContent=c.name;
+  document.getElementById('panelType').textContent=c.type+' · '+c.industry;
+  document.getElementById('panelCeo').textContent=c.ceo;
+  document.getElementById('panelFounded').textContent=c.year+'.03.15';
+  document.getElementById('panelIndustry').textContent=c.industry;
+  document.getElementById('panelEmp').textContent=c.emp+'명';
+  document.getElementById('panelAddr').textContent=c.addr;
+  document.getElementById('panelProducts').textContent=c.products;
+  // If panel already open, just swap content (no close/reopen)
+  const overlay = document.getElementById('panelOverlay');
+  if(!overlay.classList.contains('open')){
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  currentPanelIdx = idx;
+  drawPanelChart(c);
+  drawHeatmap(c);
+}
+function closePanel(){
+  document.getElementById('panelOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  document.querySelectorAll('#tableBody tr').forEach(r=>r.classList.remove('selected'));
+  currentPanelIdx = -1;
+}
+
+function drawPanelChart(c){
+  const canvas=document.getElementById('panelChart');
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=380*dpr;canvas.height=180*dpr;
+  canvas.style.width='380px';canvas.style.height='180px';
+  ctx.scale(dpr,dpr);
+  ctx.clearRect(0,0,380,180);
+  const years=['2021','2022','2023','2024','2025'];
+  const data=c.trend;
+  const max=Math.max(...data)*1.2;
+  const barW=36,gap=28,startX=50,baseY=155;
+  // Y axis
+  ctx.strokeStyle='#E0E4EB';ctx.lineWidth=0.5;
+  for(let i=0;i<=4;i++){
+    const y=baseY-(i/4)*(baseY-20);
+    ctx.beginPath();ctx.moveTo(45,y);ctx.lineTo(370,y);ctx.stroke();
+    ctx.fillStyle='#9AA3B4';ctx.font='11px Pretendard Variable';ctx.textAlign='right';
+    ctx.fillText(Math.round(max*i/4)+'억',42,y+4);
+  }
+  // Bars
+  data.forEach((v,i)=>{
+    const x=startX+i*(barW+gap);
+    const h=(v/max)*(baseY-20);
+    const gradient=ctx.createLinearGradient(x,baseY-h,x,baseY);
+    gradient.addColorStop(0,'#0549CC');gradient.addColorStop(1,'#3A7ADF');
+    ctx.fillStyle=gradient;
+    ctx.beginPath();
+    ctx.roundRect(x,baseY-h,barW,h,4);
+    ctx.fill();
+    // Profit line point
+    const py=baseY-((c.profit*(1+i*0.15))/max)*(baseY-20);
+    if(i>0){
+      const px2=startX+(i-1)*(barW+gap)+barW/2;
+      const py2=baseY-((c.profit*(1+(i-1)*0.15))/max)*(baseY-20);
+      ctx.strokeStyle='#F59E0B';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(px2,py2);ctx.lineTo(x+barW/2,py);ctx.stroke();
+    }
+    ctx.fillStyle='#F59E0B';
+    ctx.beginPath();ctx.arc(x+barW/2,py,3.5,0,Math.PI*2);ctx.fill();
+    // Year label
+    ctx.fillStyle='#9AA3B4';ctx.font='11px Pretendard Variable';ctx.textAlign='center';
+    ctx.fillText(years[i],x+barW/2,baseY+14);
+  });
+  // Legend
+  ctx.fillStyle='#0549CC';ctx.fillRect(260,2,10,10);
+  ctx.fillStyle='#374151';ctx.font='11px Pretendard Variable';ctx.textAlign='left';
+  ctx.fillText('매출액',274,11);
+  ctx.fillStyle='#F59E0B';ctx.beginPath();ctx.arc(320,7,4,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#374151';ctx.fillText('영업이익',328,11);
+}
+
+function drawHeatmap(c){
+  const el=document.getElementById('panelHeatmap');
+  const years=['2021','2022','2023','2024','2025'];
+  const metrics=['매출액','영업이익','순이익','자산총계'];
+  const base=[c.revenue,c.profit,c.profit*0.7,c.revenue*2.5];
+  let html='<div style="font-size:11px;color:var(--text-muted)"></div>';
+  years.forEach(y=>html+=`<div style="font-size:11px;color:var(--text-muted);text-align:center">${y}</div>`);
+  metrics.forEach((m,mi)=>{
+    html+=`<div style="font-size:11px;color:var(--text-sub);padding:4px 6px">${m}</div>`;
+    years.forEach((y,yi)=>{
+      const val=Math.round(base[mi]*(0.8+yi*0.05)*(1+Math.random()*0.1));
+      const growth=yi>0?(val-Math.round(base[mi]*(0.8+(yi-1)*0.05)))/Math.abs(Math.round(base[mi]*(0.8+(yi-1)*0.05)))*100:0;
+      const bg=growth>5?'var(--emerald-50)':growth<-5?'var(--red-50)':'var(--slate-50)';
+      const color=growth>5?'var(--emerald-600)':growth<-5?'var(--red-600)':'var(--text)';
+      html+=`<div style="background:${bg};color:${color};text-align:center;padding:4px 2px;border-radius:4px;font-size:11px;font-weight:500;font-variant-numeric:tabular-nums">${val}</div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+
+// ══ ⌘K ══
+function openCmdK(){
+  document.getElementById('cmdkOverlay').classList.add('open');
+  document.getElementById('cmdkInput').value='';
+  document.getElementById('cmdkInput').focus();
+}
+function closeCmdK(){
+  document.getElementById('cmdkOverlay').classList.remove('open');
+}
+function filterCmdK(q){}
+
+// ══ BULK ══
+function updateBulk(){
+  const checked=document.querySelectorAll('#tableBody input[type=checkbox]:checked').length;
+  document.getElementById('bulkBar').classList.toggle('show',checked>0);
+  document.getElementById('bulkCount').textContent=checked;
+}
+function clearSelection(){
+  document.querySelectorAll('#tableBody input[type=checkbox]').forEach(cb=>cb.checked=false);
+  document.getElementById('bulkBar').classList.remove('show');
+}
+function toggleAllChecks(master){
+  document.querySelectorAll('#tableBody input[type=checkbox]').forEach(cb=>cb.checked=master.checked);
+  updateBulk();
+}
+
+// ══ CHIPS ══
+function toggleFilter(btn,label){
+  if(btn.classList.contains('has-value')){
+    btn.classList.remove('has-value');
+    btn.textContent=label.split(':')[0];
+  } else {
+    btn.classList.add('has-value');
+    btn.textContent=label;
+  }
+}
+function clearChips(){
+  document.querySelectorAll('.chip').forEach(c=>c.remove());
+  document.querySelectorAll('.filter-select').forEach(f=>f.classList.remove('has-value'));
+  updateCount();
+}
+function updateCount(){
+  const chips=document.querySelectorAll('.chip').length;
+  document.getElementById('result-count').textContent=chips===0?'1,043,287':'2,345';
+}
+
+// ══ KEYBOARD ══
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openCmdK();}
+  if(e.key==='Escape'){closeCmdK();closePanel();}
+});
+
+// ══ INIT ══
+renderTable();
+</script>
+</body>
+</html>
