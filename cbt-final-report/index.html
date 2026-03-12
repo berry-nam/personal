@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookieDeal CBT Final Report | D1~D11</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0" integrity="sha384-cVMg8E3QFwTvGCDuK+ET4PD341jF3W8nO1auiXfuZNQkzbUUiBGLsIQUE+b1mxws" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey@0.12.1"></script>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-card-hover: #F8F9FA;
+            --bg-header: linear-gradient(135deg, #0549CC 0%, #043AA3 100%);
+            --text-primary: #212529;
+            --text-secondary: #868E96;
+            --text-on-dark: #ffffff;
+            --text-accent: #0549CC;
+            --color-1: #0549CC;
+            --color-2: #DE3D82;
+            --color-3: #0FB5AE;
+            --color-4: #F68511;
+            --color-5: #DA4343;
+            --color-6: #6A93E1;
+            --color-7: #8B5CF6;
+            --positive: #3E9E53;
+            --negative: #DA4343;
+            --warning: #E8A43D;
+            --neutral: #868E96;
+            --border: #DEE2E6;
+            --gap: 16px;
+            --radius: 8px;
+            --radius-sm: 6px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F8F9FA;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        .dashboard-container { max-width:1440px; margin:0 auto; padding:var(--gap); }
+
+        /* Header */
+        .dashboard-header {
+            background: var(--bg-header);
+            padding: 28px 32px;
+            border-radius: var(--radius);
+            margin-bottom: var(--gap);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+        .dashboard-header h1 { font-size:22px; font-weight:700; color:var(--text-on-dark); z-index:1; }
+        .dashboard-header .subtitle { font-size:13px; color:rgba(255,255,255,0.75); margin-top:4px; z-index:1; }
+        .header-badge {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 12px;
+            color: var(--text-on-dark);
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 4px;
+            margin-bottom: var(--gap);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--color-1);
+            color: var(--text-on-dark);
+        }
+        .tab-btn:hover:not(.active) { color: var(--text-primary); background: var(--bg-card-hover); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* KPI Cards */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--gap);
+            margin-bottom: var(--gap);
+        }
+        .kpi-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card:hover { transform: translateY(-2px); border-color: #A5BDED; box-shadow: 0 4px 12px rgba(5,73,204,0.08); }
+        .kpi-card .kpi-icon {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        .kpi-label { font-size:12px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+        .kpi-value { font-size:28px; font-weight:800; margin-bottom:4px; }
+        .kpi-sub { font-size:12px; color:var(--text-secondary); }
+        .kpi-change { font-size:12px; font-weight:600; }
+        .kpi-change.positive { color:var(--positive); }
+        .kpi-change.negative { color:var(--negative); }
+        .kpi-change.warning { color:var(--warning); }
+        .kpi-target { font-size:11px; color:var(--text-secondary); margin-top:4px; }
+        .kpi-progress {
+            height:4px; background:#E9ECEF; border-radius:2px; margin-top:8px; overflow:hidden;
+        }
+        .kpi-progress-bar { height:100%; border-radius:2px; transition:width 0.6s ease; }
+
+        /* Chart Containers */
+        .chart-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: var(--gap);
+            margin-bottom: var(--gap);
+        }
+        .chart-row.single { grid-template-columns: 1fr; }
+        .chart-container {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .chart-container h3 {
+            font-size:14px; font-weight:700; color:var(--text-primary); margin-bottom:4px;
+        }
+        .chart-container .chart-desc { font-size:12px; color:var(--text-secondary); margin-bottom:16px; }
+        .chart-container canvas { max-height:300px; }
+        .chart-container.tall canvas { max-height:400px; }
+
+        /* Heatmap */
+        .heatmap-wrapper { overflow-x:auto; }
+        .heatmap-table { border-collapse:collapse; width:100%; font-size:12px; }
+        .heatmap-table th { padding:8px 6px; text-align:center; color:var(--text-secondary); font-weight:600; font-size:11px; white-space:nowrap; }
+        .heatmap-table td { padding:6px; text-align:center; border-radius:4px; min-width:50px; font-weight:600; font-size:11px; }
+        .heatmap-table .user-name { text-align:left; padding-left:12px; color:var(--text-primary); font-weight:500; min-width:80px; white-space:nowrap; }
+        .heat-0 { background:transparent; color:var(--text-secondary); }
+        .heat-1 { background:#EBF1FB; color:#0549CC; }
+        .heat-2 { background:#D8E2F7; color:#0549CC; }
+        .heat-3 { background:#A5BDED; color:#ffffff; }
+        .heat-4 { background:#6A93E1; color:#ffffff; }
+        .heat-5 { background:#0549CC; color:#ffffff; font-weight:700; }
+
+        /* Section Title */
+        .section-title {
+            font-size:16px; font-weight:700; color:var(--text-primary); margin:24px 0 12px 0;
+            display:flex; align-items:center; gap:8px;
+        }
+        .section-title .badge {
+            font-size:11px; background:var(--color-1); color:#fff; padding:2px 8px; border-radius:10px; font-weight:600;
+        }
+
+        /* Data Table */
+        .table-section {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            overflow-x: auto;
+            margin-bottom: var(--gap);
+        }
+        .data-table { width:100%; border-collapse:collapse; font-size:13px; }
+        .data-table thead th {
+            text-align:left; padding:10px 12px; border-bottom:2px solid #DEE2E6;
+            color:var(--text-secondary); font-weight:600; font-size:11px; text-transform:uppercase;
+            letter-spacing:0.5px; white-space:nowrap; cursor:pointer; user-select:none;
+        }
+        .data-table thead th:hover { color:var(--text-primary); }
+        .data-table tbody td { padding:10px 12px; border-bottom:1px solid var(--border); }
+        .data-table tbody tr:hover { background:var(--bg-card-hover); }
+        .data-table tbody tr:last-child td { border-bottom:none; }
+        .badge-segment {
+            display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600;
+        }
+        .badge-heavy { background:#EBF1FB; color:#0549CC; }
+        .badge-medium { background:rgba(15,181,174,0.12); color:#0FB5AE; }
+        .badge-light { background:rgba(246,133,17,0.12); color:#F68511; }
+        .badge-inactive { background:rgba(218,67,67,0.10); color:#DA4343; }
+        .inactive-row { opacity:0.7; }
+        .inactive-row:hover { opacity:1; }
+        .inactive-separator td { padding:12px 12px; font-size:11px; font-weight:700; color:var(--negative); text-transform:uppercase; letter-spacing:0.5px; border-bottom:2px solid rgba(218,67,67,0.2); background:rgba(218,67,67,0.03); }
+
+        /* Insight Cards */
+        .insight-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:var(--gap); margin-bottom:var(--gap); }
+        .insight-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--color-1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .insight-card.positive { border-left:4px solid var(--positive); }
+        .insight-card.warning { border-left:4px solid var(--warning); }
+        .insight-card.negative { border-left:4px solid var(--negative); }
+        .insight-card h4 { font-size:14px; font-weight:700; margin-bottom:8px; }
+        .insight-card p { font-size:13px; color:var(--text-secondary); line-height:1.6; }
+        .insight-card .metric { font-size:20px; font-weight:800; color:var(--text-accent); }
+
+        /* Go/No-Go Section */
+        .verdict-box {
+            background: linear-gradient(135deg, #F1FAF3, #EBF1FB);
+            border: 2px solid #3E9E53;
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            text-align: center;
+            margin: 24px 0;
+        }
+        .verdict-box h2 { font-size:24px; font-weight:800; color:var(--positive); margin-bottom:8px; }
+        .verdict-box p { font-size:14px; color:var(--text-secondary); }
+
+        /* Footer */
+        .dashboard-footer {
+            text-align:center; padding:20px; color:var(--text-secondary); font-size:12px;
+            border-top:1px solid var(--border); margin-top:24px;
+        }
+
+        /* Responsive — Tablet */
+        @media (max-width:768px) {
+            .dashboard-container { padding:8px; }
+            .dashboard-header { padding:20px 16px; }
+            .dashboard-header h1 { font-size:18px; }
+            .dashboard-header .subtitle { font-size:11px; }
+            .kpi-row { grid-template-columns:repeat(2,1fr); gap:8px; }
+            .kpi-card { padding:14px 16px; }
+            .kpi-value { font-size:22px; }
+            .chart-row { grid-template-columns:1fr; gap:8px; }
+            .chart-container { padding:16px; }
+            .tab-nav { flex-wrap:wrap; gap:2px; padding:3px; }
+            .tab-btn { padding:8px 6px; font-size:11px; }
+            .insight-row { grid-template-columns:1fr; }
+            .insight-card { padding:16px; }
+            .section-title { font-size:14px; }
+            .verdict-box { padding:20px 16px; }
+            .verdict-box h2 { font-size:20px; }
+            .funnel-label { min-width:80px; font-size:11px; }
+            .funnel-stats { min-width:60px; font-size:11px; }
+            .funnel-bar { height:32px; font-size:11px; padding:0 10px; }
+            .funnel-arrow { padding-left:96px; font-size:10px; }
+            .qa-user-card { padding:14px 16px; }
+            .qa-group-insight { font-size:12px; }
+        }
+        /* Responsive — Mobile */
+        @media (max-width:480px) {
+            .dashboard-container { padding:6px; }
+            .dashboard-header { padding:16px 12px; flex-direction:column; align-items:flex-start; }
+            .dashboard-header h1 { font-size:16px; }
+            .dashboard-header .subtitle { font-size:10px; }
+            .header-badge { font-size:10px; padding:4px 10px; }
+            .kpi-row { grid-template-columns:1fr; gap:6px; }
+            .kpi-card {
+                padding:10px 14px;
+                display:grid;
+                grid-template-columns:auto 1fr auto;
+                grid-template-rows:auto auto;
+                gap:0 10px;
+                align-items:center;
+            }
+            .kpi-card .kpi-icon { grid-row:1/3; margin-bottom:0; width:32px; height:32px; font-size:16px; }
+            .kpi-card .kpi-label { grid-column:2; font-size:11px; margin-bottom:0; }
+            .kpi-card .kpi-value { grid-column:3; grid-row:1/3; font-size:20px; text-align:right; margin-bottom:0; }
+            .kpi-card .kpi-sub { grid-column:2; font-size:10px; }
+            .kpi-card .kpi-change { display:none; }
+            .kpi-card .kpi-progress { grid-column:1/4; margin-top:6px; }
+            .kpi-card .kpi-target { grid-column:1/4; font-size:10px; }
+            .kpi-label { font-size:11px; }
+            .kpi-sub { font-size:11px; }
+            .tab-nav { gap:2px; padding:2px; }
+            .tab-btn { padding:7px 4px; font-size:10px; min-width:0; }
+            .chart-container { padding:12px; }
+            .chart-container h3 { font-size:13px; }
+            .chart-container canvas { max-height:220px; }
+            .chart-container.tall canvas { max-height:280px; }
+            .section-title { font-size:13px; margin:16px 0 8px 0; }
+            .section-title .badge { font-size:10px; padding:2px 6px; }
+            .data-table { font-size:11px; }
+            .data-table thead th { padding:8px 6px; font-size:10px; }
+            .data-table tbody td { padding:8px 6px; }
+            .insight-card { padding:14px; }
+            .insight-card h4 { font-size:13px; }
+            .insight-card p { font-size:12px; }
+            .verdict-box { padding:16px 12px; }
+            .verdict-box h2 { font-size:18px; }
+            .verdict-box p { font-size:12px; }
+            .funnel-step { gap:8px; padding:8px 0; }
+            .funnel-label { min-width:60px; font-size:10px; }
+            .funnel-stats { min-width:auto; font-size:10px; }
+            .funnel-bar { height:28px; font-size:10px; padding:0 8px; }
+            .funnel-arrow { padding-left:68px; font-size:9px; }
+            .qa-group-header { font-size:12px; padding:8px 12px; }
+            .qa-user-card { padding:12px; }
+            .qa-user-name { font-size:13px; }
+            .qa-user-meta { font-size:11px; }
+            .qa-item { font-size:12px; }
+            .qa-label { padding:6px 8px; min-width:28px; font-size:10px; }
+            .qa-text { padding:6px 10px; font-size:12px; }
+            .qa-intent-badge { font-size:9px; padding:1px 4px; }
+            .qa-quality-badge { font-size:9px; padding:1px 4px; }
+            .qa-summary { font-size:11px; padding:8px 10px; }
+            .qa-group-insight { font-size:11px; padding:10px 12px; }
+            .heatmap-table th { font-size:9px; padding:6px 3px; }
+            .heatmap-table td { font-size:9px; padding:4px 3px; min-width:36px; }
+            .heatmap-table .user-name { font-size:10px; min-width:60px; padding-left:6px; }
+        }
+        @media print {
+            body { background:#fff; color:#111; }
+            .tab-nav { display:none; }
+            .tab-content { display:block !important; }
+            .kpi-card, .chart-container, .table-section { border:1px solid #ddd; box-shadow:none; background:#fff; }
+        }
+
+        /* Funnel */
+        .funnel-container { display:flex; flex-direction:column; gap:0; padding:16px 0; }
+        .funnel-step {
+            display:flex; align-items:center; gap:16px; padding:14px 0;
+        }
+        .funnel-bar-wrapper { flex:1; position:relative; }
+        .funnel-bar {
+            height:40px; border-radius:6px; display:flex; align-items:center; padding:0 16px;
+            font-size:13px; font-weight:700; color:#fff; transition:width 0.6s ease;
+        }
+        .funnel-label { min-width:120px; font-size:13px; font-weight:600; color:var(--text-primary); }
+        .funnel-stats { min-width:100px; text-align:right; font-size:12px; color:var(--text-secondary); }
+        .funnel-arrow { text-align:center; color:var(--text-secondary); font-size:11px; padding-left:136px; }
+
+        /* Survey score highlight */
+        .score-bar { display:inline-block; height:8px; border-radius:4px; margin-right:8px; vertical-align:middle; }
+        .survey-quote { font-style:italic; color:var(--text-secondary); font-size:12px; padding:8px 12px; border-left:3px solid var(--color-1); margin:8px 0; }
+
+        /* Survey Query Analysis */
+        .qa-group { margin-bottom:24px; }
+        .qa-group-header {
+            display:flex; align-items:center; gap:10px; margin-bottom:12px;
+            padding:10px 16px; border-radius:var(--radius); font-weight:700; font-size:14px;
+        }
+        .qa-group-header.score-high { background:rgba(5,73,204,0.08); color:#0549CC; border:1px solid rgba(5,73,204,0.2); }
+        .qa-group-header.score-mid { background:rgba(134,142,150,0.08); color:#555; border:1px solid rgba(134,142,150,0.2); }
+        .qa-group-header.score-low { background:rgba(218,67,67,0.08); color:#DA4343; border:1px solid rgba(218,67,67,0.2); }
+        .qa-user-card {
+            background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);
+            padding:20px 24px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);
+        }
+        .qa-user-header {
+            display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:14px;
+            padding-bottom:12px; border-bottom:1px solid var(--border);
+        }
+        .qa-user-name { font-size:15px; font-weight:700; }
+        .qa-user-meta { display:flex; gap:12px; font-size:12px; color:var(--text-secondary); }
+        .qa-user-meta span { display:flex; align-items:center; gap:4px; }
+        .qa-score-badge {
+            display:inline-flex; align-items:center; gap:4px; padding:3px 10px;
+            border-radius:12px; font-size:12px; font-weight:700;
+        }
+        .qa-score-5 { background:rgba(5,73,204,0.12); color:#0549CC; }
+        .qa-score-3 { background:rgba(134,142,150,0.12); color:#555; }
+        .qa-score-2 { background:rgba(218,67,67,0.1); color:#DA4343; }
+        .qa-score-1 { background:rgba(218,67,67,0.15); color:#DA4343; }
+        .qa-item {
+            display:grid; grid-template-columns:auto 1fr; gap:0; margin-bottom:10px;
+            font-size:13px; line-height:1.6; border:1px solid #F1F3F5; border-radius:6px; overflow:hidden;
+        }
+        .qa-label {
+            padding:8px 12px; font-weight:600; font-size:11px; text-transform:uppercase;
+            letter-spacing:0.5px; min-width:36px; display:flex; align-items:flex-start; justify-content:center;
+        }
+        .qa-label.q-label { background:#EBF1FB; color:var(--color-1); }
+        .qa-label.a-label { background:#F8F9FA; color:var(--text-secondary); }
+        .qa-text { padding:8px 12px; }
+        .qa-text.q-text { background:#FAFBFD; color:var(--text-primary); font-weight:500; }
+        .qa-text.a-text { background:#fff; color:var(--text-secondary); }
+        .qa-intent-badge {
+            display:inline-block; padding:1px 6px; border-radius:3px; font-size:10px;
+            font-weight:600; margin-left:6px; vertical-align:middle;
+        }
+        .qa-intent-person_search { background:rgba(5,73,204,0.1); color:#0549CC; }
+        .qa-intent-company_info { background:rgba(15,181,174,0.1); color:#0FB5AE; }
+        .qa-intent-card_list { background:rgba(139,92,246,0.1); color:#8B5CF6; }
+        .qa-intent-card_statistics { background:rgba(246,133,17,0.1); color:#F68511; }
+        .qa-intent-service_guide { background:rgba(134,142,150,0.1); color:#868E96; }
+        .qa-intent-lounge_post { background:rgba(222,61,130,0.1); color:#DE3D82; }
+        .qa-intent-out_of_scope { background:rgba(218,67,67,0.1); color:#DA4343; }
+        .qa-quality-badge {
+            display:inline-block; padding:1px 6px; border-radius:3px; font-size:10px;
+            font-weight:600; margin-left:4px;
+        }
+        .qa-quality-good { background:rgba(5,73,204,0.1); color:#0549CC; }
+        .qa-quality-ok { background:rgba(134,142,150,0.1); color:#868E96; }
+        .qa-quality-poor { background:rgba(218,67,67,0.1); color:#DA4343; }
+        .qa-summary {
+            margin-top:12px; padding:10px 14px; background:#F8F9FA; border-radius:6px;
+            font-size:12px; color:var(--text-secondary); line-height:1.6;
+            border-left:3px solid var(--color-1);
+        }
+        .qa-summary strong { color:var(--text-primary); }
+        .qa-group-insight {
+            margin:8px 0 20px 0; padding:12px 16px; border-radius:6px;
+            font-size:13px; line-height:1.6;
+        }
+        .qa-group-insight.score-high { background:rgba(5,73,204,0.05); border:1px solid rgba(5,73,204,0.15); color:#0549CC; }
+        .qa-group-insight.score-mid { background:rgba(134,142,150,0.05); border:1px solid rgba(134,142,150,0.15); color:#555; }
+        .qa-group-insight.score-low { background:rgba(218,67,67,0.05); border:1px solid rgba(218,67,67,0.15); color:#B83030; }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- HEADER -->
+    <header class="dashboard-header">
+        <div>
+            <h1>CookieDeal CBT Final Report</h1>
+            <div class="subtitle">D1~D11 (2026.02.25 ~ 2026.03.07) | AI 명함 관리 서비스 비공개 베타 테스트</div>
+        </div>
+        <span class="header-badge">FINAL REPORT v2</span>
+    </header>
+
+    <!-- TAB NAVIGATION -->
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('executive')">Executive Summary</button>
+        <button class="tab-btn" onclick="switchTab('engagement')">사용자 Engagement</button>
+        <button class="tab-btn" onclick="switchTab('funnel')">퍼널 & 리텐션</button>
+        <button class="tab-btn" onclick="switchTab('ai')">AI 기능 분석</button>
+        <button class="tab-btn" onclick="switchTab('survey')">설문조사</button>
+        <button class="tab-btn" onclick="switchTab('recommendation')">Go/No-Go</button>
+    </div>
+
+    <!-- TAB 1: EXECUTIVE SUMMARY -->
+    <div id="tab-executive" class="tab-content active">
+        <div class="kpi-row" id="kpi-summary"></div>
+        <div class="chart-row">
+            <div class="chart-container">
+                <h3>일별 가입자 & AI 사용자 추이</h3>
+                <div class="chart-desc">신규 가입(bar) vs AI 질의 사용자(line) 비교</div>
+                <canvas id="chart-daily-overview"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>CBT 참여자 일별 활동 추이</h3>
+                <div class="chart-desc">CBT 수락자 28명 중 당일 활동 사용자 vs AI 질의 수</div>
+                <canvas id="chart-dau"></canvas>
+            </div>
+        </div>
+        <div class="section-title">Key Insights <span class="badge">TOP 3</span></div>
+        <div class="insight-row" id="key-insights"></div>
+    </div>
+
+    <!-- TAB 2: ENGAGEMENT -->
+    <div id="tab-engagement" class="tab-content">
+        <div class="section-title">사용자 활동 히트맵 <span class="badge">16 Users x 11 Days</span></div>
+        <div class="chart-container" style="overflow-x:auto;">
+            <div class="heatmap-wrapper" id="heatmap-container"></div>
+        </div>
+        <div class="chart-row" style="margin-top:var(--gap);">
+            <div class="chart-container">
+                <h3>사용자 세그먼트 분포</h3>
+                <div class="chart-desc">Heavy (3일+) / Medium (2일) / Light (1일)</div>
+                <canvas id="chart-segments"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>일별 AI 질의 수 추이</h3>
+                <div class="chart-desc">외부 사용자 AI 질의 총 건수 (총 89건)</div>
+                <canvas id="chart-daily-queries"></canvas>
+            </div>
+        </div>
+        <div class="section-title">사용자별 상세 활동</div>
+        <div class="table-section" id="user-detail-table"></div>
+    </div>
+
+    <!-- TAB 3: FUNNEL & RETENTION -->
+    <div id="tab-funnel" class="tab-content">
+        <div class="chart-row">
+            <div class="chart-container">
+                <h3>CBT 핵심 퍼널 (Sankey)</h3>
+                <div class="chart-desc">수락 → 온보딩 완료 → 명함 업로드 / AI 사용 (병렬 경로)</div>
+                <div style="height:340px"><canvas id="chart-sankey"></canvas></div>
+            </div>
+            <div class="chart-container">
+                <h3>퍼널 단계별 전환율</h3>
+                <div class="chart-desc">각 단계별 전환율 (%) — 바 차트</div>
+                <canvas id="chart-funnel-bars"></canvas>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-container">
+                <h3>일별 가입자 수 & 누적</h3>
+                <div class="chart-desc">일별 신규 가입 + 누적 가입자 추이</div>
+                <canvas id="chart-signups"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>명함 업로드 분석</h3>
+                <div class="chart-desc">사용자별 업로드 카드 수</div>
+                <canvas id="chart-uploads"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: AI ANALYSIS -->
+    <div id="tab-ai" class="tab-content">
+        <div style="background:#FCF0F0;border:1px solid #DA4343;border-radius:var(--radius);padding:16px 20px;margin-bottom:var(--gap);display:flex;align-items:flex-start;gap:12px">
+            <span style="font-size:20px">⚠️</span>
+            <div>
+                <div style="font-weight:700;color:#DA4343;margin-bottom:4px">답변 퀄리티 보장 안됨 — AI 응답 정확도 주의</div>
+                <div style="font-size:13px;color:#495057">설문 AI 정확도 평가 <strong>3.00/5점</strong> (8명 응답 중 최저 항목). person_search(39%)가 킬러 유즈케이스로 확인되었으나, 실제 AI 답변의 정확도·품질은 사용자 기대에 미달. 회사명/브랜드명 불일치, 비상장 기업 정보 부재 등 구조적 한계 존재. 아래 데이터는 <strong>사용 행태(quantity)</strong>를 보여줄 뿐, <strong>답변 품질(quality)</strong>을 보장하지 않음.</div>
+            </div>
+        </div>
+        <div class="section-title">AgentQueryLog 전수 분석 <span class="badge">230건</span></div>
+        <div class="kpi-row" id="agent-log-summary"></div>
+        <div class="chart-row">
+            <div class="chart-container">
+                <h3>일별 내부/외부 질의 비교</h3>
+                <div class="chart-desc">AgentQueryLog 230건 — 내부(개발팀) vs 외부(CBT 참여자)</div>
+                <canvas id="chart-int-ext"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>AI 질의 Intent 분포 (외부)</h3>
+                <div class="chart-desc">외부 사용자 89건 질의의 의도 유형 분포</div>
+                <canvas id="chart-intents"></canvas>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-container">
+                <h3>일별 Intent 변화 추이 (외부)</h3>
+                <div class="chart-desc">시간에 따른 사용자 의도 패턴 변화</div>
+                <canvas id="chart-intent-stack"></canvas>
+            </div>
+        </div>
+        <div class="section-title">KPI 달성 현황 <span class="badge">5 KPIs</span></div>
+        <div class="kpi-row" id="kpi-targets"></div>
+        <div class="chart-row single" style="margin-top:var(--gap);">
+            <div class="chart-container">
+                <h3>KPI 목표 vs 실적</h3>
+                <div class="chart-desc">각 KPI의 목표 대비 달성률</div>
+                <canvas id="chart-kpi-radar"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 5: SURVEY -->
+    <div id="tab-survey" class="tab-content">
+        <div class="section-title">CBT 설문조사 결과 <span class="badge">9명 응답</span></div>
+        <div class="kpi-row" id="survey-kpi"></div>
+        <div class="chart-row">
+            <div class="chart-container">
+                <h3>항목별 평균 점수</h3>
+                <div class="chart-desc">5점 만점 기준 평균 (9명 응답)</div>
+                <canvas id="chart-survey-radar"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>응답자별 세부 점수</h3>
+                <div class="chart-desc">각 응답자의 항목별 점수 비교</div>
+                <canvas id="chart-survey-bars"></canvas>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-container">
+                <h3>AI 시간절약 & 재사용 의향</h3>
+                <div class="chart-desc">Yes/No 응답 비율</div>
+                <canvas id="chart-survey-yesno"></canvas>
+            </div>
+        </div>
+        <div class="section-title">설문 응답 상세</div>
+        <div class="table-section" id="survey-detail-table"></div>
+        <div class="section-title">정성 피드백 하이라이트</div>
+        <div class="insight-row" id="survey-qualitative"></div>
+        <div class="section-title">설문 응답자별 AI 질의-응답 분석 <span class="badge">7명</span></div>
+        <div id="survey-query-analysis"></div>
+    </div>
+
+    <!-- TAB 6: GO/NO-GO -->
+    <div id="tab-recommendation" class="tab-content">
+        <div class="verdict-box">
+            <h2>CONDITIONAL GO</h2>
+            <p>서비스 수요와 사용 의지는 확인되었으나, AI 답변 품질(3.00/5)이 핵심 리스크. AI 정확도 개선 + 온보딩 퍼널 최적화 후 Open Beta 진행 권고.</p>
+        </div>
+        <div class="section-title">Go 근거 — 서비스 수요는 확인됨</div>
+        <div class="insight-row" id="strengths"></div>
+        <div class="section-title">Conditional 근거 — AI 품질이 핵심 리스크</div>
+        <div class="insight-row" id="improvements"></div>
+        <div class="section-title">Open Beta 필수 조건</div>
+        <div class="insight-row" id="conditions"></div>
+    </div>
+
+    <footer class="dashboard-footer">
+        CookieDeal CBT Final Report v2 | Data as of: 2026-03-07 (D11) | Sources: Notion (CBT 진행 인원 DB) + MongoDB (AgentQueryLog 230건) + Amplitude + 설문 (9명)
+    </footer>
+</div>
+
+<script>
+// ============================================================
+// EMBEDDED DATA — Updated to D11 (2026-03-07)
+// ============================================================
+const DAYS = ['D1\n2/25','D2\n2/26','D3\n2/27','D4\n2/28','D5\n3/1','D6\n3/2','D7\n3/3','D8\n3/4','D9\n3/5','D10\n3/6','D11\n3/7'];
+const DAYS_SHORT = ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11'];
+const DATES = ['2/25(수)','2/26(목)','2/27(금)','2/28(토)','3/1(일)','3/2(월)','3/3(화)','3/4(수)','3/5(목)','3/6(금)','3/7(토)'];
+
+// CBT 참여자 (Notion "CBT 진행 인원" DB, CBT 링크 수락=YES: 28명)
+const SIGNUPS_DAILY = [12, 6, 4, 1, 1, 0, 2, 1, 1, 0, 0];
+const SIGNUPS_CUMULATIVE = [12, 18, 22, 23, 24, 24, 26, 27, 28, 28, 28];
+
+// Daily AI users (external, from AgentQueryLog)
+const AI_USERS_DAILY = [6, 9, 4, 1, 0, 1, 1, 2, 2, 3, 1];
+
+// Daily AI queries (external only)
+const AI_QUERIES_DAILY = [28, 25, 8, 1, 4, 0, 3, 2, 9, 6, 3];
+
+// Daily AI queries — internal
+const AI_QUERIES_INTERNAL = [52, 14, 6, 4, 0, 28, 3, 7, 0, 0, 0];
+
+// CBT 참여자 일별 활동 (CBT 수락자 28명 중 당일 활동 사용자 수 — 가입+AI 합산 유니크)
+const CBT_ACTIVE_DAILY = [12, 9, 4, 1, 1, 1, 2, 2, 2, 3, 1];
+
+// Intent distribution (external only, total 89)
+const INTENTS = {
+    'person_search': 35,
+    'lounge_post': 15,
+    'card_list': 11,
+    'company_info': 9,
+    'service_guide': 8,
+    'out_of_scope': 6,
+    'card_statistics': 5
+};
+
+// Intent by day (external only, from MongoDB aggregation)
+const INTENT_BY_DAY = {
+    person_search:  [7, 9, 2, 0, 4, 0, 1, 0, 7, 4, 1],
+    lounge_post:    [1, 7, 3, 0, 0, 0, 2, 1, 0, 1, 0],
+    card_list:      [4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0],
+    company_info:   [3, 1, 0, 1, 0, 0, 0, 1, 0, 1, 2],
+    service_guide:  [6, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    out_of_scope:   [3, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    card_statistics:[4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+};
+
+// User activity heatmap: D11 column added
+const USERS = [
+    {name:'서지은', queries:[8,1,0,0,0,0,0,0,0,0,0], segment:'Medium', total:9, days:2, company:'Persona.ly', linkedin:'https://www.linkedin.com/in/rachel-seo-199a74127/'},
+    {name:'홍성빈', queries:[5,0,0,0,0,0,0,0,0,0,0], segment:'Light', total:5, days:1, company:'초', linkedin:'https://www.linkedin.com/in/%EC%84%B1%EB%B9%88-%ED%99%8D-8b5a3312b/'},
+    {name:'이재용', queries:[3,4,1,0,0,0,3,0,0,0,0], segment:'Heavy', total:11, days:4, company:'리뉴어스랩', linkedin:'https://www.linkedin.com/in/climeet-up/'},
+    {name:'양준철', queries:[3,0,0,0,0,0,0,0,0,0,0], segment:'Light', total:3, days:1, company:'온오프믹스', linkedin:'https://www.linkedin.com/in/promise4u/'},
+    {name:'최규민', queries:[2,0,0,0,0,0,0,0,0,1,0], segment:'Medium', total:3, days:2, company:'Snowflake', linkedin:'https://www.linkedin.com/in/gyuminchoi/'},
+    {name:'임채이', queries:[2,3,0,0,0,0,0,1,0,0,0], segment:'Heavy', total:6, days:3, company:'Finger inc', linkedin:'https://www.linkedin.com/in/chaei-im-48367b219/'},
+    {name:'김현태', queries:[0,8,3,0,0,0,0,0,0,0,0], segment:'Medium', total:11, days:2, company:'월드클래스부동산', linkedin:'https://www.linkedin.com/in/impactsnu/'},
+    {name:'최은수', queries:[0,4,0,0,0,0,0,0,0,0,0], segment:'Light', total:4, days:1, company:'서치라이트', linkedin:'https://www.linkedin.com/in/chance84/'},
+    {name:'윤성용', queries:[0,3,2,0,0,0,0,0,0,0,0], segment:'Medium', total:5, days:2, company:'강남 디벨롭퍼스', linkedin:'https://www.linkedin.com/in/ACoAACulhZcBcDUg0bc-qSyZ9WGmRnh3vygk0vQ'},
+    {name:'최유정', queries:[0,2,0,0,0,0,0,0,0,0,0], segment:'Light', total:2, days:1, company:'ZUZU(코드박스)', linkedin:'https://www.linkedin.com/in/yj1003/'},
+    {name:'이주형', queries:[0,2,0,0,0,0,0,0,0,1,0], segment:'Medium', total:3, days:2, company:'트래블월렛', linkedin:'https://www.linkedin.com/in/joo-hyung-lee-1827806a/'},
+    {name:'김범석', queries:[0,2,3,0,0,0,0,0,0,0,0], segment:'Medium', total:5, days:2, company:'빅거츠', linkedin:'https://www.linkedin.com/in/bumsuk-kim-a55a14225/'},
+    {name:'이요한', queries:[0,0,0,0,0,4,0,0,0,0,0], segment:'Light', total:4, days:1, company:'SIDE X SIDE', linkedin:'https://www.linkedin.com/in/yohan-lee/'},
+    {name:'지재원', queries:[0,0,0,0,0,0,0,1,0,0,0], segment:'Light', total:1, days:1, company:'데이터독', linkedin:'https://www.linkedin.com/in/jaewon-chi-b1217626b/'},
+    {name:'김은지', queries:[0,0,0,0,0,0,0,0,6,0,3], segment:'Medium', total:9, days:2, company:'젠스타메이트', linkedin:''},
+    {name:'이민용', queries:[0,0,0,0,0,0,0,0,3,0,0], segment:'Light', total:3, days:1, company:'스위스 연방 교육연구혁신청', linkedin:'https://www.linkedin.com/in/leeminyong/'},
+];
+
+// CBT 링크 수락했으나 AI 미사용 (12명)
+const INACTIVE_USERS = [
+    {name:'김선우', company:'Digital Turbine', position:'퍼블리셔 영업 이사', onboarding:true, linkedin:'https://www.linkedin.com/in/davidseonwookim/'},
+    {name:'송기범', company:'크리앤비(비트플래닛)', position:'CFO', onboarding:true, linkedin:'https://www.linkedin.com/in/leo-kibeom-soung-096967119/'},
+    {name:'장민환', company:'KB 금융지주', position:'차장', onboarding:true, linkedin:'https://www.linkedin.com/in/%EB%AF%BC%ED%99%98-%EC%9E%A5-8b9b00295/'},
+    {name:'임민경', company:'-', position:'-', onboarding:true, linkedin:'https://www.linkedin.com/in/minkyeong-madeline-lim-49196a180/'},
+    {name:'백남정', company:'한국열린사이버대학교', position:'객원교수', onboarding:true, linkedin:'https://www.linkedin.com/in/teamor/'},
+    {name:'김수영', company:'위드포인츠', position:'Director', onboarding:false, linkedin:'https://www.linkedin.com/in/soo-young-kim-b19851149/'},
+    {name:'이다운', company:'코리아스타트업허브', position:'대표이사', onboarding:false, linkedin:'https://www.linkedin.com/in/dawoon2023/'},
+    {name:'김환', company:'올리브영', position:'CTO', onboarding:false, linkedin:'https://www.linkedin.com/in/hwank/'},
+    {name:'장성훈', company:'포웰파트너스', position:'대표이사', onboarding:false, linkedin:''},
+    {name:'조홍근', company:'키움프라이빗에쿼티', position:'PE운용역', onboarding:false, linkedin:''},
+    {name:'오경석', company:'엔라이튼', position:'재무기획', onboarding:false, linkedin:''},
+    {name:'정진호', company:'SKS프라이빗에쿼티', position:'PE운용역', onboarding:false, linkedin:''},
+];
+
+// Card upload data
+const UPLOADS = [
+    {name:'윤성용', cards:9752},
+    {name:'서지은', cards:7027},
+    {name:'양준철', cards:7266},
+    {name:'이요한', cards:7818},
+    {name:'이주형', cards:5151},
+    {name:'홍성빈', cards:4958},
+    {name:'김현태', cards:2942},
+    {name:'김범석', cards:2463},
+    {name:'김은지', cards:2014},
+    {name:'최유정', cards:1583},
+    {name:'이민용', cards:1438},
+    {name:'임채이', cards:1415},
+    {name:'최은수', cards:1278},
+    {name:'이재용', cards:1015},
+    {name:'최규민', cards:316},
+];
+
+// Funnel data (CBT 28명 기준)
+const FUNNEL = [
+    {step:'CBT 링크 수락', count:28, rate:100},
+    {step:'온보딩 완료', count:19, rate:67.9},
+    {step:'명함 업로드', count:13, rate:46.4, from:1},
+    {step:'AI 기능 사용', count:16, rate:57.1, from:1},
+];
+
+// KPI targets & actuals (updated: 89 queries / 16 users = 5.6)
+const KPIS = [
+    {id:'kpi1', label:'온보딩 완료율', desc:'CBT 기획서 목표: ≥90%', target:90, actual:67.9, unit:'%', icon:'🔄'},
+    {id:'kpi2', label:'명함 업로드 완료율', desc:'CBT 기획서 목표: ≥80%', target:80, actual:46.4, unit:'%', icon:'📊'},
+    {id:'kpi3', label:'AI 3회+ 사용률', desc:'CBT 기획서 목표: ≥70%', target:70, actual:87.5, unit:'%', icon:'🤖'},
+    {id:'kpi4', label:'기능 만족도', desc:'CBT 기획서 목표: ≥3.5/5 (=7/10)', target:3.5, actual:3.33, unit:'점', icon:'⭐'},
+    {id:'kpi5', label:'시간 절약 동의율', desc:'CBT 기획서 목표: ≥70%', target:70, actual:50.0, unit:'%', icon:'⏱️'},
+    {id:'kpi6', label:'AI 정확도', desc:'CBT 기획서 목표: ≥3.5/5 (=7/10)', target:3.5, actual:2.89, unit:'점', icon:'🎯'},
+];
+
+// AgentQueryLog summary
+const AGENT_LOG = {
+    total: 230,
+    external: 89,
+    internal: 141,
+    period: '2026-02-23 ~ 2026-03-07',
+    internalUsers: ['남승오', '정홍준', '신승민', '류고은', '심정훈', '이기범', '이우진']
+};
+
+// Survey data (9 respondents)
+const SURVEY = [
+    {name:'최규민', date:'3/6', satisfaction:3, useful:2, aiAccuracy:1, aiTimeSave:'아니오', companyInfo:1, recommend:1, reuse:'아니오', interview:'예'},
+    {name:'윤성용', date:'3/6', satisfaction:5, useful:5, aiAccuracy:5, aiTimeSave:'예', companyInfo:5, recommend:5, reuse:'예', interview:'예'},
+    {name:'이주형', date:'3/6', satisfaction:3, useful:2, aiAccuracy:2, aiTimeSave:'아니오', companyInfo:3, recommend:3, reuse:'예', interview:'예'},
+    {name:'임채이', date:'3/6', satisfaction:4, useful:5, aiAccuracy:3, aiTimeSave:'예', companyInfo:5, recommend:5, reuse:'예', interview:'예'},
+    {name:'김은지', date:'3/7', satisfaction:3, useful:4, aiAccuracy:3, aiTimeSave:'예', companyInfo:3, recommend:4, reuse:'예', interview:'예'},
+    {name:'최유정', date:'3/7', satisfaction:4, useful:4, aiAccuracy:2, aiTimeSave:'이용안함', companyInfo:3, recommend:4, reuse:'예', interview:'예'},
+    {name:'이재용', date:'3/8', satisfaction:3, useful:3, aiAccuracy:5, aiTimeSave:'예', companyInfo:5, recommend:3, reuse:'예', interview:'예'},
+    {name:'이민용', date:'3/8', satisfaction:3, useful:3, aiAccuracy:2, aiTimeSave:'아니오', companyInfo:2, recommend:3, reuse:'아니오', interview:'아니오'},
+    {name:'김범석', date:'3/9', satisfaction:2, useful:2, aiAccuracy:3, aiTimeSave:'아니오', companyInfo:4, recommend:2, reuse:'아니오', interview:'아니오'},
+];
+
+const SURVEY_AVG = {
+    satisfaction: 3.33,
+    useful: 3.33,
+    aiAccuracy: 2.89,
+    companyInfo: 3.44,
+    recommend: 3.33,
+};
+
+const SURVEY_QUERY_ANALYSIS = [
+    {
+        name: '윤성용', aiScore: 5, queryCount: 5, company: '강남 디벨롭퍼스',
+        queries: [
+            {query:'삼성전자 임원급 연결 가능한 분 찾아줘', answer:'삼성전자 Executive 명함 3건 반환 — 박경원(Principal Professional), 박구룡(그룹장), 장형택(상무)', intent:'card_list', quality:'good'},
+            {query:'강남디벨로퍼스는 뭐하는 회사야?', answer:'"기타 업종의 회사입니다. 사업 모델 관련 정보가 부족하여 자세한 설명이 어렵습니다" — 자사 정보도 못 줌', intent:'company_info', quality:'poor'},
+            {query:'변리사 인맥을 알려줘', answer:'13건 매칭 (topScore 81.76) — 다양한 회사의 변리사 목록 제공', intent:'person_search', quality:'good'},
+            {query:'부산 스타트업에 프리팁스 연계 투자를 도와 줄 수 있는 인맥을 알려줘', answer:'10건 매칭 (topScore 91.6) — 투자/엑셀러레이터 분야 인사 제공', intent:'person_search', quality:'good'},
+        ],
+        summary: 'person_search 3건 전부 성공(3~13건, topScore 81~91). 9,752장 대규모 명함첩으로 풍부한 검색풀 보유. company_info에서 자사(강남디벨로퍼스) "정보 부족"으로 응답 실패했으나, 핵심 사용 목적인 인맥 검색 만족이 5점의 결정적 이유.'
+    },
+    {
+        name: '이재용', aiScore: 5, queryCount: 11, company: '리뉴어스랩',
+        queries: [
+            {query:'자동차 부품회사 몇개나 있어?', answer:'"총 0건 있어요!" — 제조업 304건인데 부품회사 0건 (카테고리 매칭 실패)', intent:'card_statistics', quality:'poor'},
+            {query:'제조업 몇개있어?', answer:'제조업 명함 총 304건', intent:'card_statistics', quality:'good'},
+            {query:'현대자동차 임원 찾아줘', answer:'"해당하는 명함이 없어요" → 라운지 등록 제안', intent:'card_list', quality:'poor'},
+            {query:'삼성전자 임원급 연결 가능한 분 찾아줘', answer:'"해당하는 명함이 없어요" → 라운지 등록 제안', intent:'card_list', quality:'poor'},
+            {query:'변호사 인맥 찾아줘', answer:'6건 매칭 (topScore 79.23) — 법률사무소/법무법인 변호사 목록', intent:'person_search', quality:'good'},
+            {query:'자동차 부품 관련 인맥 찾아줘', answer:'14건 매칭 (topScore 86.05) — 자동차 부품 기술/연구 분야 전문가', intent:'person_search', quality:'good'},
+            {query:'제조업 종사 인맥 찾아줘', answer:'총 295건 중 10건 표시 — HL Mando, 네오오토 등', intent:'card_list', quality:'good'},
+            {query:'현대자동차 인맥 확인해줘', answer:'2명만 발견 (topScore 80) → "더 적합한 분이 있을 수 있어요" → 라운지 등록 제안', intent:'person_search', quality:'poor'},
+        ],
+        summary: '11건 중 양호 4건, 미흡 4건(card_list 전멸: 현대차/삼성/지주사 명함 없음). 그럼에도 5점인 이유: person_search에서 제조업 295건, 자동차부품 14건 등 핵심 업무 인맥 확보에 성공. 라운지 전환도 긍정적으로 수용. 11건이라는 높은 사용빈도 자체가 서비스 수요 반증.'
+    },
+    {
+        name: '임채이', aiScore: 3, queryCount: 6, company: 'Finger inc',
+        queries: [
+            {query:'쿠키딜은 어떤 서비스야? (2회 반복)', answer:'서비스 소개 텍스트 제공 — AI 핵심 기능 체험 아닌 안내 수준', intent:'service_guide', quality:'poor'},
+            {query:'메가존헬스케어에 대해 알려줘', answer:'매출 1억, 영업이익 -3억(2023), 대표 서민택, 소기업 — 구체적 재무 정보 제공', intent:'company_info', quality:'good'},
+            {query:'라운지는 어떤 서비스고 어디에서 데이터를 끌어와?', answer:'라운지 설명 + 데이터 소스(명함/인맥) 안내 — 서비스 설명 반복', intent:'service_guide', quality:'poor'},
+            {query:'라운지에서 사람 찾기', answer:'"어떤 정보를 찾으시는지 선택해 주세요" — 의도 해석 실패, 선택지만 던짐', intent:'service_guide', quality:'poor'},
+        ],
+        summary: '6건 중 3건이 service_guide — AI 핵심 기능(person_search) 미사용. company_info에서 메가존헬스케어 재무 제공이 유일한 실질 결과. "라운지에서 사람 찾기" 질의에 선택지만 던지며 의도 해석 실패. 서비스 탐색 단계에서 벗어나지 못한 패턴 → 3점.'
+    },
+    {
+        name: '김은지', aiScore: 3, queryCount: 11, company: '젠스타메이트',
+        queries: [
+            {query:'브랜드명과 회사명이 다른경우가 있어 못찾을때가 있거든', answer:'out_of_scope — "직접 답변드리기는 어렵지만" — 유효한 사용자 피드백을 처리 불가', intent:'out_of_scope', quality:'poor'},
+            {query:'명함첩에서 인맥 찾기', answer:'"272장 중 0장 분석 완료 (0%) — 약 18분 후 재시도" — 기술 문제로 즉시 사용 불가', intent:'person_search', quality:'poor'},
+            {query:'점포개발담당자 찾아줘', answer:'10건 매칭 (topScore 94.92) — 점포개발팀 소속 담당자 목록', intent:'person_search', quality:'good'},
+            {query:'브랜드 담당자 찾아줘', answer:'10건 매칭 (topScore 95.15) — 브랜드 기획/관리 분야 전문가', intent:'person_search', quality:'good'},
+            {query:'중식 관련된 사람', answer:'7건 매칭 (topScore 94.4) — 중식업계 종사자 목록', intent:'person_search', quality:'good'},
+            {query:'젠스타리테일 재무정보알려줘', answer:'"재무 정보는 현재 확인되지 않습니다" — 자사 재무 조회 실패', intent:'company_info', quality:'poor'},
+            {query:'스타벅스 재무정보', answer:'"확인 가능한 최신 데이터가 없습니다" — 대기업 재무도 조회 불가', intent:'company_info', quality:'poor'},
+            {query:'젠스타리테일 임원정보', answer:'명함첩에서 7건 반환 (topScore 100, lookup) — 자사 임원 목록 제공', intent:'person_search', quality:'good'},
+        ],
+        summary: 'person_search는 높은 성공률(4건 양호, topScore 90+). 반면 company_info 전면 실패 — 자사(젠스타리테일) + 스타벅스 재무 모두 "확인 불가". 첫 질의에서 브랜드/회사명 불일치 문제 제기했으나 out_of_scope 처리. 명함 분석 0% 상태에서 18분 대기 요청. person_search 성공 vs company_info 미흡이 상쇄 → 3점.'
+    },
+    {
+        name: '이주형', aiScore: 2, queryCount: 6, company: '트래블월렛',
+        queries: [
+            {query:'스테이블 코인 관련 비지니스 모델 설정하는데 도움 될 인맥 찾아줘', answer:'2명만 발견 (비바리퍼블리카 VP, 스톤브릿지벤처스 상무) → "더 적합한 분이 있을 수 있어요" — 스테이블코인 전문성 미확인, AI도 확신 없음', intent:'person_search', quality:'poor'},
+            {query:'삼성전자 최근 매출 알려줘', answer:'"2023년 기준 약 106억원" — 실제 매출 약 258조원. 2만 배 이상 차이나는 심각한 오류 (비연결 기준 데이터 혼동)', intent:'company_info', quality:'poor'},
+            {query:'소프트웨어 마에스트로 멘토 관련 누구에게 문의하면 좋을까?', answer:'10건 매칭 (topScore 85.97) — IT/SW 분야 CEO/CTO 제시. 실제 소마 멘토인지는 불명', intent:'person_search', quality:'poor'},
+            {query:'삼성전자 임원급 연결 가능한 분 찾아줘', answer:'3명 발견 (topScore 90.05) 했으나 → "더 적합한 분이 있을 수 있어요" → 라운지 등록 제안', intent:'person_search', quality:'poor'},
+            {query:'주식회사 트래블월렛 주주현황 알려줘', answer:'"주주 구성 정보는 현재 확인되지 않습니다" — 자사 정보도 못 줌', intent:'company_info', quality:'poor'},
+        ],
+        summary: '6건 중 양호 0건. company_info에서 삼성전자 매출 "106억원" 오답(실제 258조원) — CBT 전체에서 가장 심각한 데이터 오류. 자사(트래블월렛) 주주현황도 조회 불가. person_search에서도 결과 부족(2~3명)하거나 관련성 미보장. 6건 연속 기대 이하 → 2점.'
+    },
+    {
+        name: '최유정', aiScore: 2, queryCount: 2, company: 'ZUZU(코드박스)',
+        queries: [
+            {query:'/리멤버명함다운받기', answer:'out_of_scope — "리멤버 명함에 대해 궁금하시군요. 직접 답변드리기는 어렵지만" — 슬래시 명령어로 입력, AI를 명령 실행기로 인식', intent:'out_of_scope', quality:'poor'},
+            {query:'쿠키딜은 어떤 서비스야?', answer:'서비스 소개 텍스트 제공 — 기본 정보만 받고 이탈, AI 핵심 기능 0% 체험', intent:'service_guide', quality:'poor'},
+        ],
+        summary: '최소 사용(2건). 첫 질의 "/리멤버명함다운받기"가 out_of_scope 처리 — 온보딩 완전 실패. AI 핵심 기능(person_search, company_info) 0% 체험. 설문 aiTimeSave="이용안함"과 일치. 서비스 가치를 전혀 확인하지 못한 채 이탈 → 2점.'
+    },
+    {
+        name: '최규민', aiScore: 1, queryCount: 3, company: 'Snowflake',
+        queries: [
+            {query:'내 인맥 어떤 수준임', answer:'out_of_scope — "인맥 수준에 대해 궁금하시군요. 직접 답변드리기는 어렵지만" — 충분히 분석 가능한 질문을 처리 거부', intent:'out_of_scope', quality:'poor'},
+            {query:'통계치를 좀 더 말해봐', answer:'"전체 명함 311장이 등록되어 있어요!" — 한 줄 답변. 업종/직급/지역 분석 없음', intent:'card_statistics', quality:'poor'},
+            {query:'내 인맥 리스트 중 지금 연락해볼 사람추천', answer:'100건 필터 결과 중 "오뚜기, 펜타시스템테크놀러지" 인물 추천 — 왜 이 사람을 "지금" 연락해야 하는지 근거 없음', intent:'person_search', quality:'poor'},
+        ],
+        summary: '3건 전부 미흡 — CBT 최저 품질. "내 인맥 어떤 수준" 질의를 분석 대신 out_of_scope 처리(첫인상 실패). "통계치" 요청에 총 수(311장) 한 줄만 제공. "연락할 사람 추천"은 100건 중 임의 10명을 추천 근거 없이 제시. 3건 연속 기대 배신 → 1점.'
+    },
+    {
+        name: '이민용', aiScore: 2, queryCount: 3, company: '(미상)',
+        queries: [
+            {query:'최근 이직하신 분이 있을까?', answer:'7명 발견 (topScore 55.46, minScore 44.15) — 매우 낮은 매칭 점수, 실제 이직 여부 확인 불가. "라운지 이용해보세요" 제안', intent:'person_search', quality:'poor'},
+            {query:'삼성전자 임원급 연결 가능한 분 찾아줘', answer:'6명 발견 (topScore 88.11) — 삼성전자 관련 임원급 인맥 목록 제공', intent:'person_search', quality:'good'},
+            {query:'그린하우스 관련 스타트업을 소개할 만한 인맥이 있을까?', answer:'10명 발견 (topScore 91.6) — "환경과 스타트업 생태계 전문가" 제시. 실제 그린하우스 관련성 미검증', intent:'person_search', quality:'poor'},
+        ],
+        summary: '3건 전부 person_search. 삼성전자 임원급(6명, topScore 88)은 양호하나, "이직자 찾기"는 topScore 55로 관련성 의문. 그린하우스 스타트업 질의는 10명 제시했으나 실제 관련성 미보장. 모든 응답에 "라운지 이용" 보일러플레이트 첨부. 3건 중 1건만 양호 → 2점.'
+    },
+    {
+        name: '김범석', aiScore: 3, queryCount: 0, company: '(미상)',
+        queries: [],
+        summary: 'MongoDB 접속 불가로 실제 질의 데이터 미확인. 설문: AI 정확도 3점(보통), 기업 정보 유용성 4점(양호), 명함 3,000장 보유. 피드백: "알고리즘 고도화가 많이 필요해보입니다. 답답해서 직접 찾았어요." 기업 상세보기(경쟁사 동향)에는 만족했으나, 인맥 검색 품질에 불만. 재사용 의향 없음, 시간 절약 미동의.'
+    },
+];
+
+const COLORS = ['#0549CC','#DE3D82','#0FB5AE','#F68511','#DA4343','#6A93E1','#8B5CF6'];
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.target.classList.add('active');
+    setTimeout(() => {
+        Object.values(window._charts || {}).forEach(c => c.resize());
+    }, 100);
+}
+
+// ============================================================
+// RENDER FUNCTIONS
+// ============================================================
+window._charts = {};
+
+function renderKPISummary() {
+    const container = document.getElementById('kpi-summary');
+    const totalQ = AI_QUERIES_DAILY.reduce((a,b)=>a+b,0);
+    const cards = [
+        {label:'CBT 참여자', value:'28', sub:'50명 초대 중 링크 수락 (56%)', change:'Notion DB 기준', cls:'positive', color:'#0549CC', icon:'👥'},
+        {label:'AI 사용자', value:'16', sub:`총 ${totalQ}건 질의 (인당 ${(totalQ/16).toFixed(1)}회)`, change:'57.1% of 외부 사용자', cls:'positive', color:'#DE3D82', icon:'🤖'},
+        {label:'명함 업로드', value:'56,436', sub:'13명 업로더 / 평균 4,341장', change:'13/28 참여 (46.4%)', cls:'positive', color:'#0FB5AE', icon:'📇'},
+        {label:'온보딩 완료', value:'19', sub:'28명 중 19명 완료 (67.9%)', change:'9명 미완료', cls:'warning', color:'#F68511', icon:'✅'},
+        {label:'설문 만족도', value:'3.33', sub:'5점 만점 / 9명 응답', change:'재사용 의향 66.7%', cls:'warning', color:'#8B5CF6', icon:'⭐'},
+    ];
+    container.innerHTML = cards.map(c => `
+        <div class="kpi-card">
+            <div class="kpi-icon" style="background:${c.color}20;color:${c.color}">${c.icon}</div>
+            <div class="kpi-label">${c.label}</div>
+            <div class="kpi-value" style="color:${c.color}">${c.value}</div>
+            <div class="kpi-sub">${c.sub}</div>
+            <div class="kpi-change ${c.cls}">${c.change}</div>
+        </div>
+    `).join('');
+}
+
+function renderDailyOverview() {
+    const ctx = document.getElementById('chart-daily-overview').getContext('2d');
+    window._charts.dailyOverview = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: DAYS_SHORT,
+            datasets: [
+                {
+                    label: '신규 가입자',
+                    data: SIGNUPS_DAILY,
+                    backgroundColor: '#0549CC66',
+                    borderColor: '#0549CC',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    order: 2,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'AI 사용자 수',
+                    data: AI_USERS_DAILY,
+                    type: 'line',
+                    borderColor: '#DE3D82',
+                    backgroundColor: '#DE3D8220',
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#DE3D82',
+                    tension: 0.3,
+                    fill: true,
+                    order: 1,
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode:'index', intersect:false },
+            plugins: { legend: { position:'top', labels:{ usePointStyle:true, padding:16, color:'#868E96' }}},
+            scales: {
+                y: { beginAtZero:true, title:{display:true, text:'가입자 수', color:'#868E96'}, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96'} },
+                y1: { beginAtZero:true, position:'right', title:{display:true, text:'AI 사용자', color:'#868E96'}, grid:{display:false}, ticks:{color:'#868E96'} },
+                x: { grid:{display:false}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+function renderDAU() {
+    const ctx = document.getElementById('chart-dau').getContext('2d');
+    window._charts.dau = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: DATES,
+            datasets: [
+                {
+                    label: 'CBT 활동 사용자',
+                    data: CBT_ACTIVE_DAILY,
+                    backgroundColor: '#0549CC66',
+                    borderColor: '#0549CC',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    order: 2,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'AI 질의 수',
+                    data: AI_QUERIES_DAILY,
+                    type: 'line',
+                    borderColor: '#DE3D82',
+                    backgroundColor: '#DE3D8220',
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#DE3D82',
+                    tension: 0.3,
+                    fill: true,
+                    order: 1,
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode:'index', intersect:false },
+            plugins: {
+                legend: { position:'top', labels:{ usePointStyle:true, padding:16, color:'#868E96' }},
+                tooltip: { callbacks:{ label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}${ctx.datasetIndex===0?'명':'건'}` }}
+            },
+            scales: {
+                y: { beginAtZero:true, title:{display:true, text:'활동 사용자', color:'#868E96'}, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96'} },
+                y1: { beginAtZero:true, position:'right', title:{display:true, text:'AI 질의 수', color:'#868E96'}, grid:{display:false}, ticks:{color:'#868E96'} },
+                x: { grid:{display:false}, ticks:{color:'#868E96', maxRotation:45} }
+            }
+        }
+    });
+}
+
+function renderKeyInsights() {
+    const container = document.getElementById('key-insights');
+    const totalQ = AI_QUERIES_DAILY.reduce((a,b)=>a+b,0);
+    const d1d3 = AI_QUERIES_DAILY[0]+AI_QUERIES_DAILY[1]+AI_QUERIES_DAILY[2];
+    const d1d3pct = ((d1d3/totalQ)*100).toFixed(0);
+    const insights = [
+        {type:'positive', title:'초기 Activation 강력', metric:`D1~D3 핵심 활동 집중 (${d1d3pct}%)`, text:`D1~D3에 전체 AI 질의의 ${d1d3pct}%(${d1d3}/${totalQ}건)가 집중. 초기 온보딩 후 즉시 핵심 기능을 탐색하는 패턴 확인. person_search(39%)가 킬러 유즈케이스로 부상.`},
+        {type:'warning', title:'D4 이후 급격한 활동 감소', metric:'주말+주중 드롭', text:'D4(토) 이후 일 평균 AI 질의가 급감. 초기 호기심 후 지속적 가치 전달 메커니즘 부재. Habit Loop 설계 필요.'},
+        {type:'positive', title:'설문: 재사용 의향 66.7%', metric:'9명 중 6명 재사용 희망', text:'설문 응답 9명 중 6명(66.7%)이 재사용 의향 긍정. 서비스 유용성 3.33점. 다만 AI 정확도 2.89점으로 핵심 개선 필요.'}
+    ];
+    container.innerHTML = insights.map(i => `
+        <div class="insight-card ${i.type}">
+            <h4>${i.title}</h4>
+            <div class="metric">${i.metric}</div>
+            <p>${i.text}</p>
+        </div>
+    `).join('');
+}
+
+function renderHeatmap() {
+    const container = document.getElementById('heatmap-container');
+    const sorted = [...USERS].sort((a,b) => b.total - a.total);
+    let html = '<table class="heatmap-table"><thead><tr><th>사용자</th>';
+    DAYS_SHORT.forEach(d => { html += `<th>${d}</th>`; });
+    html += '<th>합계</th><th>세그먼트</th></tr></thead><tbody>';
+    sorted.forEach(u => {
+        const nameHtml = u.linkedin ? `<a href="${u.linkedin}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid #D8E2F7" title="LinkedIn 프로필">${u.name}</a>` : u.name;
+        html += `<tr><td class="user-name">${nameHtml}</td>`;
+        u.queries.forEach(q => {
+            const level = q === 0 ? 0 : q <= 1 ? 1 : q <= 3 ? 2 : q <= 5 ? 3 : q <= 8 ? 4 : 5;
+            html += `<td class="heat-${level}">${q || '-'}</td>`;
+        });
+        const segClass = u.segment === 'Heavy' ? 'badge-heavy' : u.segment === 'Medium' ? 'badge-medium' : 'badge-light';
+        html += `<td style="font-weight:700;color:#0549CC">${u.total}</td>`;
+        html += `<td><span class="badge-segment ${segClass}">${u.segment}</span></td></tr>`;
+    });
+    // Inactive users separator + rows
+    html += `<tr class="inactive-separator"><td colspan="${DAYS_SHORT.length + 3}">AI 미사용 참여자 (${INACTIVE_USERS.length}명) — CBT 링크 수락 후 챗봇 미이용</td></tr>`;
+    INACTIVE_USERS.forEach(u => {
+        const nameHtml = u.linkedin ? `<a href="${u.linkedin}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(218,67,67,0.3)" title="LinkedIn 프로필">${u.name}</a>` : u.name;
+        html += `<tr class="inactive-row"><td class="user-name">${nameHtml}</td>`;
+        DAYS_SHORT.forEach(() => { html += `<td class="heat-0">-</td>`; });
+        html += `<td style="font-weight:700;color:var(--text-secondary)">0</td>`;
+        html += `<td><span class="badge-segment badge-inactive">${u.onboarding ? '온보딩만' : '미참여'}</span></td></tr>`;
+    });
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function renderSegments() {
+    const ctx = document.getElementById('chart-segments').getContext('2d');
+    // Recalculate from USERS data
+    const heavy = USERS.filter(u => u.days >= 3).length;
+    const medium = USERS.filter(u => u.days === 2).length;
+    const light = USERS.filter(u => u.days === 1).length;
+    window._charts.segments = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [`Heavy (3일+) — ${heavy}명`, `Medium (2일) — ${medium}명`, `Light (1일) — ${light}명`],
+            datasets: [{ data:[heavy,medium,light], backgroundColor:['#0549CCCC','#0FB5AECC','#F68511CC'], borderColor:'#ffffff', borderWidth:3 }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '55%',
+            plugins: {
+                legend: { position:'bottom', labels:{ usePointStyle:true, padding:12, color:'#868E96' }},
+                tooltip: { callbacks:{ label: ctx => {
+                    const pct = ((ctx.parsed / USERS.length) * 100).toFixed(1);
+                    return `${ctx.label}: ${pct}%`;
+                }}}
+            }
+        }
+    });
+}
+
+function renderDailyQueries() {
+    const ctx = document.getElementById('chart-daily-queries').getContext('2d');
+    window._charts.dailyQueries = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: DAYS_SHORT,
+            datasets: [{
+                label: 'AI 질의 수',
+                data: AI_QUERIES_DAILY,
+                backgroundColor: AI_QUERIES_DAILY.map((v,i) => i <= 2 ? '#0549CCCC' : '#0549CC44'),
+                borderColor: '#0549CC',
+                borderWidth: 1,
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend:{display:false} },
+            scales: {
+                y: { beginAtZero:true, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96'} },
+                x: { grid:{display:false}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+function renderUserTable() {
+    const container = document.getElementById('user-detail-table');
+    const sorted = [...USERS].sort((a,b) => b.total - a.total);
+    let html = '<table class="data-table"><thead><tr>';
+    html += '<th>사용자</th><th>소속</th><th>세그먼트</th><th>활동일수</th><th>총 질의</th><th>일평균</th><th>명함업로드</th>';
+    html += '</tr></thead><tbody>';
+    sorted.forEach(u => {
+        const upload = UPLOADS.find(up => up.name === u.name);
+        const segClass = u.segment === 'Heavy' ? 'badge-heavy' : u.segment === 'Medium' ? 'badge-medium' : 'badge-light';
+        html += `<tr>
+            <td style="font-weight:600">${u.linkedin ? `<a href="${u.linkedin}" target="_blank" rel="noopener" style="color:#0549CC;text-decoration:none;border-bottom:1px solid #D8E2F7" title="LinkedIn 프로필">${u.name}</a>` : u.name}</td>
+            <td>${u.company}</td>
+            <td><span class="badge-segment ${segClass}">${u.segment}</span></td>
+            <td>${u.days}일</td>
+            <td style="font-weight:700;color:#0549CC">${u.total}회</td>
+            <td>${(u.total / u.days).toFixed(1)}회</td>
+            <td>${upload ? upload.cards.toLocaleString() + '장' : '-'}</td>
+        </tr>`;
+    });
+    // Inactive users
+    html += `<tr class="inactive-separator"><td colspan="7">AI 미사용 참여자 (${INACTIVE_USERS.length}명)</td></tr>`;
+    INACTIVE_USERS.forEach(u => {
+        html += `<tr class="inactive-row">
+            <td style="font-weight:600">${u.linkedin ? `<a href="${u.linkedin}" target="_blank" rel="noopener" style="color:#DA4343;text-decoration:none;border-bottom:1px solid rgba(218,67,67,0.3)" title="LinkedIn 프로필">${u.name}</a>` : u.name}</td>
+            <td>${u.company}</td>
+            <td><span class="badge-segment badge-inactive">${u.onboarding ? '온보딩만' : '미참여'}</span></td>
+            <td>0일</td>
+            <td style="font-weight:700;color:var(--text-secondary)">0회</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>`;
+    });
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function renderFunnel() {
+    const ctx = document.getElementById('chart-sankey').getContext('2d');
+    const colors = {
+        accept: '#0549CC',
+        onboard: '#DE3D82',
+        drop: '#DA4343',
+        both: '#0FB5AE',
+        cardOnly: '#F68511',
+        aiOnly: '#8B5CF6',
+        inactive: '#868E96',
+    };
+    window._charts.sankey = new Chart(ctx, {
+        type: 'sankey',
+        data: {
+            datasets: [{
+                data: [
+                    {from: 'accept', to: 'onboard', flow: 19},
+                    {from: 'accept', to: 'drop', flow: 9},
+                    {from: 'onboard', to: 'both', flow: 12},
+                    {from: 'onboard', to: 'cardOnly', flow: 1},
+                    {from: 'onboard', to: 'aiOnly', flow: 4},
+                    {from: 'onboard', to: 'inactive', flow: 2},
+                ],
+                colorFrom: (c) => colors[c.dataset.data[c.dataIndex].from],
+                colorTo: (c) => colors[c.dataset.data[c.dataIndex].to],
+                colorMode: 'gradient',
+                labels: {
+                    accept: 'CBT 링크 수락 (28명, 100%)',
+                    onboard: '온보딩 완료 (19명, 67.9%)',
+                    drop: '미완료 이탈 (9명, 32.1%)',
+                    both: '명함+AI 모두 (12명, 42.9%)',
+                    cardOnly: '명함만 업로드 (1명, 3.6%)',
+                    aiOnly: 'AI만 사용 (4명, 14.3%)',
+                    inactive: '비활성 (2명, 7.1%)',
+                },
+                color: colors,
+                size: 'max',
+                nodeWidth: 20,
+                borderWidth: 0,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {display: false},
+                tooltip: {
+                    callbacks: {
+                        label: function(c) {
+                            const d = c.dataset.data[c.dataIndex];
+                            const l = c.dataset.labels;
+                            return `${l[d.from]} → ${l[d.to]}: ${d.flow}명`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function renderFunnelBars() {
+    const ctx = document.getElementById('chart-funnel-bars').getContext('2d');
+    const stepConversions = [
+        {label:'수락→온보딩', rate: (19/28*100)},
+        {label:'온보딩→명함 업로드', rate: (13/19*100)},
+        {label:'명함 업로드→AI사용', rate: (12/13*100)},
+        {label:'온보딩→AI사용 (명함 미업로드 포함)', rate: (16/19*100)},
+        {label:'수락→AI사용 (전체)', rate: (16/28*100)},
+    ];
+    window._charts.funnelBars = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: stepConversions.map(s=>s.label),
+            datasets: [{
+                data: stepConversions.map(s=>s.rate),
+                backgroundColor: ['#0549CCCC','#DE3D82CC','#0FB5AECC','#F68511CC','#8B5CF6CC'],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: {
+                legend:{display:false},
+                tooltip:{ callbacks:{ label: ctx => ctx.parsed.x.toFixed(1) + '%' }}
+            },
+            scales: {
+                x: { beginAtZero:true, max:100, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96', callback:v=>v+'%'} },
+                y: { grid:{display:false}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+function renderSignups() {
+    const ctx = document.getElementById('chart-signups').getContext('2d');
+    window._charts.signups = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: DAYS_SHORT,
+            datasets: [
+                {
+                    label: '일별 가입자',
+                    data: SIGNUPS_DAILY,
+                    backgroundColor: '#0549CC88',
+                    borderColor: '#0549CC',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    order: 2,
+                    yAxisID: 'y'
+                },
+                {
+                    label: '누적 가입자',
+                    data: SIGNUPS_CUMULATIVE,
+                    type: 'line',
+                    borderColor: '#F68511',
+                    backgroundColor: '#F6851120',
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#F68511',
+                    tension: 0.3,
+                    fill: false,
+                    order: 1,
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode:'index', intersect:false },
+            plugins: { legend: { position:'top', labels:{ usePointStyle:true, padding:16, color:'#868E96' }}},
+            scales: {
+                y: { beginAtZero:true, title:{display:true, text:'일별', color:'#868E96'}, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96'} },
+                y1: { beginAtZero:true, position:'right', title:{display:true, text:'누적', color:'#868E96'}, grid:{display:false}, ticks:{color:'#868E96'} },
+                x: { grid:{display:false}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+function renderUploads() {
+    const ctx = document.getElementById('chart-uploads').getContext('2d');
+    const sorted = [...UPLOADS].sort((a,b) => b.cards - a.cards).slice(0,10);
+    window._charts.uploads = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: sorted.map(u=>u.name),
+            datasets: [{
+                label: '업로드 카드 수',
+                data: sorted.map(u=>u.cards),
+                backgroundColor: sorted.map((_,i) => COLORS[i % COLORS.length] + 'CC'),
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: { legend:{display:false}, tooltip:{ callbacks:{ label: ctx => ctx.parsed.x.toLocaleString() + '장' }}},
+            scales: {
+                x: { beginAtZero:true, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96', callback:v=>v>=1000?(v/1000)+'K':v} },
+                y: { grid:{display:false}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+// ---- AI ANALYSIS TAB ----
+
+function renderAgentLogSummary() {
+    const container = document.getElementById('agent-log-summary');
+    const cards = [
+        {label:'총 질의 수', value: AGENT_LOG.total, sub: AGENT_LOG.period, change:'AgentQueryLog 전체', cls:'positive', color:'#0549CC'},
+        {label:'외부 사용자', value: AGENT_LOG.external, sub:`${((AGENT_LOG.external/AGENT_LOG.total)*100).toFixed(1)}% — CBT 참여자 질의`, change:'16명 사용자', cls:'positive', color:'#0FB5AE'},
+        {label:'내부 (개발팀)', value: AGENT_LOG.internal, sub:`${((AGENT_LOG.internal/AGENT_LOG.total)*100).toFixed(1)}% — 분석 제외`, change: AGENT_LOG.internalUsers.join(', '), cls:'neutral', color:'#868E96'},
+    ];
+    container.innerHTML = cards.map(c => `
+        <div class="kpi-card">
+            <div class="kpi-icon" style="background:${c.color}20;color:${c.color}">${c.label.charAt(0)}</div>
+            <div class="kpi-label">${c.label}</div>
+            <div class="kpi-value" style="color:${c.color}">${c.value}건</div>
+            <div class="kpi-sub">${c.sub}</div>
+            <div class="kpi-change ${c.cls}">${c.change}</div>
+        </div>
+    `).join('');
+}
+
+function renderIntExtChart() {
+    const ctx = document.getElementById('chart-int-ext').getContext('2d');
+    window._charts.intExt = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: DAYS_SHORT,
+            datasets: [
+                {
+                    label: '외부 (CBT)',
+                    data: AI_QUERIES_DAILY,
+                    backgroundColor: '#0FB5AECC',
+                    borderColor: '#0FB5AE',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                },
+                {
+                    label: '내부 (개발팀)',
+                    data: AI_QUERIES_INTERNAL,
+                    backgroundColor: '#868E9666',
+                    borderColor: '#868E96',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position:'top', labels:{ usePointStyle:true, padding:16, color:'#868E96' }}},
+            scales: {
+                x: { stacked:true, grid:{display:false}, ticks:{color:'#868E96'} },
+                y: { stacked:true, beginAtZero:true, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+function renderIntents() {
+    const ctx = document.getElementById('chart-intents').getContext('2d');
+    const labels = Object.keys(INTENTS);
+    const data = Object.values(INTENTS);
+    const total = data.reduce((a,b)=>a+b,0);
+    window._charts.intents = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels.map(l => {
+                const map = {person_search:'인물 검색',lounge_post:'라운지 포스트',card_list:'명함 목록',service_guide:'서비스 안내',company_info:'기업 정보',out_of_scope:'범위 외',card_statistics:'명함 통계'};
+                return map[l] || l;
+            }),
+            datasets: [{ data, backgroundColor: COLORS.map(c=>c+'CC'), borderColor:'#ffffff', borderWidth:3 }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '50%',
+            plugins: {
+                legend: { position:'right', labels:{ usePointStyle:true, padding:10, color:'#868E96', font:{size:11} }},
+                tooltip: { callbacks:{ label: ctx => {
+                    const pct = ((ctx.parsed / total) * 100).toFixed(1);
+                    return `${ctx.label}: ${ctx.parsed}건 (${pct}%)`;
+                }}}
+            }
+        }
+    });
+}
+
+function renderIntentStack() {
+    const ctx = document.getElementById('chart-intent-stack').getContext('2d');
+    const intentLabels = {person_search:'인물 검색',lounge_post:'라운지',card_list:'명함 목록',service_guide:'서비스 안내',company_info:'기업 정보',out_of_scope:'범위 외',card_statistics:'명함 통계'};
+    const datasets = Object.entries(INTENT_BY_DAY).map(([key, data], i) => ({
+        label: intentLabels[key] || key,
+        data: data,
+        backgroundColor: COLORS[i % COLORS.length] + '99',
+        borderColor: COLORS[i % COLORS.length],
+        borderWidth: 1,
+    }));
+    window._charts.intentStack = new Chart(ctx, {
+        type: 'bar',
+        data: { labels: DAYS_SHORT, datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position:'top', labels:{ usePointStyle:true, padding:8, color:'#868E96', font:{size:10} }}},
+            scales: {
+                x: { stacked:true, grid:{display:false}, ticks:{color:'#868E96'} },
+                y: { stacked:true, beginAtZero:true, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+function renderKPITargets() {
+    const container = document.getElementById('kpi-targets');
+    container.innerHTML = KPIS.map(k => {
+        const pct = Math.min(100, (k.actual / k.target) * 100);
+        const achieved = k.actual >= k.target;
+        const color = k.unit === '점'
+            ? (k.actual > 4 ? '#0549CC' : k.actual > 3 ? '#E8A43D' : '#DA4343')
+            : (achieved ? '#0549CC' : pct >= 50 ? '#E8A43D' : '#DA4343');
+        return `
+        <div class="kpi-card">
+            <div class="kpi-icon" style="font-size:24px">${k.icon}</div>
+            <div class="kpi-label">${k.label}</div>
+            <div class="kpi-value" style="color:${color}">${k.actual}${k.unit}</div>
+            <div class="kpi-target">목표: ${k.target}${k.unit} | 달성률: ${pct.toFixed(0)}%</div>
+            <div class="kpi-progress"><div class="kpi-progress-bar" style="width:${pct}%;background:${color}"></div></div>
+            <div class="kpi-sub" style="margin-top:4px">${k.desc}</div>
+        </div>`;
+    }).join('');
+}
+
+function renderKPIRadar() {
+    const ctx = document.getElementById('chart-kpi-radar').getContext('2d');
+    const achievementRates = KPIS.map(k => Math.min(150, (k.actual / k.target) * 100));
+    const kpiPtColors = KPIS.map((k, i) => {
+        if (k.unit === '점') return k.actual > 4 ? '#0549CC' : k.actual > 3 ? '#E8A43D' : '#DA4343';
+        return achievementRates[i] >= 100 ? '#0549CC' : achievementRates[i] >= 50 ? '#E8A43D' : '#DA4343';
+    });
+    window._charts.kpiRadar = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: KPIS.map(k => k.label),
+            datasets: [
+                {
+                    label: '달성률 (%)',
+                    data: achievementRates,
+                    borderColor: '#86868680',
+                    backgroundColor: '#86868815',
+                    borderWidth: 2,
+                    pointRadius: 8,
+                    pointBackgroundColor: kpiPtColors,
+                    pointBorderColor: kpiPtColors,
+                    pointBorderWidth: 2,
+                },
+                {
+                    label: '목표 (100%)',
+                    data: KPIS.map(()=>100),
+                    borderColor: '#DA434366',
+                    backgroundColor: '#DA434311',
+                    borderWidth: 2,
+                    borderDash: [5,5],
+                    pointRadius: 0,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend:{ position:'top', labels:{ usePointStyle:true, color:'#868E96' }}},
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 150,
+                    ticks: { stepSize:50, color:'#868E96', backdropColor:'transparent' },
+                    grid: { color:'#E9ECEF' },
+                    pointLabels: { color: kpiPtColors, font:{size:11, weight:'bold'} },
+                    angleLines: { color:'#E9ECEF' }
+                }
+            }
+        }
+    });
+}
+
+// ---- SURVEY TAB ----
+
+function renderSurveyKPI() {
+    const container = document.getElementById('survey-kpi');
+    const reuseYes = SURVEY.filter(s => s.reuse === '예').length;
+    const timeSaveYes = SURVEY.filter(s => s.aiTimeSave === '예').length;
+    const pos = '#0549CC', mid = '#E8A43D', neg = '#DA4343';
+    const kpiColor = v => v > 4 ? pos : v > 3 ? mid : neg;
+    const cards = [
+        {label:'전체 만족도', value: SURVEY_AVG.satisfaction.toFixed(2), sub:'5점 만점', color: kpiColor(SURVEY_AVG.satisfaction)},
+        {label:'서비스 유용성', value: SURVEY_AVG.useful.toFixed(2), sub:'5점 만점', color: kpiColor(SURVEY_AVG.useful)},
+        {label:'AI 정확도', value: SURVEY_AVG.aiAccuracy.toFixed(2), sub:'5점 만점 — 최저 항목', color: kpiColor(SURVEY_AVG.aiAccuracy)},
+        {label:'추천 의향', value: SURVEY_AVG.recommend.toFixed(2), sub:'5점 만점', color: kpiColor(SURVEY_AVG.recommend)},
+        {label:'재사용 의향', value: `${((reuseYes/SURVEY.length)*100).toFixed(1)}%`, sub:`${reuseYes}/${SURVEY.length}명 긍정`, color: pos},
+    ];
+    container.innerHTML = cards.map(c => `
+        <div class="kpi-card">
+            <div class="kpi-icon" style="background:${c.color}20;color:${c.color}">★</div>
+            <div class="kpi-label">${c.label}</div>
+            <div class="kpi-value" style="color:${c.color}">${c.value}</div>
+            <div class="kpi-sub">${c.sub}</div>
+        </div>
+    `).join('');
+}
+
+function renderSurveyRadar() {
+    const ctx = document.getElementById('chart-survey-radar').getContext('2d');
+    const dims = ['전체 만족도','서비스 유용성','AI 정확도','기업정보 유용성','추천 의향'];
+    const avgs = [SURVEY_AVG.satisfaction, SURVEY_AVG.useful, SURVEY_AVG.aiAccuracy, SURVEY_AVG.companyInfo, SURVEY_AVG.recommend];
+    const ptColor = v => v > 4 ? '#0549CC' : v > 3 ? '#E8A43D' : '#DA4343';
+    const ptColors = avgs.map(ptColor);
+    window._charts.surveyRadar = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: dims,
+            datasets: [
+                {
+                    label: '평균 점수',
+                    data: avgs,
+                    borderColor: '#86868680',
+                    backgroundColor: '#86868815',
+                    borderWidth: 2,
+                    pointRadius: 8,
+                    pointBackgroundColor: ptColors,
+                    pointBorderColor: ptColors,
+                    pointBorderWidth: 2,
+                },
+                {
+                    label: '만점 (5.0)',
+                    data: [5,5,5,5,5],
+                    borderColor: '#DA434344',
+                    backgroundColor: '#DA434308',
+                    borderWidth: 1,
+                    borderDash: [5,5],
+                    pointRadius: 0,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend:{ position:'top', labels:{ usePointStyle:true, color:'#868E96' }}},
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 5,
+                    ticks: { stepSize:1, color:'#868E96', backdropColor:'transparent' },
+                    grid: { color:'#E9ECEF' },
+                    pointLabels: { color: ptColors, font:{size:12, weight:'bold'} },
+                    angleLines: { color:'#E9ECEF' }
+                }
+            }
+        }
+    });
+}
+
+function renderSurveyBars() {
+    const ctx = document.getElementById('chart-survey-bars').getContext('2d');
+    const dims = ['satisfaction','useful','aiAccuracy','companyInfo','recommend'];
+    const dimLabels = ['만족도','유용성','AI정확도','기업정보','추천의향'];
+    const datasets = SURVEY.map((s, i) => ({
+        label: s.name,
+        data: dims.map(d => s[d]),
+        backgroundColor: COLORS[i % COLORS.length] + '99',
+        borderColor: COLORS[i % COLORS.length],
+        borderWidth: 1,
+        borderRadius: 3,
+    }));
+    window._charts.surveyBars = new Chart(ctx, {
+        type: 'bar',
+        data: { labels: dimLabels, datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position:'top', labels:{ usePointStyle:true, padding:8, color:'#868E96', font:{size:10} }}},
+            scales: {
+                y: { beginAtZero:true, max:5, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96', stepSize:1} },
+                x: { grid:{display:false}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+function renderSurveyYesNo() {
+    const ctx = document.getElementById('chart-survey-yesno').getContext('2d');
+    const timeSaveYes = SURVEY.filter(s => s.aiTimeSave === '예').length;
+    const timeSaveNo = SURVEY.filter(s => s.aiTimeSave === '아니오').length;
+    const timeSaveNA = SURVEY.filter(s => s.aiTimeSave === '이용안함').length;
+    const reuseYes = SURVEY.filter(s => s.reuse === '예').length;
+    const reuseNo = SURVEY.filter(s => s.reuse === '아니오').length;
+    window._charts.surveyYesNo = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['AI 시간절약', '재사용 의향'],
+            datasets: [
+                { label: '예', data: [timeSaveYes, reuseYes], backgroundColor: '#0549CCCC', borderRadius: 4 },
+                { label: '아니오', data: [timeSaveNo, reuseNo], backgroundColor: '#DA4343CC', borderRadius: 4 },
+                { label: '이용안함', data: [timeSaveNA, 0], backgroundColor: '#868E9666', borderRadius: 4 },
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position:'top', labels:{ usePointStyle:true, color:'#868E96' }}},
+            scales: {
+                y: { beginAtZero:true, max:6, grid:{color:'#E9ECEF'}, ticks:{color:'#868E96', stepSize:1} },
+                x: { grid:{display:false}, ticks:{color:'#868E96'} }
+            }
+        }
+    });
+}
+
+function renderSurveyTable() {
+    const container = document.getElementById('survey-detail-table');
+    let html = '<table class="data-table"><thead><tr>';
+    html += '<th>응답자</th><th>제출일</th><th>만족도</th><th>유용성</th><th>AI정확도</th><th>시간절약</th><th>기업정보</th><th>추천</th><th>재사용</th>';
+    html += '</tr></thead><tbody>';
+    SURVEY.forEach(s => {
+        const scoreColor = v => v > 4 ? '#0549CC' : v > 3 ? '#E8A43D' : '#DA4343';
+        html += `<tr>
+            <td style="font-weight:600">${s.name}</td>
+            <td>${s.date}</td>
+            <td style="color:${scoreColor(s.satisfaction)};font-weight:700">${s.satisfaction}</td>
+            <td style="color:${scoreColor(s.useful)};font-weight:700">${s.useful}</td>
+            <td style="color:${scoreColor(s.aiAccuracy)};font-weight:700">${s.aiAccuracy}</td>
+            <td>${s.aiTimeSave === '예' ? '<span style="color:#E8A43D">예</span>' : s.aiTimeSave === '아니오' ? '<span style="color:#DA4343">아니오</span>' : '<span style="color:#868E96">미이용</span>'}</td>
+            <td style="color:${scoreColor(s.companyInfo)};font-weight:700">${s.companyInfo}</td>
+            <td style="color:${scoreColor(s.recommend)};font-weight:700">${s.recommend}</td>
+            <td>${s.reuse === '예' ? '<span style="color:#0549CC">예</span>' : '<span style="color:#DA4343">아니오</span>'}</td>
+        </tr>`;
+    });
+    // Average row
+    const avgColor = v => v > 4 ? '#0549CC' : v > 3 ? '#E8A43D' : '#DA4343';
+    const tsYes = SURVEY.filter(s=>s.aiTimeSave==='예').length;
+    const tsPct = ((tsYes/SURVEY.length)*100).toFixed(1);
+    const ruYes = SURVEY.filter(s=>s.reuse==='예').length;
+    const ruPct = ((ruYes/SURVEY.length)*100).toFixed(1);
+    html += `<tr style="border-top:2px solid #DEE2E6;font-weight:700">
+        <td>평균</td><td>-</td>
+        <td style="color:${avgColor(SURVEY_AVG.satisfaction)}">${SURVEY_AVG.satisfaction.toFixed(2)}</td>
+        <td style="color:${avgColor(SURVEY_AVG.useful)}">${SURVEY_AVG.useful.toFixed(2)}</td>
+        <td style="color:${avgColor(SURVEY_AVG.aiAccuracy)}">${SURVEY_AVG.aiAccuracy.toFixed(2)}</td>
+        <td style="color:#E8A43D">${tsPct}%</td>
+        <td style="color:${avgColor(SURVEY_AVG.companyInfo)}">${SURVEY_AVG.companyInfo.toFixed(2)}</td>
+        <td style="color:${avgColor(SURVEY_AVG.recommend)}">${SURVEY_AVG.recommend.toFixed(2)}</td>
+        <td style="color:${ruYes/SURVEY.length > 0.7 ? '#0549CC' : '#E8A43D'}">${ruPct}%</td>
+    </tr>`;
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+function renderSurveyQualitative() {
+    const container = document.getElementById('survey-qualitative');
+    const insights = [
+        {type:'positive', title:'긍정 피드백', text:'카테고리 검색의 편리함(김은지), 기업 정보 조회가 세일즈에 도움(임채이), 리멤버 명함 데이터를 AI로 활용하는 편의(윤성용), 직무 기반 필터링 유용(최유정)'},
+        {type:'negative', title:'AI 정확도 이슈 (평균 2.67점)', text:'AI 정확도가 가장 낮은 점수(최규민 1점, 이주형 2점). 회사명/브랜드명 불일치 시 검색 불가(김은지). 비상장 기업 정보 부재(이주형).'},
+        {type:'warning', title:'핵심 Feature Request', text:'연락 기록 아카이빙(최유정), 명함 꾸미기/즐겨찾기(김은지), 기업 최신 뉴스 스크래핑(임채이), 인맥 기반 정보 고도화(이주형), 생일 알림/알만한 사람 추천(임채이)'},
+    ];
+    container.innerHTML = insights.map(i => `
+        <div class="insight-card ${i.type}">
+            <h4>${i.title}</h4>
+            <p>${i.text}</p>
+        </div>
+    `).join('');
+}
+
+// ---- SURVEY QUERY ANALYSIS ----
+
+function renderSurveyQueryAnalysis() {
+    const container = document.getElementById('survey-query-analysis');
+    const groups = [
+        {label:'5점 — 높은 만족', cls:'score-high', users: SURVEY_QUERY_ANALYSIS.filter(u=>u.aiScore===5),
+         insight:'5점 그룹도 company_info/card_list에서 미흡 다수(윤성용 1건, 이재용 5건). 그러나 person_search에서 실질적 비즈니스 인맥 확보(변리사 13건, 자동차부품 14건, 제조업 295건)가 불만을 상쇄. 대규모 명함첩 보유(9,752장/3,021장)가 검색 성공률의 핵심 변수.'},
+        {label:'3점 — 보통', cls:'score-mid', users: SURVEY_QUERY_ANALYSIS.filter(u=>u.aiScore===3),
+         insight:'person_search 성공(topScore 90+)과 company_info 전면 실패가 공존. 김은지: 자사+스타벅스 재무 모두 조회 불가, 명함 분석 18분 대기. 임채이: 6건 중 3건이 서비스 안내 — 핵심 기능 미체험. 김범석: 기업 상세보기(경쟁사 동향)에 만족(4점)했으나 인맥 검색 품질 불만("답답해서 직접 찾았어요"). "쓸만한 부분이 있지만 신뢰하기 어렵다"는 양면적 평가.'},
+        {label:'1~2점 — 불만족', cls:'score-low', users: SURVEY_QUERY_ANALYSIS.filter(u=>u.aiScore<=2),
+         insight:'공통점: 양호 응답 0건. 이주형 — 삼성전자 매출 "106억원" 심각한 오답(실제 258조원), 자사 정보 조회 불가, 검색 결과 부족. 최유정/최규민 — 첫 질의에서 out_of_scope 처리되며 온보딩 실패, AI 핵심 기능 미체험. AI가 "1건도 제대로 답하지 못한" 경험이 저점수의 직접 원인.'},
+    ];
+
+    const intentLabel = {person_search:'인맥검색', company_info:'기업정보', card_list:'명함검색', card_statistics:'명함통계', service_guide:'서비스안내', lounge_post:'라운지', out_of_scope:'범위밖'};
+    const qualityLabel = {good:'정확', ok:'보통', poor:'미흡'};
+
+    let html = `<div style="background:#FFF3F3;border:1px solid #DA4343;border-radius:8px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px">
+        <span style="font-size:20px;line-height:1">⚠️</span>
+        <div>
+            <div style="font-weight:700;color:#DA4343;margin-bottom:4px">답변 퀄리티 보장 안됨 — AI 응답 정확도 주의</div>
+            <div style="font-size:13px;color:#555">아래 분석은 MongoDB AgentQueryLog 실데이터 기반입니다. AI 응답의 '양호' 판정은 결과 건수·responseType 기준이며, <strong>실제 내용의 정확성이나 관련성까지 검증된 것은 아닙니다.</strong> 예: person_search에서 10건 반환되더라도 추천된 인물이 실제로 적합한지는 별도 확인 필요. company_info의 재무 데이터는 삼성전자 매출 "106억원"(실제 258조원) 같은 심각한 오류가 확인되었습니다.</div>
+        </div>
+    </div>`;
+    groups.forEach(g => {
+        html += `<div class="qa-group">`;
+        html += `<div class="qa-group-header ${g.cls}">${g.label} (${g.users.map(u=>u.name).join(', ')})</div>`;
+        html += `<div class="qa-group-insight ${g.cls}">${g.insight}</div>`;
+        g.users.forEach(u => {
+            const scoreCls = u.aiScore >= 5 ? 'qa-score-5' : u.aiScore >= 3 ? 'qa-score-3' : u.aiScore >= 2 ? 'qa-score-2' : 'qa-score-1';
+            html += `<div class="qa-user-card">`;
+            html += `<div class="qa-user-header">`;
+            html += `<div><span class="qa-user-name">${u.name}</span> <span style="font-size:12px;color:var(--text-secondary);margin-left:6px">${u.company}</span></div>`;
+            html += `<div class="qa-user-meta">`;
+            html += `<span class="${scoreCls} qa-score-badge">AI 정확도 ${u.aiScore}점</span>`;
+            html += `<span>질의 ${u.queryCount}건</span>`;
+            html += `</div></div>`;
+            u.queries.forEach(q => {
+                const iCls = 'qa-intent-' + q.intent;
+                const qCls = 'qa-quality-' + q.quality;
+                html += `<div class="qa-item">`;
+                html += `<div class="qa-label q-label">Q</div>`;
+                html += `<div class="qa-text q-text">${q.query} <span class="qa-intent-badge ${iCls}">${intentLabel[q.intent]||q.intent}</span></div>`;
+                html += `<div class="qa-label a-label">A</div>`;
+                html += `<div class="qa-text a-text">${q.answer} <span class="qa-quality-badge ${qCls}">${qualityLabel[q.quality]}</span></div>`;
+                html += `</div>`;
+            });
+            html += `<div class="qa-summary"><strong>분석:</strong> ${u.summary}</div>`;
+            html += `</div>`;
+        });
+        html += `</div>`;
+    });
+    container.innerHTML = html;
+}
+
+// ---- GO/NO-GO TAB ----
+
+function renderGoNoGo() {
+    document.getElementById('strengths').innerHTML = [
+        {title:'서비스 컨셉에 대한 수요 확인', text:'재사용 의향 66.7%(9명 중 6명), 인터뷰 참여 의향 77.8%. AI 정확도 불만(2.89점)에도 서비스 자체에 대한 니즈를 인정. "AI 명함 관리" 컨셉은 시장에서 통한다.'},
+        {title:'인물 검색 핵심 수요 입증', text:'전체 외부 질의의 39%가 person_search — "내 인맥에서 적합한 사람 찾기"가 가장 강한 사용 동기. AI 3회+ 사용률 87.5%로 반복 시도 의지도 확인.'},
+        {title:'명함 업로드→AI 사용 자연 전환', text:'명함 업로드 완료자 13명 중 12명(92%)이 AI 사용. 업로드만 유도하면 AI 사용으로 자연 전환되는 구조 확인. Aha Moment의 핵심 선행 조건.'},
+    ].map(i => `<div class="insight-card positive"><h4>${i.title}</h4><p>${i.text}</p></div>`).join('');
+
+    document.getElementById('improvements').innerHTML = [
+        {title:'AI 정확도 2.89/5 — 설문 전 항목 최저', text:'최규민 1점, 이주형·최유정·이민용 2점. 삼성전자 매출 "106억원" 오답, 자사 정보 조회 불가, 첫 질의 out_of_scope 처리 등 AI가 기대를 배신한 경험이 저점수의 직접 원인. 수요는 있지만 Value Delivery가 미완성.'},
+        {title:'극심한 D4+ 리텐션 드롭', text:'D1~D3 질의 61건(69%) → D4 이후 일 평균 3.5건. 초기 호기심 후 재방문 동기 부재. AI 답변 품질 미달이 리텐션 실패의 근본 원인.'},
+        {title:'온보딩·명함 업로드 퍼널 미달', text:'CBT 기획서 온보딩 목표 90% 대비 실적 67.9%, 업로드 목표 80% 대비 46.4%. 명함 업로드 없이는 AI 가치 경험 불가 — 퍼널 초입에서 이미 이탈.'},
+    ].map(i => `<div class="insight-card negative"><h4>${i.title}</h4><p>${i.text}</p></div>`).join('');
+
+    document.getElementById('conditions').innerHTML = [
+        {title:'1. AI 답변 품질 대폭 개선 (P0)', text:'person_search 매칭 정밀도 향상(퍼지 검색, 브랜드명/법인명 매핑), 비상장 기업 데이터 확충. 사용자가 "이 사람이 맞다"고 느낄 수 있는 수준으로. 목표: AI 정확도 2.89→4.0+'},
+        {title:'2. 온보딩→명함 업로드 전환 개선 (P1)', text:'온보딩 직후 명함 업로드 유도 Step-by-Step 가이드. 업로드 완료가 AI 가치 경험의 선행 조건임을 감안, 업로드율 46.4%→70%+ 달성 필요.'},
+        {title:'3. Re-engagement + 답변 품질 피드백 루프 (P1)', text:'Push 알림, 주간 AI 인사이트 리포트로 재방문 유도. 동시에 AI 답변에 대한 사용자 피드백(좋아요/싫어요)을 수집하여 품질 개선 사이클 구축.'},
+    ].map(i => `<div class="insight-card warning"><h4>${i.title}</h4><p>${i.text}</p></div>`).join('');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+    renderKPISummary();
+    renderDailyOverview();
+    renderDAU();
+    renderKeyInsights();
+    renderHeatmap();
+    renderSegments();
+    renderDailyQueries();
+    renderUserTable();
+    renderFunnel();
+    renderFunnelBars();
+    renderSignups();
+    renderUploads();
+    renderAgentLogSummary();
+    renderIntExtChart();
+    renderIntents();
+    renderIntentStack();
+    renderKPITargets();
+    renderKPIRadar();
+    renderSurveyKPI();
+    renderSurveyRadar();
+    renderSurveyBars();
+    renderSurveyYesNo();
+    renderSurveyTable();
+    renderSurveyQualitative();
+    renderSurveyQueryAnalysis();
+    renderGoNoGo();
+}
+
+init();
+</script>
+</body>
+</html>

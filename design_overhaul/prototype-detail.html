@@ -122,8 +122,41 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .fin-table .negative{color:var(--red-600)}
 
 /* Network */
-.network-wrap{background:var(--slate-50);border-radius:var(--radius);padding:20px;min-height:380px;position:relative}
+.network-wrap{background:var(--slate-900);border-radius:var(--radius);padding:20px;min-height:320px;position:relative;color:#fff}
 .network-toggle{position:absolute;top:12px;right:12px;display:flex;gap:4px;z-index:10}
+/* Bloomberg Terminal Network */
+.bloomberg-network{display:flex;align-items:center;justify-content:center;gap:0;padding:16px 0;position:relative}
+.bloomberg-col{display:flex;flex-direction:column;gap:10px;min-width:180px}
+.bloomberg-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6B7689;margin-bottom:6px;text-align:center}
+.bloomberg-node{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #374151;border-radius:6px;background:#1F2937;cursor:pointer;transition:all .15s;text-decoration:none;color:#fff;min-width:170px}
+.bloomberg-node:hover{border-color:var(--brand);background:#283548;box-shadow:0 0 12px rgba(5,73,204,.25)}
+.bloomberg-node-name{font-size:13.5px;font-weight:600;white-space:nowrap}
+.bloomberg-node-pct{font-size:12px;font-weight:700;color:var(--amber-400);margin-left:auto;font-variant-numeric:tabular-nums}
+.bloomberg-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 24px;border:2px solid var(--brand);border-radius:10px;background:var(--brand);color:#fff;text-align:center;min-width:160px;z-index:2}
+.bloomberg-center-name{font-size:15px;font-weight:800;letter-spacing:-.3px}
+.bloomberg-center-sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:2px}
+.bloomberg-connectors{position:relative;width:60px;flex-shrink:0}
+.bloomberg-connectors svg{width:100%;height:100%;position:absolute;top:0;left:0}
+.bloomberg-connector-line{stroke:#374151;stroke-width:1.5;fill:none}
+/* Competitor: Horizontal Bar */
+.hbar-chart{display:flex;flex-direction:column;gap:10px}
+.hbar-row{display:flex;align-items:center;gap:12px}
+.hbar-label{min-width:160px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.hbar-label-logo{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.hbar-track{flex:1;height:28px;background:var(--slate-100);border-radius:6px;overflow:hidden;position:relative}
+.hbar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11.5px;font-weight:600;color:#fff;transition:width .8s ease}
+.hbar-value{min-width:60px;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+/* Competitor: Metric Card Grid */
+.metric-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.metric-compare-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;text-align:center;transition:var(--transition)}
+.metric-compare-card:hover{box-shadow:var(--shadow-md);border-color:var(--blue-200)}
+.metric-compare-card .mc-label{font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:8px}
+.metric-compare-card .mc-value{font-size:24px;font-weight:800;color:var(--brand);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.metric-compare-card .mc-avg{font-size:13px;color:var(--text-sub);margin-top:4px}
+.metric-compare-card .mc-rank{display:inline-flex;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;background:var(--blue-50);color:var(--brand);margin-top:6px}
+/* Comp table improved */
+.comp-table .best-cell{background:var(--emerald-50);color:var(--emerald-600);font-weight:700;border-radius:4px}
+.comp-table .worst-cell{background:var(--red-50);color:var(--red-500)}
 
 /* Donut */
 .donut-wrap{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
@@ -203,13 +236,14 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 
 /* Paywall */
 .paywall-section{position:relative;overflow:hidden}
-.paywall-blur{filter:blur(6px);pointer-events:none;user-select:none;opacity:.6}
-.paywall-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.7);backdrop-filter:blur(2px);z-index:5;gap:8px}
+.paywall-blur{user-select:auto;pointer-events:auto;opacity:1}
+.paywall-overlay{display:none}
 .paywall-badge{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:4px}
 .paywall-cta{padding:10px 24px;background:var(--brand);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:var(--transition)}
 .paywall-cta:hover{background:var(--brand-hover)}
 .paywall-items{font-size:12px;color:var(--text-muted);margin-top:4px}
 .paywall-bundle{margin-top:8px;padding:8px 16px;background:var(--amber-50);border:1px solid var(--amber-400);border-radius:var(--radius);font-size:12px;color:var(--amber-600);font-weight:500;cursor:pointer}
+.paywall-inline-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;background:var(--amber-50);color:var(--amber-600);border:1px solid var(--amber-400);position:absolute;top:12px;right:12px;z-index:6}
 
 /* People */
 .people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
@@ -336,6 +370,10 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
   .invest-grid{grid-template-columns:1fr 1fr}
   .similar-grid{grid-template-columns:1fr}
   .thread-modal{width:100%;margin:8px}
+  .bloomberg-network{flex-direction:column;gap:12px}
+  .bloomberg-connectors{width:100%;height:30px}
+  .metric-card-grid{grid-template-columns:1fr 1fr}
+  .hbar-label{min-width:100px}
 }
 </style>
 </head>
@@ -430,7 +468,7 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <div class="tab active" onclick="switchTab('overview',this)">개요</div>
     <div class="tab" onclick="switchTab('finance',this)">재무 <span class="tab-badge">8</span></div>
     <div class="tab" onclick="switchTab('people',this)">인물 <span class="tab-badge">12</span></div>
-    <div class="tab" onclick="switchTab('similar',this)">유사기업 <span class="tab-badge">15</span></div>
+    <div class="tab" onclick="switchTab('similar',this)">유사기업 <span class="tab-badge">18</span></div>
     <div class="tab" onclick="switchTab('competitors',this)">경쟁사</div>
     <div class="tab" onclick="switchTab('community',this)">커뮤니티</div>
   </div>
@@ -488,33 +526,86 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
       </div>
     </div>
 
-    <!-- 4. Supply Chain Network Graph -->
+    <!-- 4. Supply Chain Network Graph (Bloomberg Terminal) -->
     <div class="section" style="position:relative">
-      <span class="design-note dn-yellow">Canvas 2D + requestAnimationFrame, spring physics k=0.05</span>
+      <span class="design-note dn-yellow">Bloomberg Terminal style HTML/CSS network</span>
       <div class="section-title"><span class="icon">🔗</span> 주요 구매처 · 판매처 네트워크</div>
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div class="network-wrap" id="networkGraphWrap">
         <div class="network-toggle">
-          <button class="chart-toggle-btn active" onclick="toggleView('network','graph',this)" style="font-size:11px;padding:3px 10px">그래프</button>
-          <button class="chart-toggle-btn" onclick="toggleView('network','table',this)" style="font-size:11px;padding:3px 10px">테이블</button>
+          <button class="chart-toggle-btn active" onclick="toggleView('network','graph',this)" style="font-size:11px;padding:3px 10px;color:#fff;border-color:#374151">그래프</button>
+          <button class="chart-toggle-btn" onclick="toggleView('network','table',this)" style="font-size:11px;padding:3px 10px;color:#9AA3B4;border-color:#374151">테이블</button>
         </div>
-        <canvas id="networkCanvas" width="1100" height="380"></canvas>
+        <div id="networkGraph">
+          <div class="bloomberg-network">
+            <!-- Left: 구매처 (Suppliers) -->
+            <div class="bloomberg-col">
+              <div class="bloomberg-col-label" style="color:#10B981">구매처</div>
+              <a href="prototype-detail.html?company=%EB%8F%84%EC%BF%84%EC%A0%95%EB%B0%80" class="bloomberg-node" id="bn-s1">
+                <span class="bloomberg-node-name">도쿄정밀</span>
+                <span class="bloomberg-node-pct">32%</span>
+              </a>
+              <a href="prototype-detail.html?company=%ED%95%9C%EA%B5%AD%EC%86%8C%EC%9E%AC" class="bloomberg-node" id="bn-s2">
+                <span class="bloomberg-node-name">한국소재</span>
+                <span class="bloomberg-node-pct">25%</span>
+              </a>
+              <a href="prototype-detail.html?company=%EA%B8%80%EB%A1%9C%EB%B2%8C%ED%85%8C%ED%81%AC" class="bloomberg-node" id="bn-s3">
+                <span class="bloomberg-node-name">글로벌테크</span>
+                <span class="bloomberg-node-pct">20%</span>
+              </a>
+            </div>
+            <!-- Left connectors -->
+            <div class="bloomberg-connectors" style="height:160px">
+              <svg viewBox="0 0 60 160" preserveAspectRatio="none">
+                <line x1="0" y1="30" x2="60" y2="80" class="bloomberg-connector-line"/>
+                <line x1="0" y1="80" x2="60" y2="80" class="bloomberg-connector-line"/>
+                <line x1="0" y1="130" x2="60" y2="80" class="bloomberg-connector-line"/>
+              </svg>
+            </div>
+            <!-- Center Node -->
+            <div class="bloomberg-center">
+              <div class="bloomberg-center-name">에이치비테크놀로지</div>
+              <div class="bloomberg-center-sub">반도체 검사장비 전문</div>
+            </div>
+            <!-- Right connectors -->
+            <div class="bloomberg-connectors" style="height:160px">
+              <svg viewBox="0 0 60 160" preserveAspectRatio="none">
+                <line x1="0" y1="80" x2="60" y2="30" class="bloomberg-connector-line"/>
+                <line x1="0" y1="80" x2="60" y2="80" class="bloomberg-connector-line"/>
+                <line x1="0" y1="80" x2="60" y2="130" class="bloomberg-connector-line"/>
+              </svg>
+            </div>
+            <!-- Right: 판매처 (Buyers) -->
+            <div class="bloomberg-col">
+              <div class="bloomberg-col-label" style="color:#3A7ADF">판매처</div>
+              <a href="prototype-detail.html?company=%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90" class="bloomberg-node" id="bn-b1">
+                <span class="bloomberg-node-name">삼성전자</span>
+                <span class="bloomberg-node-pct">35%</span>
+              </a>
+              <a href="prototype-detail.html?company=SK%ED%95%98%EC%9D%B4%EB%8B%89%EC%8A%A4" class="bloomberg-node" id="bn-b2">
+                <span class="bloomberg-node-name">SK하이닉스</span>
+                <span class="bloomberg-node-pct">28%</span>
+              </a>
+              <a href="prototype-detail.html?company=%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%A0" class="bloomberg-node" id="bn-b3">
+                <span class="bloomberg-node-name">마이크론</span>
+                <span class="bloomberg-node-pct">18%</span>
+              </a>
+            </div>
+          </div>
+        </div>
         <div id="networkTable" style="display:none;padding-top:8px">
-          <table class="fin-table">
-            <thead><tr><th>유형</th><th>기업명</th><th>거래 비중</th><th>관계</th></tr></thead>
+          <table class="fin-table" style="color:#fff">
+            <thead><tr><th style="color:#9AA3B4">유형</th><th style="color:#9AA3B4">기업명</th><th style="color:#9AA3B4">거래 비중</th><th style="color:#9AA3B4">관계</th></tr></thead>
             <tbody>
-              <tr><td>판매처</td><td>삼성전자</td><td>35%</td><td>주요 고객</td></tr>
-              <tr><td>판매처</td><td>SK하이닉스</td><td>28%</td><td>주요 고객</td></tr>
-              <tr><td>판매처</td><td>마이크론</td><td>18%</td><td>해외 고객</td></tr>
-              <tr><td>구매처</td><td>도쿄정밀</td><td>32%</td><td>핵심 부품</td></tr>
-              <tr><td>구매처</td><td>한국소재</td><td>25%</td><td>소재 공급</td></tr>
-              <tr><td>구매처</td><td>글로벌테크</td><td>20%</td><td>부품 공급</td></tr>
+              <tr><td style="color:#3A7ADF">판매처</td><td style="color:#fff">삼성전자</td><td>35%</td><td style="color:#9AA3B4">주요 고객</td></tr>
+              <tr><td style="color:#3A7ADF">판매처</td><td style="color:#fff">SK하이닉스</td><td>28%</td><td style="color:#9AA3B4">주요 고객</td></tr>
+              <tr><td style="color:#3A7ADF">판매처</td><td style="color:#fff">마이크론</td><td>18%</td><td style="color:#9AA3B4">해외 고객</td></tr>
+              <tr><td style="color:#10B981">구매처</td><td style="color:#fff">도쿄정밀</td><td>32%</td><td style="color:#9AA3B4">핵심 부품</td></tr>
+              <tr><td style="color:#10B981">구매처</td><td style="color:#fff">한국소재</td><td>25%</td><td style="color:#9AA3B4">소재 공급</td></tr>
+              <tr><td style="color:#10B981">구매처</td><td style="color:#fff">글로벌테크</td><td>20%</td><td style="color:#9AA3B4">부품 공급</td></tr>
             </tbody>
           </table>
         </div>
-      </div>
-      <!-- L2 paywall overlay on network -->
-      <div class="paywall-overlay" style="border-radius:var(--radius);position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(transparent,rgba(255,255,255,.95));justify-content:flex-end;padding-bottom:16px">
-        <button class="paywall-cta" style="font-size:13px;padding:8px 18px">🔒 456🍪 전체 네트워크 열람</button>
       </div>
     </div>
 
@@ -523,7 +614,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
       <span class="design-note dn-green">ENPsthr0001 + ENPcapt0000</span>
       <span class="design-note dn-red" style="right:auto;left:-4px">L2: 39🍪</span>
       <div class="section-title"><span class="icon">🥧</span> 주주현황</div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 39🍪 필요</span>
+      <div>
         <div class="donut-wrap">
           <canvas id="donutChart" width="140" height="140"></canvas>
           <div style="flex:1;min-width:0">
@@ -539,10 +631,6 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
             </table>
           </div>
         </div>
-      </div>
-      <div class="paywall-overlay">
-        <div class="paywall-badge">5개 항목 중 2개 보유</div>
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 주주현황 열람 — 39🍪</button>
       </div>
     </div>
 
@@ -673,7 +761,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
       <span class="design-note dn-green">ENPfsdt0003, ENPfsdt0004</span>
       <span class="design-note dn-red" style="right:auto;left:-4px">L2: 456🍪</span>
       <div class="section-title"><span class="icon">📈</span> 투자 지표</div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div>
         <div class="invest-grid">
           <div class="invest-card"><div class="invest-card-label">시가총액</div><div class="invest-card-value" style="font-size:16px;color:var(--text-muted)">비상장 — 추정 불가</div></div>
           <div class="invest-card"><div class="invest-card-label">배당수익률</div><div class="invest-card-value" style="color:var(--text-muted)">—</div></div>
@@ -683,15 +772,13 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
           <div class="invest-card"><div class="invest-card-label">PSR</div><div class="invest-card-value">2.1<span style="font-size:14px;font-weight:500;color:var(--text-sub)">x</span></div></div>
         </div>
       </div>
-      <div class="paywall-overlay">
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 투자 지표 열람 — 456🍪</button>
-      </div>
     </div>
 
     <!-- S2: Valuation Metrics -->
-    <div class="section paywall-section">
+    <div class="section paywall-section" style="position:relative">
       <div class="section-title"><span class="icon">📊</span> 가치평가지표</div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div>
         <div class="chart-toggle" style="margin-bottom:12px">
           <button class="chart-toggle-btn active">PER</button>
           <button class="chart-toggle-btn">PBR</button>
@@ -700,15 +787,13 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
         <canvas id="valuationBars" width="1100" height="160"></canvas>
         <a href="#" class="compare-link" style="margin-top:12px;display:inline-flex">종목끼리 비교하기 →</a>
       </div>
-      <div class="paywall-overlay">
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 456🍪</button>
-      </div>
     </div>
 
     <!-- S3: Earnings -->
-    <div class="section paywall-section">
+    <div class="section paywall-section" style="position:relative">
       <div class="section-title"><span class="icon">💰</span> 실적</div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div>
         <div style="display:flex;gap:8px;margin-bottom:12px">
           <div class="chart-toggle"><button class="chart-toggle-btn active">분기</button><button class="chart-toggle-btn">연간</button></div>
           <div class="chart-toggle"><button class="chart-toggle-btn active">주당순이익</button><button class="chart-toggle-btn">매출</button></div>
@@ -726,15 +811,13 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
           </table>
         </div>
       </div>
-      <div class="paywall-overlay">
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 456🍪</button>
-      </div>
     </div>
 
     <!-- S4: Financial Stacked Bars -->
-    <div class="section paywall-section">
+    <div class="section paywall-section" style="position:relative">
       <div class="section-title"><span class="icon">📊</span> 재무</div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div>
         <div class="chart-toggle" style="margin-bottom:12px"><button class="chart-toggle-btn active">연간</button><button class="chart-toggle-btn">분기</button></div>
         <canvas id="financialBars" width="1100" height="240"></canvas>
         <div class="expandable-trigger" onclick="toggleExpand(this)">▼ 재무제표 보기</div>
@@ -749,21 +832,16 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
           </table>
         </div>
       </div>
-      <div class="paywall-overlay">
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 456🍪</button>
-      </div>
     </div>
 
     <!-- S5: Stability -->
-    <div class="section paywall-section">
+    <div class="section paywall-section" style="position:relative">
       <div class="section-title"><span class="icon">🛡️</span> 안정성</div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div>
         <div class="chart-toggle" style="margin-bottom:12px"><button class="chart-toggle-btn active">부채비율</button><button class="chart-toggle-btn">유동비율</button></div>
         <canvas id="stabilityChart" width="1100" height="200"></canvas>
         <a href="#" class="compare-link" style="margin-top:12px;display:inline-flex">동종업계와 비교하기 →</a>
-      </div>
-      <div class="paywall-overlay">
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 456🍪</button>
       </div>
     </div>
 
@@ -771,7 +849,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
     <div class="section paywall-section" style="position:relative">
       <span class="design-note dn-green">ENPfsdt0003</span>
       <div class="section-title"><span class="icon">📋</span> 손익계산서</div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div>
         <table class="income-table">
           <thead><tr><th>항목</th><th>2023</th><th>변동</th><th>2024</th><th>변동</th><th>2025</th></tr></thead>
           <tbody>
@@ -787,16 +866,14 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
           </tbody>
         </table>
       </div>
-      <div class="paywall-overlay">
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 456🍪</button>
-      </div>
     </div>
 
     <!-- S7: Balance Sheet -->
     <div class="section paywall-section" style="position:relative">
       <span class="design-note dn-green">ENPfsdt0004</span>
       <div class="section-title"><span class="icon">📋</span> 재무상태표</div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div>
         <table class="income-table">
           <thead><tr><th>항목</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
           <tbody>
@@ -812,16 +889,14 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
           </tbody>
         </table>
       </div>
-      <div class="paywall-overlay">
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 456🍪</button>
-      </div>
     </div>
 
     <!-- S8: Cash Flow -->
     <div class="section paywall-section" style="position:relative">
       <span class="design-note dn-green">ENPcfan0002</span>
       <div class="section-title"><span class="icon">💵</span> 현금흐름 <span class="cashflow-badge">A+</span></div>
-      <div class="paywall-blur">
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div>
         <canvas id="cashFlowChart" width="1100" height="200"></canvas>
         <table class="fin-table" style="margin-top:16px">
           <thead><tr><th>항목</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
@@ -831,10 +906,6 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
             <tr><td>재무활동</td><td>500</td><td class="negative">-200</td><td class="negative">-300</td><td class="negative">-400</td><td class="negative">-500</td></tr>
           </tbody>
         </table>
-      </div>
-      <div class="paywall-overlay">
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 456🍪</button>
-        <div class="paywall-bundle">전체 열람 — 414🍪 (25% 할인)</div>
       </div>
     </div>
 
@@ -853,8 +924,9 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
         <div class="person-card"><div class="person-avatar" style="background:var(--red-500)">최</div><div><div class="person-name">최민호</div><div class="person-title">영업본부장</div><div class="person-contact">연락처 보기 (15🍪)</div></div></div>
       </div>
     </div>
-    <div class="section paywall-section">
-      <div class="paywall-blur">
+    <div class="section paywall-section" style="position:relative">
+      <span class="paywall-inline-badge">🔒 열람 시 60🍪 필요</span>
+      <div>
         <div class="people-grid">
           <div class="person-card"><div class="person-avatar" style="background:var(--slate-400)">A</div><div><div class="person-name">XXXXXX</div><div class="person-title">반도체사업부장</div></div></div>
           <div class="person-card"><div class="person-avatar" style="background:var(--slate-400)">B</div><div><div class="person-name">XXXXXX</div><div class="person-title">품질관리팀장</div></div></div>
@@ -863,10 +935,6 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
           <div class="person-card"><div class="person-avatar" style="background:var(--slate-400)">E</div><div><div class="person-name">XXXXXX</div><div class="person-title">생산관리부장</div></div></div>
           <div class="person-card"><div class="person-avatar" style="background:var(--slate-400)">F</div><div><div class="person-name">XXXXXX</div><div class="person-title">마케팅팀장</div></div></div>
         </div>
-      </div>
-      <div class="paywall-overlay">
-        <div class="paywall-badge">12명 중 6명 추가 열람 가능</div>
-        <button class="paywall-cta"><span class="cookie-icon">🍪</span> 인물 심화 열람 — 60🍪</button>
       </div>
     </div>
   </div>
@@ -877,8 +945,8 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
       <div class="similar-header">
         <div class="section-title" style="margin-bottom:0"><span class="icon">🏢</span> 유사 기업 추천</div>
         <div class="view-toggle" id="similarViewToggle">
-          <button class="view-toggle-btn active" onclick="toggleView('similar','card',this)">카드</button>
-          <button class="view-toggle-btn" onclick="toggleView('similar','grid',this)">그리드</button>
+          <button class="view-toggle-btn" onclick="toggleView('similar','card',this)">카드</button>
+          <button class="view-toggle-btn active" onclick="toggleView('similar','grid',this)">그리드</button>
           <button class="view-toggle-btn" onclick="toggleView('similar','compare',this)">비교</button>
         </div>
       </div>
@@ -896,17 +964,18 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
 
   <!-- ═══ COMPETITORS TAB (B8) ═══ -->
   <div class="tab-panel" id="panel-competitors">
-    <div class="section" style="position:relative">
-      <span class="design-note dn-yellow">3D CSS perspective + canvas gradient fills</span>
-      <div class="competitor-banner">⚠ 경쟁사 분석 로직 개발 중 — 아래 시각화는 데모 데이터로 구성된 목표 UX입니다.</div>
 
-      <!-- 3D-tilted Radar -->
+    <!-- A. Radar Chart (improved) -->
+    <div class="section" style="position:relative">
+      <span class="design-note dn-yellow">Improved radar with 400x400, gradient fills, value labels</span>
+      <div class="competitor-banner">⚠ 경쟁사 분석 로직 개발 중 — 아래 시각화는 데모 데이터로 구성된 목표 UX입니다.</div>
       <div class="section-title"><span class="icon">🕸</span> 경쟁력 레이더 차트</div>
       <div class="radar-wrap">
-        <div style="perspective:600px">
-          <canvas id="radarChart" width="380" height="380" style="transform:rotateX(15deg) rotateY(-5deg)"></canvas>
+        <div>
+          <canvas id="radarChart" width="440" height="440"></canvas>
         </div>
         <div class="radar-legend">
+          <div style="font-size:13px;font-weight:600;margin-bottom:10px">범례</div>
           <div class="radar-legend-item"><div class="radar-legend-dot" style="background:var(--brand)"></div> 에이치비테크놀로지</div>
           <div class="radar-legend-item"><div class="radar-legend-dot" style="background:var(--emerald-500)"></div> 세미텍인스트루먼트</div>
           <div class="radar-legend-item"><div class="radar-legend-dot" style="background:var(--amber-500)"></div> 프로브앤텍</div>
@@ -916,35 +985,93 @@ body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
       </div>
     </div>
 
-    <!-- Revenue Bubbles -->
+    <!-- B. Revenue Comparison - Horizontal Bar Chart -->
     <div class="section">
-      <div class="section-title"><span class="icon">🫧</span> 매출 규모 비교 버블</div>
-      <canvas id="bubbleChart" width="1100" height="300"></canvas>
+      <div class="section-title"><span class="icon">📊</span> 매출 규모 비교</div>
+      <div class="hbar-chart" id="revenueHBars">
+        <div class="hbar-row">
+          <div class="hbar-label"><div class="hbar-label-logo" style="background:#DC2626">케</div> 케이반도체</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:100%;background:var(--slate-400)">456억</div></div>
+          <div class="hbar-value">456억</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label"><div class="hbar-label-logo" style="background:var(--brand)">HB</div> 에이치비테크놀로지</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:75%;background:var(--brand)">342억</div></div>
+          <div class="hbar-value" style="color:var(--brand)">342억</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label"><div class="hbar-label-logo" style="background:#10B981">세</div> 세미텍인스트루먼트</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:63%;background:var(--slate-400)">287억</div></div>
+          <div class="hbar-value">287억</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-label"><div class="hbar-label-logo" style="background:#F59E0B">프</div> 프로브앤텍</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:43%;background:var(--slate-400)">198억</div></div>
+          <div class="hbar-value">198억</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Animated Comparison Bars -->
-    <div class="section" id="compBarsSection">
-      <div class="section-title"><span class="icon">📊</span> 핵심 지표 비교</div>
-      <div id="compBars"></div>
+    <!-- C. Key Metrics Card Grid -->
+    <div class="section">
+      <div class="section-title"><span class="icon">📈</span> 핵심 지표 비교</div>
+      <div class="metric-card-grid" id="compMetricCards">
+        <div class="metric-compare-card">
+          <div class="mc-label">매출액</div>
+          <div class="mc-value">342억</div>
+          <div class="mc-avg">산업 평균 <strong>321억</strong></div>
+          <div class="mc-rank">2위/4개</div>
+        </div>
+        <div class="metric-compare-card">
+          <div class="mc-label">영업이익</div>
+          <div class="mc-value">28억</div>
+          <div class="mc-avg">산업 평균 <strong>26억</strong></div>
+          <div class="mc-rank">2위/4개</div>
+        </div>
+        <div class="metric-compare-card">
+          <div class="mc-label">직원수</div>
+          <div class="mc-value">187명</div>
+          <div class="mc-avg">산업 평균 <strong>184명</strong></div>
+          <div class="mc-rank">2위/4개</div>
+        </div>
+        <div class="metric-compare-card">
+          <div class="mc-label">매출성장률</div>
+          <div class="mc-value">+4.3%</div>
+          <div class="mc-avg">산업 평균 <strong>+4.6%</strong></div>
+          <div class="mc-rank">3위/4개</div>
+        </div>
+        <div class="metric-compare-card">
+          <div class="mc-label">영업이익률</div>
+          <div class="mc-value">8.2%</div>
+          <div class="mc-avg">산업 평균 <strong>7.9%</strong></div>
+          <div class="mc-rank">2위/4개</div>
+        </div>
+        <div class="metric-compare-card">
+          <div class="mc-label">업력</div>
+          <div class="mc-value">14년</div>
+          <div class="mc-avg">산업 평균 <strong>15년</strong></div>
+          <div class="mc-rank">3위/4개</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Comparison Table -->
+    <!-- D. Improved Comparison Table -->
     <div class="section">
       <div class="section-title"><span class="icon">📋</span> 경쟁사 비교 테이블</div>
-      <table class="comp-table">
+      <table class="comp-table" id="compTable">
         <thead>
-          <tr><th></th><th class="target">에이치비테크놀로지</th><th>세미텍인스트루먼트</th><th>프로브앤텍</th><th>케이반도체</th></tr>
+          <tr><th></th><th class="target" style="background:var(--blue-50);color:var(--brand);font-weight:700">에이치비테크놀로지</th><th>세미텍인스트루먼트</th><th>프로브앤텍</th><th>케이반도체</th></tr>
         </thead>
         <tbody>
-          <tr><td>매출액</td><td class="target">342억</td><td class="worse">287억</td><td class="worse">198억</td><td class="better">456억</td></tr>
-          <tr><td>영업이익</td><td class="target">28억</td><td class="worse">22억</td><td class="worse">15억</td><td class="better">38억</td></tr>
-          <tr><td>영업이익률</td><td class="target better">8.2%</td><td>7.7%</td><td>7.6%</td><td>8.3%</td></tr>
-          <tr><td>직원수</td><td class="target">187명</td><td class="worse">145명</td><td class="worse">92명</td><td class="better">310명</td></tr>
+          <tr><td>매출액</td><td class="target">342억</td><td>287억</td><td>198억</td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">456억</span></td></tr>
+          <tr><td>영업이익</td><td class="target">28억</td><td>22억</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">15억</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">38억</span></td></tr>
+          <tr><td>영업이익률</td><td class="target"><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">8.2%</span></td><td>7.7%</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">7.6%</span></td><td>8.3%</td></tr>
+          <tr><td>순이익</td><td class="target">20억</td><td>16억</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">11억</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">30억</span></td></tr>
+          <tr><td>직원수</td><td class="target">187명</td><td>145명</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">92명</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">310명</span></td></tr>
+          <tr><td>매출 성장률</td><td class="target">+4.3%</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">+2.1%</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">+8.7%</span></td><td>+3.2%</td></tr>
+          <tr><td>부채비율</td><td class="target">65%</td><td>72%</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">85%</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">58%</span></td></tr>
           <tr><td>설립연도</td><td class="target">2011</td><td>2008</td><td>2015</td><td>2003</td></tr>
-          <tr><td>매출 성장률</td><td class="target">+4.3%</td><td class="worse">+2.1%</td><td class="better">+8.7%</td><td class="worse">+3.2%</td></tr>
-          <tr><td>부채비율</td><td class="target better">65%</td><td>72%</td><td class="worse">85%</td><td>58%</td></tr>
-          <tr><td>특허수</td><td class="target">5건</td><td>3건</td><td class="worse">2건</td><td class="better">8건</td></tr>
-          <tr><td>ROE</td><td class="target better">14.2%</td><td class="worse">11.8%</td><td class="worse">9.5%</td><td>13.6%</td></tr>
+          <tr><td>지역</td><td class="target">서울 강남</td><td>경기 수원</td><td>서울 금천</td><td>경기 화성</td></tr>
         </tbody>
       </table>
     </div>
@@ -1118,8 +1245,7 @@ function switchTab(tabId, el) {
   var panel = document.getElementById('panel-' + tabId);
   if (panel) panel.classList.add('active');
   window.scrollTo({top: document.querySelector('.tabs-wrap').offsetTop - 56, behavior: 'smooth'});
-  // Trigger animations on tab switch
-  if (tabId === 'competitors') { setTimeout(animateCompBars, 200); }
+  // Trigger chart drawing on tab switch
   if (tabId === 'finance') {
     setTimeout(function(){
       drawValuationBars(); drawEarningsChart(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
@@ -1150,7 +1276,7 @@ function toggleCollapse(row) {
 
 function toggleView(section, mode, btn) {
   if (section === 'network') {
-    document.getElementById('networkCanvas').style.display = mode === 'graph' ? '' : 'none';
+    document.getElementById('networkGraph').style.display = mode === 'graph' ? '' : 'none';
     document.getElementById('networkTable').style.display = mode === 'table' ? '' : 'none';
     btn.parentElement.querySelectorAll('.chart-toggle-btn').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
@@ -1162,7 +1288,7 @@ function toggleView(section, mode, btn) {
   } else if (section === 'similar') {
     btn.parentElement.querySelectorAll('.view-toggle-btn').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
-    renderSimilarCards('similarCardsMain', mode === 'grid' ? 15 : 5, mode);
+    renderSimilarCards('similarCardsMain', mode === 'grid' ? SIMILAR.length : (mode === 'compare' ? SIMILAR.length : 5), mode);
   }
 }
 
@@ -1171,7 +1297,7 @@ function toggleDesignNotes(btn) {
   btn.style.background = document.body.classList.contains('show-design-notes') ? '#DC2626' : '';
 }
 
-// ══ SIMILAR COMPANIES DATA (15+) ══
+// ══ SIMILAR COMPANIES DATA (18 companies, diverse industries) ══
 var SIMILAR = [
   {name:'세미텍인스트루먼트',desc:'반도체 테스트 솔루션 전문',revenue:287,profit:22,profitG:6.8,emp:145,color:'#059669',chips:['동일 업종','유사 규모'],best:true},
   {name:'프로브앤텍',desc:'프로브카드·소켓 제조',revenue:198,profit:15,profitG:8.7,emp:92,color:'#D97706',chips:['동일 업종','같은 지역']},
@@ -1179,15 +1305,18 @@ var SIMILAR = [
   {name:'테크윈시스템즈',desc:'전자부품 검사장비',revenue:312,profit:26,profitG:5.4,emp:178,color:'#8B5CF6',chips:['유사 규모','같은 지역']},
   {name:'나노프리시전',desc:'웨이퍼 정밀측정장비',revenue:234,profit:19,profitG:11.2,emp:125,color:'#DC2626',chips:['동일 업종','유사 규모']},
   {name:'에이엠테크놀로지',desc:'반도체 패키징 장비',revenue:380,profit:32,profitG:4.1,emp:220,color:'#0549CC',chips:['동일 업종','유사 매출']},
-  {name:'한일정밀기기',desc:'정밀 검사·측정장비',revenue:165,profit:12,profitG:7.3,emp:78,color:'#14B8A6',chips:['동일 업종','유사 규모']},
+  {name:'한일정밀기기',desc:'정밀 검사·측정장비 제조',revenue:165,profit:12,profitG:7.3,emp:78,color:'#14B8A6',chips:['동일 업종','유사 규모']},
   {name:'디에스이',desc:'반도체 디스플레이 검사',revenue:290,profit:24,profitG:6.1,emp:160,color:'#EA580C',chips:['동일 업종','같은 지역']},
   {name:'옵토전자',desc:'광학 검사 솔루션',revenue:215,profit:18,profitG:9.5,emp:110,color:'#059669',chips:['유사 규모','유사 매출']},
-  {name:'마이크로인피니티',desc:'초소형 반도체 테스트',revenue:142,profit:10,profitG:14.2,emp:65,color:'#8B5CF6',chips:['동일 업종']},
+  {name:'바이오셀텍',desc:'바이오 분석장비·진단키트',revenue:310,profit:25,profitG:12.3,emp:140,color:'#8B5CF6',chips:['유사 규모','유사 매출']},
   {name:'씨에스텍',desc:'반도체 세정·코팅 장비',revenue:328,profit:27,profitG:3.8,emp:195,color:'#D97706',chips:['동일 업종','유사 매출']},
-  {name:'퀀텀솔루션즈',desc:'양자 반도체 검사 R&D',revenue:88,profit:4,profitG:22.5,emp:42,color:'#DC2626',chips:['동일 업종']},
+  {name:'뉴로사이언스AI',desc:'AI 반도체 설계·검증 플랫폼',revenue:145,profit:8,profitG:28.5,emp:72,color:'#DC2626',chips:['동일 업종']},
   {name:'인텍플러스',desc:'비전 검사 시스템',revenue:410,profit:35,profitG:5.2,emp:280,color:'#0549CC',chips:['동일 업종','같은 지역']},
   {name:'유니테스트',desc:'반도체·PCB 검사장비',revenue:520,profit:42,profitG:2.8,emp:350,color:'#14B8A6',chips:['동일 업종','유사 매출']},
-  {name:'넥스틴',desc:'반도체 웨이퍼 결함 검사',revenue:175,profit:14,profitG:16.8,emp:85,color:'#EA580C',chips:['동일 업종','유사 규모']}
+  {name:'넥스틴',desc:'반도체 웨이퍼 결함 검사',revenue:175,profit:14,profitG:16.8,emp:85,color:'#EA580C',chips:['동일 업종','유사 규모']},
+  {name:'그린에너지텍',desc:'태양광·ESS 제조장비',revenue:275,profit:20,profitG:9.1,emp:130,color:'#059669',chips:['유사 규모','유사 매출']},
+  {name:'스마트로지스',desc:'스마트 물류·자동화 시스템',revenue:340,profit:28,profitG:7.6,emp:190,color:'#D97706',chips:['유사 규모','유사 매출']},
+  {name:'파인매뉴팩처링',desc:'정밀 부품 CNC 가공 전문',revenue:260,profit:21,profitG:5.8,emp:155,color:'#8B5CF6',chips:['유사 규모','같은 지역']}
 ];
 
 var CHIP_CLASS = {'동일 업종':'chip-industry','유사 규모':'chip-scale','같은 지역':'chip-region','유사 매출':'chip-revenue'};
@@ -1343,136 +1472,8 @@ function drawWaterfallChart() {
   });
 }
 
-// ══ NETWORK GRAPH (Canvas with drag) ══
-var netNodes = [];
-var netDragging = null;
-var netAnimId = null;
-
-function initNetworkNodes() {
-  var W = 1100, H = 380;
-  var cx = W / 2, cy = H / 2;
-  netNodes = [
-    {id:'center',name:'에이치비테크놀로지',x:cx,y:cy,r:40,color:'#0549CC',type:'center',vx:0,vy:0,tx:cx,ty:cy},
-    {id:'b1',name:'삼성전자',pct:'35%',x:cx-200,y:cy-80,r:32,color:'#3A7ADF',type:'buyer',vx:0,vy:0,tx:cx-200,ty:cy-80},
-    {id:'b2',name:'SK하이닉스',pct:'28%',x:cx-220,y:cy+20,r:28,color:'#3A7ADF',type:'buyer',vx:0,vy:0,tx:cx-220,ty:cy+20},
-    {id:'b3',name:'마이크론',pct:'18%',x:cx-180,y:cy+100,r:24,color:'#3A7ADF',type:'buyer',vx:0,vy:0,tx:cx-180,ty:cy+100},
-    {id:'s1',name:'도쿄정밀',pct:'32%',x:cx+200,y:cy-80,r:30,color:'#10B981',type:'supplier',vx:0,vy:0,tx:cx+200,ty:cy-80},
-    {id:'s2',name:'한국소재',pct:'25%',x:cx+220,y:cy+20,r:26,color:'#10B981',type:'supplier',vx:0,vy:0,tx:cx+220,ty:cy+20},
-    {id:'s3',name:'글로벌테크',pct:'20%',x:cx+180,y:cy+100,r:22,color:'#10B981',type:'supplier',vx:0,vy:0,tx:cx+180,ty:cy+100}
-  ];
-}
-
-function drawNetworkGraph() {
-  var canvas = document.getElementById('networkCanvas');
-  var W = 1100, H = 380;
-  var ctx = hiDPI(canvas, W, H);
-  ctx.clearRect(0, 0, W, H);
-  var center = netNodes[0];
-
-  // Labels
-  ctx.fillStyle = '#6B7689'; ctx.font = 'bold 12px Pretendard Variable'; ctx.textAlign = 'center';
-  ctx.fillText('판매처 (Buyers)', W / 2 - 200, 24);
-  ctx.fillText('구매처 (Suppliers)', W / 2 + 200, 24);
-
-  // Edges
-  netNodes.forEach(function(n) {
-    if (n.type === 'center') return;
-    ctx.beginPath(); ctx.moveTo(center.x, center.y); ctx.lineTo(n.x, n.y);
-    ctx.strokeStyle = n.color; ctx.lineWidth = 2; ctx.globalAlpha = 0.3; ctx.stroke(); ctx.globalAlpha = 1;
-  });
-
-  // Nodes
-  netNodes.forEach(function(n) {
-    // Shadow for 3D effect
-    ctx.save();
-    ctx.beginPath(); ctx.arc(n.x + 3, n.y + 4, n.r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0,0,0,0.08)'; ctx.fill();
-    ctx.restore();
-
-    // Node circle
-    var grad = ctx.createRadialGradient(n.x - n.r * 0.3, n.y - n.r * 0.3, 2, n.x, n.y, n.r);
-    grad.addColorStop(0, n.color + 'dd'); grad.addColorStop(1, n.color);
-    ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-    ctx.fillStyle = grad; ctx.fill();
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.5; ctx.stroke();
-
-    // Text
-    ctx.fillStyle = '#fff'; ctx.textAlign = 'center';
-    if (n.type === 'center') {
-      ctx.font = 'bold 11px Pretendard Variable';
-      ctx.fillText('에이치비', n.x, n.y - 3);
-      ctx.font = '9px Pretendard Variable'; ctx.fillStyle = 'rgba(255,255,255,.7)';
-      ctx.fillText('테크놀로지', n.x, n.y + 10);
-    } else {
-      ctx.font = '10px Pretendard Variable';
-      ctx.fillText(n.name, n.x, n.y - 2);
-      ctx.font = '9px Pretendard Variable'; ctx.fillStyle = 'rgba(255,255,255,.8)';
-      ctx.fillText(n.pct, n.x, n.y + 10);
-    }
-  });
-}
-
-function netAnimate() {
-  var k = 0.05, damping = 0.85;
-  netNodes.forEach(function(n) {
-    if (n === netDragging) return;
-    var dx = n.tx - n.x, dy = n.ty - n.y;
-    n.vx = (n.vx + dx * k) * damping;
-    n.vy = (n.vy + dy * k) * damping;
-    n.x += n.vx; n.y += n.vy;
-  });
-  drawNetworkGraph();
-  netAnimId = requestAnimationFrame(netAnimate);
-}
-
-function setupNetworkDrag() {
-  var canvas = document.getElementById('networkCanvas');
-  var rect;
-  canvas.addEventListener('mousedown', function(e) {
-    rect = canvas.getBoundingClientRect();
-    var mx = (e.clientX - rect.left) * (1100 / rect.width);
-    var my = (e.clientY - rect.top) * (380 / rect.height);
-    netNodes.forEach(function(n) {
-      var d = Math.sqrt((mx - n.x) ** 2 + (my - n.y) ** 2);
-      if (d < n.r + 5) netDragging = n;
-    });
-  });
-  canvas.addEventListener('mousemove', function(e) {
-    if (!netDragging) {
-      // Hover detection for tooltip
-      rect = canvas.getBoundingClientRect();
-      var mx = (e.clientX - rect.left) * (1100 / rect.width);
-      var my = (e.clientY - rect.top) * (380 / rect.height);
-      var found = false;
-      netNodes.forEach(function(n) {
-        if (Math.sqrt((mx - n.x) ** 2 + (my - n.y) ** 2) < n.r + 5) {
-          canvas.style.cursor = 'pointer';
-          canvas.title = n.name + (n.pct ? ' ' + n.pct : '') + ' - 상세 보기';
-          found = true;
-        }
-      });
-      if (!found) { canvas.style.cursor = 'grab'; canvas.title = ''; }
-      return;
-    }
-    rect = canvas.getBoundingClientRect();
-    netDragging.x = (e.clientX - rect.left) * (1100 / rect.width);
-    netDragging.y = (e.clientY - rect.top) * (380 / rect.height);
-    netDragging.tx = netDragging.x;
-    netDragging.ty = netDragging.y;
-  });
-  canvas.addEventListener('mouseup', function() { netDragging = null; });
-  canvas.addEventListener('mouseleave', function() { netDragging = null; });
-  canvas.addEventListener('click', function(e) {
-    rect = canvas.getBoundingClientRect();
-    var mx = (e.clientX - rect.left) * (1100 / rect.width);
-    var my = (e.clientY - rect.top) * (380 / rect.height);
-    netNodes.forEach(function(n) {
-      if (n.type !== 'center' && Math.sqrt((mx - n.x) ** 2 + (my - n.y) ** 2) < n.r + 5) {
-        window.location = 'prototype-detail.html?company=' + encodeURIComponent(n.name);
-      }
-    });
-  });
-}
+// ══ NETWORK GRAPH (Bloomberg Terminal HTML/CSS — no canvas) ══
+// Network is now pure HTML/CSS, no JS needed for rendering.
 
 // ══ SHAREHOLDER DONUT ══
 function drawShareholderDonut() {
@@ -1558,19 +1559,28 @@ function drawEmployeeChart() {
   });
 }
 
-// ══ RADAR CHART (3D-tilted) ══
+// ══ RADAR CHART (Improved, larger 440x440 with value labels) ══
 function drawRadarChart() {
   var canvas = document.getElementById('radarChart');
-  var ctx = hiDPI(canvas, 380, 380);
-  var cx = 190, cy = 190, R = 140;
+  var SIZE = 440;
+  var ctx = hiDPI(canvas, SIZE, SIZE);
+  var cx = SIZE / 2, cy = SIZE / 2, R = 170;
   var labels = ['매출액', '영업이익', '직원수', '업력', '특허수', '매출성장률'];
+  var actualValues = [
+    ['342억','287억','198억'],
+    ['28억','22억','15억'],
+    ['187명','145명','92명'],
+    ['14년','17년','10년'],
+    ['5건','3건','2건'],
+    ['+4.3%','+2.1%','+8.7%']
+  ];
   var companies = [
-    {data:[68,56,62,48,80,72],color:'#0549CC',alpha:0.3},
-    {data:[58,44,48,58,60,42],color:'#10B981',alpha:0.2},
-    {data:[40,30,30,35,45,85],color:'#F59E0B',alpha:0.2}
+    {data:[68,56,62,48,80,72],color:'#0549CC',alpha:0.25,name:'에이치비테크놀로지'},
+    {data:[58,44,48,58,60,42],color:'#10B981',alpha:0.15,name:'세미텍인스트루먼트'},
+    {data:[40,30,30,35,45,85],color:'#F59E0B',alpha:0.15,name:'프로브앤텍'}
   ];
 
-  // Grid rings with gradient fill for 3D effect
+  // Grid rings with gradient fill
   for (var ring = 5; ring >= 1; ring--) {
     var r = (ring / 5) * R;
     ctx.beginPath();
@@ -1586,17 +1596,25 @@ function drawRadarChart() {
       ctx.fillStyle = grd; ctx.fill();
     }
     ctx.strokeStyle = '#CCD2DB'; ctx.lineWidth = 0.8; ctx.stroke();
+    // Ring value
+    if (ring < 5) {
+      ctx.fillStyle = '#9AA3B4'; ctx.font = '10px Pretendard Variable'; ctx.textAlign = 'center';
+      ctx.fillText((ring * 20) + '', cx + 4, cy - r + 12);
+    }
   }
 
-  // Axis lines & labels
+  // Axis lines & labels with actual values
   labels.forEach(function(l, i) {
     var a = (i / 6) * Math.PI * 2 - Math.PI / 2;
     var x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R;
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y);
     ctx.strokeStyle = '#CCD2DB'; ctx.lineWidth = 0.5; ctx.stroke();
-    var lx = cx + Math.cos(a) * (R + 22), ly = cy + Math.sin(a) * (R + 22);
-    ctx.fillStyle = '#4A5567'; ctx.font = '12px Pretendard Variable'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    var lx = cx + Math.cos(a) * (R + 30), ly = cy + Math.sin(a) * (R + 30);
+    ctx.fillStyle = '#374151'; ctx.font = 'bold 12px Pretendard Variable'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(l, lx, ly);
+    // Show target company value below label
+    ctx.fillStyle = '#0549CC'; ctx.font = '11px Pretendard Variable';
+    ctx.fillText(actualValues[i][0], lx, ly + 14);
   });
 
   // Data polygons with gradient fills
@@ -1609,84 +1627,24 @@ function drawRadarChart() {
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.closePath();
-    var alphaHex = Math.round(c.alpha * 255).toString(16).padStart(2, '0');
-    ctx.fillStyle = c.color + alphaHex; ctx.fill();
-    ctx.strokeStyle = c.color; ctx.lineWidth = 2; ctx.stroke();
+    // Gradient fill
+    var grdF = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    grdF.addColorStop(0, c.color + '40');
+    grdF.addColorStop(1, c.color + '18');
+    ctx.fillStyle = grdF; ctx.fill();
+    ctx.strokeStyle = c.color; ctx.lineWidth = 2.5; ctx.stroke();
     // Points
     c.data.forEach(function(v, i) {
       var a = (i / 6) * Math.PI * 2 - Math.PI / 2;
       var r2 = (v / 100) * R;
-      ctx.beginPath(); ctx.arc(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2, 4, 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2, 5, 0, Math.PI * 2);
       ctx.fillStyle = c.color; ctx.fill();
-      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
     });
   });
 }
 
-// ══ BUBBLE CHART (Revenue bubbles with 3D sphere) ══
-function drawBubbleChart() {
-  var canvas = document.getElementById('bubbleChart');
-  var W = 1100, H = 300;
-  var ctx = hiDPI(canvas, W, H);
-  ctx.clearRect(0, 0, W, H);
-
-  var companies = [
-    {name:'에이치비테크놀로지',revenue:342,color:'#0549CC',x:280,y:150},
-    {name:'세미텍인스트루먼트',revenue:287,color:'#10B981',x:480,y:140},
-    {name:'프로브앤텍',revenue:198,color:'#F59E0B',x:650,y:160},
-    {name:'케이반도체',revenue:456,color:'#DC2626',x:850,y:130}
-  ];
-
-  companies.forEach(function(c) {
-    var r = Math.sqrt(c.revenue) * 2.2;
-    // 3D sphere effect
-    var grad = ctx.createRadialGradient(c.x - r * 0.25, c.y - r * 0.3, r * 0.1, c.x, c.y, r);
-    grad.addColorStop(0, '#ffffff88'); grad.addColorStop(0.3, c.color + 'cc'); grad.addColorStop(1, c.color + '66');
-    // Shadow
-    ctx.beginPath(); ctx.arc(c.x + 4, c.y + 6, r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0,0,0,0.08)'; ctx.fill();
-    // Sphere
-    ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, Math.PI * 2);
-    ctx.fillStyle = grad; ctx.fill();
-    ctx.strokeStyle = c.color; ctx.lineWidth = 2; ctx.globalAlpha = 0.5; ctx.stroke(); ctx.globalAlpha = 1;
-    // Label
-    ctx.fillStyle = '#fff'; ctx.font = 'bold 12px Pretendard Variable'; ctx.textAlign = 'center';
-    ctx.fillText(c.name.length > 6 ? c.name.substring(0, 6) + '..' : c.name, c.x, c.y - 4);
-    ctx.font = '11px Pretendard Variable';
-    ctx.fillText(c.revenue + '억', c.x, c.y + 12);
-  });
-}
-
-// ══ ANIMATED COMPARISON BARS ══
-function animateCompBars() {
-  var el = document.getElementById('compBars');
-  var metrics = [
-    {label:'매출액 (억)',vals:[{name:'에이치비테크놀로지',v:342,color:'#0549CC'},{name:'세미텍인스트루먼트',v:287,color:'#10B981'},{name:'프로브앤텍',v:198,color:'#F59E0B'},{name:'케이반도체',v:456,color:'#DC2626'}]},
-    {label:'영업이익 (억)',vals:[{name:'에이치비테크놀로지',v:28,color:'#0549CC'},{name:'세미텍인스트루먼트',v:22,color:'#10B981'},{name:'프로브앤텍',v:15,color:'#F59E0B'},{name:'케이반도체',v:38,color:'#DC2626'}]},
-    {label:'매출 성장률 (%)',vals:[{name:'에이치비테크놀로지',v:4.3,color:'#0549CC'},{name:'세미텍인스트루먼트',v:2.1,color:'#10B981'},{name:'프로브앤텍',v:8.7,color:'#F59E0B'},{name:'케이반도체',v:3.2,color:'#DC2626'}]},
-    {label:'ROE (%)',vals:[{name:'에이치비테크놀로지',v:14.2,color:'#0549CC'},{name:'세미텍인스트루먼트',v:11.8,color:'#10B981'},{name:'프로브앤텍',v:9.5,color:'#F59E0B'},{name:'케이반도체',v:13.6,color:'#DC2626'}]}
-  ];
-
-  var html = '';
-  metrics.forEach(function(m) {
-    var maxV = Math.max.apply(null, m.vals.map(function(v){ return v.v; }));
-    html += '<div style="margin-bottom:20px"><div style="font-size:13px;font-weight:600;margin-bottom:8px">' + m.label + '</div>';
-    m.vals.forEach(function(v) {
-      var pct = (v.v / maxV * 100).toFixed(0);
-      html += '<div class="comp-bar-wrap"><div class="comp-bar-label"><span style="font-weight:500">' + v.name + '</span><span style="font-weight:600">' + v.v + '</span></div>' +
-        '<div class="comp-bar-track"><div class="comp-bar-fill" data-width="' + pct + '" style="background:' + v.color + '">' + v.v + '</div></div></div>';
-    });
-    html += '</div>';
-  });
-  el.innerHTML = html;
-
-  // Animate after render
-  setTimeout(function() {
-    el.querySelectorAll('.comp-bar-fill').forEach(function(bar) {
-      bar.style.width = bar.dataset.width + '%';
-    });
-  }, 50);
-}
+// ══ BUBBLE CHART & ANIMATED BARS — removed, replaced by HTML horizontal bars and metric cards ══
 
 // ══ FINANCE TAB CHARTS ══
 
@@ -2052,17 +2010,13 @@ document.addEventListener('click', function(e) {
 });
 
 // ══ INIT ══
-initNetworkNodes();
 drawRevenueChart();
 drawWaterfallChart();
 drawShareholderDonut();
 drawEmployeeChart();
 drawRadarChart();
-drawBubbleChart();
 renderSimilarCards('similarCardsPreview', 5, 'card');
-renderSimilarCards('similarCardsMain', 15, 'card');
-setupNetworkDrag();
-netAnimate();
+renderSimilarCards('similarCardsMain', SIMILAR.length, 'grid');
 
 // Close thread on Escape
 document.addEventListener('keydown', function(e) {
