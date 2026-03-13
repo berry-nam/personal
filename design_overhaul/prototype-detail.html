@@ -404,7 +404,46 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .el-separator{width:1px;height:16px;background:var(--border);margin:0 4px}
 .el-summary{font-size:12.5px;color:var(--text-sub)}
 
-/* ══ Responsive additions for S2/S3 ══ */
+/* ══ S2: Performance comparison cards ══ */
+.perf-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.perf-card{background:var(--slate-50);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.perf-card-period{font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:10px;letter-spacing:.5px}
+.perf-card-row{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px}
+.perf-label{color:var(--text-sub);font-weight:500}
+.perf-value{font-weight:700;font-variant-numeric:tabular-nums}
+.perf-value.positive{color:var(--emerald-600)}
+.perf-value.negative{color:var(--red-600)}
+.perf-value.muted{color:var(--text-muted)}
+.perf-bar-wrap{height:6px;background:var(--slate-100);border-radius:3px;margin-bottom:6px;overflow:hidden}
+.perf-bar{height:100%;border-radius:3px;transition:width .6s}
+.perf-bar.company{background:var(--brand)}
+.perf-bar.industry{background:var(--slate-300)}
+
+/* ══ S3: Earnings 2-column layout ══ */
+.earnings-2col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:16px}
+.earnings-col{min-width:0}
+
+/* ══ S3a: Analyst Insights ══ */
+.analyst-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.analyst-card{background:var(--slate-50);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px}
+.analyst-card-title{font-size:12.5px;font-weight:600;color:var(--text-sub);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.analyst-card-value{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.credit-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--red-500),var(--amber-500),var(--emerald-500),var(--blue-500));position:relative;margin:12px 0 8px}
+.credit-marker{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--brand);transform:translateX(-50%)}
+.credit-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);font-weight:600}
+.range-track{height:8px;background:var(--slate-100);border-radius:4px;position:relative;margin:16px 0 8px}
+.range-fill{position:absolute;height:100%;background:linear-gradient(90deg,var(--blue-200),var(--brand));border-radius:4px}
+.range-marker{position:absolute;top:-6px;width:20px;height:20px;border-radius:50%;background:var(--brand);border:3px solid #fff;box-shadow:var(--shadow);transform:translateX(-50%)}
+.range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);font-weight:500}
+.rating-history-table{width:100%;border-collapse:collapse;font-size:12px}
+.rating-history-table th{text-align:left;font-weight:600;color:var(--text-muted);padding:6px 8px;border-bottom:1px solid var(--border)}
+.rating-history-table td{padding:6px 8px;color:var(--text-sub);border-bottom:1px solid var(--border-light)}
+.rating-change{font-weight:700;font-size:11px;padding:2px 8px;border-radius:10px;display:inline-block}
+.rating-change.up{background:var(--emerald-50);color:var(--emerald-600)}
+.rating-change.down{background:var(--red-50);color:var(--red-600)}
+.rating-change.hold{background:var(--slate-100);color:var(--text-muted)}
+
+/* ══ Responsive additions for S2/S3/S3a ══ */
 @media(max-width:768px){
   .val-summary{flex-direction:column}
   .val-card-value{font-size:26px}
@@ -415,6 +454,9 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
   .eq-bar{width:30px}
   .earnings-legend{flex-direction:column;align-items:flex-start;gap:8px}
   .el-separator{display:none}
+  .perf-cards{grid-template-columns:repeat(2,1fr)}
+  .earnings-2col{grid-template-columns:1fr}
+  .analyst-grid{grid-template-columns:1fr}
 }
 
 /* Design notes */
@@ -538,7 +580,7 @@ body.show-design-notes .section{margin-top:18px}
   <span class="design-note dn-blue" style="top:auto;bottom:-12px;right:8px">6탭: 14px/Medium, active=Blue-600 + 하단선 2px. badge 원형 18px. 패딩 14×20. Sticky top:56px</span>
   <div class="tabs">
     <div class="tab active" onclick="switchTab('overview',this)">개요</div>
-    <div class="tab" onclick="switchTab('finance',this)">재무 <span class="tab-badge">8</span></div>
+    <div class="tab" onclick="switchTab('finance',this)">재무 <span class="tab-badge">9</span></div>
     <div class="tab" onclick="switchTab('people',this)">인물 <span class="tab-badge">12</span></div>
     <div class="tab" onclick="switchTab('similar',this)">유사기업 <span class="tab-badge">18</span></div>
     <div class="tab" onclick="switchTab('competitors',this)">경쟁사</div>
@@ -905,72 +947,86 @@ body.show-design-notes .section{margin-top:18px}
         <div class="val-insight" id="valInsight">💡 현재 PER은 산업 평균 대비 <strong style="color:var(--emerald-600)">17% 저평가</strong> 상태입니다</div>
 
         <a href="#" class="compare-link" style="margin-top:14px;display:inline-flex">종목끼리 비교하기 →</a>
+
+        <!-- Performance comparison cards -->
+        <div style="margin-top:24px">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px">📈 성과 비교</div>
+          <div class="perf-cards">
+            <div class="perf-card">
+              <div class="perf-card-period">YTD</div>
+              <div class="perf-card-row"><span class="perf-label">에이치비테크놀로지</span><span class="perf-value positive">+18.4%</span></div>
+              <div class="perf-card-row"><span class="perf-label">산업 평균</span><span class="perf-value muted">+9.2%</span></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:72%"></div></div>
+              <div class="perf-bar-wrap"><div class="perf-bar industry" style="width:36%"></div></div>
+            </div>
+            <div class="perf-card">
+              <div class="perf-card-period">1Y</div>
+              <div class="perf-card-row"><span class="perf-label">에이치비테크놀로지</span><span class="perf-value positive">+42.1%</span></div>
+              <div class="perf-card-row"><span class="perf-label">산업 평균</span><span class="perf-value muted">+15.8%</span></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:84%"></div></div>
+              <div class="perf-bar-wrap"><div class="perf-bar industry" style="width:32%"></div></div>
+            </div>
+            <div class="perf-card">
+              <div class="perf-card-period">3Y</div>
+              <div class="perf-card-row"><span class="perf-label">에이치비테크놀로지</span><span class="perf-value positive">+128.5%</span></div>
+              <div class="perf-card-row"><span class="perf-label">산업 평균</span><span class="perf-value muted">+34.2%</span></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:92%"></div></div>
+              <div class="perf-bar-wrap"><div class="perf-bar industry" style="width:24%"></div></div>
+            </div>
+            <div class="perf-card">
+              <div class="perf-card-period">5Y</div>
+              <div class="perf-card-row"><span class="perf-label">에이치비테크놀로지</span><span class="perf-value positive">+215.3%</span></div>
+              <div class="perf-card-row"><span class="perf-label">산업 평균</span><span class="perf-value muted">+52.7%</span></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:96%"></div></div>
+              <div class="perf-bar-wrap"><div class="perf-bar industry" style="width:24%"></div></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- S3: Earnings — Yahoo Finance Style -->
+    <!-- S3: Earnings — Seeking Alpha Style (2-column) -->
     <div class="section paywall-section" style="position:relative" id="earnings-section">
-      <span class="design-note dn-green">분기별 4~8포인트. 바 쌍: 추정 Gray-300, 실제 Blue-500, 폭 24px 간격 8px. Beat=Green Miss=Red</span>
-      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">Yahoo Finance 참고: 컨센서스 vs 실제 비교. 상단 범례+바 아래 분기 라벨. 높이 260px</span>
+      <span class="design-note dn-green">Seeking Alpha 참고: 좌=EPS dot chart (컨센서스 점선 + 실제 dot), 우=매출 vs 순이익 grouped bar</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">2-column canvas layout. Beat=Green dot, Miss=Red dot. 순이익/영업이익 토글</span>
       <div class="section-title"><span class="icon">💰</span> 실적</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
-        <!-- Period & metric toggles -->
         <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
           <div class="chart-toggle"><button class="chart-toggle-btn active">분기</button><button class="chart-toggle-btn">연간</button></div>
-          <div class="chart-toggle"><button class="chart-toggle-btn active">주당순이익</button><button class="chart-toggle-btn">매출</button></div>
         </div>
 
-        <!-- Quarter bar pairs -->
-        <div class="earnings-grid">
-          <!-- Q1 '25 -->
-          <div class="earnings-quarter">
-            <div class="eq-label">Q1 '25</div>
-            <div class="eq-bars">
-              <div class="eq-bar estimate" style="height:68%"><span>480</span></div>
-              <div class="eq-bar actual" style="height:71%"><span>495</span></div>
+        <div class="earnings-2col">
+          <!-- Left: EPS dot chart -->
+          <div class="earnings-col">
+            <div style="font-size:12.5px;font-weight:600;color:var(--text-sub);margin-bottom:12px">주당순이익 (EPS) 추이</div>
+            <canvas id="epsDotChart" style="width:100%;height:280px"></canvas>
+            <div class="earnings-legend" style="margin-top:12px">
+              <span class="el-item"><span class="el-dot" style="border:2px dashed var(--slate-400);background:none;border-radius:50%"></span> 컨센서스</span>
+              <span class="el-item"><span class="el-dot" style="background:var(--emerald-500);border-radius:50%"></span> Beat</span>
+              <span class="el-item"><span class="el-dot" style="background:var(--red-500);border-radius:50%"></span> Miss</span>
             </div>
-            <div class="eq-values"><span class="est-val">480</span><span class="act-val">495</span></div>
-            <div class="eq-beat positive">+3.1% <span class="eq-icon">✓</span></div>
           </div>
-          <!-- Q2 '25 -->
-          <div class="earnings-quarter">
-            <div class="eq-label">Q2 '25</div>
-            <div class="eq-bars">
-              <div class="eq-bar estimate" style="height:73%"><span>510</span></div>
-              <div class="eq-bar actual" style="height:72%"><span>502</span></div>
+          <!-- Right: Revenue vs Earnings bar -->
+          <div class="earnings-col">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div style="font-size:12.5px;font-weight:600;color:var(--text-sub)">매출 vs 순이익</div>
+              <div class="chart-toggle" id="revToggle">
+                <button class="chart-toggle-btn active" onclick="drawRevenueEarningsChart('net',this)">순이익</button>
+                <button class="chart-toggle-btn" onclick="drawRevenueEarningsChart('op',this)">영업이익</button>
+              </div>
             </div>
-            <div class="eq-values"><span class="est-val">510</span><span class="act-val">502</span></div>
-            <div class="eq-beat negative">-1.6% <span class="eq-icon">✗</span></div>
-          </div>
-          <!-- Q3 '25 -->
-          <div class="earnings-quarter">
-            <div class="eq-label">Q3 '25</div>
-            <div class="eq-bars">
-              <div class="eq-bar estimate" style="height:77%"><span>540</span></div>
-              <div class="eq-bar actual" style="height:80%"><span>558</span></div>
+            <canvas id="revenueEarningsChart" style="width:100%;height:280px"></canvas>
+            <div class="earnings-legend" style="margin-top:12px">
+              <span class="el-item"><span class="el-dot blue"></span> 매출</span>
+              <span class="el-item"><span class="el-dot" style="background:var(--amber-500)"></span> <span id="revLegendLabel">순이익</span></span>
             </div>
-            <div class="eq-values"><span class="est-val">540</span><span class="act-val">558</span></div>
-            <div class="eq-beat positive">+3.3% <span class="eq-icon">✓</span></div>
-          </div>
-          <!-- Q4 '25 -->
-          <div class="earnings-quarter">
-            <div class="eq-label">Q4 '25</div>
-            <div class="eq-bars">
-              <div class="eq-bar estimate" style="height:83%"><span>580</span></div>
-              <div class="eq-bar actual" style="height:87%"><span>612</span></div>
-            </div>
-            <div class="eq-values"><span class="est-val">580</span><span class="act-val">612</span></div>
-            <div class="eq-beat positive">+5.5% <span class="eq-icon">✓</span></div>
           </div>
         </div>
 
-        <!-- Legend & summary -->
-        <div class="earnings-legend">
-          <span class="el-item"><span class="el-dot gray"></span> 추정</span>
-          <span class="el-item"><span class="el-dot blue"></span> 발표</span>
-          <span class="el-separator"></span>
-          <span class="el-summary">4분기 연속 <strong style="color:var(--emerald-600)">3회</strong> 어닝 서프라이즈</span>
+        <!-- Summary -->
+        <div class="earnings-legend" style="margin-top:4px">
+          <span class="el-summary">최근 8분기 중 <strong style="color:var(--emerald-600)">6회</strong> 어닝 서프라이즈</span>
         </div>
 
         <!-- Expandable historical table -->
@@ -983,6 +1039,77 @@ body.show-design-notes .section{margin-top:18px}
               <tr><td>2025 Q3</td><td>540원</td><td>558원</td><td class="positive">+3.3%</td></tr>
               <tr><td>2025 Q2</td><td>510원</td><td>502원</td><td class="negative">-1.6%</td></tr>
               <tr><td>2025 Q1</td><td>480원</td><td>495원</td><td class="positive">+3.1%</td></tr>
+              <tr><td>2024 Q4</td><td>440원</td><td>462원</td><td class="positive">+5.0%</td></tr>
+              <tr><td>2024 Q3</td><td>420원</td><td>435원</td><td class="positive">+3.6%</td></tr>
+              <tr><td>2024 Q2</td><td>400원</td><td>388원</td><td class="negative">-3.0%</td></tr>
+              <tr><td>2024 Q1</td><td>380원</td><td>395원</td><td class="positive">+3.9%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- S3a: Analyst Insights -->
+    <div class="section paywall-section" style="position:relative" id="analyst-section">
+      <span class="design-note dn-green">Seeking Alpha Analyst Insights 참고. 2×2 grid: 신용평가, 기업가치, 전문가 의견, 평가 이력</span>
+      <div class="section-title"><span class="icon">🔍</span> 애널리스트 인사이트</div>
+      <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
+      <div class="analyst-grid">
+        <!-- Card 1: Credit Rating -->
+        <div class="analyst-card">
+          <div class="analyst-card-title">🏦 신용 평가</div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+            <div class="analyst-card-value" style="color:var(--brand)">BBB+</div>
+            <span style="font-size:12px;color:var(--text-muted);font-weight:500">안정적</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px">NICE신용평가 · 2025.12.15</div>
+          <div class="credit-bar">
+            <div class="credit-marker" style="left:62%"></div>
+          </div>
+          <div class="credit-labels">
+            <span>D</span><span>CCC</span><span>BB</span><span>BBB</span><span>A</span><span>AA</span><span>AAA</span>
+          </div>
+        </div>
+        <!-- Card 2: Valuation Range -->
+        <div class="analyst-card">
+          <div class="analyst-card-title">💎 추정 기업가치</div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+            <div class="analyst-card-value">520<span style="font-size:16px;font-weight:500;color:var(--text-sub)">억원</span></div>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">중앙값 기준 · 3개 기관 추정</div>
+          <div class="range-track">
+            <div class="range-fill" style="left:0%;width:100%"></div>
+            <div class="range-marker" style="left:41%"></div>
+          </div>
+          <div class="range-labels">
+            <span>380억</span><span>520억</span><span>720억</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:11px">
+            <span style="color:var(--text-muted)">보수적</span>
+            <span style="color:var(--brand);font-weight:600">현재 추정</span>
+            <span style="color:var(--text-muted)">낙관적</span>
+          </div>
+        </div>
+        <!-- Card 3: Expert Sentiment -->
+        <div class="analyst-card">
+          <div class="analyst-card-title">📊 업종 전문가 의견</div>
+          <div style="display:flex;gap:16px;margin-bottom:12px">
+            <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:var(--emerald-600)">62%</div><div style="font-size:11px;color:var(--text-muted)">긍정</div></div>
+            <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:var(--amber-500)">24%</div><div style="font-size:11px;color:var(--text-muted)">중립</div></div>
+            <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:var(--red-500)">14%</div><div style="font-size:11px;color:var(--text-muted)">부정</div></div>
+          </div>
+          <canvas id="expertSentimentChart" style="width:100%;height:32px"></canvas>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:8px">반도체 장비 업종 전문가 21명 대상 · 2025.12</div>
+        </div>
+        <!-- Card 4: Rating History -->
+        <div class="analyst-card">
+          <div class="analyst-card-title">📋 최근 평가 이력</div>
+          <table class="rating-history-table">
+            <thead><tr><th>날짜</th><th>기관</th><th>변동</th></tr></thead>
+            <tbody>
+              <tr><td>2025.12</td><td>NICE신용평가</td><td><span class="rating-change up">BBB → BBB+</span></td></tr>
+              <tr><td>2025.09</td><td>한국기업평가</td><td><span class="rating-change hold">BBB 유지</span></td></tr>
+              <tr><td>2025.06</td><td>한국신용평가</td><td><span class="rating-change up">BBB- → BBB</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -1429,7 +1556,7 @@ function switchTab(tabId, el) {
   // Trigger chart drawing on tab switch
   if (tabId === 'finance') {
     setTimeout(function(){
-      drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
+      drawEpsDotChart(); drawRevenueEarningsChart(); drawExpertSentimentChart(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
     }, 100);
   }
 }
@@ -1898,7 +2025,178 @@ function switchValuation(metric, btn) {
   document.getElementById('valInsight').innerHTML = '💡 현재 ' + metric + '은 산업 평균 대비 <strong style="color:' + diffColor + '">' + d.pctDiff + '% ' + diffLabel + '</strong> 상태입니다';
 }
 
-// S3: Earnings — pure HTML/CSS, no canvas needed (drawEarningsChart removed)
+// S3: EPS Dot Chart
+function drawEpsDotChart() {
+  var canvas = document.getElementById('epsDotChart');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 520, H = 280;
+  var ctx = hiDPI(canvas, W, H);
+  ctx.clearRect(0, 0, W, H);
+
+  var quarters = ["Q1'24","Q2'24","Q3'24","Q4'24","Q1'25","Q2'25","Q3'25","Q4'25"];
+  var consensus = [380, 400, 420, 440, 480, 510, 540, 580];
+  var actual =    [395, 388, 435, 462, 495, 502, 558, 612];
+  var beat = actual.map(function(a,i){ return a >= consensus[i]; });
+
+  var padL = 50, padR = 20, padT = 20, padB = 40;
+  var chartW = W - padL - padR, chartH = H - padT - padB;
+  var minV = 340, maxV = 660;
+
+  function yPos(v) { return padT + chartH * (1 - (v - minV) / (maxV - minV)); }
+  function xPos(i) { return padL + (i / (quarters.length - 1)) * chartW; }
+
+  // Grid lines
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var g = 0; g <= 4; g++) {
+    var gv = minV + (maxV - minV) * g / 4;
+    var gy = yPos(gv);
+    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(W - padR, gy); ctx.stroke();
+    ctx.fillStyle = '#9AA3B4'; ctx.font = '11px Pretendard Variable';
+    ctx.textAlign = 'right'; ctx.fillText(Math.round(gv) + '원', padL - 8, gy + 4);
+  }
+
+  // Consensus dashed line
+  ctx.strokeStyle = '#9AA3B4'; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  for (var i = 0; i < consensus.length; i++) {
+    var cx = xPos(i), cy = yPos(consensus[i]);
+    if (i === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Actual line
+  ctx.strokeStyle = '#0549CC'; ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  for (var i = 0; i < actual.length; i++) {
+    var ax = xPos(i), ay = yPos(actual[i]);
+    if (i === 0) ctx.moveTo(ax, ay); else ctx.lineTo(ax, ay);
+  }
+  ctx.stroke();
+
+  // Dots
+  for (var i = 0; i < actual.length; i++) {
+    var dx = xPos(i), dy = yPos(actual[i]);
+    ctx.beginPath(); ctx.arc(dx, dy, 6, 0, Math.PI * 2);
+    ctx.fillStyle = beat[i] ? '#10B981' : '#EF4444';
+    ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+    // Beat/Miss label
+    ctx.fillStyle = beat[i] ? '#059669' : '#DC2626';
+    ctx.font = 'bold 10px Pretendard Variable'; ctx.textAlign = 'center';
+    var diff = ((actual[i] - consensus[i]) / consensus[i] * 100).toFixed(1);
+    ctx.fillText((beat[i] ? '+' : '') + diff + '%', dx, dy - 14);
+  }
+
+  // X-axis labels
+  ctx.fillStyle = '#6B7689'; ctx.font = '11px Pretendard Variable'; ctx.textAlign = 'center';
+  for (var i = 0; i < quarters.length; i++) {
+    ctx.fillText(quarters[i], xPos(i), H - 10);
+  }
+}
+
+// S3: Revenue vs Earnings Bar Chart
+function drawRevenueEarningsChart(mode, btn) {
+  if (btn) {
+    document.querySelectorAll('#revToggle .chart-toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  mode = mode || 'net';
+  var label2 = mode === 'net' ? '순이익' : '영업이익';
+  var el = document.getElementById('revLegendLabel');
+  if (el) el.textContent = label2;
+
+  var canvas = document.getElementById('revenueEarningsChart');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 520, H = 280;
+  var ctx = hiDPI(canvas, W, H);
+  ctx.clearRect(0, 0, W, H);
+
+  var years = ['2022','2023','2024','2025'];
+  var revenue = [295, 310, 328, 342];
+  var earnings = mode === 'net' ? [14, 15, 18, 20] : [20, 22, 25, 28];
+
+  var padL = 50, padR = 20, padT = 20, padB = 40;
+  var chartW = W - padL - padR, chartH = H - padT - padB;
+  var maxV = 400;
+  var groupW = chartW / years.length;
+  var barW = Math.min(36, groupW * 0.28);
+  var gap = 6;
+
+  function yPos(v) { return padT + chartH * (1 - v / maxV); }
+
+  // Grid
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var g = 0; g <= 4; g++) {
+    var gv = maxV * g / 4;
+    var gy = yPos(gv);
+    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(W - padR, gy); ctx.stroke();
+    ctx.fillStyle = '#9AA3B4'; ctx.font = '11px Pretendard Variable';
+    ctx.textAlign = 'right'; ctx.fillText(gv + '억', padL - 8, gy + 4);
+  }
+
+  var baseY = yPos(0);
+  for (var i = 0; i < years.length; i++) {
+    var cx = padL + groupW * i + groupW / 2;
+
+    // Revenue bar
+    var rH = (revenue[i] / maxV) * chartH;
+    var rx = cx - barW - gap / 2;
+    ctx.fillStyle = '#0549CC';
+    ctx.beginPath();
+    ctx.roundRect(rx, baseY - rH, barW, rH, [4, 4, 0, 0]);
+    ctx.fill();
+
+    // Revenue value
+    ctx.fillStyle = '#0549CC'; ctx.font = 'bold 11px Pretendard Variable'; ctx.textAlign = 'center';
+    ctx.fillText(revenue[i], rx + barW / 2, baseY - rH - 6);
+
+    // Earnings bar
+    var eH = (earnings[i] / maxV) * chartH;
+    var ex = cx + gap / 2;
+    ctx.fillStyle = '#F59E0B';
+    ctx.beginPath();
+    ctx.roundRect(ex, baseY - eH, barW, eH, [4, 4, 0, 0]);
+    ctx.fill();
+
+    // Earnings value
+    ctx.fillStyle = '#D97706'; ctx.font = 'bold 11px Pretendard Variable';
+    ctx.fillText(earnings[i], ex + barW / 2, baseY - eH - 6);
+
+    // Year label
+    ctx.fillStyle = '#6B7689'; ctx.font = '12px Pretendard Variable';
+    ctx.fillText(years[i], cx, H - 10);
+  }
+}
+
+// S3a: Expert Sentiment horizontal bar
+function drawExpertSentimentChart() {
+  var canvas = document.getElementById('expertSentimentChart');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 400, H = 32;
+  var ctx = hiDPI(canvas, W, H);
+  ctx.clearRect(0, 0, W, H);
+
+  var segments = [
+    { pct: 0.62, color: '#10B981' },
+    { pct: 0.24, color: '#F59E0B' },
+    { pct: 0.14, color: '#EF4444' }
+  ];
+  var r = 6, x = 0;
+  for (var i = 0; i < segments.length; i++) {
+    var sw = segments[i].pct * W;
+    ctx.fillStyle = segments[i].color;
+    if (i === 0) {
+      ctx.beginPath(); ctx.roundRect(x, 4, sw, H - 8, [r, 0, 0, r]); ctx.fill();
+    } else if (i === segments.length - 1) {
+      ctx.beginPath(); ctx.roundRect(x, 4, sw, H - 8, [0, r, r, 0]); ctx.fill();
+    } else {
+      ctx.fillRect(x, 4, sw, H - 8);
+    }
+    x += sw;
+  }
+}
 
 function drawFinancialBars() {
   var canvas = document.getElementById('financialBars');
