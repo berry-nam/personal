@@ -993,7 +993,7 @@ function subscribe(){
       _lastPageJSON=pageJSON;
       comments=pageData;
       var mx=0;
-      Object.keys(comments).forEach(function(k){if(comments[k].pinNumber>mx)mx=comments[k].pinNumber;});
+      Object.keys(allComments).forEach(function(pid){if(allComments[pid])Object.keys(allComments[pid]).forEach(function(k){if(allComments[pid][k].pinNumber>mx)mx=allComments[pid][k].pinNumber;});});
       nextPin=mx+1;
       renderPins();
       if(openThreadId){
@@ -1327,9 +1327,9 @@ function checkDeepLink(){
     if(comments[commentId]){
       clearInterval(check);
       history.replaceState(null,'',location.pathname+location.hash);
-      openThread(commentId);
       var pin=document.querySelector('.cb-pin[data-id="'+commentId+'"]');
       if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
+      setTimeout(function(){openThread(commentId);},500);
     }
   },200);
   setTimeout(function(){clearInterval(check);},5000);
