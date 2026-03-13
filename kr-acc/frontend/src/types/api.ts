@@ -123,12 +123,21 @@ export interface GraphNode {
   name: string;
   party: string | null;
   group: string | null;
+  node_type?: "politician" | "company" | "vote" | "asset";
+  photo_url?: string | null;
+  industry?: string | null;
+  total_assets?: number;
+  result?: string;
+  yes_count?: number;
+  no_count?: number;
 }
 
 export interface GraphEdge {
   source: string;
   target: string;
   weight: number;
+  edge_type?: "co_sponsored" | "related_company" | "voted_on" | "owns_asset" | "sponsored_vote";
+  label?: string;
 }
 
 export interface GraphData {

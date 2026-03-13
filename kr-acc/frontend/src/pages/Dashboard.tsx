@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Link, useNavigate } from "react-router";
 import useDocumentTitle from "@/lib/useDocumentTitle";
 import {
-  useCoSponsorshipGraph,
+  useUnifiedGraph,
   useBillPipeline,
   useTopSponsors,
   useVotes,
@@ -54,7 +54,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   // Data queries
-  const graphData = useCoSponsorshipGraph({ min_weight: 3, limit: 500 });
+  const graphData = useUnifiedGraph({ assembly_term: 22, min_cosponsorship: 2, cosponsorship_limit: 500 });
   const partySeats = usePartySeats(22);
   const pipeline = useBillPipeline();
   const topSponsors = useTopSponsors({ assembly_term: 22, limit: 10 });
@@ -141,10 +141,10 @@ export default function Dashboard() {
         <div className="pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-gray-950/80 to-transparent px-6 pb-16 pt-5">
           <div className="pointer-events-auto mx-auto max-w-7xl">
             <h1 className="text-lg font-bold text-white sm:text-xl">
-              22대 국회 306인의 관계도
+              22대 국회 통합 관계도
             </h1>
             <p className="mt-1 text-xs text-gray-400">
-              인물 중심 · 공동발의 관계 네트워크 · 노드 클릭으로 탐색
+              의원 · 기업 · 표결 · 재산이 연결된 인물 중심 네트워크
             </p>
           </div>
         </div>
@@ -160,29 +160,53 @@ export default function Dashboard() {
 
         {graphData.data && (
           <div className="pointer-events-none absolute bottom-4 left-4 z-10">
-            <div className="pointer-events-auto flex flex-wrap gap-1">
-              {(() => {
-                const counts = new Map<string, number>();
-                for (const n of graphData.data.nodes) {
-                  const p = n.party ?? "무소속";
-                  counts.set(p, (counts.get(p) ?? 0) + 1);
-                }
-                return [...counts.entries()]
-                  .sort((a, b) => b[1] - a[1])
-                  .slice(0, 8)
-                  .map(([party, count]) => (
+            <div className="pointer-events-auto space-y-1">
+              {/* Node type legend */}
+              <div className="flex gap-2">
+                {[
+                  { label: "의원", color: "#9CA3AF" },
+                  { label: "기업", color: "#F97316" },
+                  { label: "표결", color: "#EF4444" },
+                  { label: "재산", color: "#8B5CF6" },
+                ].map((t) => (
+                  <span
+                    key={t.label}
+                    className="flex items-center gap-1 rounded bg-gray-900/80 px-2 py-0.5 text-[9px] text-gray-300 backdrop-blur-sm"
+                  >
                     <span
-                      key={party}
-                      className="flex items-center gap-1 rounded bg-gray-900/80 px-2 py-0.5 text-[9px] text-gray-300 backdrop-blur-sm"
-                    >
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{ backgroundColor: t.color }}
+                    />
+                    {t.label}
+                  </span>
+                ))}
+              </div>
+              {/* Party counts */}
+              <div className="flex flex-wrap gap-1">
+                {(() => {
+                  const counts = new Map<string, number>();
+                  for (const n of graphData.data.nodes) {
+                    if (n.node_type !== "politician" && n.group !== "politician") continue;
+                    const p = n.party ?? "무소속";
+                    counts.set(p, (counts.get(p) ?? 0) + 1);
+                  }
+                  return [...counts.entries()]
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 6)
+                    .map(([party, count]) => (
                       <span
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ backgroundColor: getPartyColor(party) }}
-                      />
-                      {party} {count}
-                    </span>
-                  ));
-              })()}
+                        key={party}
+                        className="flex items-center gap-1 rounded bg-gray-900/80 px-1.5 py-0.5 text-[8px] text-gray-400 backdrop-blur-sm"
+                      >
+                        <span
+                          className="h-1 w-1 rounded-full"
+                          style={{ backgroundColor: getPartyColor(party) }}
+                        />
+                        {party} {count}
+                      </span>
+                    ));
+                })()}
+              </div>
             </div>
           </div>
         )}

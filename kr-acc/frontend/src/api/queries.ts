@@ -195,6 +195,22 @@ export function useCoSponsorshipGraph(params: {
   });
 }
 
+export function useUnifiedGraph(params: {
+  assembly_term?: number;
+  min_cosponsorship?: number;
+  cosponsorship_limit?: number;
+}) {
+  return useQuery({
+    queryKey: ["graph-unified", params],
+    queryFn: async () => {
+      const { data } = await api.get<GraphData>("/graph/unified", {
+        params,
+      });
+      return data;
+    },
+  });
+}
+
 export function useNeighbors(
   assemblyId: string,
   params: { min_weight?: number; limit?: number },
