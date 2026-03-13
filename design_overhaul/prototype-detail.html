@@ -2203,5 +2203,323 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeThread();
 });
 </script>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     FIGMA-LIKE COMMENT SYSTEM — Firebase Realtime DB
+     ══════════════════════════════════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<style>
+/* ── Comment System (cb- prefix) ── */
+#cb-toolbar{position:fixed;bottom:76px;right:24px;z-index:700;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.cb-toggle-btn{display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:24px;border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);transition:all .15s cubic-bezier(.4,0,.2,1)}
+.cb-toggle-btn.inactive{background:#1F2937;color:#fff}
+.cb-toggle-btn.active{background:#F59E0B;color:#1F2937;box-shadow:0 0 0 3px rgba(245,158,11,.3)}
+.cb-count-badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:10px;font-size:11px;font-weight:700;background:rgba(255,255,255,.25)}
+#cb-pin-layer{position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:650}
+body.cb-comment-mode #cb-pin-layer{pointer-events:auto;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='36' viewBox='0 0 24 36'%3E%3Cpath d='M12 36s12-14 12-22A12 12 0 000 14C0 22 12 36 12 36z' fill='%23F59E0B'/%3E%3Ccircle cx='12' cy='13' r='4.5' fill='%23fff'/%3E%3C/svg%3E") 12 36, crosshair}
+body.cb-comment-mode{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='36' viewBox='0 0 24 36'%3E%3Cpath d='M12 36s12-14 12-22A12 12 0 000 14C0 22 12 36 12 36z' fill='%23F59E0B'/%3E%3Ccircle cx='12' cy='13' r='4.5' fill='%23fff'/%3E%3C/svg%3E") 12 36, crosshair}
+.cb-pin{position:absolute;pointer-events:auto;transform:translate(-50%,-100%);cursor:pointer;transition:transform .1s;z-index:1}
+.cb-pin:hover{transform:translate(-50%,-100%) scale(1.15);z-index:2}
+.cb-pin-marker{width:32px;height:40px;position:relative;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
+.cb-pin-number{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.cb-pin.resolved{opacity:.35;filter:grayscale(.8)}
+.cb-thread{position:absolute;width:320px;max-height:420px;background:#fff;border:1px solid #E0E4EB;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.15);z-index:800;overflow:hidden;display:flex;flex-direction:column;animation:cb-in .15s ease}
+@keyframes cb-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.cb-thread-header{padding:12px 14px;border-bottom:1px solid #EFF1F5;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.cb-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
+.cb-avatar.sm{width:22px;height:22px;font-size:10px}
+.cb-thread-author{font-size:13px;font-weight:600;color:#111827}
+.cb-thread-time{font-size:11px;color:#9AA3B4}
+.cb-thread-actions{margin-left:auto;display:flex;gap:4px}
+.cb-action-btn{width:28px;height:28px;border-radius:6px;border:1px solid #E0E4EB;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;padding:0;font-family:inherit;color:#6B7689}
+.cb-action-btn:hover{background:#F7F8FA;border-color:#CCD2DB}
+.cb-thread-body{flex:1;overflow-y:auto;padding:12px 14px}
+.cb-msg{margin-bottom:12px}
+.cb-msg-meta{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.cb-msg-name{font-size:12px;font-weight:600;color:#374151}
+.cb-msg-time{font-size:11px;color:#9AA3B4}
+.cb-msg-text{font-size:13px;line-height:1.55;color:#374151}
+.cb-thread-input{padding:10px 14px;border-top:1px solid #EFF1F5;display:flex;gap:8px;flex-shrink:0}
+.cb-thread-input input,.cb-thread-input textarea{flex:1;padding:8px 12px;border:1px solid #E0E4EB;border-radius:8px;font-family:inherit;font-size:13px;outline:none;resize:none;transition:border-color .15s}
+.cb-thread-input input:focus,.cb-thread-input textarea:focus{border-color:#0549CC}
+.cb-send-btn{padding:8px 14px;background:#0549CC;color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0}
+.cb-send-btn:hover{background:#0340A8}
+.cb-name-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:899}
+.cb-name-prompt{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.2);z-index:900;width:340px;text-align:center}
+.cb-name-prompt input{width:100%;padding:10px 14px;border:1px solid #E0E4EB;border-radius:8px;font-family:inherit;font-size:14px;text-align:center;outline:none;margin-bottom:12px;box-sizing:border-box}
+.cb-name-prompt button{width:100%;padding:10px;background:#0549CC;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.cb-name-prompt button:hover{background:#0340A8}
+.cb-pin.resolved.cb-hide-resolved{display:none}
+</style>
+<script>
+(function(){
+'use strict';
+
+// ── CONFIG ──
+var FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCyIDH5rAmlG2jLFMW9aXNABWOB0jekXdU",
+  authDomain: "cookiedeal-prototype.firebaseapp.com",
+  databaseURL: "https://cookiedeal-prototype-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "cookiedeal-prototype",
+  storageBucket: "cookiedeal-prototype.firebasestorage.app",
+  messagingSenderId: "288688295893",
+  appId: "1:288688295893:web:2ac43b8a5e28ec812c375c"
+};
+var PAGE_ID = location.pathname.indexOf('detail') !== -1 ? 'detail' : 'search';
+var COLORS = ['#0549CC','#059669','#D97706','#DC2626','#8B5CF6','#0D9488','#EA580C','#6366F1','#B45309','#14B8A6'];
+
+// ── STATE ──
+var commentMode = false;
+var comments = {};
+var openThreadId = null;
+var currentUser = null;
+var db = null;
+var commentsRef = null;
+var nextPin = 1;
+
+// ── HELPERS ──
+function hashStr(s){var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function timeAgo(ts){
+  if(!ts)return '';
+  var d=Date.now()-ts,s=Math.floor(d/1000),m=Math.floor(s/60),h=Math.floor(m/60),dy=Math.floor(h/24);
+  if(dy>0)return dy+'일 전';if(h>0)return h+'시간 전';if(m>0)return m+'분 전';return '방금';
+}
+function syncLayerHeight(){
+  var l=document.getElementById('cb-pin-layer');
+  if(l)l.style.height=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)+'px';
+}
+
+// ── FIREBASE ──
+function initFB(){
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db=firebase.database();
+  commentsRef=db.ref('comments/'+PAGE_ID);
+}
+function subscribe(){
+  commentsRef.on('value',function(snap){
+    comments=snap.val()||{};
+    var mx=0;
+    Object.keys(comments).forEach(function(k){if(comments[k].pinNumber>mx)mx=comments[k].pinNumber;});
+    nextPin=mx+1;
+    renderPins();
+    var cnt=Object.keys(comments).filter(function(k){return !comments[k].resolved;}).length;
+    var badge=document.getElementById('cb-badge');
+    if(badge)badge.textContent=cnt;
+  });
+}
+function addComment(x,y,text){
+  var ref=commentsRef.push();
+  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin});
+}
+function addReply(cid,text){
+  commentsRef.child(cid).child('replies').push().set({author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP});
+}
+function resolveComment(cid){commentsRef.child(cid).update({resolved:!comments[cid].resolved});}
+function deleteComment(cid){if(confirm('이 코멘트를 삭제하시겠습니까?'))commentsRef.child(cid).remove();}
+
+// ── TOOLBAR ──
+function createToolbar(){
+  var tb=document.createElement('div');
+  tb.id='cb-toolbar';
+  tb.innerHTML='<button class="cb-toggle-btn inactive" id="cb-mode-btn" onclick="window._cbToggle()"><span class="cb-mode-icon">💬</span><span class="cb-mode-label">코멘트</span><span class="cb-count-badge" id="cb-badge">0</span></button>';
+  document.body.appendChild(tb);
+  window._cbToggle=toggleMode;
+}
+function toggleMode(){
+  commentMode=!commentMode;
+  document.body.classList.toggle('cb-comment-mode',commentMode);
+  var btn=document.getElementById('cb-mode-btn');
+  btn.className='cb-toggle-btn '+(commentMode?'active':'inactive');
+  btn.querySelector('.cb-mode-label').textContent=commentMode?'코멘트 ON':'코멘트';
+  if(!commentMode){closeThread();var ni=document.getElementById('cb-new-input');if(ni)ni.remove();}
+}
+
+// ── PIN LAYER ──
+function createPinLayer(){
+  var l=document.createElement('div');
+  l.id='cb-pin-layer';
+  syncLayerHeight();
+  l.addEventListener('click',function(e){
+    if(!commentMode)return;
+    if(e.target.closest('.cb-pin')||e.target.closest('.cb-thread'))return;
+    closeThread();
+    var ni=document.getElementById('cb-new-input');if(ni)ni.remove();
+    var xPct=(e.pageX/document.documentElement.scrollWidth)*100;
+    var yPx=e.pageY;
+    showNewInput(xPct,yPx,e.pageX,e.pageY);
+  });
+  document.body.appendChild(l);
+}
+
+function renderPins(){
+  var layer=document.getElementById('cb-pin-layer');
+  if(!layer)return;
+  layer.querySelectorAll('.cb-pin').forEach(function(p){p.remove();});
+  var sorted=Object.keys(comments).map(function(k){return comments[k];}).sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
+  sorted.forEach(function(c){
+    var pin=document.createElement('div');
+    pin.className='cb-pin'+(c.resolved?' resolved':'');
+    pin.dataset.id=c.id;
+    var leftPx=(c.x/100)*document.documentElement.scrollWidth;
+    pin.style.left=leftPx+'px';
+    pin.style.top=c.y+'px';
+    pin.innerHTML='<div class="cb-pin-marker"><svg width="32" height="40" viewBox="0 0 32 40"><path d="M16 40C16 40 0 24 0 14 0 6.27 7.16 0 16 0 24.84 0 32 6.27 32 14 32 24 16 40 16 40Z" fill="'+c.authorColor+'"/></svg><div class="cb-pin-number" style="background:'+c.authorColor+'">'+c.pinNumber+'</div></div>';
+    pin.addEventListener('click',function(ev){ev.stopPropagation();openThread(c.id);});
+    layer.appendChild(pin);
+  });
+  syncLayerHeight();
+}
+
+// ── NEW COMMENT INPUT ──
+function showNewInput(xPct,yPx,px,py){
+  if(!currentUser){showNamePrompt(function(){showNewInput(xPct,yPx,px,py);});return;}
+  var div=document.createElement('div');
+  div.id='cb-new-input';
+  div.className='cb-thread';
+  div.style.position='absolute';
+  var left=px+16;
+  if(left+320>window.innerWidth+window.scrollX)left=px-336;
+  div.style.left=left+'px';
+  div.style.top=(py-20)+'px';
+  div.innerHTML='<div style="padding:14px;display:flex;flex-direction:column;gap:10px">'
+    +'<div style="display:flex;align-items:center;gap:8px"><div class="cb-avatar sm" style="background:'+currentUser.color+'">'+currentUser.name[0]+'</div><span style="font-size:12px;font-weight:600">'+esc(currentUser.name)+'</span></div>'
+    +'<textarea id="cb-new-text" rows="3" placeholder="코멘트를 입력하세요..." style="width:100%;padding:8px 12px;border:1px solid #E0E4EB;border-radius:8px;font-family:inherit;font-size:13px;resize:none;outline:none;box-sizing:border-box"></textarea>'
+    +'<div style="display:flex;justify-content:flex-end;gap:6px">'
+    +'<button onclick="window._cbCancelNew()" style="padding:6px 14px;border:1px solid #E0E4EB;border-radius:6px;background:#fff;font-size:12px;cursor:pointer;font-family:inherit">취소</button>'
+    +'<button class="cb-send-btn" style="padding:6px 14px;font-size:12px" onclick="window._cbSubmitNew()">등록</button>'
+    +'</div></div>';
+  div.addEventListener('click',function(e){e.stopPropagation();});
+  document.getElementById('cb-pin-layer').appendChild(div);
+  var ta=document.getElementById('cb-new-text');
+  ta.focus();
+  ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();window._cbSubmitNew();}});
+  window._cbCancelNew=function(){div.remove();};
+  window._cbSubmitNew=function(){
+    var t=document.getElementById('cb-new-text').value.trim();
+    if(!t)return;
+    addComment(xPct,yPx,t);
+    div.remove();
+  };
+}
+
+// ── THREAD ──
+function openThread(cid){
+  closeThread();
+  openThreadId=cid;
+  var c=comments[cid];if(!c)return;
+  var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');if(!pin)return;
+  var thread=document.createElement('div');
+  thread.id='cb-open-thread';
+  thread.className='cb-thread';
+  thread.style.position='absolute';
+  var left=parseFloat(pin.style.left)+40;
+  if(left+320>document.documentElement.scrollWidth)left=parseFloat(pin.style.left)-328;
+  thread.style.left=left+'px';
+  thread.style.top=(parseFloat(pin.style.top)-20)+'px';
+  thread.addEventListener('click',function(e){e.stopPropagation();});
+  renderThreadHTML(thread,c);
+  document.getElementById('cb-pin-layer').appendChild(thread);
+  commentsRef.child(cid).on('value',function(snap){
+    var updated=snap.val();
+    if(!updated){closeThread();return;}
+    comments[cid]=updated;
+    var el=document.getElementById('cb-open-thread');
+    if(el&&openThreadId===cid)renderThreadHTML(el,updated);
+  });
+}
+function closeThread(){
+  if(openThreadId){commentsRef.child(openThreadId).off('value');}
+  openThreadId=null;
+  var el=document.getElementById('cb-open-thread');if(el)el.remove();
+}
+function renderThreadHTML(container,c){
+  var repliesHTML='';
+  if(c.replies){
+    var rArr=Object.keys(c.replies).map(function(k){return c.replies[k];}).sort(function(a,b){return(a.timestamp||0)-(b.timestamp||0);});
+    rArr.forEach(function(r){
+      repliesHTML+='<div class="cb-msg"><div class="cb-msg-meta"><div class="cb-avatar sm" style="background:'+r.authorColor+'">'+r.author[0]+'</div><span class="cb-msg-name">'+esc(r.author)+'</span><span class="cb-msg-time">'+timeAgo(r.timestamp)+'</span></div><div class="cb-msg-text">'+esc(r.text)+'</div></div>';
+    });
+  }
+  var resolveIcon=c.resolved?'↩':'✓';
+  var resolveTitle=c.resolved?'다시 열기':'해결';
+  container.innerHTML='<div class="cb-thread-header">'
+    +'<div class="cb-avatar" style="background:'+c.authorColor+'">'+c.author[0]+'</div>'
+    +'<div><div class="cb-thread-author">'+esc(c.author)+'</div><div class="cb-thread-time">'+timeAgo(c.timestamp)+'</div></div>'
+    +'<div class="cb-thread-actions">'
+    +'<button class="cb-action-btn" title="'+resolveTitle+'" onclick="window._cbResolve(\''+c.id+'\')">'+resolveIcon+'</button>'
+    +'<button class="cb-action-btn" title="삭제" onclick="window._cbDelete(\''+c.id+'\')">🗑</button>'
+    +'<button class="cb-action-btn" title="닫기" onclick="window._cbClose()">✕</button>'
+    +'</div></div>'
+    +'<div class="cb-thread-body"><div class="cb-msg"><div class="cb-msg-text" style="font-size:13.5px">'+esc(c.text)+'</div></div>'+repliesHTML+'</div>'
+    +'<div class="cb-thread-input"><input type="text" id="cb-reply-input" placeholder="답글..." onkeydown="if(event.key===\'Enter\')window._cbReplySubmit(\''+c.id+'\')"><button class="cb-send-btn" onclick="window._cbReplySubmit(\''+c.id+'\')">전송</button></div>';
+  window._cbResolve=function(id){resolveComment(id);};
+  window._cbDelete=function(id){deleteComment(id);closeThread();};
+  window._cbClose=function(){closeThread();};
+  window._cbReplySubmit=function(id){
+    var inp=document.getElementById('cb-reply-input');if(!inp)return;
+    var t=inp.value.trim();if(!t)return;
+    addReply(id,t);inp.value='';
+  };
+}
+
+// ── NAME PROMPT ──
+function showNamePrompt(cb){
+  var ov=document.createElement('div');ov.className='cb-name-overlay';ov.id='cb-name-ov';
+  var pr=document.createElement('div');pr.className='cb-name-prompt';pr.id='cb-name-pr';
+  pr.innerHTML='<div style="font-size:28px;margin-bottom:8px">💬</div>'
+    +'<div style="font-size:16px;font-weight:700;margin-bottom:4px">코멘트 시스템</div>'
+    +'<div style="font-size:13px;color:#6B7689;margin-bottom:16px">피드백을 남기려면 이름을 입력하세요</div>'
+    +'<input type="text" id="cb-name-inp" placeholder="이름 (예: 홍길동)">'
+    +'<button id="cb-name-btn">시작하기</button>';
+  document.body.appendChild(ov);document.body.appendChild(pr);
+  setTimeout(function(){document.getElementById('cb-name-inp').focus();},100);
+  function submit(){
+    var n=document.getElementById('cb-name-inp').value.trim();if(!n)return;
+    var col=COLORS[hashStr(n)%COLORS.length];
+    currentUser={name:n,color:col};
+    localStorage.setItem('cb-user',JSON.stringify(currentUser));
+    ov.remove();pr.remove();if(cb)cb();
+  }
+  document.getElementById('cb-name-inp').addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+  document.getElementById('cb-name-btn').addEventListener('click',submit);
+}
+function loadUser(){
+  var s=localStorage.getItem('cb-user');
+  if(s){try{currentUser=JSON.parse(s);}catch(e){}}
+}
+
+// ── KEYBOARD ──
+function initKeys(){
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+    if(e.key==='c'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){e.preventDefault();toggleMode();}
+    if(e.key==='Escape'){
+      if(openThreadId){closeThread();e.stopPropagation();}
+      else if(commentMode){toggleMode();e.stopPropagation();}
+    }
+  },true);
+}
+
+// ── RESIZE / MUTATION ──
+function initObservers(){
+  window.addEventListener('resize',function(){renderPins();});
+  new MutationObserver(function(){syncLayerHeight();}).observe(document.body,{childList:true,subtree:true,attributes:false});
+}
+
+// ── BOOT ──
+function boot(){
+  loadUser();
+  initFB();
+  createToolbar();
+  createPinLayer();
+  subscribe();
+  initKeys();
+  initObservers();
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
+})();
+</script>
 </body>
 </html>
