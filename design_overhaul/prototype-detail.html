@@ -2864,8 +2864,8 @@ var FIREBASE_CONFIG = {
 var PAGE_ID = 'detail';
 var PAGE_LABEL = '에이치비테크놀로지 상세';
 var TAB_LABELS = {overview:'개요',finance:'재무',people:'인물',similar:'유사기업',competitors:'경쟁사',community:'커뮤니티'};
-var PAGE_LABELS = {search:'기업탐색', detail:'에이치비테크놀로지 상세'};
-var PAGE_URLS = {search:'prototype-search.html', detail:'prototype-detail.html'};
+var PAGE_LABELS = {search:'기업탐색', detail:'에이치비테크놀로지 상세', detail_v2:'에이치비테크놀로지 상세', list:'잠재 고객 리스트'};
+var PAGE_URLS = {search:'prototype-search.html', detail:'prototype-detail.html', detail_v2:'prototype-detail.html', list:'prototype-list.html'};
 var COLORS = ['#0549CC','#059669','#D97706','#DC2626','#8B5CF6','#0D9488','#EA580C','#6366F1','#B45309','#14B8A6'];
 
 // ── STATE ──
@@ -2982,8 +2982,8 @@ function flattenAll(){
     if(!allComments[pid])return;
     Object.keys(allComments[pid]).forEach(function(cid){
       var c=allComments[pid][cid];
-      if(!c.anchorId)return; // Skip legacy coordinate-based comments
-      c._pageId=pid;
+      if(pid==='detail_v2'&&!c.anchorId)return; // Skip legacy coordinate-based comments (detail only)
+      c._pageId=c.pageId||pid;
       c._pageLabel=c.pageLabel||PAGE_LABELS[pid]||PAGE_LABEL;
       arr.push(c);
     });
@@ -3005,7 +3005,7 @@ function renderSidebar(){
   list.innerHTML=sorted.map(function(c){
     var replyCount=c.replies?Object.keys(c.replies).length:0;
     var replyText=replyCount>0?'<div class="cb-sb-replies">💬 '+replyCount+'개 답글</div>':'';
-    var isOther=c._pageId.indexOf('detail')!==0;
+    var isOther=c._pageId!==PAGE_ID;
     var tabLabel=c.tabId?(TAB_LABELS[c.tabId]||c.tabId):'';
     var cls='cb-sb-item'+(c.resolved?' resolved-item':'')+(isOther?' other-page':'')+(openThreadId===c.id?' active':'');
     var pageTag='<div class="cb-sb-page">'+(isOther?'<span class="cb-sb-link-icon">↗</span>':'')+esc(c._pageLabel)+(tabLabel?' · '+tabLabel:'')+'</div>';
@@ -3023,8 +3023,8 @@ function renderSidebar(){
       var cid=item.dataset.cid;
       var pid=item.dataset.page;
       var tid=item.dataset.tab;
-      var isCurrentPage=pid.indexOf('detail')===0;
-      if(!isCurrentPage){window.location.href=PAGE_URLS[pid]||('#');return;}
+      var isCurrentPage=(pid===PAGE_ID);
+      if(!isCurrentPage){window.location.href=(PAGE_URLS[pid]||'#')+'?comment='+cid;return;}
       // Same page, different tab → switch tab (triggers renderPins for new tab)
       if(tid && tid!==activeTabId){switchTab(tid);}
       setTimeout(function(){
@@ -3240,6 +3240,24 @@ function initObservers(){
   window.addEventListener('resize',function(){renderPins();});
 }
 
+// ── DEEP LINK ──
+function checkDeepLink(){
+  var params=new URLSearchParams(location.search);
+  var commentId=params.get('comment');
+  if(!commentId)return;
+  var check=setInterval(function(){
+    if(comments[commentId]){
+      clearInterval(check);
+      history.replaceState(null,'',location.pathname+location.hash);
+      openThread(commentId);
+      renderSidebar();
+      var pin=document.querySelector('.cb-pin[data-id="'+commentId+'"]');
+      if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
+    }
+  },200);
+  setTimeout(function(){clearInterval(check);},5000);
+}
+
 // ── BOOT ──
 function boot(){
   loadUser();
@@ -3274,6 +3292,7 @@ function boot(){
     var h=location.hash.replace('#','');
     if(h&&TAB_LABELS[h]&&h!==activeTabId)switchTab(h);
   });
+  checkDeepLink();
   console.log('[CookieDeal] v11 loaded — anchor-relative pins, tab='+activeTabId);
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}

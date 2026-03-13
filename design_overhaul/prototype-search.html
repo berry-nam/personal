@@ -1302,8 +1302,8 @@ var FIREBASE_CONFIG = {
 };
 var PAGE_ID = 'search';
 var PAGE_LABEL = '기업탐색';
-var PAGE_LABELS = {search:'기업탐색', detail:'에이치비테크놀로지 상세'};
-var PAGE_URLS = {search:'prototype-search.html', detail:'prototype-detail.html'};
+var PAGE_LABELS = {search:'기업탐색', detail:'에이치비테크놀로지 상세', detail_v2:'에이치비테크놀로지 상세', list:'잠재 고객 리스트'};
+var PAGE_URLS = {search:'prototype-search.html', detail:'prototype-detail.html', detail_v2:'prototype-detail.html', list:'prototype-list.html'};
 var COLORS = ['#0549CC','#059669','#D97706','#DC2626','#8B5CF6','#0D9488','#EA580C','#6366F1','#B45309','#14B8A6'];
 
 // ── STATE ──
@@ -1421,7 +1421,7 @@ function flattenAll(){
     if(!allComments[pid])return;
     Object.keys(allComments[pid]).forEach(function(cid){
       var c=allComments[pid][cid];
-      c._pageId=pid;
+      c._pageId=c.pageId||pid;
       c._pageLabel=c.pageLabel||PAGE_LABELS[pid]||pid;
       arr.push(c);
     });
@@ -1459,7 +1459,7 @@ function renderSidebar(){
     item.addEventListener('click',function(){
       var cid=item.dataset.cid;
       var pid=item.dataset.page;
-      if(pid!==PAGE_ID){window.location.href=PAGE_URLS[pid]||('#');return;}
+      if(pid!==PAGE_ID){window.location.href=(PAGE_URLS[pid]||'#')+'?comment='+cid;return;}
       var c=comments[cid];
       if(!c)return;
       var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
@@ -1645,6 +1645,23 @@ function initObservers(){
   new MutationObserver(function(){syncLayerHeight();}).observe(document.body,{childList:true,subtree:true,attributes:false});
 }
 
+// ── DEEP LINK ──
+function checkDeepLink(){
+  var params=new URLSearchParams(location.search);
+  var commentId=params.get('comment');
+  if(!commentId)return;
+  var check=setInterval(function(){
+    if(comments[commentId]){
+      clearInterval(check);
+      history.replaceState(null,'',location.pathname+location.hash);
+      var pin=document.querySelector('.cb-pin[data-id="'+commentId+'"]');
+      if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
+      setTimeout(function(){openThread(commentId);renderSidebar();},400);
+    }
+  },200);
+  setTimeout(function(){clearInterval(check);},5000);
+}
+
 // ── BOOT ──
 function boot(){
   loadUser();
@@ -1655,6 +1672,7 @@ function boot(){
   subscribe();
   initKeys();
   initObservers();
+  checkDeepLink();
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
 })();
