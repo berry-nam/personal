@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>에이치비테크놀로지 — CookieDeal</title><!-- build:v10 -->
+<title>에이치비테크놀로지 — CookieDeal</title><!-- build:v11 -->
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -2977,24 +2977,21 @@ function renderPins(){
     .sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
   var rendered=0;
   sorted.forEach(function(c){
-    if(!c.anchorId){console.warn('[CB] SKIP no anchorId:',c.id,c);return;}
+    if(!c.anchorId)return;
     var anchor=document.querySelector('[data-cb-id="'+c.anchorId+'"]');
-    if(!anchor){console.warn('[CB] SKIP anchor not found:',c.anchorId);return;}
-    var rect=anchor.getBoundingClientRect();
-    if(rect.width===0&&rect.height===0){console.warn('[CB] SKIP zero rect:',c.anchorId,rect);return;}
-    // Calculate absolute document position from anchor rect + % offset
-    var absX=rect.left+window.scrollX+(c.offsetXPct/100*rect.width);
-    var absY=rect.top+window.scrollY+(c.offsetYPct/100*rect.height);
+    if(!anchor)return;
+    // Place pin INSIDE anchor with percentage positioning.
+    // Pins automatically follow layout changes (sidebar, resize) and
+    // hide when their tab-panel has display:none.
     var pin=document.createElement('div');
     pin.className='cb-pin'+(c.resolved?' resolved':'');
     pin.dataset.id=c.id;
-    pin.style.position='absolute';
-    pin.style.left=absX+'px';
-    pin.style.top=absY+'px';
+    pin.style.left=c.offsetXPct+'%';
+    pin.style.top=c.offsetYPct+'%';
     pin.style.zIndex='650';
     pin.innerHTML='<div class="cb-pin-marker"><svg width="32" height="40" viewBox="0 0 32 40"><path d="M16 40C16 40 0 24 0 14 0 6.27 7.16 0 16 0 24.84 0 32 6.27 32 14 32 24 16 40 16 40Z" fill="'+c.authorColor+'"/></svg><div class="cb-pin-number" style="background:'+c.authorColor+'">'+c.pinNumber+'</div></div>';
     pin.addEventListener('click',function(ev){ev.stopPropagation();openThread(c.id);});
-    document.body.appendChild(pin);
+    anchor.appendChild(pin);
     rendered++;
   });
   console.log('[CB] renderPins:',sorted.length,'comments,',rendered,'pins rendered, tab='+activeTabId);
@@ -3174,7 +3171,7 @@ function boot(){
     var h=location.hash.replace('#','');
     if(h&&TAB_LABELS[h]&&h!==activeTabId)switchTab(h);
   });
-  console.log('[CookieDeal] v10 loaded — element-anchored comments, tab='+activeTabId);
+  console.log('[CookieDeal] v11 loaded — anchor-relative pins, tab='+activeTabId);
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
 })();
