@@ -490,6 +490,40 @@ body.show-design-notes .section{margin-top:18px}
 .dn-yellow{background:var(--amber-50);color:var(--amber-600);border:1px solid var(--amber-400)}
 .dn-red{background:var(--red-50);color:var(--red-500);border:1px solid var(--red-400)}
 
+/* ══ LIST MODAL ══ */
+.list-modal-overlay{position:fixed;inset:0;background:rgba(17,24,39,.45);z-index:900;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.list-modal-overlay.open{display:flex}
+.list-modal{background:#fff;border-radius:var(--radius-xl);width:420px;max-height:80vh;box-shadow:0 24px 48px rgba(17,24,39,.18);overflow:hidden;animation:listModalIn .2s ease}
+@keyframes listModalIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.list-modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 12px}
+.list-modal-title{font-size:16px;font-weight:700;color:var(--text)}
+.list-modal-close{width:28px;height:28px;border-radius:6px;border:none;background:transparent;font-size:18px;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.list-modal-close:hover{background:var(--slate-100);color:var(--text)}
+.list-modal-body{padding:0 24px 16px;max-height:50vh;overflow-y:auto}
+.list-modal-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;transition:var(--transition)}
+.list-modal-item:hover{background:var(--slate-50)}
+.list-modal-item input[type="checkbox"]{accent-color:var(--brand);width:16px;height:16px;flex-shrink:0}
+.list-modal-item-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.list-modal-item-info{flex:1;min-width:0}
+.list-modal-item-name{font-size:13.5px;font-weight:500;color:var(--text)}
+.list-modal-item-count{font-size:12px;color:var(--text-muted)}
+.list-modal-divider{height:1px;background:var(--border);margin:8px 0}
+.list-modal-new{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:500;color:var(--brand);transition:var(--transition)}
+.list-modal-new:hover{background:var(--brand-bg)}
+.list-modal-new svg{width:16px;height:16px}
+.list-modal-create{padding:0 24px 16px;display:none}
+.list-modal-create.open{display:block}
+.list-modal-create input,.list-modal-create textarea{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:13px;transition:var(--transition);outline:none;margin-bottom:8px}
+.list-modal-create input:focus,.list-modal-create textarea:focus{border-color:var(--brand);box-shadow:0 0 0 2px rgba(5,73,204,.1)}
+.list-modal-create textarea{resize:vertical;min-height:60px}
+.list-modal-footer{padding:12px 24px 20px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border-light)}
+.list-modal-footer button{padding:8px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:var(--transition)}
+.list-modal-cancel{border:1px solid var(--border);background:#fff;color:var(--text-sub)}
+.list-modal-cancel:hover{background:var(--slate-50)}
+.list-modal-confirm{border:none;background:var(--brand);color:#fff}
+.list-modal-confirm:hover{background:var(--brand-hover)}
+
 /* Responsive */
 @media(max-width:768px){
   .hero{padding:0 12px 12px}
@@ -519,6 +553,9 @@ body.show-design-notes .section{margin-top:18px}
     CookieDeal
   </a>
   <a href="prototype-search.html" class="nav-link active">기업탐색</a>
+  <a href="prototype-list.html" class="nav-link">리스트</a>
+  <a href="#" class="nav-link">AI 분석</a>
+  <a href="#" class="nav-link">마이페이지</a>
   <div class="nav-right">
     <div class="nav-avatar">남</div>
   </div>
@@ -586,7 +623,7 @@ body.show-design-notes .section{margin-top:18px}
   <div class="cta-bar">
     <button class="cta-btn primary">★ 저장</button>
     <button class="cta-btn">+ 팔로우</button>
-    <button class="cta-btn">리스트에 추가</button>
+    <button class="cta-btn" onclick="openListModal()">리스트에 추가</button>
     <button class="cta-btn">↗ 내보내기</button>
     <button class="cta-btn">↗ 공유</button>
   </div>
@@ -1684,6 +1721,35 @@ body.show-design-notes .section{margin-top:18px}
   </div>
 </div>
 
+<!-- ══ LIST ADD MODAL ══ -->
+<div class="list-modal-overlay" id="listModalOverlay" onclick="if(event.target===this)closeListModal()">
+  <div class="list-modal">
+    <div class="list-modal-header">
+      <span class="list-modal-title">리스트에 추가</span>
+      <button class="list-modal-close" onclick="closeListModal()">×</button>
+    </div>
+    <div class="list-modal-body" id="listModalBody">
+      <label class="list-modal-item"><input type="checkbox" value="잠재 고객 리스트"><span class="list-modal-item-dot" style="background:var(--brand)"></span><div class="list-modal-item-info"><div class="list-modal-item-name">잠재 고객 리스트</div><div class="list-modal-item-count">12개 기업</div></div></label>
+      <label class="list-modal-item"><input type="checkbox" value="M&A 후보"><span class="list-modal-item-dot" style="background:var(--emerald-500)"></span><div class="list-modal-item-info"><div class="list-modal-item-name">M&A 후보</div><div class="list-modal-item-count">5개 기업</div></div></label>
+      <label class="list-modal-item"><input type="checkbox" value="투자 관심 기업"><span class="list-modal-item-dot" style="background:var(--amber-500)"></span><div class="list-modal-item-info"><div class="list-modal-item-name">투자 관심 기업</div><div class="list-modal-item-count">8개 기업</div></div></label>
+      <label class="list-modal-item"><input type="checkbox" value="경쟁사 모니터링"><span class="list-modal-item-dot" style="background:var(--purple-500)"></span><div class="list-modal-item-info"><div class="list-modal-item-name">경쟁사 모니터링</div><div class="list-modal-item-count">3개 기업</div></div></label>
+      <div class="list-modal-divider"></div>
+      <div class="list-modal-new" onclick="toggleListCreate()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+        새 리스트 만들기
+      </div>
+    </div>
+    <div class="list-modal-create" id="listModalCreate">
+      <input type="text" id="newListName" placeholder="리스트 이름">
+      <textarea id="newListDesc" placeholder="설명 (선택사항)" rows="2"></textarea>
+    </div>
+    <div class="list-modal-footer">
+      <button class="list-modal-cancel" onclick="closeListModal()">취소</button>
+      <button class="list-modal-confirm" onclick="confirmListModal()">추가</button>
+    </div>
+  </div>
+</div>
+
 <!-- Design Notes Toggle -->
 <button class="design-notes-toggle" onclick="toggleDesignNotes(this)">📝 디자인 노트</button>
 
@@ -1773,6 +1839,35 @@ function toggleView(section, mode, btn) {
 function toggleDesignNotes(btn) {
   document.body.classList.toggle('show-design-notes');
   btn.style.background = document.body.classList.contains('show-design-notes') ? '#DC2626' : '';
+}
+
+// ══ TOAST ══
+function showToast(msg){
+  var t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--slate-800);color:#fff;padding:10px 24px;border-radius:var(--radius-lg);font-size:13px;z-index:999;box-shadow:var(--shadow-lg);animation:fadeIn .2s';
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(function(){t.remove();},2000);
+}
+
+// ══ LIST MODAL ══
+function openListModal(){
+  document.getElementById('listModalOverlay').classList.add('open');
+  document.getElementById('listModalCreate').classList.remove('open');
+  document.querySelectorAll('#listModalBody input[type="checkbox"]').forEach(function(c){c.checked=false;});
+  document.getElementById('newListName').value='';
+  document.getElementById('newListDesc').value='';
+}
+function closeListModal(){document.getElementById('listModalOverlay').classList.remove('open');}
+function toggleListCreate(){document.getElementById('listModalCreate').classList.toggle('open');}
+function confirmListModal(){
+  var checked=[];
+  document.querySelectorAll('#listModalBody input[type="checkbox"]:checked').forEach(function(c){checked.push(c.value);});
+  var newName=document.getElementById('newListName').value.trim();
+  if(newName)checked.push(newName);
+  closeListModal();
+  if(checked.length)showToast(checked.join(', ')+' 에 추가됨');
+  else showToast('리스트를 선택해주세요');
 }
 
 // ══ SIMILAR COMPANIES DATA (18 companies, diverse industries) ══
@@ -2954,7 +3049,7 @@ function initCommentClick(){
   document.addEventListener('click',function(e){
     if(!commentMode)return;
     // Let comment UI clicks through normally
-    if(e.target.closest('.cb-pin')||e.target.closest('.cb-thread')||e.target.closest('#cb-new-input')||e.target.closest('#cb-toolbar')||e.target.closest('#cb-sidebar')||e.target.closest('.cb-name-prompt')||e.target.closest('.cb-name-overlay')||e.target.closest('.design-notes-toggle'))return;
+    if(e.target.closest('.cb-pin')||e.target.closest('.cb-thread')||e.target.closest('#cb-new-input')||e.target.closest('#cb-toolbar')||e.target.closest('#cb-sidebar')||e.target.closest('.cb-name-prompt')||e.target.closest('.cb-name-overlay')||e.target.closest('.design-notes-toggle')||e.target.closest('.list-modal-overlay'))return;
     e.preventDefault();e.stopPropagation();
     var anchor=e.target.closest('[data-cb-id]');
     if(!anchor)return;
@@ -3035,8 +3130,16 @@ function openThread(cid){
   closeThread();
   openThreadId=cid;
   var c=comments[cid];if(!c)return;
+  // Auto-switch to the comment's tab if needed
+  if(c.tabId && c.tabId !== activeTabId){
+    switchTab(c.tabId);
+    setTimeout(function(){ openThread(cid); }, 120);
+    return;
+  }
   var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');if(!pin)return;
   var pinRect=pin.getBoundingClientRect();
+  // Guard: don't position at (0,0) if pin is still hidden
+  if(pinRect.width===0 && pinRect.height===0) return;
   var thread=document.createElement('div');
   thread.id='cb-open-thread';
   thread.className='cb-thread';
