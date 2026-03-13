@@ -3,12 +3,14 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "./client";
 import type {
+  AbsenteeRanking,
   AssetAggregate,
   AssetRanking,
   BillDetail,
   BillSummary,
   BillTrendPoint,
   CommitteeOut,
+  ControversialVote,
   Demographics,
   GraphData,
   NeighborOut,
@@ -18,6 +20,7 @@ import type {
   PoliticianDetail,
   PoliticianSummary,
   PoliticianVoteRecord,
+  RegionSeat,
   VoteDetail,
   VoteParticipation,
   VoteSummary,
@@ -354,16 +357,57 @@ export function useBillTrend(term: number = 22) {
   });
 }
 
-export function useAssetRankings(limit: number = 20) {
+export function useAssetRankings(limit: number = 20, category?: string) {
   return useQuery({
-    queryKey: ["asset-rankings", limit],
+    queryKey: ["asset-rankings", limit, category],
     queryFn: async () => {
       const { data } = await api.get<AssetRanking[]>("/assets/rankings", {
-        params: { limit },
+        params: { limit, category: category || undefined },
       });
       return data;
     },
     staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useRegionSeats(term: number = 22) {
+  return useQuery({
+    queryKey: ["region-seats", term],
+    queryFn: async () => {
+      const { data } = await api.get<RegionSeat[]>("/stats/region-seats", {
+        params: { assembly_term: term },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useControversialVotes(term: number = 22, limit: number = 10) {
+  return useQuery({
+    queryKey: ["controversial-votes", term, limit],
+    queryFn: async () => {
+      const { data } = await api.get<ControversialVote[]>(
+        "/stats/controversial-votes",
+        { params: { assembly_term: term, limit } },
+      );
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function useAbsenteeRanking(term: number = 22, limit: number = 20) {
+  return useQuery({
+    queryKey: ["absentee-ranking", term, limit],
+    queryFn: async () => {
+      const { data } = await api.get<AbsenteeRanking[]>(
+        "/stats/absentee-ranking",
+        { params: { assembly_term: term, limit } },
+      );
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
   });
 }
 

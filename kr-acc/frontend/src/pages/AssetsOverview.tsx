@@ -1,8 +1,9 @@
+import { useMemo } from "react";
 import { Link } from "react-router";
 import useDocumentTitle from "@/lib/useDocumentTitle";
 import { useAssetRankings, useAssetAggregate } from "@/api/queries";
 import { getPartyColor } from "@/lib/partyColors";
-import { formatKrw } from "@/lib/format";
+import { formatKrw, formatNumber } from "@/lib/format";
 import {
   BarChart,
   Bar,
@@ -10,148 +11,523 @@ import {
   YAxis,
   ResponsiveContainer,
   Tooltip,
-  Cell,
-  Treemap,
-  ScatterChart,
-  Scatter,
   CartesianGrid,
-  ZAxis,
+  Cell,
+  PieChart,
+  Pie,
 } from "recharts";
+
+const CATEGORY_COLORS: Record<string, string> = {
+  부동산: "#3B82F6",
+  예금: "#22C55E",
+  유가증권: "#F59E0B",
+  가상자산: "#8B5CF6",
+};
+
+// Reusable ranking list for each category
+function RankingCard({
+  title,
+  subtitle,
+  data,
+  field,
+  limit = 10,
+  color,
+}: {
+  title: string;
+  subtitle: string;
+  data: {
+    politician_id: number;
+    name: string;
+    party: string | null;
+    photo_url: string | null;
+    total_assets: number;
+    total_real_estate: number | null;
+    total_deposits: number | null;
+    total_securities: number | null;
+    total_crypto: number | null;
+  }[];
+  field: "total_assets" | "total_real_estate" | "total_deposits" | "total_securities" | "total_crypto";
+  limit?: number;
+  color?: string;
+}) {
+  const sorted = useMemo(
+    () =>
+      [...data]
+        .sort((a, b) => ((b[field] as number) ?? 0) - ((a[field] as number) ?? 0))
+        .filter((r) => ((r[field] as number) ?? 0) > 0)
+        .slice(0, limit),
+    [data, field, limit],
+  );
+  const maxVal = (sorted[0]?.[field] as number) ?? 1;
+
+  if (sorted.length === 0) return null;
+
+  return (
+    <section className="rounded-lg border border-gray-200 bg-white p-5">
+      <h3 className="text-base font-semibold">{title}</h3>
+      <p className="mb-3 text-xs text-gray-400">{subtitle}</p>
+      <div className="space-y-1">
+        {sorted.map((r, i) => {
+          const value = (r[field] as number) ?? 0;
+          return (
+            <Link
+              key={r.politician_id}
+              to={`/politicians/${r.politician_id}`}
+              className="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 transition-colors hover:bg-gray-50"
+            >
+              <span className="w-5 text-right text-xs font-bold text-gray-300">
+                {i + 1}
+              </span>
+              {r.photo_url ? (
+                <img
+                  src={r.photo_url}
+                  alt={r.name}
+                  className="h-7 w-7 shrink-0 rounded-full object-cover"
+                />
+              ) : (
+                <div
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
+                  style={{ backgroundColor: getPartyColor(r.party) }}
+                >
+                  {r.name.charAt(0)}
+                </div>
+              )}
+              <div className="w-16 shrink-0">
+                <p className="text-sm font-medium group-hover:text-blue-600">
+                  {r.name}
+                </p>
+                <p className="text-[10px] text-gray-400">{r.party}</p>
+              </div>
+              <div className="flex-1">
+                <div className="h-4 overflow-hidden rounded bg-gray-100">
+                  <div
+                    className="h-full rounded"
+                    style={{
+                      width: `${Math.max((value / maxVal) * 100, 2)}%`,
+                      backgroundColor: color ?? getPartyColor(r.party),
+                      opacity: 0.75,
+                    }}
+                  />
+                </div>
+              </div>
+              <span className="w-20 text-right text-sm font-semibold tabular-nums text-gray-700">
+                {formatKrw(value)}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
 
 export default function AssetsOverview() {
   useDocumentTitle("재산·자금");
-  const rankings = useAssetRankings(20);
+
+  // Fetch ALL rankings (large limit to have enough for per-category sorting)
+  const rankings = useAssetRankings(50);
+  const rankingsRealEstate = useAssetRankings(20, "real_estate");
+  const rankingsDeposits = useAssetRankings(20, "deposits");
+  const rankingsSecurities = useAssetRankings(20, "securities");
+  const rankingsCrypto = useAssetRankings(20, "crypto");
   const aggregate = useAssetAggregate();
 
-  const maxAsset = rankings.data?.[0]?.total_assets ?? 1;
+  // Summary stats from rankings
+  const summaryStats = useMemo(() => {
+    if (!rankings.data || rankings.data.length === 0) return null;
+    const total = rankings.data.reduce((s, r) => s + r.total_assets, 0);
+    const avg = Math.round(total / rankings.data.length);
+    const median =
+      rankings.data.length > 0
+        ? rankings.data[Math.floor(rankings.data.length / 2)].total_assets
+        : 0;
+    const top = rankings.data[0];
+    return { total, avg, median, top, count: rankings.data.length };
+  }, [rankings.data]);
+
+  // Category totals from aggregate
+  const categoryTotals = useMemo(() => {
+    if (!aggregate.data) return [];
+    const totals = aggregate.data.reduce(
+      (acc, a) => ({
+        real_estate: acc.real_estate + a.total_real_estate,
+        deposits: acc.deposits + a.total_deposits,
+        securities: acc.securities + a.total_securities,
+        crypto: acc.crypto + a.total_crypto,
+      }),
+      { real_estate: 0, deposits: 0, securities: 0, crypto: 0 },
+    );
+    return [
+      { name: "부동산", value: totals.real_estate, color: CATEGORY_COLORS["부동산"] },
+      { name: "예금", value: totals.deposits, color: CATEGORY_COLORS["예금"] },
+      { name: "유가증권", value: totals.securities, color: CATEGORY_COLORS["유가증권"] },
+      { name: "가상자산", value: totals.crypto, color: CATEGORY_COLORS["가상자산"] },
+    ];
+  }, [aggregate.data]);
+
+  const categoryTotal = categoryTotals.reduce((s, c) => s + c.value, 0);
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold">재산·자금</h1>
+      <div>
+        <h1 className="text-2xl font-bold">재산·자금</h1>
+        <p className="mt-1 text-sm text-gray-500">
+          국회의원 재산공개 데이터 기반 비교 분석
+        </p>
+      </div>
 
-      {/* Asset Rankings — Horizontal bar chart */}
-      {rankings.data && rankings.data.length > 0 && (
-        <section className="rounded-lg border border-gray-200 bg-white p-5">
-          <h2 className="mb-4 text-lg font-semibold">재산 상위 20인</h2>
-          <div className="space-y-1.5">
-            {rankings.data.map((r, i) => (
-              <Link
-                key={r.politician_id}
-                to={`/politicians/${r.politician_id}`}
-                className="group flex items-center gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-gray-50"
-              >
-                <span className="w-6 text-right text-sm font-bold text-gray-300">
-                  {i + 1}
-                </span>
-                {r.photo_url ? (
-                  <img
-                    src={r.photo_url}
-                    alt={r.name}
-                    className="h-7 w-7 shrink-0 rounded-full object-cover"
-                  />
-                ) : (
-                  <div
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
-                    style={{ backgroundColor: getPartyColor(r.party) }}
-                  >
-                    {r.name.charAt(0)}
-                  </div>
-                )}
-                <div className="w-20 shrink-0">
-                  <p className="text-sm font-medium group-hover:text-blue-600">
-                    {r.name}
-                  </p>
-                  <p className="text-[10px] text-gray-400">{r.party}</p>
-                </div>
-                <div className="flex-1">
-                  <div className="h-4 overflow-hidden rounded bg-gray-100">
-                    <div
-                      className="h-full rounded transition-all"
-                      style={{
-                        width: `${(r.total_assets / maxAsset) * 100}%`,
-                        backgroundColor: getPartyColor(r.party),
-                        opacity: 0.7,
-                      }}
-                    />
-                  </div>
-                </div>
-                <span className="w-24 text-right text-sm font-medium text-gray-600">
-                  {formatKrw(r.total_assets)}
-                </span>
-              </Link>
-            ))}
+      {/* ── Section 1: Summary Stats ──────────────────── */}
+      {summaryStats && (
+        <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="rounded-lg border border-gray-200 bg-white p-4 text-center">
+            <p className="text-xs font-medium text-gray-500">재산 1위</p>
+            <p className="mt-1 text-lg font-bold">{summaryStats.top.name}</p>
+            <p className="text-sm font-semibold text-blue-600">
+              {formatKrw(summaryStats.top.total_assets)}
+            </p>
+            <p className="text-[10px] text-gray-400">{summaryStats.top.party}</p>
+          </div>
+          <div className="rounded-lg border border-gray-200 bg-white p-4 text-center">
+            <p className="text-xs font-medium text-gray-500">의원 평균 재산</p>
+            <p className="mt-2 text-2xl font-bold">{formatKrw(summaryStats.avg)}</p>
+          </div>
+          <div className="rounded-lg border border-gray-200 bg-white p-4 text-center">
+            <p className="text-xs font-medium text-gray-500">재산 중앙값</p>
+            <p className="mt-2 text-2xl font-bold">{formatKrw(summaryStats.median)}</p>
+          </div>
+          <div className="rounded-lg border border-gray-200 bg-white p-4 text-center">
+            <p className="text-xs font-medium text-gray-500">전체 재산 합계</p>
+            <p className="mt-2 text-2xl font-bold">{formatKrw(summaryStats.total)}</p>
+            <p className="text-[10px] text-gray-400">{summaryStats.count}명 합산</p>
           </div>
         </section>
       )}
 
-      {/* Aggregate by party */}
-      {aggregate.data && aggregate.data.length > 0 && (
-        <>
-          {/* Treemap */}
+      {/* ── Section 2: Category Overview (Pie + Bars) ── */}
+      {categoryTotals.length > 0 && (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {/* Pie chart */}
           <section className="rounded-lg border border-gray-200 bg-white p-5">
-            <h2 className="mb-4 text-lg font-semibold">
-              정당별 총 재산 (트리맵)
-            </h2>
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
-                <Treemap
-                  data={aggregate.data.map((a) => ({
-                    name: a.party,
-                    size: a.total_assets,
-                    fill: getPartyColor(a.party),
-                  }))}
-                  dataKey="size"
-                  nameKey="name"
-                  stroke="#fff"
-                  content={({ x, y, width, height, name, fill }) => {
-                    const w = Number(width);
-                    const h = Number(height);
-                    if (w < 40 || h < 20) return null;
-                    return (
-                      <g>
-                        <rect
-                          x={x}
-                          y={y}
-                          width={w}
-                          height={h}
-                          fill={String(fill)}
-                          stroke="#fff"
-                          strokeWidth={2}
-                          rx={4}
-                        />
-                        <text
-                          x={Number(x) + w / 2}
-                          y={Number(y) + h / 2}
-                          textAnchor="middle"
-                          dominantBaseline="central"
-                          fontSize={w < 60 ? 10 : 12}
-                          fill="#fff"
-                          fontWeight="bold"
-                        >
-                          {name}
-                        </text>
-                      </g>
-                    );
-                  }}
-                />
-              </ResponsiveContainer>
+            <h2 className="mb-1 text-lg font-semibold">재산 유형별 비중</h2>
+            <p className="mb-2 text-xs text-gray-400">
+              전체 의원 재산의 카테고리별 구성
+            </p>
+            <div className="flex items-center justify-center">
+              <div className="h-56 w-56">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={categoryTotals}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={90}
+                      paddingAngle={2}
+                    >
+                      {categoryTotals.map((c) => (
+                        <Cell key={c.name} fill={c.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(v) => formatKrw(Number(v))} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            <div className="mt-2 flex flex-wrap justify-center gap-3 text-xs">
+              {categoryTotals.map((c) => (
+                <span key={c.name} className="flex items-center gap-1.5">
+                  <span
+                    className="inline-block h-2.5 w-2.5 rounded-full"
+                    style={{ backgroundColor: c.color }}
+                  />
+                  {c.name}{" "}
+                  <span className="font-semibold">
+                    {categoryTotal > 0
+                      ? ((c.value / categoryTotal) * 100).toFixed(1)
+                      : 0}
+                    %
+                  </span>
+                </span>
+              ))}
             </div>
           </section>
 
-          {/* Category Breakdown — Stacked bar */}
+          {/* Category bars */}
           <section className="rounded-lg border border-gray-200 bg-white p-5">
-            <h2 className="mb-4 text-lg font-semibold">
-              정당별 재산 구성
+            <h2 className="mb-1 text-lg font-semibold">유형별 총액 비교</h2>
+            <p className="mb-3 text-xs text-gray-400">부동산 · 예금 · 유가증권 · 가상자산</p>
+            <div className="space-y-3">
+              {categoryTotals.map((c) => {
+                const maxCat = Math.max(...categoryTotals.map((x) => x.value)) || 1;
+                return (
+                  <div key={c.name}>
+                    <div className="mb-1 flex items-center justify-between text-xs">
+                      <span className="flex items-center gap-1.5 font-medium text-gray-700">
+                        <span
+                          className="h-2.5 w-2.5 rounded-full"
+                          style={{ backgroundColor: c.color }}
+                        />
+                        {c.name}
+                      </span>
+                      <span className="font-semibold">{formatKrw(c.value)}</span>
+                    </div>
+                    <div className="h-6 overflow-hidden rounded bg-gray-100">
+                      <div
+                        className="h-full rounded"
+                        style={{
+                          width: `${(c.value / maxCat) * 100}%`,
+                          backgroundColor: c.color,
+                          minWidth: "4px",
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* ── Section 3: 총 재산 Top 20 ─────────────────── */}
+      {rankings.data && rankings.data.length > 0 && (
+        <RankingCard
+          title="총 재산 상위 20인"
+          subtitle="최신 재산공개 기준 · 클릭하여 의원 프로필 확인"
+          data={rankings.data}
+          field="total_assets"
+          limit={20}
+        />
+      )}
+
+      {/* ── Section 4: Category-specific Rankings (2-col grid) ── */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {rankingsRealEstate.data && rankingsRealEstate.data.length > 0 && (
+          <RankingCard
+            title="부동산 상위 10인"
+            subtitle="부동산 보유액 기준"
+            data={rankingsRealEstate.data}
+            field="total_real_estate"
+            limit={10}
+            color={CATEGORY_COLORS["부동산"]}
+          />
+        )}
+        {rankingsDeposits.data && rankingsDeposits.data.length > 0 && (
+          <RankingCard
+            title="예금 상위 10인"
+            subtitle="예금 보유액 기준"
+            data={rankingsDeposits.data}
+            field="total_deposits"
+            limit={10}
+            color={CATEGORY_COLORS["예금"]}
+          />
+        )}
+        {rankingsSecurities.data && rankingsSecurities.data.length > 0 && (
+          <RankingCard
+            title="유가증권 상위 10인"
+            subtitle="주식·채권 등 유가증권 기준"
+            data={rankingsSecurities.data}
+            field="total_securities"
+            limit={10}
+            color={CATEGORY_COLORS["유가증권"]}
+          />
+        )}
+        {rankingsCrypto.data && rankingsCrypto.data.length > 0 && (
+          <RankingCard
+            title="가상자산 상위 10인"
+            subtitle="비트코인·이더리움 등 가상자산 기준"
+            data={rankingsCrypto.data}
+            field="total_crypto"
+            limit={10}
+            color={CATEGORY_COLORS["가상자산"]}
+          />
+        )}
+      </div>
+
+      {/* ── Section 5: Party Aggregate ────────────────── */}
+      {aggregate.data && aggregate.data.length > 0 && (
+        <>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {/* Party total assets */}
+            <section className="rounded-lg border border-gray-200 bg-white p-5">
+              <h2 className="mb-1 text-lg font-semibold">정당별 총 재산</h2>
+              <p className="mb-4 text-xs text-gray-400">
+                소속 의원 재산 합산 · 정당별 비교
+              </p>
+              <div className="space-y-2">
+                {aggregate.data
+                  .filter((a) => a.total_assets > 0)
+                  .map((a) => {
+                    const maxPartyAsset = aggregate.data![0].total_assets || 1;
+                    return (
+                      <div key={a.party} className="flex items-center gap-3">
+                        <span className="w-20 text-right text-xs font-medium text-gray-600">
+                          {a.party}
+                        </span>
+                        <div className="flex-1">
+                          <div className="h-7 overflow-hidden rounded bg-gray-100">
+                            <div
+                              className="flex h-full items-center rounded pl-2 text-[10px] font-bold text-white"
+                              style={{
+                                width: `${(a.total_assets / maxPartyAsset) * 100}%`,
+                                backgroundColor: getPartyColor(a.party),
+                                minWidth: "30px",
+                              }}
+                            >
+                              {formatKrw(a.total_assets)}
+                            </div>
+                          </div>
+                        </div>
+                        <span className="w-10 text-right text-xs text-gray-400">
+                          {a.count}명
+                        </span>
+                      </div>
+                    );
+                  })}
+              </div>
+            </section>
+
+            {/* Per-capita average by party */}
+            <section className="rounded-lg border border-gray-200 bg-white p-5">
+              <h2 className="mb-1 text-lg font-semibold">1인당 평균 재산</h2>
+              <p className="mb-4 text-xs text-gray-400">
+                정당별 의원 1인당 평균 총 재산
+              </p>
+              {(() => {
+                const perCapita = aggregate.data
+                  .filter((a) => a.count > 0 && a.total_assets > 0)
+                  .map((a) => ({
+                    party: a.party,
+                    avg: Math.round(a.total_assets / a.count),
+                    count: a.count,
+                  }))
+                  .sort((a, b) => b.avg - a.avg);
+                const maxAvg = perCapita[0]?.avg || 1;
+                return (
+                  <div className="space-y-2">
+                    {perCapita.map((a) => (
+                      <div key={a.party} className="flex items-center gap-3">
+                        <span className="w-20 text-right text-xs font-medium text-gray-600">
+                          {a.party}
+                        </span>
+                        <div className="flex-1">
+                          <div className="h-7 overflow-hidden rounded bg-gray-100">
+                            <div
+                              className="flex h-full items-center rounded pl-2 text-[10px] font-bold text-white"
+                              style={{
+                                width: `${(a.avg / maxAvg) * 100}%`,
+                                backgroundColor: getPartyColor(a.party),
+                                minWidth: "30px",
+                              }}
+                            >
+                              {formatKrw(a.avg)}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+            </section>
+
+            {/* Party real estate comparison */}
+            <section className="rounded-lg border border-gray-200 bg-white p-5">
+              <h2 className="mb-1 text-lg font-semibold">정당별 부동산 총액</h2>
+              <p className="mb-4 text-xs text-gray-400">어떤 정당이 부동산을 가장 많이 보유하고 있는가?</p>
+              {(() => {
+                const sorted = [...aggregate.data]
+                  .filter((a) => a.total_real_estate > 0)
+                  .sort((a, b) => b.total_real_estate - a.total_real_estate);
+                const max = sorted[0]?.total_real_estate || 1;
+                return (
+                  <div className="space-y-2">
+                    {sorted.map((a) => (
+                      <div key={a.party} className="flex items-center gap-3">
+                        <span className="w-20 text-right text-xs font-medium text-gray-600">
+                          {a.party}
+                        </span>
+                        <div className="flex-1">
+                          <div className="h-7 overflow-hidden rounded bg-gray-100">
+                            <div
+                              className="flex h-full items-center rounded pl-2 text-[10px] font-bold text-white"
+                              style={{
+                                width: `${(a.total_real_estate / max) * 100}%`,
+                                backgroundColor: CATEGORY_COLORS["부동산"],
+                                minWidth: "30px",
+                              }}
+                            >
+                              {formatKrw(a.total_real_estate)}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+            </section>
+
+            {/* Party securities comparison */}
+            <section className="rounded-lg border border-gray-200 bg-white p-5">
+              <h2 className="mb-1 text-lg font-semibold">정당별 유가증권 총액</h2>
+              <p className="mb-4 text-xs text-gray-400">정당별 주식·채권 등 유가증권 비교</p>
+              {(() => {
+                const sorted = [...aggregate.data]
+                  .filter((a) => a.total_securities > 0)
+                  .sort((a, b) => b.total_securities - a.total_securities);
+                const max = sorted[0]?.total_securities || 1;
+                return (
+                  <div className="space-y-2">
+                    {sorted.map((a) => (
+                      <div key={a.party} className="flex items-center gap-3">
+                        <span className="w-20 text-right text-xs font-medium text-gray-600">
+                          {a.party}
+                        </span>
+                        <div className="flex-1">
+                          <div className="h-7 overflow-hidden rounded bg-gray-100">
+                            <div
+                              className="flex h-full items-center rounded pl-2 text-[10px] font-bold text-white"
+                              style={{
+                                width: `${(a.total_securities / max) * 100}%`,
+                                backgroundColor: CATEGORY_COLORS["유가증권"],
+                                minWidth: "30px",
+                              }}
+                            >
+                              {formatKrw(a.total_securities)}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+            </section>
+          </div>
+
+          {/* Category breakdown stacked */}
+          <section className="rounded-lg border border-gray-200 bg-white p-5">
+            <h2 className="mb-1 text-lg font-semibold">
+              정당별 재산 구성 비교
             </h2>
-            <div className="h-64">
+            <p className="mb-4 text-xs text-gray-400">
+              부동산 · 예금 · 유가증권 · 가상자산
+            </p>
+            <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={aggregate.data}
+                  data={aggregate.data.filter((a) => a.total_assets > 0)}
                   margin={{ left: 60, right: 8 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="party" tick={{ fontSize: 11 }} />
-                  <YAxis tickFormatter={(v: number) => formatKrw(v)} tick={{ fontSize: 11 }} />
+                  <YAxis
+                    tickFormatter={(v: number) => formatKrw(v)}
+                    tick={{ fontSize: 11 }}
+                  />
                   <Tooltip formatter={(v) => formatKrw(Number(v))} />
                   <Bar dataKey="total_real_estate" name="부동산" stackId="a" fill="#3B82F6" />
                   <Bar dataKey="total_deposits" name="예금" stackId="a" fill="#22C55E" />
@@ -161,18 +537,13 @@ export default function AssetsOverview() {
               </ResponsiveContainer>
             </div>
             <div className="mt-2 flex justify-center gap-4 text-xs">
-              {[
-                { name: "부동산", color: "#3B82F6" },
-                { name: "예금", color: "#22C55E" },
-                { name: "유가증권", color: "#F59E0B" },
-                { name: "가상자산", color: "#8B5CF6" },
-              ].map((c) => (
-                <span key={c.name} className="flex items-center gap-1">
+              {Object.entries(CATEGORY_COLORS).map(([name, color]) => (
+                <span key={name} className="flex items-center gap-1">
                   <span
                     className="inline-block h-2 w-2 rounded-full"
-                    style={{ backgroundColor: c.color }}
+                    style={{ backgroundColor: color }}
                   />
-                  {c.name}
+                  {name}
                 </span>
               ))}
             </div>

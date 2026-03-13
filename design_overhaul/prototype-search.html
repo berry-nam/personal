@@ -1175,8 +1175,10 @@ body.cb-comment-mode{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 .cb-thread-author{font-size:13px;font-weight:600;color:#111827}
 .cb-thread-time{font-size:11px;color:#9AA3B4}
 .cb-thread-actions{margin-left:auto;display:flex;gap:4px}
-.cb-action-btn{width:28px;height:28px;border-radius:6px;border:1px solid #E0E4EB;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;padding:0;font-family:inherit;color:#6B7689}
+.cb-action-btn{height:28px;border-radius:6px;border:1px solid #E0E4EB;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;font-size:12px;transition:all .15s;padding:0 10px;font-family:inherit;color:#6B7689;white-space:nowrap}
 .cb-action-btn:hover{background:#F7F8FA;border-color:#CCD2DB}
+.cb-action-btn.resolve:hover{background:#ECFDF5;border-color:#6EE7B7;color:#059669}
+.cb-action-btn.delete:hover{background:#FEF2F2;border-color:#FCA5A5;color:#DC2626}
 .cb-thread-body{flex:1;overflow-y:auto;padding:12px 14px}
 .cb-msg{margin-bottom:12px}
 .cb-msg-meta{display:flex;align-items:center;gap:6px;margin-bottom:3px}
@@ -1387,26 +1389,29 @@ function renderThreadHTML(container,c){
       repliesHTML+='<div class="cb-msg"><div class="cb-msg-meta"><div class="cb-avatar sm" style="background:'+r.authorColor+'">'+r.author[0]+'</div><span class="cb-msg-name">'+esc(r.author)+'</span><span class="cb-msg-time">'+timeAgo(r.timestamp)+'</span></div><div class="cb-msg-text">'+esc(r.text)+'</div></div>';
     });
   }
-  var resolveIcon=c.resolved?'↩':'✓';
-  var resolveTitle=c.resolved?'다시 열기':'해결';
+  var resolveLabel=c.resolved?'다시 열기':'해결';
+  var resolveClass=c.resolved?'reopen':'resolve';
   container.innerHTML='<div class="cb-thread-header">'
     +'<div class="cb-avatar" style="background:'+c.authorColor+'">'+c.author[0]+'</div>'
     +'<div><div class="cb-thread-author">'+esc(c.author)+'</div><div class="cb-thread-time">'+timeAgo(c.timestamp)+'</div></div>'
     +'<div class="cb-thread-actions">'
-    +'<button class="cb-action-btn" title="'+resolveTitle+'" onclick="window._cbResolve(\''+c.id+'\')">'+resolveIcon+'</button>'
-    +'<button class="cb-action-btn" title="삭제" onclick="window._cbDelete(\''+c.id+'\')">🗑</button>'
-    +'<button class="cb-action-btn" title="닫기" onclick="window._cbClose()">✕</button>'
+    +'<button class="cb-action-btn '+resolveClass+'" id="cb-btn-resolve">'+resolveLabel+'</button>'
+    +'<button class="cb-action-btn delete" id="cb-btn-delete">삭제</button>'
+    +'<button class="cb-action-btn" id="cb-btn-close">닫기</button>'
     +'</div></div>'
     +'<div class="cb-thread-body"><div class="cb-msg"><div class="cb-msg-text" style="font-size:13.5px">'+esc(c.text)+'</div></div>'+repliesHTML+'</div>'
-    +'<div class="cb-thread-input"><input type="text" id="cb-reply-input" placeholder="답글..." onkeydown="if(event.key===\'Enter\')window._cbReplySubmit(\''+c.id+'\')"><button class="cb-send-btn" onclick="window._cbReplySubmit(\''+c.id+'\')">전송</button></div>';
-  window._cbResolve=function(id){resolveComment(id);};
-  window._cbDelete=function(id){deleteComment(id);closeThread();};
-  window._cbClose=function(){closeThread();};
-  window._cbReplySubmit=function(id){
-    var inp=document.getElementById('cb-reply-input');if(!inp)return;
-    var t=inp.value.trim();if(!t)return;
-    addReply(id,t);inp.value='';
-  };
+    +'<div class="cb-thread-input"><input type="text" id="cb-reply-input" placeholder="답글..."><button class="cb-send-btn" id="cb-btn-reply">전송</button></div>';
+  // Bind events via addEventListener (more reliable than inline onclick)
+  var cid=c.id;
+  container.querySelector('#cb-btn-resolve').addEventListener('click',function(e){e.stopPropagation();resolveComment(cid);});
+  container.querySelector('#cb-btn-delete').addEventListener('click',function(e){e.stopPropagation();deleteComment(cid);closeThread();});
+  container.querySelector('#cb-btn-close').addEventListener('click',function(e){e.stopPropagation();closeThread();});
+  container.querySelector('#cb-btn-reply').addEventListener('click',function(e){e.stopPropagation();
+    var inp=document.getElementById('cb-reply-input');if(!inp)return;var t=inp.value.trim();if(!t)return;addReply(cid,t);inp.value='';
+  });
+  container.querySelector('#cb-reply-input').addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.stopPropagation();var t=e.target.value.trim();if(!t)return;addReply(cid,t);e.target.value='';}
+  });
 }
 
 // ── NAME PROMPT ──

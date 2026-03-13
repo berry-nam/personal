@@ -207,7 +207,40 @@ export interface AssetRanking {
   party: string | null;
   photo_url: string | null;
   total_assets: number;
+  total_real_estate: number | null;
+  total_deposits: number | null;
+  total_securities: number | null;
+  total_crypto: number | null;
   report_year: number;
+}
+
+export interface RegionSeat {
+  region: string;
+  total: number;
+  parties: Record<string, number>;
+}
+
+export interface ControversialVote {
+  vote_id: string;
+  bill_name: string;
+  vote_date: string | null;
+  total_members: number;
+  yes_count: number;
+  no_count: number;
+  abstain_count: number;
+  absent_count: number;
+  result: string | null;
+  opposition_rate: number;
+}
+
+export interface AbsenteeRanking {
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+  total_votes: number;
+  absent_count: number;
+  absence_rate: number;
 }
 
 export interface AssetAggregate {

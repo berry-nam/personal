@@ -28,10 +28,10 @@ router = APIRouter(tags=["assets"])
 @router.get("/assets/rankings")
 async def asset_rankings(
     limit: int = Query(20, ge=1, le=100),
+    category: str | None = Query(None, description="total, real_estate, deposits, securities, crypto"),
     session: AsyncSession = Depends(get_session),
 ) -> list[dict]:
-    """Top politicians by total assets (latest report year per politician)."""
-    # Subquery: latest report year per politician
+    """Top politicians by asset category (latest report year per politician)."""
     latest_year = (
         select(
             AssetDeclaration.politician_id,
@@ -41,6 +41,14 @@ async def asset_rankings(
         .subquery()
     )
 
+    col_map = {
+        "real_estate": AssetDeclaration.total_real_estate,
+        "deposits": AssetDeclaration.total_deposits,
+        "securities": AssetDeclaration.total_securities,
+        "crypto": AssetDeclaration.total_crypto,
+    }
+    sort_col = col_map.get(category, AssetDeclaration.total_assets)
+
     result = await session.execute(
         select(
             Politician.id.label("politician_id"),
@@ -48,6 +56,10 @@ async def asset_rankings(
             Politician.party,
             Politician.photo_url,
             AssetDeclaration.total_assets,
+            AssetDeclaration.total_real_estate,
+            AssetDeclaration.total_deposits,
+            AssetDeclaration.total_securities,
+            AssetDeclaration.total_crypto,
             AssetDeclaration.report_year,
         )
         .join(AssetDeclaration, AssetDeclaration.politician_id == Politician.id)
@@ -56,8 +68,8 @@ async def asset_rankings(
             (latest_year.c.politician_id == AssetDeclaration.politician_id)
             & (latest_year.c.max_year == AssetDeclaration.report_year),
         )
-        .where(AssetDeclaration.total_assets.isnot(None))
-        .order_by(AssetDeclaration.total_assets.desc())
+        .where(sort_col.isnot(None), sort_col > 0)
+        .order_by(sort_col.desc())
         .limit(limit)
     )
     return [
@@ -67,6 +79,10 @@ async def asset_rankings(
             "party": row.party,
             "photo_url": row.photo_url,
             "total_assets": row.total_assets,
+            "total_real_estate": row.total_real_estate,
+            "total_deposits": row.total_deposits,
+            "total_securities": row.total_securities,
+            "total_crypto": row.total_crypto,
             "report_year": row.report_year,
         }
         for row in result.all()
