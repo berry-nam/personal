@@ -442,6 +442,26 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .rating-change.up{background:var(--emerald-50);color:var(--emerald-600)}
 .rating-change.down{background:var(--red-50);color:var(--red-600)}
 .rating-change.hold{background:var(--slate-100);color:var(--text-muted)}
+/* Gauge semicircle for ratios */
+.gauge-wrap{position:relative;width:120px;height:65px;margin:0 auto 8px}
+.gauge-bg{position:absolute;width:120px;height:60px;border-radius:60px 60px 0 0;background:conic-gradient(from 180deg at 50% 100%,var(--red-400) 0deg,var(--amber-400) 60deg,var(--emerald-400) 120deg,var(--blue-400) 180deg);overflow:hidden}
+.gauge-mask{position:absolute;bottom:0;left:10px;width:100px;height:50px;border-radius:50px 50px 0 0;background:var(--slate-50)}
+.gauge-needle{position:absolute;bottom:0;left:50%;width:2px;height:52px;background:var(--slate-800);transform-origin:bottom center;border-radius:1px}
+.gauge-dot{position:absolute;bottom:-3px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--slate-800);transform:translateX(-50%)}
+.gauge-value{text-align:center;font-size:20px;font-weight:800;letter-spacing:-.5px}
+/* Mini spark bars */
+.spark-bars{display:flex;align-items:flex-end;gap:4px;height:48px}
+.spark-bar{flex:1;border-radius:3px 3px 0 0;transition:height .4s}
+.spark-bar-label{font-size:10px;color:var(--text-muted);text-align:center;margin-top:4px}
+/* Zone bar */
+.zone-bar{height:10px;border-radius:5px;display:flex;overflow:hidden;margin:12px 0 6px}
+.zone-bar>div{height:100%}
+.zone-marker-wrap{position:relative;height:0}
+.zone-marker{position:absolute;top:-20px;width:2px;height:20px;background:var(--slate-800)}
+.zone-marker::after{content:'';position:absolute;bottom:-4px;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--slate-800)}
+.zone-labels{display:flex;justify-content:space-between;font-size:9.5px;color:var(--text-muted);font-weight:600}
+/* 외감 badge */
+.audit-badge{font-size:10px;font-weight:700;color:var(--purple-500);background:var(--purple-50);padding:2px 8px;border-radius:10px;border:1px solid var(--purple-400);white-space:nowrap}
 
 /* ══ Responsive additions for S2/S3/S3a ══ */
 @media(max-width:768px){
@@ -1049,7 +1069,7 @@ body.show-design-notes .section{margin-top:18px}
 
     <!-- S3a: 재무 건전성 인사이트 — KoDATA 현금흐름(ENPcfan0002) + DART 감사/배당 기반 -->
     <div class="section paywall-section" style="position:relative" id="analyst-section">
-      <span class="design-note dn-green">KoDATA cf_anal4(현금흐름등급), DART audit_summary(감사의견), DART dividend_status(배당). 신용평가=Phase 2(NICE)</span>
+      <span class="design-note dn-green">KoDATA: 현금흐름등급(cf_anal4), 유동비율·자기자본비율(ENPfsdt0003), 이자보상배율·매출채권회전일(ENPfsdt0004). DART: 감사의견·배당(외감기업). 신용평가=Phase 2(NICE)</span>
       <div class="section-title"><span class="icon">🔍</span> 재무 건전성</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div class="analyst-grid">
@@ -1092,8 +1112,131 @@ body.show-design-notes .section{margin-top:18px}
             </div>
           </div>
         </div>
-        <!-- Card 3: Audit Opinion — DART ds002_020 -->
+        <!-- Card 3: Current Ratio — KoDATA ENPfsdt0003 (재무상태표) -->
         <div class="analyst-card">
+          <div class="analyst-card-title">📐 유동비율 <span style="font-size:10px;color:var(--text-muted);font-weight:400">KoDATA</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+            <div class="analyst-card-value" style="color:var(--emerald-600)">182<span style="font-size:14px;font-weight:500">%</span></div>
+            <span style="font-size:12px;color:var(--emerald-600);font-weight:600">양호</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">ENPfsdt0003 · 유동자산/유동부채 · 2025 결산</div>
+          <div class="zone-bar">
+            <div style="width:33%;background:var(--red-400)"></div>
+            <div style="width:17%;background:var(--amber-400)"></div>
+            <div style="width:50%;background:var(--emerald-400)"></div>
+          </div>
+          <div class="zone-marker-wrap"><div class="zone-marker" style="left:68%"></div></div>
+          <div class="zone-labels"><span>위험 ~100%</span><span>보통 100~150%</span><span>양호 150%+</span></div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <div style="flex:1;text-align:center;padding:6px;background:#fff;border-radius:var(--radius-sm);border:1px solid var(--border-light)">
+              <div style="font-size:10px;color:var(--text-muted)">2023</div>
+              <div style="font-size:13px;font-weight:700">165%</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:6px;background:#fff;border-radius:var(--radius-sm);border:1px solid var(--border-light)">
+              <div style="font-size:10px;color:var(--text-muted)">2024</div>
+              <div style="font-size:13px;font-weight:700">174%</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:6px;background:var(--emerald-50);border-radius:var(--radius-sm);border:1px solid var(--emerald-400)">
+              <div style="font-size:10px;color:var(--text-muted)">2025</div>
+              <div style="font-size:13px;font-weight:700;color:var(--emerald-600)">182%</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4: Equity Ratio — KoDATA ENPfsdt0003 (재무상태표) -->
+        <div class="analyst-card">
+          <div class="analyst-card-title">🛡️ 자기자본비율 <span style="font-size:10px;color:var(--text-muted);font-weight:400">KoDATA</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+            <div class="analyst-card-value" style="color:var(--brand)">60.5<span style="font-size:14px;font-weight:500">%</span></div>
+            <span style="font-size:12px;color:var(--emerald-600);font-weight:600">안정</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">ENPfsdt0003 · 자본총계/자산총계 · 2025 결산</div>
+          <!-- Mini donut showing 자기자본 vs 부채 -->
+          <div style="display:flex;align-items:center;gap:16px;margin-top:8px">
+            <canvas id="equityDonut" width="80" height="80" style="width:80px;height:80px"></canvas>
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+                <div style="width:10px;height:10px;border-radius:2px;background:var(--brand)"></div>
+                <span style="font-size:12px;color:var(--text-sub)">자기자본</span>
+                <span style="font-size:12px;font-weight:700;margin-left:auto">60.5%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+                <div style="width:10px;height:10px;border-radius:2px;background:var(--slate-300)"></div>
+                <span style="font-size:12px;color:var(--text-sub)">부채</span>
+                <span style="font-size:12px;font-weight:700;margin-left:auto">39.5%</span>
+              </div>
+              <div style="font-size:10.5px;color:var(--text-muted);margin-top:8px;line-height:1.5">
+                업종 평균 대비 <span style="color:var(--emerald-600);font-weight:700">+8.3%p</span> 높음
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 5: Interest Coverage — KoDATA ENPfsdt0004 (손익계산서) -->
+        <div class="analyst-card">
+          <div class="analyst-card-title">⚡ 이자보상배율 <span style="font-size:10px;color:var(--text-muted);font-weight:400">KoDATA</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+            <div class="analyst-card-value" style="color:var(--emerald-600)">4.8<span style="font-size:14px;font-weight:500">배</span></div>
+            <span style="font-size:12px;color:var(--emerald-600);font-weight:600">안전</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">ENPfsdt0004 · 영업이익/이자비용 · 2025 결산</div>
+          <div class="zone-bar">
+            <div style="width:20%;background:var(--red-400)"></div>
+            <div style="width:20%;background:var(--amber-400)"></div>
+            <div style="width:60%;background:var(--emerald-400)"></div>
+          </div>
+          <div class="zone-marker-wrap"><div class="zone-marker" style="left:72%"></div></div>
+          <div class="zone-labels"><span>위험 ~1배</span><span>주의 1~3배</span><span>안전 3배+</span></div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <div style="flex:1;text-align:center;padding:6px;background:#fff;border-radius:var(--radius-sm);border:1px solid var(--border-light)">
+              <div style="font-size:10px;color:var(--text-muted)">2023</div>
+              <div style="font-size:13px;font-weight:700">3.2배</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:6px;background:#fff;border-radius:var(--radius-sm);border:1px solid var(--border-light)">
+              <div style="font-size:10px;color:var(--text-muted)">2024</div>
+              <div style="font-size:13px;font-weight:700">4.1배</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:6px;background:var(--emerald-50);border-radius:var(--radius-sm);border:1px solid var(--emerald-400)">
+              <div style="font-size:10px;color:var(--text-muted)">2025</div>
+              <div style="font-size:13px;font-weight:700;color:var(--emerald-600)">4.8배</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 6: DSO (매출채권회전일) — KoDATA ENPfsdt0003+0004 -->
+        <div class="analyst-card">
+          <div class="analyst-card-title">🔄 매출채권회전일 <span style="font-size:10px;color:var(--text-muted);font-weight:400">KoDATA</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+            <div class="analyst-card-value" style="color:var(--brand)">52<span style="font-size:14px;font-weight:500">일</span></div>
+            <span style="font-size:12px;color:var(--emerald-600);font-weight:600">양호</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">매출채권/매출액×365 · 2025 결산</div>
+          <div style="display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:8px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:10px;font-weight:700;color:var(--text-sub);margin-bottom:4px">68일</div>
+              <div style="width:100%;border-radius:3px 3px 0 0;background:var(--slate-300);height:46px"></div>
+              <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2022</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:10px;font-weight:700;color:var(--text-sub);margin-bottom:4px">61일</div>
+              <div style="width:100%;border-radius:3px 3px 0 0;background:var(--blue-200);height:38px"></div>
+              <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2023</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:10px;font-weight:700;color:var(--text-sub);margin-bottom:4px">56일</div>
+              <div style="width:100%;border-radius:3px 3px 0 0;background:var(--blue-300);height:30px"></div>
+              <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2024</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:10px;font-weight:700;color:var(--brand);margin-bottom:4px">52일</div>
+              <div style="width:100%;border-radius:3px 3px 0 0;background:var(--brand);height:24px"></div>
+              <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2025</div>
+            </div>
+          </div>
+          <div style="font-size:10.5px;color:var(--text-muted);margin-top:10px;line-height:1.5">
+            4년간 <span style="color:var(--emerald-600);font-weight:700">-16일</span> 개선 · 현금 회수 속도 향상
+          </div>
+        </div>
+        <!-- Card 7: Audit Opinion — DART ds002_020 (외감기업 전용) -->
+        <div class="analyst-card" style="position:relative">
+          <div style="position:absolute;top:12px;right:12px" class="audit-badge">외감기업</div>
           <div class="analyst-card-title">📋 감사 의견 <span style="font-size:10px;color:var(--text-muted);font-weight:400">DART</span></div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
             <div style="font-size:22px;font-weight:800;color:var(--emerald-600)">적정</div>
@@ -1109,8 +1252,9 @@ body.show-design-notes .section{margin-top:18px}
             </tbody>
           </table>
         </div>
-        <!-- Card 4: Dividend — DART ds002_002 -->
-        <div class="analyst-card">
+        <!-- Card 8: Dividend — DART ds002_002 (외감기업 전용) -->
+        <div class="analyst-card" style="position:relative">
+          <div style="position:absolute;top:12px;right:12px" class="audit-badge">외감기업</div>
           <div class="analyst-card-title">💰 배당 현황 <span style="font-size:10px;color:var(--text-muted);font-weight:400">DART</span></div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
             <div style="font-size:22px;font-weight:800;color:var(--brand)">1.8<span style="font-size:14px;font-weight:500">%</span></div>
@@ -1569,7 +1713,7 @@ function switchTab(tabId, el) {
   // Trigger chart drawing on tab switch
   if (tabId === 'finance') {
     setTimeout(function(){
-      drawRevenueEarningsChart(); drawRevenueCompositionChart(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
+      drawRevenueEarningsChart(); drawRevenueCompositionChart(); drawEquityDonut(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
     }, 100);
   }
 }
@@ -2047,6 +2191,37 @@ function switchValuation(metric, btn) {
   }
 
   document.getElementById('valInsight').innerHTML = '💡 ' + d.insight;
+}
+
+// S3a: Equity Donut — KoDATA 재무상태표(ENPfsdt0003) 기반
+function drawEquityDonut() {
+  var canvas = document.getElementById('equityDonut');
+  if (!canvas) return;
+  var S = 80;
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = S * dpr; canvas.height = S * dpr;
+  canvas.style.width = S + 'px'; canvas.style.height = S + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  var cx = S / 2, cy = S / 2, R = 32, r = 18;
+  var equity = 0.605;
+  // Equity arc
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, -Math.PI / 2, -Math.PI / 2 + equity * Math.PI * 2);
+  ctx.arc(cx, cy, r, -Math.PI / 2 + equity * Math.PI * 2, -Math.PI / 2, true);
+  ctx.closePath();
+  ctx.fillStyle = '#0549CC';
+  ctx.fill();
+  // Debt arc
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, -Math.PI / 2 + equity * Math.PI * 2, -Math.PI / 2 + Math.PI * 2);
+  ctx.arc(cx, cy, r, -Math.PI / 2 + Math.PI * 2, -Math.PI / 2 + equity * Math.PI * 2, true);
+  ctx.closePath();
+  ctx.fillStyle = '#CCD2DB';
+  ctx.fill();
+  // Center text
+  ctx.fillStyle = '#111827'; ctx.font = 'bold 13px Pretendard Variable'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('60.5%', cx, cy);
 }
 
 // S3: Revenue Composition — KoDATA 주요매출계정(ENPfsdt0005) 기반
