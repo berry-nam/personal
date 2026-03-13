@@ -614,7 +614,7 @@ body.show-design-notes .section{margin-top:18px}
         </div>
       </div>
       <div class="chart-container">
-        <canvas id="revenueChart" width="1100" height="300"></canvas>
+        <canvas id="revenueChart" style="width:100%" height="300"></canvas>
       </div>
     </div>
 
@@ -641,7 +641,7 @@ body.show-design-notes .section{margin-top:18px}
       <span class="design-note dn-yellow" style="right:auto;left:8px">hover 시 툴팁(값+비율). 바 위 값 라벨 11px. 높이 240px. 카테고리 라벨 수평 배치</span>
       <div class="section-title"><span class="icon">🏗️</span> 매출 구성 워터폴</div>
       <div class="chart-container">
-        <canvas id="waterfallChart" width="1100" height="260"></canvas>
+        <canvas id="waterfallChart" style="width:100%" height="260"></canvas>
       </div>
     </div>
 
@@ -795,7 +795,7 @@ body.show-design-notes .section{margin-top:18px}
       <span class="design-note dn-blue" style="right:auto;left:8px">하단 요약 카드 3개: 현재 인원·증감률·평균 근속. 숫자 20px/Bold, 라벨 11px/Gray-500</span>
       <div class="section-title"><span class="icon">👥</span> 인원현황</div>
       <div class="chart-container">
-        <canvas id="employeeChart" width="1100" height="220"></canvas>
+        <canvas id="employeeChart" style="width:100%" height="220"></canvas>
       </div>
     </div>
 
@@ -1123,7 +1123,7 @@ body.show-design-notes .section{margin-top:18px}
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
         <div class="chart-toggle" style="margin-bottom:12px"><button class="chart-toggle-btn active">연간</button><button class="chart-toggle-btn">분기</button></div>
-        <canvas id="financialBars" width="1100" height="240"></canvas>
+        <canvas id="financialBars" style="width:100%" height="240"></canvas>
         <div class="expandable-trigger" onclick="toggleExpand(this)">▼ 재무제표 보기</div>
         <div class="expandable-content">
           <table class="fin-table" style="margin-top:8px">
@@ -1146,7 +1146,7 @@ body.show-design-notes .section{margin-top:18px}
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
         <div class="chart-toggle" style="margin-bottom:12px"><button class="chart-toggle-btn active">부채비율</button><button class="chart-toggle-btn">유동비율</button></div>
-        <canvas id="stabilityChart" width="1100" height="200"></canvas>
+        <canvas id="stabilityChart" style="width:100%" height="200"></canvas>
         <a href="#" class="compare-link" style="margin-top:12px;display:inline-flex">동종업계와 비교하기 →</a>
       </div>
     </div>
@@ -1203,7 +1203,7 @@ body.show-design-notes .section{margin-top:18px}
       <div class="section-title"><span class="icon">💵</span> 현금흐름 <span class="cashflow-badge">A+</span></div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
-        <canvas id="cashFlowChart" width="1100" height="200"></canvas>
+        <canvas id="cashFlowChart" style="width:100%" height="200"></canvas>
         <table class="fin-table" style="margin-top:16px">
           <thead><tr><th>항목</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
           <tbody>
@@ -1697,7 +1697,8 @@ function renderSimilarCards(containerId, count, mode) {
 // ══ REVENUE CHART ══
 function drawRevenueChart() {
   var canvas = document.getElementById('revenueChart');
-  var W = 1100, H = 300;
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 1100, H = 300;
   var ctx = hiDPI(canvas, W, H);
   ctx.clearRect(0, 0, W, H);
 
@@ -1705,20 +1706,25 @@ function drawRevenueChart() {
   var revenue = [280, 295, 310, 328, 342];
   var profit = [18, 20, 22, 25, 28];
   var maxR = 400;
-  var barW = 56, gap = 120, startX = 100, baseY = H - 40;
+  var padL = 80, padR = 20;
+  var chartArea = W - padL - padR;
+  var groupW = chartArea / years.length;
+  var barW = Math.min(56, groupW * 0.35);
+  var startX = padL;
+  var baseY = H - 40;
   var chartH = baseY - 30;
 
   // Grid
   ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
   for (var i = 0; i <= 5; i++) {
     var y = baseY - (i / 5) * chartH;
-    ctx.beginPath(); ctx.moveTo(80, y); ctx.lineTo(W - 20, y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
     ctx.fillStyle = '#9AA3B4'; ctx.font = '12px Pretendard Variable'; ctx.textAlign = 'right';
-    ctx.fillText(Math.round(maxR * i / 5) + '억', 74, y + 4);
+    ctx.fillText(Math.round(maxR * i / 5) + '억', padL - 6, y + 4);
   }
 
   years.forEach(function(yr, i) {
-    var x = startX + i * (barW * 2 + gap);
+    var x = startX + i * groupW + (groupW - barW * 2 - 8) / 2;
     // Revenue bar
     var rH = (revenue[i] / maxR) * chartH;
     var grad = ctx.createLinearGradient(x, baseY - rH, x, baseY);
@@ -1744,17 +1750,19 @@ function drawRevenueChart() {
   });
 
   // Legend
-  ctx.fillStyle = '#0549CC'; ctx.fillRect(W - 200, 10, 14, 14);
+  var lgX = Math.max(W - 200, padL + 10);
+  ctx.fillStyle = '#0549CC'; ctx.fillRect(lgX, 10, 14, 14);
   ctx.fillStyle = '#374151'; ctx.font = '13px Pretendard Variable'; ctx.textAlign = 'left';
-  ctx.fillText('매출액', W - 180, 22);
-  ctx.fillStyle = '#F59E0B'; ctx.fillRect(W - 110, 10, 14, 14);
-  ctx.fillStyle = '#374151'; ctx.fillText('영업이익', W - 90, 22);
+  ctx.fillText('매출액', lgX + 20, 22);
+  ctx.fillStyle = '#F59E0B'; ctx.fillRect(lgX + 90, 10, 14, 14);
+  ctx.fillStyle = '#374151'; ctx.fillText('영업이익', lgX + 110, 22);
 }
 
 // ══ WATERFALL CHART ══
 function drawWaterfallChart() {
   var canvas = document.getElementById('waterfallChart');
-  var W = 1100, H = 260;
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 1100, H = 260;
   var ctx = hiDPI(canvas, W, H);
   ctx.clearRect(0, 0, W, H);
 
@@ -1767,21 +1775,25 @@ function drawWaterfallChart() {
     {label:'총 매출',value:342,type:'total'}
   ];
 
-  var max = 380, barW = 80, gap = 72, startX = 80, baseY = H - 40;
+  var padL = 60, padR = 20;
+  var chartArea = W - padL - padR;
+  var groupW = chartArea / segments.length;
+  var barW = Math.min(80, groupW * 0.6);
+  var max = 380, startX = padL, baseY = H - 40;
   var chartH = baseY - 30;
   var running = 0;
 
   ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
   for (var i = 0; i <= 4; i++) {
     var y = baseY - (i / 4) * chartH;
-    ctx.beginPath(); ctx.moveTo(60, y); ctx.lineTo(W - 20, y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
     ctx.fillStyle = '#9AA3B4'; ctx.font = '12px Pretendard Variable'; ctx.textAlign = 'right';
-    ctx.fillText(Math.round(max * i / 4) + '억', 54, y + 4);
+    ctx.fillText(Math.round(max * i / 4) + '억', padL - 6, y + 4);
   }
 
   var colors = ['#0549CC','#3A7ADF','#6D9DE7','#9BBBEE','#C8D9F5'];
   segments.forEach(function(s, i) {
-    var x = startX + i * (barW + gap);
+    var x = startX + i * groupW + (groupW - barW) / 2;
     if (s.type === 'total') {
       var h = (s.value / max) * chartH;
       var grad = ctx.createLinearGradient(x, baseY - h, x, baseY);
@@ -1842,7 +1854,8 @@ function drawShareholderDonut() {
 // ══ EMPLOYEE AREA CHART ══
 function drawEmployeeChart() {
   var canvas = document.getElementById('employeeChart');
-  var W = 1100, H = 220;
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 1100, H = 220;
   var ctx = hiDPI(canvas, W, H);
   ctx.clearRect(0, 0, W, H);
 
@@ -2201,7 +2214,7 @@ function drawExpertSentimentChart() {
 function drawFinancialBars() {
   var canvas = document.getElementById('financialBars');
   if (!canvas) return;
-  var W = 1100, H = 240;
+  var W = canvas.parentElement.offsetWidth || 1100, H = 240;
   var ctx = hiDPI(canvas, W, H);
   ctx.clearRect(0, 0, W, H);
 
@@ -2209,20 +2222,24 @@ function drawFinancialBars() {
   var revenue = [280, 295, 310, 328, 342];
   var opProfit = [18, 20, 22, 25, 28];
   var netProfit = [12, 14, 15, 18, 20];
-  var maxV = 400, barW = 60, gap = 130, startX = 110, baseY = H - 36;
+  var padL = 90, padR = 20;
+  var chartArea = W - padL - padR;
+  var gap = Math.floor(chartArea / years.length);
+  var barW = Math.min(60, gap * 0.5);
+  var maxV = 400, baseY = H - 36;
   var chartH = baseY - 20;
 
   // Grid
   ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
   for (var i = 0; i <= 4; i++) {
     var y = baseY - (i / 4) * chartH;
-    ctx.beginPath(); ctx.moveTo(90, y); ctx.lineTo(W - 20, y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
     ctx.fillStyle = '#9AA3B4'; ctx.font = '11px Pretendard Variable'; ctx.textAlign = 'right';
     ctx.fillText(Math.round(maxV * i / 4) + '억', 84, y + 4);
   }
 
   years.forEach(function(yr, i) {
-    var x = startX + i * gap;
+    var x = padL + i * gap + Math.floor((gap - barW) / 2);
     // Revenue (stacked bottom)
     var rH = (revenue[i] / maxV) * chartH;
     ctx.fillStyle = '#10B981';
@@ -2243,7 +2260,7 @@ function drawFinancialBars() {
   });
 
   // Legend
-  var legendX = W - 300, legendY = 12;
+  var legendX = Math.max(W - 300, padL + 10), legendY = 12;
   [['#10B981','매출'],['#0549CC','영업이익'],['#8B5CF6','순이익']].forEach(function(l, i) {
     ctx.fillStyle = l[0]; ctx.fillRect(legendX + i * 80, legendY, 12, 12);
     ctx.fillStyle = '#374151'; ctx.font = '12px Pretendard Variable'; ctx.textAlign = 'left';
@@ -2254,7 +2271,7 @@ function drawFinancialBars() {
 function drawStabilityChart() {
   var canvas = document.getElementById('stabilityChart');
   if (!canvas) return;
-  var W = 1100, H = 200;
+  var W = canvas.parentElement.offsetWidth || 1100, H = 200;
   var ctx = hiDPI(canvas, W, H);
   ctx.clearRect(0, 0, W, H);
 
@@ -2310,7 +2327,7 @@ function drawStabilityChart() {
 function drawCashFlowChart() {
   var canvas = document.getElementById('cashFlowChart');
   if (!canvas) return;
-  var W = 1100, H = 200;
+  var W = canvas.parentElement.offsetWidth || 1100, H = 200;
   var ctx = hiDPI(canvas, W, H);
   ctx.clearRect(0, 0, W, H);
 
