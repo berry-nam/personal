@@ -1424,7 +1424,8 @@ function switchTab(tabId, el) {
   el.classList.add('active');
   var panel = document.getElementById('panel-' + tabId);
   if (panel) panel.classList.add('active');
-  window.scrollTo({top: document.querySelector('.tabs-wrap').offsetTop - 56, behavior: 'smooth'});
+  var contentEl = document.querySelector('.content');
+  window.scrollTo({top: contentEl.offsetTop - 56 - document.querySelector('.tabs-wrap').offsetHeight - 8, behavior: 'smooth'});
   // Trigger chart drawing on tab switch
   if (tabId === 'finance') {
     setTimeout(function(){
