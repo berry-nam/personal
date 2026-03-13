@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>에이치비테크놀로지 — CookieDeal</title>
+<title>에이치비테크놀로지 — CookieDeal</title><!-- build:v9 -->
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -482,8 +482,8 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 /* Design notes */
 .design-notes-toggle{position:fixed;bottom:24px;right:24px;z-index:500;padding:10px 18px;border-radius:24px;background:var(--brand);color:#fff;border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:6px;transition:var(--transition)}
 .design-notes-toggle:hover{background:var(--brand-hover);transform:translateY(-1px)}
-.design-note{display:none;position:absolute;top:-12px;right:8px;z-index:50;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;pointer-events:none;box-shadow:var(--shadow-sm);max-width:calc(100% - 16px);line-height:1.5}
-body.show-design-notes .design-note{display:flex;align-items:center;gap:3px}
+.design-note{display:none;position:absolute;top:-12px;right:8px;z-index:50;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;pointer-events:none;box-shadow:var(--shadow-sm);max-width:calc(100% - 16px);line-height:1.5;white-space:normal;overflow-wrap:break-word;word-break:break-word}
+body.show-design-notes .design-note{display:block}
 body.show-design-notes .section{margin-top:18px}
 .dn-blue{background:var(--blue-100);color:var(--blue-700)}
 .dn-green{background:var(--emerald-50);color:var(--emerald-600);border:1px solid var(--emerald-400)}
@@ -1699,18 +1699,31 @@ function hiDPI(canvas, W, H) {
 }
 
 // ══ TAB SWITCHING ══
+var TAB_ORDER = ['overview','finance','people','similar','competitors','community'];
 function switchTab(tabId, el) {
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
   document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
-  el.classList.add('active');
+  if (!el) {
+    var idx = TAB_ORDER.indexOf(tabId);
+    var tabs = document.querySelectorAll('.tab');
+    if (idx >= 0 && tabs[idx]) el = tabs[idx];
+  }
+  if (el) el.classList.add('active');
   var panel = document.getElementById('panel-' + tabId);
   if (panel) panel.classList.add('active');
+  var prevTab = activeTabId;
   activeTabId = tabId;
+  // Update URL hash
+  if (location.hash !== '#' + tabId) {
+    history.replaceState(null, '', '#' + tabId);
+  }
+  // Resubscribe Firebase to new tab's path
+  if (prevTab !== tabId && typeof subscribeToTab === 'function') {
+    subscribeToTab(tabId);
+  }
   if (typeof closeThread === 'function') closeThread();
-  if (typeof renderPins === 'function') renderPins();
   var tabsWrap = document.querySelector('.tabs-wrap');
   window.scrollTo({top: tabsWrap.offsetTop - 56, behavior: 'smooth'});
-  // Trigger chart drawing on tab switch
   if (tabId === 'finance') {
     setTimeout(function(){
       drawRevenueEarningsChart(); drawRevenueCompositionChart(); drawEquityDonut(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
@@ -2772,6 +2785,7 @@ var activeTabId = 'overview';
 var db = null;
 var commentsRef = null;
 var allCommentsRef = null;
+var currentTabRef = null;
 var nextPin = 1;
 
 // ── HELPERS ──
@@ -2791,34 +2805,56 @@ function syncLayerHeight(){
 function initFB(){
   firebase.initializeApp(FIREBASE_CONFIG);
   db=firebase.database();
-  commentsRef=db.ref('comments/'+PAGE_ID);
   allCommentsRef=db.ref('comments');
-  // Migrate orphaned data from detail_* paths back to detail
+  // Migrate legacy data: comments/detail → comments/detail__<tabId>
+  db.ref('comments/detail').once('value',function(snap){
+    var old=snap.val();
+    if(!old)return;
+    console.log('[CookieDeal] Migrating',Object.keys(old).length,'comments from comments/detail');
+    Object.keys(old).forEach(function(k){
+      var c=old[k];
+      var tab=c.tabId||'overview';
+      db.ref('comments/detail__'+tab).child(k).set(c);
+    });
+    db.ref('comments/detail').remove();
+  });
+  // Migrate from detail_* (underscore, old attempt)
   ['detail_overview','detail_finance','detail_people','detail_similar','detail_competitors','detail_community'].forEach(function(p){
     db.ref('comments/'+p).once('value',function(snap){
       var old=snap.val();
       if(!old)return;
+      var tab=p.replace('detail_','');
       Object.keys(old).forEach(function(k){
-        if(!old[k].tabId)old[k].tabId='overview';
-        commentsRef.child(k).set(old[k]);
+        if(!old[k].tabId)old[k].tabId=tab;
+        db.ref('comments/detail__'+tab).child(k).set(old[k]);
       });
       db.ref('comments/'+p).remove();
     });
   });
 }
-function subscribe(){
-  commentsRef.on('value',function(snap){
+function subscribeToTab(tabId){
+  // Unsubscribe from previous tab
+  if(currentTabRef){currentTabRef.off('value');}
+  // Subscribe to tab-specific Firebase path: comments/detail__overview, etc.
+  var path='comments/detail__'+tabId;
+  console.log('[CookieDeal] Subscribe:',path);
+  currentTabRef=db.ref(path);
+  commentsRef=currentTabRef;
+  currentTabRef.on('value',function(snap){
     comments=snap.val()||{};
-    // Backfill tabId for legacy comments
-    Object.keys(comments).forEach(function(k){if(!comments[k].tabId)comments[k].tabId='overview';});
     var mx=0;
     Object.keys(comments).forEach(function(k){if(comments[k].pinNumber>mx)mx=comments[k].pinNumber;});
     nextPin=mx+1;
     renderPins();
-    var cnt=Object.keys(comments).filter(function(k){return comments[k].tabId===activeTabId&&!comments[k].resolved;}).length;
+    var cnt=Object.keys(comments).filter(function(k){return !comments[k].resolved;}).length;
     var badge=document.getElementById('cb-badge');
     if(badge)badge.textContent=cnt;
   });
+}
+function subscribe(){
+  // Subscribe to current tab
+  subscribeToTab(activeTabId);
+  // Subscribe to all comments for sidebar
   allCommentsRef.on('value',function(snap){
     allComments=snap.val()||{};
     renderSidebar();
@@ -2888,10 +2924,16 @@ function flattenAll(){
   var arr=[];
   Object.keys(allComments).forEach(function(pid){
     if(!allComments[pid])return;
+    var isDetailTab=pid.indexOf('detail__')===0;
     Object.keys(allComments[pid]).forEach(function(cid){
       var c=allComments[pid][cid];
       c._pageId=pid;
-      c._pageLabel=c.pageLabel||PAGE_LABELS[pid]||pid;
+      if(isDetailTab){
+        c._pageLabel=PAGE_LABEL;
+        if(!c.tabId)c.tabId=pid.split('__')[1]||'overview';
+      }else{
+        c._pageLabel=c.pageLabel||PAGE_LABELS[pid]||pid;
+      }
       arr.push(c);
     });
   });
@@ -2912,7 +2954,7 @@ function renderSidebar(){
   list.innerHTML=sorted.map(function(c){
     var replyCount=c.replies?Object.keys(c.replies).length:0;
     var replyText=replyCount>0?'<div class="cb-sb-replies">💬 '+replyCount+'개 답글</div>':'';
-    var isOther=c._pageId!==PAGE_ID;
+    var isOther=c._pageId!==PAGE_ID&&c._pageId.indexOf(PAGE_ID+'__')!==0;
     var tabLabel=c.tabId?(TAB_LABELS[c.tabId]||c.tabId):'';
     var cls='cb-sb-item'+(c.resolved?' resolved-item':'')+(isOther?' other-page':'')+(openThreadId===c.id?' active':'');
     var pageTag='<div class="cb-sb-page">'+(isOther?'<span class="cb-sb-link-icon">↗</span>':'')+esc(c._pageLabel)+(tabLabel?' · '+tabLabel:'')+'</div>';
@@ -2930,11 +2972,11 @@ function renderSidebar(){
       var cid=item.dataset.cid;
       var pid=item.dataset.page;
       var tid=item.dataset.tab;
-      if(pid!==PAGE_ID){window.location.href=PAGE_URLS[pid]||('#');return;}
-      // Same page, different tab → switch tab first
+      var isCurrentPage=pid===PAGE_ID||pid.indexOf(PAGE_ID+'__')===0;
+      if(!isCurrentPage){window.location.href=PAGE_URLS[pid]||('#');return;}
+      // Same page, different tab → switch tab first (triggers Firebase resubscribe)
       if(tid && tid!==activeTabId){
-        var tabEl=document.querySelector('.tab[onclick*="\''+tid+'\'"]');
-        if(tabEl){switchTab(tid,tabEl);}
+        switchTab(tid);
       }
       setTimeout(function(){
         var c=comments[cid];
@@ -2942,7 +2984,7 @@ function renderSidebar(){
         var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
         if(pin){window.scrollTo({top:parseFloat(pin.style.top)-200,behavior:'smooth'});}
         setTimeout(function(){openThread(cid);renderSidebar();},300);
-      },500);
+      },600);
     });
   });
 }
@@ -2967,16 +3009,14 @@ function createPinLayer(){
 function renderPins(){
   var layer=document.getElementById('cb-pin-layer');
   if(!layer)return;
-  // Remove ALL old elements
   layer.querySelectorAll('.cb-pin,.cb-thread,#cb-new-input').forEach(function(p){p.remove();});
   openThreadId=null;
-  // ONLY render pins for the active tab
+  // All comments in `comments` are already scoped to the active tab (separate Firebase path per tab)
   var tabComments=Object.keys(comments).map(function(k){return comments[k];})
-    .filter(function(c){return c.tabId===activeTabId;})
     .sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
   tabComments.forEach(function(c){
     var pin=document.createElement('div');
-    pin.className='cb-pin cb-tab-visible'+(c.resolved?' resolved':'');
+    pin.className='cb-pin'+(c.resolved?' resolved':'');
     pin.dataset.id=c.id;
     var leftPx=(c.x/100)*document.documentElement.scrollWidth;
     pin.style.left=leftPx+'px';
@@ -3129,6 +3169,19 @@ function initObservers(){
 // ── BOOT ──
 function boot(){
   loadUser();
+  // Read initial tab from URL hash
+  var hash=location.hash.replace('#','');
+  if(hash&&TAB_LABELS[hash]){
+    activeTabId=hash;
+    document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+    var idx=TAB_ORDER.indexOf(hash);
+    var tabs=document.querySelectorAll('.tab');
+    if(idx>=0&&tabs[idx])tabs[idx].classList.add('active');
+    var panel=document.getElementById('panel-'+hash);
+    if(panel)panel.classList.add('active');
+  }
+  if(!location.hash||!TAB_LABELS[location.hash.replace('#','')])history.replaceState(null,'','#overview');
   initFB();
   createToolbar();
   createSidebar();
@@ -3136,6 +3189,12 @@ function boot(){
   subscribe();
   initKeys();
   initObservers();
+  // hashchange listener for browser back/forward
+  window.addEventListener('hashchange',function(){
+    var h=location.hash.replace('#','');
+    if(h&&TAB_LABELS[h]&&h!==activeTabId)switchTab(h);
+  });
+  console.log('[CookieDeal] v9 loaded, tab='+activeTabId+', hash='+location.hash);
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
 })();
