@@ -1708,6 +1708,8 @@ function switchTab(tabId, el) {
   el.classList.add('active');
   var panel = document.getElementById('panel-' + tabId);
   if (panel) panel.classList.add('active');
+  activeTabId = tabId;
+  if (typeof renderPins === 'function') renderPins();
   var tabsWrap = document.querySelector('.tabs-wrap');
   window.scrollTo({top: tabsWrap.offsetTop - 56, behavior: 'smooth'});
   // Trigger chart drawing on tab switch
@@ -2767,6 +2769,7 @@ var comments = {};
 var allComments = {};
 var openThreadId = null;
 var currentUser = null;
+var activeTabId = 'overview';
 var db = null;
 var commentsRef = null;
 var allCommentsRef = null;
@@ -2817,7 +2820,7 @@ function subscribe(){
 }
 function addComment(x,y,text){
   var ref=commentsRef.push();
-  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin,pageId:PAGE_ID,pageLabel:PAGE_LABEL}).catch(function(err){alert('Firebase 저장 실패: '+err.message+'\n\nFirebase Console → Realtime Database → 규칙 에서 read/write를 true로 설정해주세요.');});
+  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin,pageId:PAGE_ID,pageLabel:PAGE_LABEL,tabId:activeTabId}).catch(function(err){alert('Firebase 저장 실패: '+err.message+'\n\nFirebase Console → Realtime Database → 규칙 에서 read/write를 true로 설정해주세요.');});
 }
 function addReply(cid,text){
   commentsRef.child(cid).child('replies').push().set({author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP});
@@ -2899,9 +2902,10 @@ function renderSidebar(){
     var replyCount=c.replies?Object.keys(c.replies).length:0;
     var replyText=replyCount>0?'<div class="cb-sb-replies">💬 '+replyCount+'개 답글</div>':'';
     var isOther=c._pageId!==PAGE_ID;
+    var tabLabel=c.tabId?{overview:'개요',finance:'재무',people:'인물',similar:'유사기업',competitor:'경쟁사',community:'커뮤니티'}[c.tabId]||c.tabId:'';
     var cls='cb-sb-item'+(c.resolved?' resolved-item':'')+(isOther?' other-page':'')+(openThreadId===c.id?' active':'');
-    var pageTag='<div class="cb-sb-page">'+(isOther?'<span class="cb-sb-link-icon">↗</span>':'')+esc(c._pageLabel)+'</div>';
-    return '<div class="'+cls+'" data-cid="'+c.id+'" data-page="'+c._pageId+'">'
+    var pageTag='<div class="cb-sb-page">'+(isOther?'<span class="cb-sb-link-icon">↗</span>':'')+esc(c._pageLabel)+(tabLabel?' · '+tabLabel:'')+'</div>';
+    return '<div class="'+cls+'" data-cid="'+c.id+'" data-page="'+c._pageId+'" data-tab="'+(c.tabId||'')+'">'
       +'<div class="cb-sb-pin" style="background:'+c.authorColor+'">'+c.pinNumber+'</div>'
       +'<div class="cb-sb-body">'
       +pageTag
@@ -2914,12 +2918,20 @@ function renderSidebar(){
     item.addEventListener('click',function(){
       var cid=item.dataset.cid;
       var pid=item.dataset.page;
+      var tid=item.dataset.tab;
       if(pid!==PAGE_ID){window.location.href=PAGE_URLS[pid]||('#');return;}
+      // Switch to the comment's tab if different from current
+      if(tid && tid!==activeTabId){
+        var tabEl=document.querySelector('.tab[onclick*="\''+tid+'\'"]');
+        if(tabEl){switchTab(tid,tabEl);}
+      }
       var c=comments[cid];
       if(!c)return;
-      var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
-      if(pin){window.scrollTo({top:parseFloat(pin.style.top)-200,behavior:'smooth'});}
-      setTimeout(function(){openThread(cid);renderSidebar();},300);
+      setTimeout(function(){
+        var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
+        if(pin){window.scrollTo({top:parseFloat(pin.style.top)-200,behavior:'smooth'});}
+        setTimeout(function(){openThread(cid);renderSidebar();},300);
+      },150);
     });
   });
 }
@@ -2945,7 +2957,9 @@ function renderPins(){
   var layer=document.getElementById('cb-pin-layer');
   if(!layer)return;
   layer.querySelectorAll('.cb-pin').forEach(function(p){p.remove();});
-  var sorted=Object.keys(comments).map(function(k){return comments[k];}).sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
+  var sorted=Object.keys(comments).map(function(k){return comments[k];})
+    .filter(function(c){return !c.tabId || c.tabId===activeTabId;})
+    .sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
   sorted.forEach(function(c){
     var pin=document.createElement('div');
     pin.className='cb-pin'+(c.resolved?' resolved':'');
