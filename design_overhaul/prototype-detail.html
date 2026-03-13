@@ -2800,6 +2800,10 @@ function initFB(){
   // Single path for all comments on this page (element-anchored v2)
   commentsRef=db.ref('comments/detail_v2');
   allCommentsRef=db.ref('comments');
+  // Clean up legacy coordinate-based data (incompatible with v10 element-anchored model)
+  ['detail','detail_overview','detail_finance','detail_people','detail_similar','detail_competitors','detail_community',
+   'detail__overview','detail__finance','detail__people','detail__similar','detail__competitors','detail__community'
+  ].forEach(function(p){db.ref('comments/'+p).remove();});
 }
 function subscribe(){
   commentsRef.on('value',function(snap){
@@ -2883,6 +2887,7 @@ function flattenAll(){
     if(!allComments[pid])return;
     Object.keys(allComments[pid]).forEach(function(cid){
       var c=allComments[pid][cid];
+      if(!c.anchorId)return; // Skip legacy coordinate-based comments
       c._pageId=pid;
       c._pageLabel=c.pageLabel||PAGE_LABELS[pid]||PAGE_LABEL;
       arr.push(c);
