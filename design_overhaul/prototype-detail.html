@@ -2913,7 +2913,7 @@ function subscribe(){
   });
   allCommentsRef.on('value',function(snap){
     allComments=snap.val()||{};
-    renderSidebar();
+    debouncedRenderSidebar();
     var total=0;
     Object.keys(allComments).forEach(function(pid){if(allComments[pid])total+=Object.keys(allComments[pid]).length;});
     var sb=document.getElementById('cb-sidebar');
@@ -2950,6 +2950,8 @@ function toggleMode(){
 
 // ── SIDEBAR ──
 var sidebarFilter='all'; // 'all' | 'open' | 'resolved'
+var _sbTimer=null;
+function debouncedRenderSidebar(){clearTimeout(_sbTimer);_sbTimer=setTimeout(renderSidebar,80);}
 function createSidebar(){
   var sb=document.createElement('div');
   sb.id='cb-sidebar';
@@ -3025,13 +3027,10 @@ function renderSidebar(){
       var tid=item.dataset.tab;
       var isCurrentPage=(pid===PAGE_ID);
       if(!isCurrentPage){window.location.href=(PAGE_URLS[pid]||'#')+'?comment='+cid;return;}
-      // Same page, different tab → switch tab (triggers renderPins for new tab)
-      if(tid && tid!==activeTabId){switchTab(tid);}
-      setTimeout(function(){
-        var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
-        if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
-        setTimeout(function(){openThread(cid);renderSidebar();},400);
-      },300);
+      // Same page — openThread handles tab switching + retry internally
+      var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
+      if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
+      setTimeout(function(){openThread(cid);renderSidebar();},350);
     });
   });
 }
@@ -3126,20 +3125,26 @@ function showNewInput(anchorId,xPct,yPct,tabId,clientX,clientY){
 }
 
 // ── THREAD ──
-function openThread(cid){
+function openThread(cid,_retries){
   closeThread();
   openThreadId=cid;
-  var c=comments[cid];if(!c)return;
+  var c=comments[cid];if(!c){openThreadId=null;return;}
   // Auto-switch to the comment's tab if needed
   if(c.tabId && c.tabId !== activeTabId){
     switchTab(c.tabId);
-    setTimeout(function(){ openThread(cid); }, 120);
+    setTimeout(function(){ openThread(cid); }, 200);
     return;
   }
-  var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');if(!pin)return;
+  var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
+  if(!pin){openThreadId=null;return;}
   var pinRect=pin.getBoundingClientRect();
-  // Guard: don't position at (0,0) if pin is still hidden
-  if(pinRect.width===0 && pinRect.height===0) return;
+  // Guard: if pin not yet laid out, retry up to 5 times
+  if(pinRect.width===0 && pinRect.height===0){
+    var r=(_retries||0)+1;
+    if(r<=5){setTimeout(function(){openThread(cid,r);},100);}
+    else{openThreadId=null;}
+    return;
+  }
   var thread=document.createElement('div');
   thread.id='cb-open-thread';
   thread.className='cb-thread';

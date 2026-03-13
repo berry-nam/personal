@@ -1352,7 +1352,7 @@ function subscribe(){
   // Cross-page: sidebar
   allCommentsRef.on('value',function(snap){
     allComments=snap.val()||{};
-    renderSidebar();
+    debouncedRenderSidebar();
     var total=0;
     Object.keys(allComments).forEach(function(pid){if(allComments[pid])total+=Object.keys(allComments[pid]).length;});
     var sb=document.getElementById('cb-sidebar');
@@ -1389,6 +1389,8 @@ function toggleMode(){
 
 // ── SIDEBAR ──
 var sidebarFilter='all'; // 'all' | 'open' | 'resolved'
+var _sbTimer=null;
+function debouncedRenderSidebar(){clearTimeout(_sbTimer);_sbTimer=setTimeout(renderSidebar,80);}
 function createSidebar(){
   var sb=document.createElement('div');
   sb.id='cb-sidebar';
@@ -1541,8 +1543,8 @@ function showNewInput(xPct,yPx,px,py){
 function openThread(cid){
   closeThread();
   openThreadId=cid;
-  var c=comments[cid];if(!c)return;
-  var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');if(!pin)return;
+  var c=comments[cid];if(!c){openThreadId=null;return;}
+  var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');if(!pin){openThreadId=null;return;}
   var thread=document.createElement('div');
   thread.id='cb-open-thread';
   thread.className='cb-thread';
