@@ -902,115 +902,104 @@ body.show-design-notes .section{margin-top:18px}
       </div>
     </div>
 
-    <!-- S2: Valuation Metrics — Yahoo Finance Style -->
+    <!-- S2: Key Financial Ratios — KoDATA 손익계산서+재무상태표 기반 -->
     <div class="section paywall-section" style="position:relative" id="valuation-section">
-      <span class="design-note dn-green">PER/PBR/PSR 탭 전환. 가로 바: 현재=Blue-600, 산업평균=Gray-300 점선. 바 높이 24px</span>
-      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">Yahoo Finance 참고: 핵심 수치 카드→비교 바→💡인사이트 텍스트 순서. 카드 간격 12px</span>
-      <div class="section-title"><span class="icon">📊</span> 가치평가지표</div>
+      <span class="design-note dn-green">KoDATA 손익계산서(ENPfsdt0004) + 재무상태표(ENPfsdt0003) 기반. 영업이익률/순이익률/부채비율 토글</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">비상장 기업 → PER/PBR/PSR 대신 실제 재무비율 사용. 산업평균은 Phase 2</span>
+      <div class="section-title"><span class="icon">📊</span> 핵심 재무 비율</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
-        <!-- PER / PBR / PSR toggle -->
         <div class="chart-toggle" id="valToggle" style="margin-bottom:16px">
-          <button class="chart-toggle-btn active" onclick="switchValuation('PER',this)">PER</button>
-          <button class="chart-toggle-btn" onclick="switchValuation('PBR',this)">PBR</button>
-          <button class="chart-toggle-btn" onclick="switchValuation('PSR',this)">PSR</button>
+          <button class="chart-toggle-btn active" onclick="switchValuation('OPM',this)">영업이익률</button>
+          <button class="chart-toggle-btn" onclick="switchValuation('NPM',this)">순이익률</button>
+          <button class="chart-toggle-btn" onclick="switchValuation('DEBT',this)">부채비율</button>
+          <button class="chart-toggle-btn" onclick="switchValuation('ROE',this)">ROE</button>
         </div>
 
-        <!-- Summary cards -->
         <div class="val-summary">
           <div class="val-card highlight">
-            <div class="val-card-label" id="valCardLabel1">현재 PER</div>
-            <div class="val-card-value" id="valCardValue1">12.8<span>x</span></div>
-            <div class="val-card-sub positive" id="valCardSub1">▼ 산업 대비 저평가</div>
+            <div class="val-card-label" id="valCardLabel1">영업이익률 (2025)</div>
+            <div class="val-card-value" id="valCardValue1">8.2<span>%</span></div>
+            <div class="val-card-sub positive" id="valCardSub1">▲ 전년 대비 +0.6%p</div>
           </div>
           <div class="val-card">
-            <div class="val-card-label" id="valCardLabel2">산업 평균 PER</div>
-            <div class="val-card-value" id="valCardValue2">15.4<span>x</span></div>
+            <div class="val-card-label" id="valCardLabel2">산업 평균</div>
+            <div class="val-card-value" id="valCardValue2" style="color:var(--text-muted)">—<span></span></div>
+            <div class="val-card-sub" id="valCardSub2" style="font-size:11px;color:var(--text-muted);background:var(--slate-100);padding:2px 8px;border-radius:10px">Phase 2</div>
           </div>
         </div>
 
-        <!-- Horizontal comparison bars -->
         <div class="val-bars">
           <div class="val-bar-row">
-            <span class="val-bar-label">에이치비테크놀로지</span>
-            <div class="val-bar-track"><div class="val-bar-fill brand" id="valBar1" style="width:64%"></div></div>
-            <span class="val-bar-value" id="valBarVal1">12.8x</span>
+            <span class="val-bar-label">2025</span>
+            <div class="val-bar-track"><div class="val-bar-fill brand" id="valBar1" style="width:82%"></div></div>
+            <span class="val-bar-value" id="valBarVal1">8.2%</span>
           </div>
           <div class="val-bar-row">
-            <span class="val-bar-label">산업 평균</span>
-            <div class="val-bar-track"><div class="val-bar-fill gray" id="valBar2" style="width:77%"></div></div>
-            <span class="val-bar-value" id="valBarVal2">15.4x</span>
+            <span class="val-bar-label">2024</span>
+            <div class="val-bar-track"><div class="val-bar-fill" id="valBar2" style="width:76%;background:var(--blue-200)"></div></div>
+            <span class="val-bar-value" id="valBarVal2">7.6%</span>
+          </div>
+          <div class="val-bar-row">
+            <span class="val-bar-label">2023</span>
+            <div class="val-bar-track"><div class="val-bar-fill" id="valBar3" style="width:71%;background:var(--blue-100)"></div></div>
+            <span class="val-bar-value" id="valBarVal3">7.1%</span>
           </div>
         </div>
 
-        <!-- Insight -->
-        <div class="val-insight" id="valInsight">💡 현재 PER은 산업 평균 대비 <strong style="color:var(--emerald-600)">17% 저평가</strong> 상태입니다</div>
+        <div class="val-insight" id="valInsight">💡 영업이익률이 3년 연속 상승 추세이며, 최근 결산년 <strong style="color:var(--emerald-600)">8.2%</strong>를 기록했습니다</div>
 
         <a href="#" class="compare-link" style="margin-top:14px;display:inline-flex">종목끼리 비교하기 →</a>
 
-        <!-- Performance comparison cards -->
+        <!-- Financial Growth Cards -->
         <div style="margin-top:24px">
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px">📈 성과 비교</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px">📈 재무 성장률 <span style="font-size:11px;font-weight:500;color:var(--text-muted)">(KoDATA 손익계산서 3개년)</span></div>
           <div class="perf-cards">
             <div class="perf-card">
-              <div class="perf-card-period">YTD</div>
-              <div class="perf-card-row"><span class="perf-label">에이치비테크놀로지</span><span class="perf-value positive">+18.4%</span></div>
-              <div class="perf-card-row"><span class="perf-label">산업 평균</span><span class="perf-value muted">+9.2%</span></div>
-              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:72%"></div></div>
-              <div class="perf-bar-wrap"><div class="perf-bar industry" style="width:36%"></div></div>
+              <div class="perf-card-period">매출 성장률</div>
+              <div class="perf-card-row"><span class="perf-label">2024 → 2025</span><span class="perf-value positive">+4.3%</span></div>
+              <div class="perf-card-row"><span class="perf-label">2023 → 2024</span><span class="perf-value positive">+5.8%</span></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:43%"></div></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:58%"></div></div>
             </div>
             <div class="perf-card">
-              <div class="perf-card-period">1Y</div>
-              <div class="perf-card-row"><span class="perf-label">에이치비테크놀로지</span><span class="perf-value positive">+42.1%</span></div>
-              <div class="perf-card-row"><span class="perf-label">산업 평균</span><span class="perf-value muted">+15.8%</span></div>
-              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:84%"></div></div>
-              <div class="perf-bar-wrap"><div class="perf-bar industry" style="width:32%"></div></div>
+              <div class="perf-card-period">영업이익 성장률</div>
+              <div class="perf-card-row"><span class="perf-label">2024 → 2025</span><span class="perf-value positive">+12.0%</span></div>
+              <div class="perf-card-row"><span class="perf-label">2023 → 2024</span><span class="perf-value positive">+13.6%</span></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:60%"></div></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:68%"></div></div>
             </div>
             <div class="perf-card">
-              <div class="perf-card-period">3Y</div>
-              <div class="perf-card-row"><span class="perf-label">에이치비테크놀로지</span><span class="perf-value positive">+128.5%</span></div>
-              <div class="perf-card-row"><span class="perf-label">산업 평균</span><span class="perf-value muted">+34.2%</span></div>
-              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:92%"></div></div>
-              <div class="perf-bar-wrap"><div class="perf-bar industry" style="width:24%"></div></div>
+              <div class="perf-card-period">순이익 성장률</div>
+              <div class="perf-card-row"><span class="perf-label">2024 → 2025</span><span class="perf-value positive">+11.1%</span></div>
+              <div class="perf-card-row"><span class="perf-label">2023 → 2024</span><span class="perf-value positive">+20.0%</span></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:56%"></div></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:80%"></div></div>
             </div>
             <div class="perf-card">
-              <div class="perf-card-period">5Y</div>
-              <div class="perf-card-row"><span class="perf-label">에이치비테크놀로지</span><span class="perf-value positive">+215.3%</span></div>
-              <div class="perf-card-row"><span class="perf-label">산업 평균</span><span class="perf-value muted">+52.7%</span></div>
-              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:96%"></div></div>
-              <div class="perf-bar-wrap"><div class="perf-bar industry" style="width:24%"></div></div>
+              <div class="perf-card-period">총자산 성장률</div>
+              <div class="perf-card-row"><span class="perf-label">2024 → 2025</span><span class="perf-value positive">+8.5%</span></div>
+              <div class="perf-card-row"><span class="perf-label">2023 → 2024</span><span class="perf-value positive">+6.2%</span></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:52%"></div></div>
+              <div class="perf-bar-wrap"><div class="perf-bar company" style="width:40%"></div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- S3: Earnings — Seeking Alpha Style (2-column) -->
+    <!-- S3: 손익 추이 — KoDATA 손익계산서(ENPfsdt0004) + 주요매출계정(ENPfsdt0005) 기반 -->
     <div class="section paywall-section" style="position:relative" id="earnings-section">
-      <span class="design-note dn-green">Seeking Alpha 참고: 좌=EPS dot chart (컨센서스 점선 + 실제 dot), 우=매출 vs 순이익 grouped bar</span>
-      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">2-column canvas layout. Beat=Green dot, Miss=Red dot. 순이익/영업이익 토글</span>
-      <div class="section-title"><span class="icon">💰</span> 실적</div>
+      <span class="design-note dn-green">KoDATA 손익계산서 3개년: 매출(fs_val1), 영업이익(fs_val54), 순이익(fs_val90). 주요매출계정: 상품/제품/용역/수출/기타</span>
+      <span class="design-note dn-yellow" style="right:auto;left:8px;top:4px">2-column canvas: 좌=매출/이익 추이, 우=매출 구성 비율(주요매출계정 ENPfsdt0005)</span>
+      <div class="section-title"><span class="icon">💰</span> 손익 추이</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div>
-        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-          <div class="chart-toggle"><button class="chart-toggle-btn active">분기</button><button class="chart-toggle-btn">연간</button></div>
-        </div>
-
         <div class="earnings-2col">
-          <!-- Left: EPS dot chart -->
-          <div class="earnings-col">
-            <div style="font-size:12.5px;font-weight:600;color:var(--text-sub);margin-bottom:12px">주당순이익 (EPS) 추이</div>
-            <canvas id="epsDotChart" style="width:100%;height:280px"></canvas>
-            <div class="earnings-legend" style="margin-top:12px">
-              <span class="el-item"><span class="el-dot" style="border:2px dashed var(--slate-400);background:none;border-radius:50%"></span> 컨센서스</span>
-              <span class="el-item"><span class="el-dot" style="background:var(--emerald-500);border-radius:50%"></span> Beat</span>
-              <span class="el-item"><span class="el-dot" style="background:var(--red-500);border-radius:50%"></span> Miss</span>
-            </div>
-          </div>
-          <!-- Right: Revenue vs Earnings bar -->
+          <!-- Left: Revenue & Profit trend -->
           <div class="earnings-col">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-              <div style="font-size:12.5px;font-weight:600;color:var(--text-sub)">매출 vs 순이익</div>
+              <div style="font-size:12.5px;font-weight:600;color:var(--text-sub)">매출 · 이익 추이 (3개년)</div>
               <div class="chart-toggle" id="revToggle">
                 <button class="chart-toggle-btn active" onclick="drawRevenueEarningsChart('net',this)">순이익</button>
                 <button class="chart-toggle-btn" onclick="drawRevenueEarningsChart('op',this)">영업이익</button>
@@ -1022,47 +1011,57 @@ body.show-design-notes .section{margin-top:18px}
               <span class="el-item"><span class="el-dot" style="background:var(--amber-500)"></span> <span id="revLegendLabel">순이익</span></span>
             </div>
           </div>
+          <!-- Right: Revenue composition -->
+          <div class="earnings-col">
+            <div style="font-size:12.5px;font-weight:600;color:var(--text-sub);margin-bottom:12px">매출 구성 (최근 결산년)</div>
+            <canvas id="revenueCompositionChart" style="width:100%;height:280px"></canvas>
+            <div class="earnings-legend" style="margin-top:12px">
+              <span class="el-item"><span class="el-dot" style="background:#0549CC"></span> 제품</span>
+              <span class="el-item"><span class="el-dot" style="background:#3A7ADF"></span> 용역</span>
+              <span class="el-item"><span class="el-dot" style="background:#6D9DE7"></span> 수출</span>
+              <span class="el-item"><span class="el-dot" style="background:#C8D9F5"></span> 기타</span>
+            </div>
+          </div>
         </div>
 
         <!-- Summary -->
         <div class="earnings-legend" style="margin-top:4px">
-          <span class="el-summary">최근 8분기 중 <strong style="color:var(--emerald-600)">6회</strong> 어닝 서프라이즈</span>
+          <span class="el-summary">매출 <strong style="color:var(--emerald-600)">3년 연속 성장</strong>, 영업이익률 개선 추세</span>
         </div>
 
         <!-- Expandable historical table -->
-        <div class="expandable-trigger" onclick="toggleExpand(this)">▼ 지난 실적 보기</div>
+        <div class="expandable-trigger" onclick="toggleExpand(this)">▼ 상세 손익 보기</div>
         <div class="expandable-content">
           <table class="fin-table" style="margin-top:8px">
-            <thead><tr><th>분기</th><th>추정</th><th>발표</th><th>차이</th></tr></thead>
+            <thead><tr><th>항목</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
             <tbody>
-              <tr><td>2025 Q4</td><td>580원</td><td>612원</td><td class="positive">+5.5%</td></tr>
-              <tr><td>2025 Q3</td><td>540원</td><td>558원</td><td class="positive">+3.3%</td></tr>
-              <tr><td>2025 Q2</td><td>510원</td><td>502원</td><td class="negative">-1.6%</td></tr>
-              <tr><td>2025 Q1</td><td>480원</td><td>495원</td><td class="positive">+3.1%</td></tr>
-              <tr><td>2024 Q4</td><td>440원</td><td>462원</td><td class="positive">+5.0%</td></tr>
-              <tr><td>2024 Q3</td><td>420원</td><td>435원</td><td class="positive">+3.6%</td></tr>
-              <tr><td>2024 Q2</td><td>400원</td><td>388원</td><td class="negative">-3.0%</td></tr>
-              <tr><td>2024 Q1</td><td>380원</td><td>395원</td><td class="positive">+3.9%</td></tr>
+              <tr><td>매출액</td><td>310억</td><td>328억</td><td>342억</td></tr>
+              <tr><td>매출원가</td><td>224억</td><td>235억</td><td>244억</td></tr>
+              <tr><td>매출총이익</td><td>86억</td><td>93억</td><td>98억</td></tr>
+              <tr><td>판매비와관리비</td><td>64억</td><td>68억</td><td>70억</td></tr>
+              <tr><td>영업이익</td><td class="positive">22억</td><td class="positive">25억</td><td class="positive">28억</td></tr>
+              <tr><td>당기순이익</td><td class="positive">15억</td><td class="positive">18억</td><td class="positive">20억</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- S3a: Analyst Insights -->
+    <!-- S3a: 재무 건전성 인사이트 — KoDATA 현금흐름(ENPcfan0002) + DART 감사/배당 기반 -->
     <div class="section paywall-section" style="position:relative" id="analyst-section">
-      <span class="design-note dn-green">Seeking Alpha Analyst Insights 참고. 2×2 grid: 신용평가, 기업가치, 전문가 의견, 평가 이력</span>
-      <div class="section-title"><span class="icon">🔍</span> 애널리스트 인사이트</div>
+      <span class="design-note dn-green">KoDATA cf_anal4(현금흐름등급), DART audit_summary(감사의견), DART dividend_status(배당). 신용평가=Phase 2(NICE)</span>
+      <div class="section-title"><span class="icon">🔍</span> 재무 건전성</div>
       <span class="paywall-inline-badge">🔒 열람 시 456🍪 필요</span>
       <div class="analyst-grid">
-        <!-- Card 1: Credit Rating -->
-        <div class="analyst-card">
+        <!-- Card 1: Credit Rating — Phase 2 (NICE meeting) -->
+        <div class="analyst-card" style="position:relative">
+          <div style="position:absolute;top:12px;right:12px;font-size:10px;font-weight:700;color:var(--amber-600);background:var(--amber-50);padding:2px 8px;border-radius:10px;border:1px solid var(--amber-400)">Phase 2 · NICE</div>
           <div class="analyst-card-title">🏦 신용 평가</div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
             <div class="analyst-card-value" style="color:var(--brand)">BBB+</div>
             <span style="font-size:12px;color:var(--text-muted);font-weight:500">안정적</span>
           </div>
-          <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px">NICE신용평가 · 2025.12.15</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px">NICE신용평가 · 데이터 연동 예정</div>
           <div class="credit-bar">
             <div class="credit-marker" style="left:62%"></div>
           </div>
@@ -1070,46 +1069,60 @@ body.show-design-notes .section{margin-top:18px}
             <span>D</span><span>CCC</span><span>BB</span><span>BBB</span><span>A</span><span>AA</span><span>AAA</span>
           </div>
         </div>
-        <!-- Card 2: Valuation Range -->
+        <!-- Card 2: Cash Flow Grade — KoDATA ENPcfan0002 cf_anal4 -->
         <div class="analyst-card">
-          <div class="analyst-card-title">💎 추정 기업가치</div>
+          <div class="analyst-card-title">💧 현금흐름 등급 <span style="font-size:10px;color:var(--text-muted);font-weight:400">KoDATA</span></div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
-            <div class="analyst-card-value">520<span style="font-size:16px;font-weight:500;color:var(--text-sub)">억원</span></div>
+            <div class="analyst-card-value" style="color:var(--emerald-600)">A+</div>
+            <span style="font-size:12px;color:var(--text-muted);font-weight:500">우수</span>
           </div>
-          <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">중앙값 기준 · 3개 기관 추정</div>
-          <div class="range-track">
-            <div class="range-fill" style="left:0%;width:100%"></div>
-            <div class="range-marker" style="left:41%"></div>
-          </div>
-          <div class="range-labels">
-            <span>380억</span><span>520억</span><span>720억</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:11px">
-            <span style="color:var(--text-muted)">보수적</span>
-            <span style="color:var(--brand);font-weight:600">현재 추정</span>
-            <span style="color:var(--text-muted)">낙관적</span>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px">ENPcfan0002 · 최근결산년 기준</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <div style="flex:1;text-align:center;padding:8px;background:var(--emerald-50);border-radius:var(--radius-sm)">
+              <div style="font-size:11px;color:var(--text-muted)">현금영업이익</div>
+              <div style="font-size:15px;font-weight:700;color:var(--emerald-600)">36억</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:8px;background:var(--blue-50);border-radius:var(--radius-sm)">
+              <div style="font-size:11px;color:var(--text-muted)">경상활동CF</div>
+              <div style="font-size:15px;font-weight:700;color:var(--brand)">28억</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:8px;background:var(--slate-50);border-radius:var(--radius-sm)">
+              <div style="font-size:11px;color:var(--text-muted)">투자활동CF</div>
+              <div style="font-size:15px;font-weight:700;color:var(--red-600)">-22억</div>
+            </div>
           </div>
         </div>
-        <!-- Card 3: Expert Sentiment -->
+        <!-- Card 3: Audit Opinion — DART ds002_020 -->
         <div class="analyst-card">
-          <div class="analyst-card-title">📊 업종 전문가 의견</div>
-          <div style="display:flex;gap:16px;margin-bottom:12px">
-            <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:var(--emerald-600)">62%</div><div style="font-size:11px;color:var(--text-muted)">긍정</div></div>
-            <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:var(--amber-500)">24%</div><div style="font-size:11px;color:var(--text-muted)">중립</div></div>
-            <div style="text-align:center"><div style="font-size:24px;font-weight:800;color:var(--red-500)">14%</div><div style="font-size:11px;color:var(--text-muted)">부정</div></div>
+          <div class="analyst-card-title">📋 감사 의견 <span style="font-size:10px;color:var(--text-muted);font-weight:400">DART</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+            <div style="font-size:22px;font-weight:800;color:var(--emerald-600)">적정</div>
+            <span style="font-size:12px;color:var(--text-muted);font-weight:500">Unqualified</span>
           </div>
-          <canvas id="expertSentimentChart" style="width:100%;height:32px"></canvas>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:8px">반도체 장비 업종 전문가 21명 대상 · 2025.12</div>
-        </div>
-        <!-- Card 4: Rating History -->
-        <div class="analyst-card">
-          <div class="analyst-card-title">📋 최근 평가 이력</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">삼일회계법인 · 2025 사업보고서</div>
           <table class="rating-history-table">
-            <thead><tr><th>날짜</th><th>기관</th><th>변동</th></tr></thead>
+            <thead><tr><th>연도</th><th>감사법인</th><th>의견</th></tr></thead>
             <tbody>
-              <tr><td>2025.12</td><td>NICE신용평가</td><td><span class="rating-change up">BBB → BBB+</span></td></tr>
-              <tr><td>2025.09</td><td>한국기업평가</td><td><span class="rating-change hold">BBB 유지</span></td></tr>
-              <tr><td>2025.06</td><td>한국신용평가</td><td><span class="rating-change up">BBB- → BBB</span></td></tr>
+              <tr><td>2025</td><td>삼일회계법인</td><td><span class="rating-change up">적정</span></td></tr>
+              <tr><td>2024</td><td>삼일회계법인</td><td><span class="rating-change up">적정</span></td></tr>
+              <tr><td>2023</td><td>삼일회계법인</td><td><span class="rating-change up">적정</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Card 4: Dividend — DART ds002_002 -->
+        <div class="analyst-card">
+          <div class="analyst-card-title">💰 배당 현황 <span style="font-size:10px;color:var(--text-muted);font-weight:400">DART</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+            <div style="font-size:22px;font-weight:800;color:var(--brand)">1.8<span style="font-size:14px;font-weight:500">%</span></div>
+            <span style="font-size:12px;color:var(--text-muted);font-weight:500">배당수익률</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">2025 사업보고서 기준</div>
+          <table class="rating-history-table">
+            <thead><tr><th>연도</th><th>주당배당금</th><th>배당수익률</th></tr></thead>
+            <tbody>
+              <tr><td>2025</td><td>150원</td><td>1.8%</td></tr>
+              <tr><td>2024</td><td>120원</td><td>1.5%</td></tr>
+              <tr><td>2023</td><td>100원</td><td>1.3%</td></tr>
             </tbody>
           </table>
         </div>
@@ -1556,7 +1569,7 @@ function switchTab(tabId, el) {
   // Trigger chart drawing on tab switch
   if (tabId === 'finance') {
     setTimeout(function(){
-      drawEpsDotChart(); drawRevenueEarningsChart(); drawExpertSentimentChart(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
+      drawRevenueEarningsChart(); drawRevenueCompositionChart(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
     }, 100);
   }
 }
@@ -1999,114 +2012,94 @@ function drawRadarChart() {
 
 // ══ FINANCE TAB CHARTS ══
 
-// S2: Valuation toggle — switches PER/PBR/PSR data (pure CSS, no canvas)
+// S2: Financial ratio toggle — KoDATA 손익계산서+재무상태표 기반
 var valuationData = {
-  PER: { current: 12.8, avg: 15.4, maxScale: 20, pctDiff: 17, under: true },
-  PBR: { current: 1.2, avg: 1.8, maxScale: 3, pctDiff: 33, under: true },
-  PSR: { current: 2.1, avg: 1.9, maxScale: 4, pctDiff: 11, under: false }
+  OPM: { label:'영업이익률', unit:'%', years:['2023','2024','2025'], vals:[7.1, 7.6, 8.2], maxScale:15, trend:'up', insight:'영업이익률이 3년 연속 상승 추세이며, 최근 결산년 <strong style="color:var(--emerald-600)">8.2%</strong>를 기록했습니다' },
+  NPM: { label:'순이익률', unit:'%', years:['2023','2024','2025'], vals:[4.8, 5.5, 5.8], maxScale:10, trend:'up', insight:'순이익률이 안정적으로 개선 중이며, 최근 <strong style="color:var(--emerald-600)">5.8%</strong>를 기록했습니다' },
+  DEBT: { label:'부채비율', unit:'%', years:['2023','2024','2025'], vals:[72, 68, 65], maxScale:100, trend:'down', insight:'부채비율이 꾸준히 감소하여 재무 안정성이 <strong style="color:var(--emerald-600)">개선</strong>되고 있습니다' },
+  ROE: { label:'ROE', unit:'%', years:['2023','2024','2025'], vals:[8.5, 10.2, 11.1], maxScale:20, trend:'up', insight:'자기자본이익률(ROE)이 <strong style="color:var(--emerald-600)">11.1%</strong>로 높은 수익성을 보여줍니다' }
 };
 
 function switchValuation(metric, btn) {
-  // Toggle button state
   document.querySelectorAll('#valToggle .chart-toggle-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
 
   var d = valuationData[metric];
-  var currentPct = Math.round((d.current / d.maxScale) * 100);
-  var avgPct = Math.round((d.avg / d.maxScale) * 100);
-  var diffLabel = d.under ? '저평가' : '고평가';
-  var diffColor = d.under ? 'var(--emerald-600)' : 'var(--red-600)';
-  var subClass = d.under ? 'positive' : 'negative';
-  var arrow = d.under ? '▼' : '▲';
+  var latest = d.vals[d.vals.length - 1];
+  var prev = d.vals[d.vals.length - 2];
+  var diff = (latest - prev).toFixed(1);
+  var isGood = (d.trend === 'up' && latest > prev) || (d.trend === 'down' && latest < prev);
+  var arrow = latest > prev ? '▲' : '▼';
 
-  // Update summary cards
-  document.getElementById('valCardLabel1').textContent = '현재 ' + metric;
-  document.getElementById('valCardValue1').innerHTML = d.current + '<span>x</span>';
-  document.getElementById('valCardLabel2').textContent = '산업 평균 ' + metric;
-  document.getElementById('valCardValue2').innerHTML = d.avg + '<span>x</span>';
+  document.getElementById('valCardLabel1').textContent = d.label + ' (' + d.years[d.years.length-1] + ')';
+  document.getElementById('valCardValue1').innerHTML = latest + '<span>' + d.unit + '</span>';
   var sub1 = document.getElementById('valCardSub1');
-  sub1.className = 'val-card-sub ' + subClass;
-  sub1.textContent = arrow + ' 산업 대비 ' + diffLabel;
+  sub1.className = 'val-card-sub ' + (isGood ? 'positive' : 'negative');
+  sub1.textContent = arrow + ' 전년 대비 ' + (latest > prev ? '+' : '') + diff + '%p';
 
-  // Update bars
-  document.getElementById('valBar1').style.width = currentPct + '%';
-  document.getElementById('valBar2').style.width = avgPct + '%';
-  document.getElementById('valBarVal1').textContent = d.current + 'x';
-  document.getElementById('valBarVal2').textContent = d.avg + 'x';
+  for (var i = 0; i < d.vals.length; i++) {
+    var pct = Math.round((d.vals[d.vals.length - 1 - i] / d.maxScale) * 100);
+    var bar = document.getElementById('valBar' + (i + 1));
+    var val = document.getElementById('valBarVal' + (i + 1));
+    if (bar) bar.style.width = pct + '%';
+    if (val) val.textContent = d.vals[d.vals.length - 1 - i] + d.unit;
+  }
 
-  // Update insight
-  document.getElementById('valInsight').innerHTML = '💡 현재 ' + metric + '은 산업 평균 대비 <strong style="color:' + diffColor + '">' + d.pctDiff + '% ' + diffLabel + '</strong> 상태입니다';
+  document.getElementById('valInsight').innerHTML = '💡 ' + d.insight;
 }
 
-// S3: EPS Dot Chart
-function drawEpsDotChart() {
-  var canvas = document.getElementById('epsDotChart');
+// S3: Revenue Composition — KoDATA 주요매출계정(ENPfsdt0005) 기반
+function drawRevenueCompositionChart() {
+  var canvas = document.getElementById('revenueCompositionChart');
   if (!canvas) return;
   var W = canvas.parentElement.offsetWidth || 520, H = 280;
   var ctx = hiDPI(canvas, W, H);
   ctx.clearRect(0, 0, W, H);
 
-  var quarters = ["Q1'24","Q2'24","Q3'24","Q4'24","Q1'25","Q2'25","Q3'25","Q4'25"];
-  var consensus = [380, 400, 420, 440, 480, 510, 540, 580];
-  var actual =    [395, 388, 435, 462, 495, 502, 558, 612];
-  var beat = actual.map(function(a,i){ return a >= consensus[i]; });
+  // KoDATA ENPfsdt0005: 상품(fs_val1), 제품(fs_val2), 용역(fs_val3), 수출(fs_val4), 기타(fs_val5)
+  var segments = [
+    { label: '제품매출', value: 185, color: '#0549CC' },
+    { label: '용역매출', value: 89, color: '#3A7ADF' },
+    { label: '수출매출', value: 42, color: '#6D9DE7' },
+    { label: '기타', value: 26, color: '#C8D9F5' }
+  ];
+  var total = 0;
+  segments.forEach(function(s) { total += s.value; });
 
-  var padL = 50, padR = 20, padT = 20, padB = 40;
-  var chartW = W - padL - padR, chartH = H - padT - padB;
-  var minV = 340, maxV = 660;
+  var cx = W / 2, cy = H / 2 - 10, r = Math.min(W, H) * 0.35;
+  var startAngle = -Math.PI / 2;
 
-  function yPos(v) { return padT + chartH * (1 - (v - minV) / (maxV - minV)); }
-  function xPos(i) { return padL + (i / (quarters.length - 1)) * chartW; }
-
-  // Grid lines
-  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
-  for (var g = 0; g <= 4; g++) {
-    var gv = minV + (maxV - minV) * g / 4;
-    var gy = yPos(gv);
-    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(W - padR, gy); ctx.stroke();
-    ctx.fillStyle = '#9AA3B4'; ctx.font = '11px Pretendard Variable';
-    ctx.textAlign = 'right'; ctx.fillText(Math.round(gv) + '원', padL - 8, gy + 4);
-  }
-
-  // Consensus dashed line
-  ctx.strokeStyle = '#9AA3B4'; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
-  ctx.beginPath();
-  for (var i = 0; i < consensus.length; i++) {
-    var cx = xPos(i), cy = yPos(consensus[i]);
-    if (i === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
-  }
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  // Actual line
-  ctx.strokeStyle = '#0549CC'; ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  for (var i = 0; i < actual.length; i++) {
-    var ax = xPos(i), ay = yPos(actual[i]);
-    if (i === 0) ctx.moveTo(ax, ay); else ctx.lineTo(ax, ay);
-  }
-  ctx.stroke();
-
-  // Dots
-  for (var i = 0; i < actual.length; i++) {
-    var dx = xPos(i), dy = yPos(actual[i]);
-    ctx.beginPath(); ctx.arc(dx, dy, 6, 0, Math.PI * 2);
-    ctx.fillStyle = beat[i] ? '#10B981' : '#EF4444';
+  segments.forEach(function(s) {
+    var sliceAngle = (s.value / total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, startAngle, startAngle + sliceAngle);
+    ctx.closePath();
+    ctx.fillStyle = s.color;
     ctx.fill();
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
 
-    // Beat/Miss label
-    ctx.fillStyle = beat[i] ? '#059669' : '#DC2626';
-    ctx.font = 'bold 10px Pretendard Variable'; ctx.textAlign = 'center';
-    var diff = ((actual[i] - consensus[i]) / consensus[i] * 100).toFixed(1);
-    ctx.fillText((beat[i] ? '+' : '') + diff + '%', dx, dy - 14);
-  }
+    // Label
+    var midAngle = startAngle + sliceAngle / 2;
+    var lx = cx + (r * 0.65) * Math.cos(midAngle);
+    var ly = cy + (r * 0.65) * Math.sin(midAngle);
+    var pct = Math.round(s.value / total * 100);
+    if (pct >= 8) {
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 13px Pretendard Variable'; ctx.textAlign = 'center';
+      ctx.fillText(pct + '%', lx, ly + 5);
+    }
 
-  // X-axis labels
-  ctx.fillStyle = '#6B7689'; ctx.font = '11px Pretendard Variable'; ctx.textAlign = 'center';
-  for (var i = 0; i < quarters.length; i++) {
-    ctx.fillText(quarters[i], xPos(i), H - 10);
-  }
+    startAngle += sliceAngle;
+  });
+
+  // Inner circle (donut)
+  ctx.beginPath(); ctx.arc(cx, cy, r * 0.5, 0, Math.PI * 2);
+  ctx.fillStyle = '#F7F8FA'; ctx.fill();
+
+  // Center text
+  ctx.fillStyle = '#374151'; ctx.font = 'bold 18px Pretendard Variable'; ctx.textAlign = 'center';
+  ctx.fillText(total + '억', cx, cy + 2);
+  ctx.fillStyle = '#9AA3B4'; ctx.font = '11px Pretendard Variable';
+  ctx.fillText('총 매출', cx, cy + 18);
 }
 
 // S3: Revenue vs Earnings Bar Chart
@@ -2183,33 +2176,7 @@ function drawRevenueEarningsChart(mode, btn) {
   }
 }
 
-// S3a: Expert Sentiment horizontal bar
-function drawExpertSentimentChart() {
-  var canvas = document.getElementById('expertSentimentChart');
-  if (!canvas) return;
-  var W = canvas.parentElement.offsetWidth || 400, H = 32;
-  var ctx = hiDPI(canvas, W, H);
-  ctx.clearRect(0, 0, W, H);
-
-  var segments = [
-    { pct: 0.62, color: '#10B981' },
-    { pct: 0.24, color: '#F59E0B' },
-    { pct: 0.14, color: '#EF4444' }
-  ];
-  var r = 6, x = 0;
-  for (var i = 0; i < segments.length; i++) {
-    var sw = segments[i].pct * W;
-    ctx.fillStyle = segments[i].color;
-    if (i === 0) {
-      ctx.beginPath(); ctx.roundRect(x, 4, sw, H - 8, [r, 0, 0, r]); ctx.fill();
-    } else if (i === segments.length - 1) {
-      ctx.beginPath(); ctx.roundRect(x, 4, sw, H - 8, [0, r, r, 0]); ctx.fill();
-    } else {
-      ctx.fillRect(x, 4, sw, H - 8);
-    }
-    x += sw;
-  }
-}
+// S3a: (Expert sentiment removed — no data source for 비상장)
 
 function drawFinancialBars() {
   var canvas = document.getElementById('financialBars');
