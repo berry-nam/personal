@@ -1706,7 +1706,7 @@ function switchTab(tabId, el) {
   var panel = document.getElementById('panel-' + tabId);
   if (panel) panel.classList.add('active');
   activeTabId = tabId;
-  if (typeof renderPins === 'function') renderPins();
+  if (typeof updatePinVisibility === 'function') updatePinVisibility();
   var tabsWrap = document.querySelector('.tabs-wrap');
   window.scrollTo({top: tabsWrap.offsetTop - 56, behavior: 'smooth'});
   // Trigger chart drawing on tab switch
@@ -2676,7 +2676,8 @@ document.addEventListener('keydown', function(e) {
 #cb-pin-layer{position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:650}
 body.cb-comment-mode #cb-pin-layer{pointer-events:auto;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='36' viewBox='0 0 24 36'%3E%3Cpath d='M12 36s12-14 12-22A12 12 0 000 14C0 22 12 36 12 36z' fill='%23F59E0B'/%3E%3Ccircle cx='12' cy='13' r='4.5' fill='%23fff'/%3E%3C/svg%3E") 12 36, crosshair}
 body.cb-comment-mode{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='36' viewBox='0 0 24 36'%3E%3Cpath d='M12 36s12-14 12-22A12 12 0 000 14C0 22 12 36 12 36z' fill='%23F59E0B'/%3E%3Ccircle cx='12' cy='13' r='4.5' fill='%23fff'/%3E%3C/svg%3E") 12 36, crosshair}
-.cb-pin{position:absolute;pointer-events:auto;transform:translate(-50%,-100%);cursor:pointer;transition:transform .1s;z-index:1}
+.cb-pin{position:absolute;pointer-events:auto;transform:translate(-50%,-100%);cursor:pointer;transition:transform .1s;z-index:1;display:none}
+.cb-pin.cb-tab-visible{display:block}
 .cb-pin:hover{transform:translate(-50%,-100%) scale(1.15);z-index:2}
 .cb-pin-marker{width:32px;height:40px;position:relative;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
 .cb-pin-number{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
@@ -2955,12 +2956,12 @@ function renderPins(){
   if(!layer)return;
   layer.querySelectorAll('.cb-pin').forEach(function(p){p.remove();});
   var sorted=Object.keys(comments).map(function(k){return comments[k];})
-    .filter(function(c){return (c.tabId||'overview')===activeTabId;})
     .sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
   sorted.forEach(function(c){
     var pin=document.createElement('div');
     pin.className='cb-pin'+(c.resolved?' resolved':'');
     pin.dataset.id=c.id;
+    pin.dataset.tab=c.tabId||'overview';
     var leftPx=(c.x/100)*document.documentElement.scrollWidth;
     pin.style.left=leftPx+'px';
     pin.style.top=c.y+'px';
@@ -2969,6 +2970,15 @@ function renderPins(){
     layer.appendChild(pin);
   });
   syncLayerHeight();
+  updatePinVisibility();
+}
+function updatePinVisibility(){
+  document.querySelectorAll('.cb-pin').forEach(function(pin){
+    if(pin.dataset.tab===activeTabId){pin.classList.add('cb-tab-visible');}
+    else{pin.classList.remove('cb-tab-visible');}
+  });
+  // Close thread if it belongs to another tab
+  if(openThreadId&&comments[openThreadId]&&(comments[openThreadId].tabId||'overview')!==activeTabId){closeThread();}
 }
 
 // ── NEW COMMENT INPUT ──
