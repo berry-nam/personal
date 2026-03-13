@@ -2800,7 +2800,7 @@ function subscribe(){
     Object.keys(comments).forEach(function(k){if(comments[k].pinNumber>mx)mx=comments[k].pinNumber;});
     nextPin=mx+1;
     renderPins();
-    var cnt=Object.keys(comments).filter(function(k){return !comments[k].resolved;}).length;
+    var cnt=Object.keys(comments).filter(function(k){var c=comments[k];return !c.resolved&&(c.tabId||'overview')===activeTabId;}).length;
     var badge=document.getElementById('cb-badge');
     if(badge)badge.textContent=cnt;
   });
@@ -2955,7 +2955,7 @@ function renderPins(){
   if(!layer)return;
   layer.querySelectorAll('.cb-pin').forEach(function(p){p.remove();});
   var sorted=Object.keys(comments).map(function(k){return comments[k];})
-    .filter(function(c){return !c.tabId || c.tabId===activeTabId;})
+    .filter(function(c){return (c.tabId||'overview')===activeTabId;})
     .sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
   sorted.forEach(function(c){
     var pin=document.createElement('div');
