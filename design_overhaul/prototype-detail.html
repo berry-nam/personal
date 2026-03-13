@@ -1706,7 +1706,8 @@ function switchTab(tabId, el) {
   var panel = document.getElementById('panel-' + tabId);
   if (panel) panel.classList.add('active');
   activeTabId = tabId;
-  if (typeof updatePinVisibility === 'function') updatePinVisibility();
+  location.hash = '#' + tabId;
+  if (db) subscribeTab();
   var tabsWrap = document.querySelector('.tabs-wrap');
   window.scrollTo({top: tabsWrap.offsetTop - 56, behavior: 'smooth'});
   // Trigger chart drawing on tab switch
@@ -2757,8 +2758,12 @@ var FIREBASE_CONFIG = {
 };
 var PAGE_ID = 'detail';
 var PAGE_LABEL = '에이치비테크놀로지 상세';
-var PAGE_LABELS = {search:'기업탐색', detail:'에이치비테크놀로지 상세'};
-var PAGE_URLS = {search:'prototype-search.html', detail:'prototype-detail.html'};
+var TAB_LABELS = {overview:'개요',finance:'재무',people:'인물',similar:'유사기업',competitors:'경쟁사',community:'커뮤니티'};
+var PAGE_LABELS = {search:'기업탐색'};
+// Build PAGE_LABELS for every tab: detail_overview → '상세 · 개요', etc.
+Object.keys(TAB_LABELS).forEach(function(t){PAGE_LABELS[PAGE_ID+'_'+t]=PAGE_LABEL+' · '+TAB_LABELS[t];});
+var PAGE_URLS = {search:'prototype-search.html'};
+Object.keys(TAB_LABELS).forEach(function(t){PAGE_URLS[PAGE_ID+'_'+t]='prototype-detail.html#'+t;});
 var COLORS = ['#0549CC','#059669','#D97706','#DC2626','#8B5CF6','#0D9488','#EA580C','#6366F1','#B45309','#14B8A6'];
 
 // ── STATE ──
@@ -2767,7 +2772,8 @@ var comments = {};
 var allComments = {};
 var openThreadId = null;
 var currentUser = null;
-var activeTabId = 'overview';
+var activeTabId = (location.hash||'').replace('#','') || 'overview';
+if(!TAB_LABELS[activeTabId]) activeTabId='overview';
 var db = null;
 var commentsRef = null;
 var allCommentsRef = null;
@@ -2787,25 +2793,34 @@ function syncLayerHeight(){
 }
 
 // ── FIREBASE ──
+function tabRef(){return PAGE_ID+'_'+activeTabId;}
 function initFB(){
   firebase.initializeApp(FIREBASE_CONFIG);
   db=firebase.database();
-  commentsRef=db.ref('comments/'+PAGE_ID);
   allCommentsRef=db.ref('comments');
 }
-function subscribe(){
-  // Page-specific: pins + badge
+function subscribeTab(){
+  // Unsubscribe previous tab
+  if(commentsRef){commentsRef.off();}
+  commentsRef=db.ref('comments/'+tabRef());
+  comments={};
+  nextPin=1;
+  renderPins();
+  // Subscribe to new tab
   commentsRef.on('value',function(snap){
     comments=snap.val()||{};
     var mx=0;
     Object.keys(comments).forEach(function(k){if(comments[k].pinNumber>mx)mx=comments[k].pinNumber;});
     nextPin=mx+1;
     renderPins();
-    var cnt=Object.keys(comments).filter(function(k){var c=comments[k];return !c.resolved&&(c.tabId||'overview')===activeTabId;}).length;
+    var cnt=Object.keys(comments).filter(function(k){return !comments[k].resolved;}).length;
     var badge=document.getElementById('cb-badge');
     if(badge)badge.textContent=cnt;
   });
-  // Cross-page: sidebar
+}
+function subscribe(){
+  subscribeTab();
+  // Cross-page+tab: sidebar
   allCommentsRef.on('value',function(snap){
     allComments=snap.val()||{};
     renderSidebar();
@@ -2818,7 +2833,7 @@ function subscribe(){
 }
 function addComment(x,y,text){
   var ref=commentsRef.push();
-  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin,pageId:PAGE_ID,pageLabel:PAGE_LABEL,tabId:activeTabId}).catch(function(err){alert('Firebase 저장 실패: '+err.message+'\n\nFirebase Console → Realtime Database → 규칙 에서 read/write를 true로 설정해주세요.');});
+  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin,pageId:tabRef(),pageLabel:PAGE_LABEL+' · '+(TAB_LABELS[activeTabId]||activeTabId),tabId:activeTabId}).catch(function(err){alert('Firebase 저장 실패: '+err.message+'\n\nFirebase Console → Realtime Database → 규칙 에서 read/write를 true로 설정해주세요.');});
 }
 function addReply(cid,text){
   commentsRef.child(cid).child('replies').push().set({author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP});
@@ -2899,10 +2914,9 @@ function renderSidebar(){
   list.innerHTML=sorted.map(function(c){
     var replyCount=c.replies?Object.keys(c.replies).length:0;
     var replyText=replyCount>0?'<div class="cb-sb-replies">💬 '+replyCount+'개 답글</div>':'';
-    var isOther=c._pageId!==PAGE_ID;
-    var tabLabel=c.tabId?{overview:'개요',finance:'재무',people:'인물',similar:'유사기업',competitor:'경쟁사',community:'커뮤니티'}[c.tabId]||c.tabId:'';
-    var cls='cb-sb-item'+(c.resolved?' resolved-item':'')+(isOther?' other-page':'')+(openThreadId===c.id?' active':'');
-    var pageTag='<div class="cb-sb-page">'+(isOther?'<span class="cb-sb-link-icon">↗</span>':'')+esc(c._pageLabel)+(tabLabel?' · '+tabLabel:'')+'</div>';
+    var isCurrentTab=c._pageId===tabRef();
+    var cls='cb-sb-item'+(c.resolved?' resolved-item':'')+(!isCurrentTab?' other-page':'')+(openThreadId===c.id?' active':'');
+    var pageTag='<div class="cb-sb-page">'+(!isCurrentTab?'<span class="cb-sb-link-icon">↗</span>':'')+esc(c._pageLabel)+'</div>';
     return '<div class="'+cls+'" data-cid="'+c.id+'" data-page="'+c._pageId+'" data-tab="'+(c.tabId||'')+'">'
       +'<div class="cb-sb-pin" style="background:'+c.authorColor+'">'+c.pinNumber+'</div>'
       +'<div class="cb-sb-body">'
@@ -2917,19 +2931,21 @@ function renderSidebar(){
       var cid=item.dataset.cid;
       var pid=item.dataset.page;
       var tid=item.dataset.tab;
-      if(pid!==PAGE_ID){window.location.href=PAGE_URLS[pid]||('#');return;}
-      // Switch to the comment's tab if different from current
+      // Different page entirely (e.g. search page)
+      if(!pid.startsWith(PAGE_ID)){window.location.href=PAGE_URLS[pid]||('#');return;}
+      // Same page, different tab → switch tab first
       if(tid && tid!==activeTabId){
         var tabEl=document.querySelector('.tab[onclick*="\''+tid+'\'"]');
         if(tabEl){switchTab(tid,tabEl);}
       }
-      var c=comments[cid];
-      if(!c)return;
+      // Wait for Firebase re-subscribe, then scroll to pin
       setTimeout(function(){
+        var c=comments[cid];
+        if(!c)return;
         var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
         if(pin){window.scrollTo({top:parseFloat(pin.style.top)-200,behavior:'smooth'});}
         setTimeout(function(){openThread(cid);renderSidebar();},300);
-      },150);
+      },500);
     });
   });
 }
@@ -2954,14 +2970,15 @@ function createPinLayer(){
 function renderPins(){
   var layer=document.getElementById('cb-pin-layer');
   if(!layer)return;
-  layer.querySelectorAll('.cb-pin').forEach(function(p){p.remove();});
+  // Remove old pins + threads
+  layer.querySelectorAll('.cb-pin,.cb-thread,#cb-new-input').forEach(function(p){p.remove();});
+  openThreadId=null;
   var sorted=Object.keys(comments).map(function(k){return comments[k];})
     .sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
   sorted.forEach(function(c){
     var pin=document.createElement('div');
-    pin.className='cb-pin'+(c.resolved?' resolved':'');
+    pin.className='cb-pin cb-tab-visible'+(c.resolved?' resolved':'');
     pin.dataset.id=c.id;
-    pin.dataset.tab=c.tabId||'overview';
     var leftPx=(c.x/100)*document.documentElement.scrollWidth;
     pin.style.left=leftPx+'px';
     pin.style.top=c.y+'px';
@@ -2970,15 +2987,6 @@ function renderPins(){
     layer.appendChild(pin);
   });
   syncLayerHeight();
-  updatePinVisibility();
-}
-function updatePinVisibility(){
-  document.querySelectorAll('.cb-pin').forEach(function(pin){
-    if(pin.dataset.tab===activeTabId){pin.classList.add('cb-tab-visible');}
-    else{pin.classList.remove('cb-tab-visible');}
-  });
-  // Close thread if it belongs to another tab
-  if(openThreadId&&comments[openThreadId]&&(comments[openThreadId].tabId||'overview')!==activeTabId){closeThread();}
 }
 
 // ── NEW COMMENT INPUT ──
@@ -3129,6 +3137,11 @@ function boot(){
   subscribe();
   initKeys();
   initObservers();
+  // Activate tab from URL hash
+  if(activeTabId!=='overview'){
+    var tabEl=document.querySelector('.tab[onclick*="\''+activeTabId+'\'"]');
+    if(tabEl){switchTab(activeTabId,tabEl);}
+  }
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
 })();
