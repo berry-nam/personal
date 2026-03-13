@@ -184,6 +184,14 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .similar-cards::-webkit-scrollbar{height:6px}
 .similar-cards::-webkit-scrollbar-thumb{background:var(--slate-300);border-radius:3px}
 .similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sim-section{margin-bottom:20px}
+.sim-section-title{font-size:13px;font-weight:700;color:var(--text-sub);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sim-section-title::before{content:'';width:3px;height:14px;border-radius:2px}
+.sim-section[data-type="industry"] .sim-section-title::before{background:var(--brand)}
+.sim-section[data-type="scale"] .sim-section-title::before{background:var(--emerald-500)}
+.sim-section[data-type="region"] .sim-section-title::before{background:var(--purple-500)}
+.sim-section[data-type="revenue"] .sim-section-title::before{background:var(--amber-500)}
+.sim-section-count{font-size:11px;font-weight:500;padding:1px 7px;border-radius:10px;background:var(--slate-100);color:var(--text-muted)}
 .sim-card{flex:0 0 280px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;scroll-snap-align:start;transition:var(--transition);position:relative}
 .sim-card:hover{box-shadow:var(--shadow-md);border-color:var(--blue-200)}
 .sim-card.best-match{border-color:var(--brand);border-width:2px}
@@ -1116,7 +1124,7 @@ body.show-design-notes .section{margin-top:18px}
   <!-- ═══ SIMILAR COMPANIES TAB (B7) ═══ -->
   <div class="tab-panel" id="panel-similar">
     <div class="section" style="position:relative">
-      <span class="design-note dn-yellow">3-column grid, 18+ cards, filter chips</span>
+      <span class="design-note dn-yellow">3-column grid, 18+ cards, 섹션별 분류 (업종/규모/지역/매출)</span>
       <span class="design-note dn-blue" style="right:auto;left:8px">sim-card component, match % badge</span>
       <div class="similar-header">
         <div class="section-title" style="margin-bottom:0"><span class="icon">🏢</span> 유사 기업 추천</div>
@@ -1127,13 +1135,6 @@ body.show-design-notes .section{margin-top:18px}
         </div>
       </div>
       <div class="similar-context"><strong>에이치비테크놀로지</strong> 기준 · 매출 342억 · 영업이익 28억 · 반도체 장비 · 비상장</div>
-      <div class="filter-chips">
-        <button class="filter-chip active">전체</button>
-        <button class="filter-chip" onclick="this.classList.toggle('active')">동일 업종</button>
-        <button class="filter-chip" onclick="this.classList.toggle('active')">유사 규모</button>
-        <button class="filter-chip" onclick="this.classList.toggle('active')">같은 지역</button>
-        <button class="filter-chip" onclick="this.classList.toggle('active')">유사 매출</button>
-      </div>
       <div id="similarCardsMain"></div>
     </div>
   </div>
@@ -1500,39 +1501,69 @@ var SIMILAR = [
 
 var CHIP_CLASS = {'동일 업종':'chip-industry','유사 규모':'chip-scale','같은 지역':'chip-region','유사 매출':'chip-revenue'};
 
-function renderSimilarCards(containerId, count, mode) {
-  count = count || 5;
-  mode = mode || 'card';
-  var el = document.getElementById(containerId);
-  var data = SIMILAR.slice(0, count);
-  var cards = data.map(function(s){
-    var profitClass = s.profitG >= 0 ? 'metric-up' : 'metric-down';
-    return '<div class="sim-card' + (s.best ? ' best-match' : '') + '">' +
-      '<div class="sim-card-header">' +
-        '<div class="sim-card-logo" style="background:' + s.color + '">' + s.name.substring(0,2) + '</div>' +
-        '<div><div class="sim-card-name">' + s.name + '</div><div class="sim-card-desc">' + s.desc + '</div></div>' +
+function buildCard(s) {
+  var profitClass = s.profitG >= 0 ? 'metric-up' : 'metric-down';
+  return '<div class="sim-card' + (s.best ? ' best-match' : '') + '">' +
+    '<div class="sim-card-header">' +
+      '<div class="sim-card-logo" style="background:' + s.color + '">' + s.name.substring(0,2) + '</div>' +
+      '<div><div class="sim-card-name">' + s.name + '</div><div class="sim-card-desc">' + s.desc + '</div></div>' +
+    '</div>' +
+    '<div class="sim-card-metrics">' +
+      '<div class="sim-metric"><div class="sim-metric-label">매출액</div><div class="sim-metric-value">' + s.revenue + '억</div></div>' +
+      '<div class="sim-metric"><div class="sim-metric-label">영업이익</div><div class="sim-metric-value ' + profitClass + '">' + s.profit + '억</div><div class="sim-metric-trend ' + profitClass + '">▲ +' + s.profitG + '%</div></div>' +
+    '</div>' +
+    '<div class="chips-wrap">' + s.chips.map(function(c){ return '<span class="match-chip ' + (CHIP_CLASS[c]||'') + '">' + c + '</span>'; }).join('') + '</div>' +
+    '<div class="sim-card-actions">' +
+      '<a href="prototype-detail.html?company=' + encodeURIComponent(s.name) + '">상세 보기 →</a>' +
+      '<div class="feedback-btns">' +
+        '<button class="feedback-btn" onclick="event.stopPropagation();this.style.background=\'var(--brand-bg)\';this.style.borderColor=\'var(--brand)\'">👍</button>' +
+        '<button class="feedback-btn" onclick="event.stopPropagation();this.style.background=\'var(--red-50)\';this.style.borderColor=\'var(--red-400)\'">👎</button>' +
       '</div>' +
-      '<div class="sim-card-metrics">' +
-        '<div class="sim-metric"><div class="sim-metric-label">매출액</div><div class="sim-metric-value">' + s.revenue + '억</div></div>' +
-        '<div class="sim-metric"><div class="sim-metric-label">영업이익</div><div class="sim-metric-value ' + profitClass + '">' + s.profit + '억</div><div class="sim-metric-trend ' + profitClass + '">▲ +' + s.profitG + '%</div></div>' +
-      '</div>' +
-      '<div class="chips-wrap">' + s.chips.map(function(c){ return '<span class="match-chip ' + (CHIP_CLASS[c]||'') + '">' + c + '</span>'; }).join('') + '</div>' +
-      '<div class="sim-card-actions">' +
-        '<a href="prototype-detail.html?company=' + encodeURIComponent(s.name) + '">상세 보기 →</a>' +
-        '<div class="feedback-btns">' +
-          '<button class="feedback-btn" onclick="event.stopPropagation();this.style.background=\'var(--brand-bg)\';this.style.borderColor=\'var(--brand)\'">👍</button>' +
-          '<button class="feedback-btn" onclick="event.stopPropagation();this.style.background=\'var(--red-50)\';this.style.borderColor=\'var(--red-400)\'">👎</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+    '</div>' +
+  '</div>';
+}
 
-  if (mode === 'grid') {
-    el.innerHTML = '<div class="similar-grid">' + cards + '</div>';
-    el.querySelectorAll('.sim-card').forEach(function(c){ c.style.flex = 'none'; });
-  } else {
-    el.innerHTML = '<div class="similar-cards">' + cards + '</div>';
+var SECTION_MAP = {
+  '동일 업종': {label:'동일 업종', type:'industry'},
+  '유사 규모': {label:'유사 규모 (매출 200~500억)', type:'scale'},
+  '같은 지역': {label:'같은 지역 (서울·경기)', type:'region'},
+  '유사 매출': {label:'유사 매출 구조', type:'revenue'}
+};
+
+function renderSimilarCards(containerId, count, mode) {
+  var el = document.getElementById(containerId);
+  var data = SIMILAR.slice(0, count || SIMILAR.length);
+
+  if (mode === 'compare') {
+    el.innerHTML = '<div class="similar-grid">' + data.map(buildCard).join('') + '</div>';
+    return;
   }
+
+  // Group by primary chip (first chip of each company)
+  var groups = {};
+  var order = ['동일 업종','유사 규모','같은 지역','유사 매출'];
+  order.forEach(function(k){ groups[k] = []; });
+  var assigned = {};
+  // Assign each company to its primary (first) chip category
+  data.forEach(function(s){
+    var placed = false;
+    s.chips.forEach(function(c){
+      if (!placed && groups[c]) { groups[c].push(s); assigned[s.name] = true; placed = true; }
+    });
+  });
+
+  var html = '';
+  order.forEach(function(key){
+    var items = groups[key];
+    if (!items.length) return;
+    var info = SECTION_MAP[key];
+    html += '<div class="sim-section" data-type="' + info.type + '">';
+    html += '<div class="sim-section-title">' + info.label + ' <span class="sim-section-count">' + items.length + '개</span></div>';
+    html += '<div class="similar-grid">' + items.map(buildCard).join('') + '</div>';
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
 }
 
 // ══ REVENUE CHART ══
