@@ -2335,6 +2335,11 @@ function subscribe(){
     var cnt=Object.keys(comments).filter(function(k){return !comments[k].resolved;}).length;
     var badge=document.getElementById('cb-badge');
     if(badge)badge.textContent=cnt;
+    // Auto-open sidebar when comments exist
+    var sb=document.getElementById('cb-sidebar');
+    var hasComments=Object.keys(comments).length>0;
+    if(hasComments){sb.classList.add('open');document.body.classList.add('cb-sidebar-open');}
+    else{sb.classList.remove('open');document.body.classList.remove('cb-sidebar-open');}
   });
 }
 function addComment(x,y,text){
@@ -2361,10 +2366,7 @@ function toggleMode(){
   var btn=document.getElementById('cb-mode-btn');
   btn.className='cb-toggle-btn '+(commentMode?'active':'inactive');
   btn.querySelector('.cb-mode-label').textContent=commentMode?'코멘트 ON':'코멘트';
-  // Toggle sidebar
-  var sb=document.getElementById('cb-sidebar');
-  if(commentMode){sb.classList.add('open');document.body.classList.add('cb-sidebar-open');renderSidebar();}
-  else{sb.classList.remove('open');document.body.classList.remove('cb-sidebar-open');closeThread();var ni=document.getElementById('cb-new-input');if(ni)ni.remove();}
+  if(!commentMode){closeThread();var ni=document.getElementById('cb-new-input');if(ni)ni.remove();}
 }
 
 // ── SIDEBAR ──
