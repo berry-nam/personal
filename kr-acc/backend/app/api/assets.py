@@ -8,6 +8,7 @@ from sqlalchemy.orm import selectinload
 from app.database import get_session
 from app.models import (
     AssetDeclaration,
+    AssetItem,
     Company,
     Politician,
     PoliticalFund,
@@ -230,3 +231,258 @@ async def list_companies(
     query = query.limit(50)
     result = await session.execute(query)
     return [CompanyOut.model_validate(r) for r in result.scalars().all()]
+
+
+# ── Aggregate asset item endpoints ─────────────────────────────────────────
+
+
+@router.get("/assets/items/stocks")
+async def top_stock_holdings(
+    limit: int = Query(20, ge=1, le=100),
+    session: AsyncSession = Depends(get_session),
+) -> list[dict]:
+    """Top stock/securities holdings across all politicians."""
+    result = await session.execute(
+        select(
+            AssetItem.description,
+            AssetItem.subcategory,
+            AssetItem.relation,
+            AssetItem.value_krw,
+            Politician.id.label("politician_id"),
+            Politician.name,
+            Politician.party,
+            Politician.photo_url,
+        )
+        .join(AssetDeclaration, AssetDeclaration.id == AssetItem.declaration_id)
+        .join(Politician, Politician.id == AssetDeclaration.politician_id)
+        .where(AssetItem.category == "securities", AssetItem.value_krw.isnot(None))
+        .order_by(AssetItem.value_krw.desc())
+        .limit(limit)
+    )
+    return [
+        {
+            "description": row.description,
+            "subcategory": row.subcategory,
+            "relation": row.relation,
+            "value_krw": row.value_krw,
+            "politician_id": row.politician_id,
+            "name": row.name,
+            "party": row.party,
+            "photo_url": row.photo_url,
+        }
+        for row in result.all()
+    ]
+
+
+@router.get("/assets/items/real-estate")
+async def top_real_estate(
+    limit: int = Query(20, ge=1, le=100),
+    session: AsyncSession = Depends(get_session),
+) -> list[dict]:
+    """Top real estate holdings across all politicians."""
+    result = await session.execute(
+        select(
+            AssetItem.description,
+            AssetItem.subcategory,
+            AssetItem.relation,
+            AssetItem.value_krw,
+            Politician.id.label("politician_id"),
+            Politician.name,
+            Politician.party,
+            Politician.photo_url,
+        )
+        .join(AssetDeclaration, AssetDeclaration.id == AssetItem.declaration_id)
+        .join(Politician, Politician.id == AssetDeclaration.politician_id)
+        .where(AssetItem.category == "real_estate", AssetItem.value_krw.isnot(None))
+        .order_by(AssetItem.value_krw.desc())
+        .limit(limit)
+    )
+    return [
+        {
+            "description": row.description,
+            "subcategory": row.subcategory,
+            "relation": row.relation,
+            "value_krw": row.value_krw,
+            "politician_id": row.politician_id,
+            "name": row.name,
+            "party": row.party,
+            "photo_url": row.photo_url,
+        }
+        for row in result.all()
+    ]
+
+
+@router.get("/assets/items/crypto")
+async def top_crypto_holdings(
+    limit: int = Query(20, ge=1, le=100),
+    session: AsyncSession = Depends(get_session),
+) -> list[dict]:
+    """Top crypto holdings across all politicians."""
+    result = await session.execute(
+        select(
+            AssetItem.description,
+            AssetItem.subcategory,
+            AssetItem.relation,
+            AssetItem.value_krw,
+            Politician.id.label("politician_id"),
+            Politician.name,
+            Politician.party,
+            Politician.photo_url,
+        )
+        .join(AssetDeclaration, AssetDeclaration.id == AssetItem.declaration_id)
+        .join(Politician, Politician.id == AssetDeclaration.politician_id)
+        .where(AssetItem.category == "crypto", AssetItem.value_krw.isnot(None))
+        .order_by(AssetItem.value_krw.desc())
+        .limit(limit)
+    )
+    return [
+        {
+            "description": row.description,
+            "subcategory": row.subcategory,
+            "relation": row.relation,
+            "value_krw": row.value_krw,
+            "politician_id": row.politician_id,
+            "name": row.name,
+            "party": row.party,
+            "photo_url": row.photo_url,
+        }
+        for row in result.all()
+    ]
+
+
+@router.get("/assets/items/all")
+async def all_asset_items(
+    category: str | None = Query(None),
+    limit: int = Query(50, ge=1, le=200),
+    session: AsyncSession = Depends(get_session),
+) -> list[dict]:
+    """All asset items with politician info, optionally filtered by category."""
+    query = (
+        select(
+            AssetItem.category,
+            AssetItem.subcategory,
+            AssetItem.description,
+            AssetItem.relation,
+            AssetItem.value_krw,
+            AssetItem.change_krw,
+            AssetItem.note,
+            Politician.id.label("politician_id"),
+            Politician.name,
+            Politician.party,
+        )
+        .join(AssetDeclaration, AssetDeclaration.id == AssetItem.declaration_id)
+        .join(Politician, Politician.id == AssetDeclaration.politician_id)
+    )
+    if category:
+        query = query.where(AssetItem.category == category)
+    query = query.order_by(AssetItem.value_krw.desc()).limit(limit)
+    result = await session.execute(query)
+    return [
+        {
+            "category": row.category,
+            "subcategory": row.subcategory,
+            "description": row.description,
+            "relation": row.relation,
+            "value_krw": row.value_krw,
+            "change_krw": row.change_krw,
+            "note": row.note,
+            "politician_id": row.politician_id,
+            "name": row.name,
+            "party": row.party,
+        }
+        for row in result.all()
+    ]
+
+
+@router.get("/funds/rankings")
+async def fund_rankings(
+    year: int | None = Query(None),
+    limit: int = Query(20, ge=1, le=100),
+    session: AsyncSession = Depends(get_session),
+) -> list[dict]:
+    """Politicians ranked by political fund income."""
+    query = (
+        select(
+            PoliticalFund.fund_year,
+            PoliticalFund.income_total,
+            PoliticalFund.expense_total,
+            PoliticalFund.balance,
+            Politician.id.label("politician_id"),
+            Politician.name,
+            Politician.party,
+            Politician.photo_url,
+        )
+        .join(Politician, Politician.id == PoliticalFund.politician_id)
+    )
+    if year:
+        query = query.where(PoliticalFund.fund_year == year)
+    else:
+        # Latest year per politician
+        latest = (
+            select(
+                PoliticalFund.politician_id,
+                func.max(PoliticalFund.fund_year).label("max_year"),
+            )
+            .group_by(PoliticalFund.politician_id)
+            .subquery()
+        )
+        query = query.join(
+            latest,
+            (latest.c.politician_id == PoliticalFund.politician_id)
+            & (latest.c.max_year == PoliticalFund.fund_year),
+        )
+    result = await session.execute(
+        query.order_by(PoliticalFund.income_total.desc()).limit(limit)
+    )
+    return [
+        {
+            "politician_id": row.politician_id,
+            "name": row.name,
+            "party": row.party,
+            "photo_url": row.photo_url,
+            "fund_year": row.fund_year,
+            "income_total": row.income_total,
+            "expense_total": row.expense_total,
+            "balance": row.balance,
+        }
+        for row in result.all()
+    ]
+
+
+@router.get("/assets/companies/all")
+async def all_company_holdings(
+    session: AsyncSession = Depends(get_session),
+) -> list[dict]:
+    """All politician-company relationships with details."""
+    result = await session.execute(
+        select(
+            PoliticianCompany.relation_type,
+            PoliticianCompany.value_krw,
+            PoliticianCompany.source_year,
+            Company.corp_name,
+            Company.industry,
+            Company.stock_code,
+            Politician.id.label("politician_id"),
+            Politician.name,
+            Politician.party,
+            Politician.photo_url,
+        )
+        .join(Company, Company.id == PoliticianCompany.company_id)
+        .join(Politician, Politician.id == PoliticianCompany.politician_id)
+        .order_by(PoliticianCompany.value_krw.desc().nullslast())
+    )
+    return [
+        {
+            "relation_type": row.relation_type,
+            "value_krw": row.value_krw,
+            "source_year": row.source_year,
+            "corp_name": row.corp_name,
+            "industry": row.industry,
+            "stock_code": row.stock_code,
+            "politician_id": row.politician_id,
+            "name": row.name,
+            "party": row.party,
+            "photo_url": row.photo_url,
+        }
+        for row in result.all()
+    ]

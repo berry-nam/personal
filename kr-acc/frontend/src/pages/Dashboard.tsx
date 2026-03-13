@@ -15,6 +15,9 @@ import {
   useControversialVotes,
   useAbsenteeRanking,
   usePlatformStats,
+  useFundRankings,
+  useAssetItemStocks,
+  useAllCompanyHoldings,
 } from "@/api/queries";
 import HeroGraph from "@/components/graph/HeroGraph";
 import PartyWaffleChart from "@/components/charts/PartyWaffleChart";
@@ -74,6 +77,11 @@ export default function Dashboard() {
   // Vote data
   const controversialVotes = useControversialVotes(22, 5);
   const absentees = useAbsenteeRanking(22, 10);
+
+  // Fund & company data for dashboard
+  const fundRankings = useFundRankings(undefined, 5);
+  const topStocks = useAssetItemStocks(5);
+  const companyHoldings = useAllCompanyHoldings();
 
   // Derived data
   const pipelineSegments = useMemo(() => {
@@ -1040,6 +1048,107 @@ export default function Dashboard() {
                 </div>
               </section>
             )}
+        </div>
+
+        {/* Fund rankings + Stock holdings + Company relationships */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {/* Political fund TOP 5 */}
+          {fundRankings.data && fundRankings.data.length > 0 && (
+            <section className="rounded-lg border border-gray-200 bg-white p-5">
+              <h3 className="text-base font-semibold">정치자금 수입 TOP 5</h3>
+              <p className="text-xs text-gray-400">후원회 기준</p>
+              <div className="mt-3 space-y-1.5">
+                {fundRankings.data.map((f, i) => (
+                  <Link
+                    key={f.politician_id}
+                    to={`/politicians/${f.politician_id}`}
+                    className="group flex items-center gap-2 rounded px-1 py-1 hover:bg-gray-50"
+                  >
+                    <span className="w-4 text-right text-xs font-bold text-gray-300">
+                      {i + 1}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-sm font-medium group-hover:text-blue-600">
+                        {f.name}
+                      </span>
+                      <span className="ml-1 text-[10px] text-gray-400">{f.party}</span>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs font-semibold text-green-600">{formatKrw(f.income_total ?? 0)}</p>
+                      <p className="text-[10px] text-gray-400">지출 {formatKrw(f.expense_total ?? 0)}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Stock holdings TOP 5 */}
+          {topStocks.data && topStocks.data.length > 0 && (
+            <section className="rounded-lg border border-gray-200 bg-white p-5">
+              <h3 className="text-base font-semibold">주식 보유 TOP 5</h3>
+              <p className="text-xs text-gray-400">종목별 최대 보유액</p>
+              <div className="mt-3 space-y-1.5">
+                {topStocks.data.map((s, i) => (
+                  <Link
+                    key={`${s.politician_id}-${s.description}-${i}`}
+                    to={`/politicians/${s.politician_id}`}
+                    className="group flex items-center gap-2 rounded px-1 py-1 hover:bg-gray-50"
+                  >
+                    <span className="w-4 text-right text-xs font-bold text-gray-300">
+                      {i + 1}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium group-hover:text-blue-600 truncate">
+                        {s.description}
+                      </p>
+                      <p className="text-[10px] text-gray-400">{s.name} · {s.relation}</p>
+                    </div>
+                    <span className="text-xs font-semibold text-amber-600">
+                      {formatKrw(s.value_krw ?? 0)}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Company holdings summary */}
+          {companyHoldings.data && companyHoldings.data.length > 0 && (
+            <section className="rounded-lg border border-gray-200 bg-white p-5">
+              <h3 className="text-base font-semibold">의원-기업 관계</h3>
+              <p className="text-xs text-gray-400">주식 보유·임원 겸직 등</p>
+              <div className="mt-3 space-y-1.5">
+                {companyHoldings.data.slice(0, 5).map((c, i) => (
+                  <Link
+                    key={`${c.politician_id}-${c.corp_name}-${i}`}
+                    to={`/politicians/${c.politician_id}`}
+                    className="group flex items-center gap-2 rounded px-1 py-1 hover:bg-gray-50"
+                  >
+                    <span className="w-4 text-right text-xs font-bold text-gray-300">
+                      {i + 1}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium group-hover:text-blue-600 truncate">
+                        {c.corp_name}
+                        {c.stock_code && (
+                          <span className="ml-1 font-mono text-[10px] text-gray-400">
+                            ({c.stock_code})
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-[10px] text-gray-400">
+                        {c.name} · {c.relation_type}
+                      </p>
+                    </div>
+                    <span className="text-xs font-semibold text-orange-600">
+                      {c.value_krw ? formatKrw(c.value_krw) : "-"}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>

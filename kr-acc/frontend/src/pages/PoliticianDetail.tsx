@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router";
 import {
   usePolitician,
@@ -7,6 +8,7 @@ import {
   usePoliticianAssets,
   usePoliticianCompanies,
   usePoliticianFunds,
+  usePoliticianAssetDetail,
 } from "@/api/queries";
 import useDocumentTitle from "@/lib/useDocumentTitle";
 import PartyBadge from "@/components/layout/PartyBadge";
@@ -35,6 +37,22 @@ const VOTE_COLORS: Record<string, string> = {
   불참: "#9CA3AF",
 };
 
+const CATEGORY_LABELS: Record<string, string> = {
+  real_estate: "부동산",
+  deposit: "예금",
+  securities: "유가증권",
+  crypto: "가상자산",
+  vehicle: "차량",
+};
+
+const CATEGORY_COLORS: Record<string, string> = {
+  real_estate: "#3B82F6",
+  deposit: "#22C55E",
+  securities: "#F59E0B",
+  crypto: "#8B5CF6",
+  vehicle: "#6B7280",
+};
+
 export default function PoliticianDetail() {
   const { id } = useParams<{ id: string }>();
   const politicianId = Number(id);
@@ -49,6 +67,15 @@ export default function PoliticianDetail() {
   const assets = usePoliticianAssets(politicianId);
   const companies = usePoliticianCompanies(politicianId);
   const funds = usePoliticianFunds(politicianId);
+
+  // Expandable detail year
+  const [detailYear, setDetailYear] = useState<number | null>(null);
+  const latestYear = assets.data?.[0]?.report_year ?? 0;
+  const activeDetailYear = detailYear ?? latestYear;
+  const assetDetail = usePoliticianAssetDetail(
+    politicianId,
+    activeDetailYear,
+  );
 
   if (isLoading) {
     return <p className="mt-8 text-center text-gray-500">불러오는 중...</p>;
@@ -71,12 +98,13 @@ export default function PoliticianDetail() {
       ].filter((d) => d.value > 0)
     : [];
 
-  // Bill result distribution
-  const billResultMap = new Map<string, number>();
-  if (bills.data) {
-    for (const b of bills.data.items) {
-      const key = b.result ?? "계류중";
-      billResultMap.set(key, (billResultMap.get(key) ?? 0) + 1);
+  // Group asset items by category
+  const itemsByCategory = new Map<string, typeof assetDetail.data extends { items: infer I } ? (I extends (infer T)[] ? T[] : never) : never>();
+  if (assetDetail.data?.items) {
+    for (const item of assetDetail.data.items) {
+      const list = itemsByCategory.get(item.category) ?? [];
+      list.push(item);
+      itemsByCategory.set(item.category, list);
     }
   }
 
@@ -92,12 +120,20 @@ export default function PoliticianDetail() {
 
       {/* Profile header */}
       <div className="flex items-start gap-4">
-        <div
-          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-2xl font-bold text-white"
-          style={{ backgroundColor: getPartyColor(pol.party) }}
-        >
-          {pol.name.charAt(0)}
-        </div>
+        {pol.photo_url ? (
+          <img
+            src={pol.photo_url}
+            alt={pol.name}
+            className="h-16 w-16 shrink-0 rounded-full object-cover"
+          />
+        ) : (
+          <div
+            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-2xl font-bold text-white"
+            style={{ backgroundColor: getPartyColor(pol.party) }}
+          >
+            {pol.name.charAt(0)}
+          </div>
+        )}
         <div>
           <h1 className="text-2xl font-bold">
             {pol.name}
@@ -130,7 +166,6 @@ export default function PoliticianDetail() {
               ))}
             </div>
           )}
-          {/* Contact & links */}
           <div className="mt-2 flex flex-wrap gap-3 text-xs text-gray-500">
             {pol.email && (
               <a
@@ -142,7 +177,6 @@ export default function PoliticianDetail() {
             )}
             {pol.office_address && <span>{pol.office_address}</span>}
           </div>
-          {/* External links */}
           <div className="mt-2 flex flex-wrap gap-2">
             {pol.homepage && (
               <a
@@ -184,7 +218,7 @@ export default function PoliticianDetail() {
         </div>
       </div>
 
-      {/* Bio / Career history */}
+      {/* Bio */}
       {pol.bio && (
         <div className="rounded-lg border bg-white p-4">
           <h2 className="text-sm font-medium text-gray-500">주요 이력</h2>
@@ -231,7 +265,6 @@ export default function PoliticianDetail() {
 
       {/* Charts row */}
       <div className="grid gap-4 md:grid-cols-2">
-        {/* Vote distribution */}
         {voteChartData.length > 0 && (
           <div className="rounded-lg border bg-white p-4">
             <h2 className="text-sm font-medium text-gray-500">표결 분포</h2>
@@ -248,10 +281,7 @@ export default function PoliticianDetail() {
                     outerRadius={70}
                   >
                     {voteChartData.map((d) => (
-                      <Cell
-                        key={d.name}
-                        fill={VOTE_COLORS[d.name]}
-                      />
+                      <Cell key={d.name} fill={VOTE_COLORS[d.name]} />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -272,7 +302,6 @@ export default function PoliticianDetail() {
           </div>
         )}
 
-        {/* Top co-sponsors */}
         {neighbors.data && neighbors.data.length > 0 && (
           <div className="rounded-lg border bg-white p-4">
             <h2 className="text-sm font-medium text-gray-500">
@@ -336,74 +365,174 @@ export default function PoliticianDetail() {
         </div>
       )}
 
-      {/* Asset declarations (재산공개) */}
+      {/* ═══════════════════════════════════════════════════
+          ASSET DECLARATIONS — Trend + Detail Items
+         ═══════════════════════════════════════════════════ */}
       {assets.data && assets.data.length > 0 && (
-        <div className="rounded-lg border bg-white p-4">
-          <h2 className="text-sm font-medium text-gray-500">재산 변동 추이</h2>
-          <div className="mt-3 h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={[...assets.data].reverse()}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="report_year" />
-                <YAxis tickFormatter={(v: number) => formatKrw(v)} />
-                <Tooltip formatter={(v) => formatKrw(Number(v))} />
-                <Line type="monotone" dataKey="total_assets" name="총 재산" stroke="#111827" strokeWidth={2} />
-                <Line type="monotone" dataKey="total_real_estate" name="부동산" stroke="#3B82F6" />
-                <Line type="monotone" dataKey="total_securities" name="유가증권" stroke="#F59E0B" />
-                <Line type="monotone" dataKey="total_deposits" name="예금" stroke="#22C55E" />
-                {assets.data.some((a) => a.total_crypto && a.total_crypto > 0) && (
-                  <Line type="monotone" dataKey="total_crypto" name="가상자산" stroke="#8B5CF6" />
-                )}
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-3 overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b text-left text-xs text-gray-400">
-                  <th className="pb-2 font-medium">연도</th>
-                  <th className="pb-2 font-medium text-right">총 재산</th>
-                  <th className="pb-2 font-medium text-right">부동산</th>
-                  <th className="pb-2 font-medium text-right">유가증권</th>
-                  <th className="pb-2 font-medium text-right">예금</th>
-                  <th className="pb-2 font-medium text-right">가상자산</th>
-                </tr>
-              </thead>
-              <tbody>
-                {assets.data.map((a) => (
-                  <tr key={a.report_year} className="border-b last:border-0">
-                    <td className="py-2 font-medium">{a.report_year}</td>
-                    <td className="py-2 text-right">{formatKrw(a.total_assets)}</td>
-                    <td className="py-2 text-right">{formatKrw(a.total_real_estate)}</td>
-                    <td className="py-2 text-right">{formatKrw(a.total_securities)}</td>
-                    <td className="py-2 text-right">{formatKrw(a.total_deposits)}</td>
-                    <td className="py-2 text-right">{formatKrw(a.total_crypto)}</td>
+        <div className="space-y-4">
+          <div className="rounded-lg border bg-white p-4">
+            <h2 className="text-sm font-medium text-gray-500">재산 변동 추이</h2>
+            <div className="mt-3 h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={[...assets.data].reverse()}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="report_year" />
+                  <YAxis tickFormatter={(v: number) => formatKrw(v)} />
+                  <Tooltip formatter={(v) => formatKrw(Number(v))} />
+                  <Line type="monotone" dataKey="total_assets" name="총 재산" stroke="#111827" strokeWidth={2} />
+                  <Line type="monotone" dataKey="total_real_estate" name="부동산" stroke="#3B82F6" />
+                  <Line type="monotone" dataKey="total_securities" name="유가증권" stroke="#F59E0B" />
+                  <Line type="monotone" dataKey="total_deposits" name="예금" stroke="#22C55E" />
+                  {assets.data.some((a) => a.total_crypto && a.total_crypto > 0) && (
+                    <Line type="monotone" dataKey="total_crypto" name="가상자산" stroke="#8B5CF6" />
+                  )}
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            {/* Year summary table */}
+            <div className="mt-3 overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b text-left text-xs text-gray-400">
+                    <th className="pb-2 font-medium">연도</th>
+                    <th className="pb-2 font-medium text-right">총 재산</th>
+                    <th className="pb-2 font-medium text-right">부동산</th>
+                    <th className="pb-2 font-medium text-right">유가증권</th>
+                    <th className="pb-2 font-medium text-right">예금</th>
+                    <th className="pb-2 font-medium text-right">가상자산</th>
+                    <th className="pb-2 font-medium text-center">상세</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {assets.data.map((a) => (
+                    <tr
+                      key={a.report_year}
+                      className={`border-b last:border-0 ${activeDetailYear === a.report_year ? "bg-blue-50" : ""}`}
+                    >
+                      <td className="py-2 font-medium">{a.report_year}</td>
+                      <td className="py-2 text-right font-semibold">{formatKrw(a.total_assets)}</td>
+                      <td className="py-2 text-right">{formatKrw(a.total_real_estate)}</td>
+                      <td className="py-2 text-right">{formatKrw(a.total_securities)}</td>
+                      <td className="py-2 text-right">{formatKrw(a.total_deposits)}</td>
+                      <td className="py-2 text-right">{formatKrw(a.total_crypto)}</td>
+                      <td className="py-2 text-center">
+                        <button
+                          onClick={() =>
+                            setDetailYear(
+                              activeDetailYear === a.report_year ? null : a.report_year,
+                            )
+                          }
+                          className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 hover:bg-gray-200"
+                        >
+                          {activeDetailYear === a.report_year ? "접기" : "보기"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
+
+          {/* Detailed asset items for selected year */}
+          {assetDetail.data && assetDetail.data.items.length > 0 && (
+            <div className="rounded-lg border bg-white p-4">
+              <h2 className="text-sm font-medium text-gray-500">
+                {activeDetailYear}년 재산 상세 내역
+              </h2>
+              <p className="mt-0.5 text-xs text-gray-400">
+                항목별 상세 — 부동산 주소지, 보유 주식, 가상자산, 예금, 차량 등
+              </p>
+
+              <div className="mt-4 space-y-5">
+                {[...itemsByCategory.entries()].map(([cat, items]) => (
+                  <div key={cat}>
+                    <h3 className="flex items-center gap-2 text-sm font-semibold">
+                      <span
+                        className="h-2.5 w-2.5 rounded-full"
+                        style={{ backgroundColor: CATEGORY_COLORS[cat] ?? "#6B7280" }}
+                      />
+                      {CATEGORY_LABELS[cat] ?? cat}
+                      <span className="text-xs font-normal text-gray-400">
+                        {items.length}건
+                      </span>
+                    </h3>
+                    <div className="mt-2 overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b text-left text-xs text-gray-400">
+                            <th className="pb-1.5 font-medium">유형</th>
+                            <th className="pb-1.5 font-medium">상세</th>
+                            <th className="pb-1.5 font-medium">관계</th>
+                            <th className="pb-1.5 font-medium text-right">금액</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {items
+                            .sort((a, b) => (b.value_krw ?? 0) - (a.value_krw ?? 0))
+                            .map((item, idx) => (
+                              <tr key={idx} className="border-b last:border-0">
+                                <td className="py-1.5 text-gray-600">
+                                  {item.subcategory ?? "–"}
+                                </td>
+                                <td className="py-1.5 font-medium">
+                                  {item.description ?? "–"}
+                                </td>
+                                <td className="py-1.5">
+                                  {item.relation && (
+                                    <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-500">
+                                      {item.relation}
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="py-1.5 text-right font-semibold tabular-nums">
+                                  {item.value_krw ? formatKrw(item.value_krw) : "–"}
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Company affiliations (기업 관계) */}
+      {/* Company affiliations */}
       {companies.data && companies.data.length > 0 && (
         <div className="rounded-lg border bg-white p-4">
           <h2 className="text-sm font-medium text-gray-500">기업 관계</h2>
+          <p className="mt-0.5 text-xs text-gray-400">
+            이 의원이 지분을 보유하고 있거나 관련된 기업
+          </p>
           <div className="mt-3 space-y-2">
             {companies.data.map((pc, i) => (
               <div key={i} className="flex items-center justify-between rounded-lg border p-3">
                 <div>
                   <p className="font-medium">{pc.company.corp_name}</p>
-                  <div className="mt-0.5 flex gap-2 text-xs text-gray-500">
-                    <span className="rounded bg-gray-100 px-1.5 py-0.5">{pc.relation_type}</span>
+                  <div className="mt-0.5 flex flex-wrap gap-2 text-xs text-gray-500">
+                    <span className="rounded bg-orange-50 px-1.5 py-0.5 text-orange-600">
+                      {pc.relation_type}
+                    </span>
                     {pc.company.industry && <span>{pc.company.industry}</span>}
+                    {pc.company.stock_code && (
+                      <span className="text-gray-400">
+                        ({pc.company.stock_code})
+                      </span>
+                    )}
                     {pc.source_year && <span>{pc.source_year}년</span>}
                   </div>
-                  {pc.detail && <p className="mt-1 text-xs text-gray-500">{pc.detail}</p>}
+                  {pc.detail && (
+                    <p className="mt-1 text-xs text-gray-500">{pc.detail}</p>
+                  )}
                 </div>
                 {pc.value_krw && (
-                  <span className="shrink-0 text-sm font-medium">{formatKrw(pc.value_krw)}</span>
+                  <span className="shrink-0 text-sm font-semibold">
+                    {formatKrw(pc.value_krw)}
+                  </span>
                 )}
               </div>
             ))}
@@ -411,10 +540,13 @@ export default function PoliticianDetail() {
         </div>
       )}
 
-      {/* Political funds (정치자금) */}
+      {/* Political funds */}
       {funds.data && funds.data.length > 0 && (
         <div className="rounded-lg border bg-white p-4">
           <h2 className="text-sm font-medium text-gray-500">정치자금</h2>
+          <p className="mt-0.5 text-xs text-gray-400">
+            후원회 수입·지출 내역 (연도별)
+          </p>
           <div className="mt-3 h-48">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={[...funds.data].reverse()}>
@@ -426,6 +558,37 @@ export default function PoliticianDetail() {
                 <Bar dataKey="expense_total" name="지출" fill="#EF4444" />
               </BarChart>
             </ResponsiveContainer>
+          </div>
+          {/* Fund details table */}
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-xs text-gray-400">
+                  <th className="pb-2 font-medium">연도</th>
+                  <th className="pb-2 font-medium text-right">수입</th>
+                  <th className="pb-2 font-medium text-right">지출</th>
+                  <th className="pb-2 font-medium text-right">잔액</th>
+                </tr>
+              </thead>
+              <tbody>
+                {funds.data.map((f) => (
+                  <tr key={f.fund_year} className="border-b last:border-0">
+                    <td className="py-2 font-medium">{f.fund_year}</td>
+                    <td className="py-2 text-right text-emerald-600">
+                      {formatKrw(f.income_total)}
+                    </td>
+                    <td className="py-2 text-right text-red-500">
+                      {formatKrw(f.expense_total)}
+                    </td>
+                    <td className="py-2 text-right font-semibold">
+                      {formatKrw(
+                        (f.income_total ?? 0) - (f.expense_total ?? 0),
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}

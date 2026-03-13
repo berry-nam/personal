@@ -1,9 +1,17 @@
 import { useMemo } from "react";
 import { Link } from "react-router";
 import useDocumentTitle from "@/lib/useDocumentTitle";
-import { useAssetRankings, useAssetAggregate } from "@/api/queries";
+import {
+  useAssetRankings,
+  useAssetAggregate,
+  useAssetItemStocks,
+  useAssetItemRealEstate,
+  useAssetItemCrypto,
+  useFundRankings,
+  useAllCompanyHoldings,
+} from "@/api/queries";
 import { getPartyColor } from "@/lib/partyColors";
-import { formatKrw, formatNumber } from "@/lib/format";
+import { formatKrw } from "@/lib/format";
 import {
   BarChart,
   Bar,
@@ -131,6 +139,13 @@ export default function AssetsOverview() {
   const rankingsSecurities = useAssetRankings(20, "securities");
   const rankingsCrypto = useAssetRankings(20, "crypto");
   const aggregate = useAssetAggregate();
+
+  // Detail item data
+  const stocks = useAssetItemStocks(20);
+  const realEstate = useAssetItemRealEstate(20);
+  const crypto = useAssetItemCrypto(20);
+  const funds = useFundRankings(undefined, 20);
+  const companies = useAllCompanyHoldings();
 
   // Summary stats from rankings
   const summaryStats = useMemo(() => {
@@ -549,6 +564,277 @@ export default function AssetsOverview() {
             </div>
           </section>
         </>
+      )}
+
+      {/* ── Section 6: 주식 보유 상세 (종목별) ────────── */}
+      {stocks.data && stocks.data.length > 0 && (
+        <section className="rounded-lg border border-gray-200 bg-white p-5">
+          <h2 className="mb-1 text-lg font-semibold">주식·유가증권 보유 상세</h2>
+          <p className="mb-3 text-xs text-gray-400">
+            종목명 · 종목코드 · 보유자 관계 · 보유 금액 (전체 의원 기준 상위)
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-xs text-gray-500">
+                  <th className="py-2 pr-2">#</th>
+                  <th className="py-2 pr-3">종목/상품명</th>
+                  <th className="py-2 pr-3">유형</th>
+                  <th className="py-2 pr-3">관계</th>
+                  <th className="py-2 pr-3">의원</th>
+                  <th className="py-2 pr-3">정당</th>
+                  <th className="py-2 text-right">금액</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stocks.data.map((item, i) => (
+                  <tr key={`${item.politician_id}-${item.description}-${i}`} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-2 pr-2 text-xs text-gray-400">{i + 1}</td>
+                    <td className="py-2 pr-3 font-medium">{item.description}</td>
+                    <td className="py-2 pr-3 text-xs text-gray-500">{item.subcategory}</td>
+                    <td className="py-2 pr-3 text-xs text-gray-500">{item.relation}</td>
+                    <td className="py-2 pr-3">
+                      <Link to={`/politicians/${item.politician_id}`} className="text-blue-600 hover:underline">
+                        {item.name}
+                      </Link>
+                    </td>
+                    <td className="py-2 pr-3">
+                      <span
+                        className="inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
+                        style={{ backgroundColor: getPartyColor(item.party) }}
+                      >
+                        {item.party}
+                      </span>
+                    </td>
+                    <td className="py-2 text-right font-semibold tabular-nums">{formatKrw(item.value_krw ?? 0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* ── Section 7: 부동산 보유 상세 (소재지별) ──── */}
+      {realEstate.data && realEstate.data.length > 0 && (
+        <section className="rounded-lg border border-gray-200 bg-white p-5">
+          <h2 className="mb-1 text-lg font-semibold">부동산 보유 상세</h2>
+          <p className="mb-3 text-xs text-gray-400">
+            소재지 · 부동산 유형 · 보유자 관계 · 공시가액
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-xs text-gray-500">
+                  <th className="py-2 pr-2">#</th>
+                  <th className="py-2 pr-3">소재지/상세</th>
+                  <th className="py-2 pr-3">유형</th>
+                  <th className="py-2 pr-3">관계</th>
+                  <th className="py-2 pr-3">의원</th>
+                  <th className="py-2 pr-3">정당</th>
+                  <th className="py-2 text-right">금액</th>
+                </tr>
+              </thead>
+              <tbody>
+                {realEstate.data.map((item, i) => (
+                  <tr key={`${item.politician_id}-${item.description}-${i}`} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-2 pr-2 text-xs text-gray-400">{i + 1}</td>
+                    <td className="py-2 pr-3 font-medium">{item.description}</td>
+                    <td className="py-2 pr-3 text-xs text-gray-500">{item.subcategory}</td>
+                    <td className="py-2 pr-3 text-xs text-gray-500">{item.relation}</td>
+                    <td className="py-2 pr-3">
+                      <Link to={`/politicians/${item.politician_id}`} className="text-blue-600 hover:underline">
+                        {item.name}
+                      </Link>
+                    </td>
+                    <td className="py-2 pr-3">
+                      <span
+                        className="inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
+                        style={{ backgroundColor: getPartyColor(item.party) }}
+                      >
+                        {item.party}
+                      </span>
+                    </td>
+                    <td className="py-2 text-right font-semibold tabular-nums">{formatKrw(item.value_krw ?? 0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* ── Section 8: 가상자산 보유 상세 ──────────── */}
+      {crypto.data && crypto.data.length > 0 && (
+        <section className="rounded-lg border border-gray-200 bg-white p-5">
+          <h2 className="mb-1 text-lg font-semibold">가상자산 보유 상세</h2>
+          <p className="mb-3 text-xs text-gray-400">
+            비트코인·이더리움 등 가상자산 종류별 보유 현황
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-xs text-gray-500">
+                  <th className="py-2 pr-2">#</th>
+                  <th className="py-2 pr-3">자산명</th>
+                  <th className="py-2 pr-3">유형</th>
+                  <th className="py-2 pr-3">관계</th>
+                  <th className="py-2 pr-3">의원</th>
+                  <th className="py-2 pr-3">정당</th>
+                  <th className="py-2 text-right">금액</th>
+                </tr>
+              </thead>
+              <tbody>
+                {crypto.data.map((item, i) => (
+                  <tr key={`${item.politician_id}-${item.description}-${i}`} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-2 pr-2 text-xs text-gray-400">{i + 1}</td>
+                    <td className="py-2 pr-3 font-medium">{item.description}</td>
+                    <td className="py-2 pr-3 text-xs text-gray-500">{item.subcategory}</td>
+                    <td className="py-2 pr-3 text-xs text-gray-500">{item.relation}</td>
+                    <td className="py-2 pr-3">
+                      <Link to={`/politicians/${item.politician_id}`} className="text-blue-600 hover:underline">
+                        {item.name}
+                      </Link>
+                    </td>
+                    <td className="py-2 pr-3">
+                      <span
+                        className="inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
+                        style={{ backgroundColor: getPartyColor(item.party) }}
+                      >
+                        {item.party}
+                      </span>
+                    </td>
+                    <td className="py-2 text-right font-semibold tabular-nums">{formatKrw(item.value_krw ?? 0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* ── Section 9: 정치자금 수입 순위 ────────────── */}
+      {funds.data && funds.data.length > 0 && (
+        <section className="rounded-lg border border-gray-200 bg-white p-5">
+          <h2 className="mb-1 text-lg font-semibold">정치자금 수입 TOP 20</h2>
+          <p className="mb-3 text-xs text-gray-400">
+            후원회 기준 · 수입총액 · 지출총액 · 잔액
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-xs text-gray-500">
+                  <th className="py-2 pr-2">#</th>
+                  <th className="py-2 pr-3">의원</th>
+                  <th className="py-2 pr-3">정당</th>
+                  <th className="py-2 pr-3">연도</th>
+                  <th className="py-2 text-right">수입</th>
+                  <th className="py-2 text-right">지출</th>
+                  <th className="py-2 text-right">잔액</th>
+                </tr>
+              </thead>
+              <tbody>
+                {funds.data.map((f, i) => (
+                  <tr key={`${f.politician_id}-${f.fund_year}`} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-2 pr-2 text-xs text-gray-400">{i + 1}</td>
+                    <td className="py-2 pr-3">
+                      <Link to={`/politicians/${f.politician_id}`} className="text-blue-600 hover:underline font-medium">
+                        {f.name}
+                      </Link>
+                    </td>
+                    <td className="py-2 pr-3">
+                      <span
+                        className="inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
+                        style={{ backgroundColor: getPartyColor(f.party) }}
+                      >
+                        {f.party}
+                      </span>
+                    </td>
+                    <td className="py-2 pr-3 text-xs">{f.fund_year}</td>
+                    <td className="py-2 text-right font-semibold tabular-nums text-green-700">{formatKrw(f.income_total ?? 0)}</td>
+                    <td className="py-2 text-right font-semibold tabular-nums text-red-600">{formatKrw(f.expense_total ?? 0)}</td>
+                    <td className="py-2 text-right font-semibold tabular-nums">
+                      {formatKrw(f.balance ?? 0)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {/* Visual bar chart for fund income */}
+          <div className="mt-4 h-56">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={funds.data.slice(0, 10)} margin={{ left: 50, right: 8 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-30} textAnchor="end" height={50} />
+                <YAxis tickFormatter={(v: number) => formatKrw(v)} tick={{ fontSize: 10 }} />
+                <Tooltip formatter={(v) => formatKrw(Number(v))} />
+                <Bar dataKey="income_total" name="수입" fill="#22C55E">
+                  {funds.data.slice(0, 10).map((f) => (
+                    <Cell key={f.politician_id} fill={getPartyColor(f.party)} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
+      )}
+
+      {/* ── Section 10: 기업 관계 ──────────────────── */}
+      {companies.data && companies.data.length > 0 && (
+        <section className="rounded-lg border border-gray-200 bg-white p-5">
+          <h2 className="mb-1 text-lg font-semibold">의원-기업 관계 현황</h2>
+          <p className="mb-3 text-xs text-gray-400">
+            주식 보유 · 임원 겸직 · 이해관계 기업 전체 목록 (종목코드 · 업종 포함)
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b text-left text-xs text-gray-500">
+                  <th className="py-2 pr-2">#</th>
+                  <th className="py-2 pr-3">기업명</th>
+                  <th className="py-2 pr-3">종목코드</th>
+                  <th className="py-2 pr-3">업종</th>
+                  <th className="py-2 pr-3">관계</th>
+                  <th className="py-2 pr-3">의원</th>
+                  <th className="py-2 pr-3">정당</th>
+                  <th className="py-2 pr-3">기준연도</th>
+                  <th className="py-2 text-right">금액</th>
+                </tr>
+              </thead>
+              <tbody>
+                {companies.data.map((c, i) => (
+                  <tr key={`${c.politician_id}-${c.corp_name}-${i}`} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-2 pr-2 text-xs text-gray-400">{i + 1}</td>
+                    <td className="py-2 pr-3 font-medium">{c.corp_name}</td>
+                    <td className="py-2 pr-3 text-xs font-mono text-gray-500">{c.stock_code || "-"}</td>
+                    <td className="py-2 pr-3 text-xs text-gray-500 max-w-[200px] truncate">{c.industry || "-"}</td>
+                    <td className="py-2 pr-3">
+                      <span className="inline-block rounded bg-orange-100 px-1.5 py-0.5 text-[10px] font-semibold text-orange-700">
+                        {c.relation_type}
+                      </span>
+                    </td>
+                    <td className="py-2 pr-3">
+                      <Link to={`/politicians/${c.politician_id}`} className="text-blue-600 hover:underline">
+                        {c.name}
+                      </Link>
+                    </td>
+                    <td className="py-2 pr-3">
+                      <span
+                        className="inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
+                        style={{ backgroundColor: getPartyColor(c.party) }}
+                      >
+                        {c.party}
+                      </span>
+                    </td>
+                    <td className="py-2 pr-3 text-xs">{c.source_year || "-"}</td>
+                    <td className="py-2 text-right font-semibold tabular-nums">{c.value_krw ? formatKrw(c.value_krw) : "-"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       )}
     </div>
   );

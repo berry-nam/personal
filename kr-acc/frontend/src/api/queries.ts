@@ -25,6 +25,10 @@ import type {
   VoteParticipation,
   VoteSummary,
   AssetSummary,
+  AssetItemDetail,
+  AssetDeclarationDetail,
+  FundRanking,
+  CompanyHolding,
   PoliticianCompanyOut,
   PoliticalFundSummary,
 } from "@/types/api";
@@ -424,6 +428,95 @@ export function useAbsenteeRanking(term: number = 22, limit: number = 20) {
       return data;
     },
     staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function useAssetItemStocks(limit: number = 20) {
+  return useQuery({
+    queryKey: ["asset-items-stocks", limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetItemDetail[]>("/assets/items/stocks", {
+        params: { limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAssetItemRealEstate(limit: number = 20) {
+  return useQuery({
+    queryKey: ["asset-items-real-estate", limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetItemDetail[]>("/assets/items/real-estate", {
+        params: { limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAssetItemCrypto(limit: number = 20) {
+  return useQuery({
+    queryKey: ["asset-items-crypto", limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetItemDetail[]>("/assets/items/crypto", {
+        params: { limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAllAssetItems(category?: string, limit: number = 50) {
+  return useQuery({
+    queryKey: ["asset-items-all", category, limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetItemDetail[]>("/assets/items/all", {
+        params: { category: category || undefined, limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useFundRankings(year?: number, limit: number = 20) {
+  return useQuery({
+    queryKey: ["fund-rankings", year, limit],
+    queryFn: async () => {
+      const { data } = await api.get<FundRanking[]>("/funds/rankings", {
+        params: { year: year || undefined, limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAllCompanyHoldings() {
+  return useQuery({
+    queryKey: ["company-holdings-all"],
+    queryFn: async () => {
+      const { data } = await api.get<CompanyHolding[]>("/assets/companies/all");
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function usePoliticianAssetDetail(id: number, year: number) {
+  return useQuery({
+    queryKey: ["politician-asset-detail", id, year],
+    queryFn: async () => {
+      const { data } = await api.get<AssetDeclarationDetail>(
+        `/politicians/${id}/assets/${year}`,
+      );
+      return data;
+    },
+    enabled: id > 0 && year > 0,
   });
 }
 

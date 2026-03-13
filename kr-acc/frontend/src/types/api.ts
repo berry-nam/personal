@@ -262,6 +262,65 @@ export interface AssetAggregate {
   count: number;
 }
 
+export interface AssetItemDetail {
+  category: string;
+  subcategory: string | null;
+  description: string | null;
+  relation: string | null;
+  value_krw: number | null;
+  change_krw?: number | null;
+  note?: string | null;
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url?: string | null;
+}
+
+export interface AssetDeclarationDetail {
+  id: number;
+  report_year: number;
+  total_assets: number | null;
+  total_real_estate: number | null;
+  total_deposits: number | null;
+  total_securities: number | null;
+  total_crypto: number | null;
+  source: string | null;
+  items: {
+    id: number;
+    category: string;
+    subcategory: string | null;
+    description: string | null;
+    relation: string | null;
+    value_krw: number | null;
+    change_krw: number | null;
+    note: string | null;
+  }[];
+}
+
+export interface FundRanking {
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+  fund_year: number;
+  income_total: number | null;
+  expense_total: number | null;
+  balance: number | null;
+}
+
+export interface CompanyHolding {
+  relation_type: string;
+  value_krw: number | null;
+  source_year: number | null;
+  corp_name: string;
+  industry: string | null;
+  stock_code: string | null;
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+}
+
 export interface PoliticianVoteRecord {
   vote_id: string;
   bill_id: string;

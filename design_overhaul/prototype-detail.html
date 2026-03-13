@@ -2977,11 +2977,11 @@ function renderPins(){
     .sort(function(a,b){return(a.pinNumber||0)-(b.pinNumber||0);});
   var rendered=0;
   sorted.forEach(function(c){
-    if(!c.anchorId)return;
+    if(!c.anchorId){console.warn('[CB] SKIP no anchorId:',c.id,c);return;}
     var anchor=document.querySelector('[data-cb-id="'+c.anchorId+'"]');
-    if(!anchor){console.warn('[CB] anchor not found:',c.anchorId);return;}
+    if(!anchor){console.warn('[CB] SKIP anchor not found:',c.anchorId);return;}
     var rect=anchor.getBoundingClientRect();
-    if(rect.width===0&&rect.height===0)return; // Hidden tab
+    if(rect.width===0&&rect.height===0){console.warn('[CB] SKIP zero rect:',c.anchorId,rect);return;}
     // Calculate absolute document position from anchor rect + % offset
     var absX=rect.left+window.scrollX+(c.offsetXPct/100*rect.width);
     var absY=rect.top+window.scrollY+(c.offsetYPct/100*rect.height);
