@@ -120,11 +120,27 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 /* Density modes */
 .results-table.compact td{padding:3px 10px;font-size:12px;line-height:1.2}
 .results-table.compact th{padding:4px 10px;font-size:11px}
-.results-table.spacious td{padding:14px 14px;font-size:14px;line-height:1.5}
-.results-table.spacious th{padding:12px 14px;font-size:13px}
-.spacious-meta{display:flex;gap:12px;margin-top:4px;font-size:11.5px;color:var(--text-muted)}
-.spacious-meta span{display:flex;align-items:center;gap:3px}
-.spacious-meta .meta-label{color:var(--text-sub);font-weight:500}
+.results-table.spacious td{padding:12px 14px;font-size:13.5px;line-height:1.4}
+.results-table.spacious th{padding:10px 14px;font-size:12.5px}
+/* Detail mode — inline visualizations */
+.detail-meta{display:flex;gap:10px;margin-top:3px;font-size:11px;color:var(--text-muted)}
+.detail-meta span{display:flex;align-items:center;gap:3px}
+.detail-meta .meta-label{color:var(--text-sub);font-weight:500}
+.detail-rev{display:flex;flex-direction:column;gap:4px;min-width:140px}
+.detail-rev-top{display:flex;align-items:center;gap:8px}
+.detail-rev-bar{height:6px;border-radius:3px;background:var(--slate-100);width:100%;overflow:hidden}
+.detail-rev-bar-fill{height:100%;border-radius:3px;transition:width .3s}
+.detail-rev-yoy{font-size:10.5px;margin-top:1px}
+.detail-profit{display:flex;flex-direction:column;gap:4px;min-width:120px}
+.detail-profit-top{display:flex;align-items:center;gap:6px}
+.detail-profit-rate{display:flex;align-items:center;gap:4px;font-size:10.5px}
+.detail-profit-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.detail-profit-bar{height:4px;border-radius:2px;background:var(--slate-100);width:80px;overflow:hidden}
+.detail-profit-bar-fill{height:100%;border-radius:2px}
+.detail-emp{display:flex;flex-direction:column;gap:4px;min-width:110px}
+.detail-emp-top{display:flex;align-items:center;gap:6px}
+.detail-emp-bar{display:flex;gap:1px;align-items:flex-end;height:18px}
+.detail-emp-bar-seg{width:6px;border-radius:1px 1px 0 0;background:var(--blue-200);transition:height .3s}
 /* Column styles */
 .td-check{width:44px;text-align:center}
 .td-check input{accent-color:var(--brand)}
@@ -467,8 +483,8 @@ body.show-design-notes .design-note{display:block}
   <div class="table-controls">
     <div class="density-toggle">
       <button class="density-btn" onclick="setDensity('compact',this)">컴팩트</button>
-      <button class="density-btn active" onclick="setDensity('comfortable',this)">보통</button>
-      <button class="density-btn" onclick="setDensity('spacious',this)">여유</button>
+      <button class="density-btn active" onclick="setDensity('comfortable',this)">기본</button>
+      <button class="density-btn" onclick="setDensity('spacious',this)">디테일</button>
     </div>
     <div class="table-controls-right">
       <!-- View Selector -->
@@ -575,7 +591,7 @@ body.show-design-notes .design-note{display:block}
         </div>
       </div>
       <div class="panel-section">
-        <div class="panel-section-title">손익 요약</div>
+        <div class="panel-section-title">손익 요약 <span style="font-weight:400;font-size:11px;color:var(--text-muted);margin-left:4px">(단위: 억원)</span></div>
         <div id="panelHeatmap" style="display:grid;grid-template-columns:auto repeat(5,1fr);gap:2px;font-size:11.5px"></div>
       </div>
     </div>
@@ -772,16 +788,36 @@ function renderTable(){
         +'<td style="font-size:12px">'+c.emp+'명</td>'
         +'</tr>';
     } else if(mode === 'spacious'){
-      // ── SPACIOUS: larger logo, two-line company info with products/CEO/address ──
+      // ── DETAIL: enriched company + inline visualizations in revenue/profit/emp ──
       var spark = makeSpark(c.trend);
+      // Revenue bar (% of max revenue 891)
+      var revPct = Math.round((c.revenue/891)*100);
+      var revGrowth = Math.round(((c.trend[4]-c.trend[0])/c.trend[0])*100);
+      var revGClass = revGrowth >= 0 ? 'trend-up' : 'trend-down';
+      var revBarColor = revGrowth >= 0 ? 'var(--brand)' : 'var(--red-400)';
+      // Profit margin
+      var profitRate = c.profit >= 0 ? ((c.profit/c.revenue)*100).toFixed(1) : ((c.profit/c.revenue)*100).toFixed(1);
+      var profitRatePct = Math.min(Math.abs(parseFloat(profitRate)), 20) / 20 * 100;
+      var profitDotColor = c.profit >= 0 ? 'var(--emerald-500)' : 'var(--red-500)';
+      var profitBarColor = c.profit >= 0 ? 'var(--emerald-400)' : 'var(--red-400)';
+      // Employee mini histogram (simulated 5-year headcount)
+      var empBase = Math.round(c.emp * 0.7);
+      var empSteps = [empBase, Math.round(empBase*1.1), Math.round(empBase*1.25), Math.round(empBase*1.15+c.emp*0.15), c.emp];
+      var empMax = Math.max.apply(null, empSteps);
+      var empBars = empSteps.map(function(v,idx){
+        var h = Math.max(3, Math.round((v/empMax)*18));
+        var bg = idx === empSteps.length-1 ? 'var(--brand)' : 'var(--blue-200)';
+        return '<div class="detail-emp-bar-seg" style="height:'+h+'px;background:'+bg+'"></div>';
+      }).join('');
+
       return '<tr onclick="openPanel('+i+')" style="position:relative">'
         +'<td class="td-check"><input type="checkbox" onclick="event.stopPropagation();updateBulk()" data-idx="'+i+'"></td>'
         +'<td><div class="company-cell" style="align-items:flex-start">'
-        +  '<div class="company-logo" style="background:'+c.color+';width:44px;height:44px;font-size:16px;border-radius:8px">'+initials+'</div>'
+        +  '<div class="company-logo" style="background:'+c.color+';width:40px;height:40px;font-size:15px;border-radius:8px">'+initials+'</div>'
         +  '<div class="company-info">'
-        +    '<div class="company-name" style="font-size:14.5px">'+c.name+'</div>'
-        +    '<div class="company-type" style="font-size:11.5px">'+c.type+' · '+c.cat+'</div>'
-        +    '<div class="spacious-meta">'
+        +    '<div class="company-name" style="font-size:13.5px">'+c.name+'</div>'
+        +    '<div class="company-type" style="font-size:11px">'+c.type+' · '+c.cat+'</div>'
+        +    '<div class="detail-meta">'
         +      '<span><span class="meta-label">대표</span> '+c.ceo+'</span>'
         +      '<span><span class="meta-label">제품</span> '+c.products.split(',')[0]+'</span>'
         +    '</div>'
@@ -789,10 +825,27 @@ function renderTable(){
         +'</div></td>'
         +'<td><span class="industry-chip" style="'+chipStyle+'">'+c.industry+'</span></td>'
         +'<td class="region-text">'+c.region+'</td>'
-        +'<td><div class="revenue-cell"><span class="revenue-val" style="font-size:14.5px">'+c.revenue+'억</span>'+spark+'</div></td>'
-        +'<td class="profit-cell"><span class="profit-val '+profitClass+'" style="font-size:14px">'+c.profit+'억</span> <span class="emp-growth '+profitClass+'" style="font-size:11.5px">'+profitArrow+' '+profitGText+'</span></td>'
-        +'<td class="emp-cell" style="font-size:14px">'+c.emp+'명 <span class="emp-growth '+empGClass+'">+'+c.empG+'%</span></td>'
-        +'<td class="year-cell" style="font-size:13px">'+c.year+'</td>'
+        // Revenue: value + sparkline + bar + YoY growth
+        +'<td><div class="detail-rev">'
+        +  '<div class="detail-rev-top"><span class="revenue-val">'+c.revenue+'억</span>'+spark+'</div>'
+        +  '<div class="detail-rev-bar"><div class="detail-rev-bar-fill" style="width:'+revPct+'%;background:'+revBarColor+'"></div></div>'
+        +  '<div class="detail-rev-yoy '+revGClass+'">5년 '+(revGrowth>=0?'+':'')+revGrowth+'% 성장</div>'
+        +'</div></td>'
+        // Profit: value + margin rate + mini bar
+        +'<td><div class="detail-profit">'
+        +  '<div class="detail-profit-top"><span class="profit-val '+profitClass+'">'+c.profit+'억</span><span class="emp-growth '+profitClass+'" style="font-size:11px">'+profitArrow+' '+profitGText+'</span></div>'
+        +  '<div class="detail-profit-rate">'
+        +    '<div class="detail-profit-dot" style="background:'+profitDotColor+'"></div>'
+        +    '<span>영업이익률 '+profitRate+'%</span>'
+        +    '<div class="detail-profit-bar"><div class="detail-profit-bar-fill" style="width:'+profitRatePct+'%;background:'+profitBarColor+'"></div></div>'
+        +  '</div>'
+        +'</div></td>'
+        // Employee: value + growth + mini histogram
+        +'<td><div class="detail-emp">'
+        +  '<div class="detail-emp-top"><span>'+c.emp+'명</span><span class="emp-growth '+empGClass+'" style="font-size:11px">+'+c.empG+'%</span></div>'
+        +  '<div class="detail-emp-bar">'+empBars+'</div>'
+        +'</div></td>'
+        +'<td class="year-cell">'+c.year+'</td>'
         +'<td style="position:relative"><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
         +'</tr>';
     } else {
