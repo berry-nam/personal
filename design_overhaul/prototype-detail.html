@@ -91,12 +91,12 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .tab.active .tab-badge{background:var(--blue-50);color:var(--brand)}
 
 /* CONTENT */
-.content{max-width:1200px;margin:0 auto;padding:24px 24px 60px}
+.content{max-width:1200px;margin:0 auto;padding:32px 24px 60px}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 
 /* Section cards */
-.section{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;position:relative;overflow:visible}
+.section{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:16px;position:relative;overflow:visible;scroll-margin-top:120px}
 .section-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .section-title .icon{font-size:18px}
 
@@ -1424,8 +1424,8 @@ function switchTab(tabId, el) {
   el.classList.add('active');
   var panel = document.getElementById('panel-' + tabId);
   if (panel) panel.classList.add('active');
-  var contentEl = document.querySelector('.content');
-  window.scrollTo({top: contentEl.offsetTop - 56 - document.querySelector('.tabs-wrap').offsetHeight - 8, behavior: 'smooth'});
+  var tabsWrap = document.querySelector('.tabs-wrap');
+  window.scrollTo({top: tabsWrap.offsetTop - 56, behavior: 'smooth'});
   // Trigger chart drawing on tab switch
   if (tabId === 'finance') {
     setTimeout(function(){
@@ -2311,7 +2311,7 @@ function subscribe(){
 }
 function addComment(x,y,text){
   var ref=commentsRef.push();
-  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin});
+  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin}).catch(function(err){alert('Firebase 저장 실패: '+err.message+'\n\nFirebase Console → Realtime Database → 규칙 에서 read/write를 true로 설정해주세요.');});
 }
 function addReply(cid,text){
   commentsRef.child(cid).child('replies').push().set({author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP});

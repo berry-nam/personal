@@ -1255,7 +1255,7 @@ function subscribe(){
 }
 function addComment(x,y,text){
   var ref=commentsRef.push();
-  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin});
+  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin}).catch(function(err){alert('Firebase 저장 실패: '+err.message+'\n\nFirebase Console → Realtime Database → 규칙 에서 read/write를 true로 설정해주세요.');});
 }
 function addReply(cid,text){
   commentsRef.child(cid).child('replies').push().set({author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP});
