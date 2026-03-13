@@ -354,7 +354,7 @@ body.show-design-notes .design-note{display:block}
 
 <!-- ══ NAVIGATION ══ -->
 <nav class="nav" style="position:relative">
-  <div class="design-note blue" style="top:100%;left:0;margin-top:4px">CDS NavBar component, Pretendard Variable 14px</div>
+  <div class="design-note blue" style="top:100%;left:0;margin-top:4px">NavBar 높이 56px: 로고 24px, 메뉴 14px/Medium Gray-600 hover=Blue-600. 우측 아바타 32×32</div>
   <a href="#" class="nav-brand">
     <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" fill="#0549CC"/><circle cx="10" cy="11" r="2" fill="#fff"/><circle cx="18" cy="11" r="2" fill="#fff"/><circle cx="14" cy="17" r="1.5" fill="#fff"/><circle cx="9" cy="16" r="1.2" fill="#fff" opacity=".6"/><circle cx="19" cy="16" r="1.2" fill="#fff" opacity=".6"/></svg>
     CookieDeal
@@ -377,8 +377,8 @@ body.show-design-notes .design-note{display:block}
 
   <!-- ── Hero Search Omnibox ── -->
   <div class="hero-search" style="position:relative">
-    <div class="design-note yellow" style="top:-28px;left:0">Search-first UX, full-width omnibox, 1M+ 비상장 기업 탐색</div>
-    <div class="design-note blue" style="top:-28px;right:0">cmdk library, fuzzy search, keyboard-first interaction</div>
+    <div class="design-note yellow" style="top:-28px;left:0">검색창 높이 56px, 아이콘 48px+placeholder 16px/Gray-400. Focus border Blue-500+shadow. radius-16</div>
+    <div class="design-note blue" style="top:-28px;right:0">⌘K badge 우측(Gray-200 배경). 검색 드롭다운 최대 8개, 매칭 텍스트 하이라이트, 키보드 탐색</div>
     <div class="omnibox" onclick="openCmdK()">
       <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9.5" cy="9.5" r="6.5"/><path d="M14.5 14.5L19 19"/></svg>
       <input class="omnibox-input" placeholder="기업명, 업종, 또는 조건을 입력하세요..." readonly onclick="openCmdK()">
@@ -388,7 +388,7 @@ body.show-design-notes .design-note{display:block}
 
   <!-- ── Suggested Filters ── -->
   <div class="suggested-filters" style="position:relative">
-    <div class="design-note yellow" style="top:-28px;left:0">선제시 필터: Claude artifact 패턴, 검색 이력 기반 개인화 (Phase 2)</div>
+    <div class="design-note yellow" style="top:-28px;left:0">추천 칩 높이 36px: 이모지+텍스트 13px/500 radius-20. Gray-50 hover=Blue-50. 가로 스크롤 간격 8px</div>
     <span class="sf-label">추천 탐색</span>
     <button class="sf-chip" onclick="applySuggested(this)">🔥 AI·반도체 급성장 기업</button>
     <button class="sf-chip" onclick="applySuggested(this)">📈 매출 100억+ 영업이익률 10%+</button>
@@ -399,7 +399,7 @@ body.show-design-notes .design-note{display:block}
 
   <!-- ── Filter Bar ── -->
   <div class="filter-bar" style="position:relative">
-    <div class="design-note yellow" style="top:-32px;left:0">LinkedIn Sales Navigator pattern, cmdk library for ⌘K</div>
+    <div class="design-note yellow" style="top:-32px;left:0">필터 바 참고=LinkedIn Sales Nav. 칩형(활성=Blue 배경, 비활성=Gray 테두리). 좌 필터, 우 정렬+뷰</div>
     <button class="filter-select has-value" onclick="this.classList.toggle('has-value')">
       업종: 반도체/전자
       <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg>
@@ -425,7 +425,7 @@ body.show-design-notes .design-note{display:block}
 
   <!-- ── Advanced Filters (Apollo-inspired) ── -->
   <div class="advanced-panel" style="position:relative">
-    <div class="design-note yellow" style="top:4px;right:4px">Apollo-inspired: searchable filters, lock icons, AI filters, active count</div>
+    <div class="design-note yellow" style="top:4px;right:4px">고급 필터 참고=Apollo.io. 검색 바+그룹별 목록. 🔒Pro 잠금, AI 보라 badge, 활성 수 badge</div>
     <!-- Header with search + active count -->
     <div class="adv-header">
       <div class="adv-search">
@@ -525,8 +525,8 @@ body.show-design-notes .design-note{display:block}
 
   <!-- ══ RESULTS TABLE ══ -->
   <div class="results-wrap" style="position:relative">
-    <div class="design-note blue" style="top:-28px;right:0">TanStack Virtual, density 32/40/52px rows</div>
-    <div class="design-note red" style="top:-28px;left:0">L1/L2 column gating, 🍪 badge per field</div>
+    <div class="design-note blue" style="top:-28px;right:0">테이블 행 높이: 컴팩트 32px / 기본 40px / 디테일 52px. 체크박스 첫 열 44px. 헤더 sticky Gray-50</div>
+    <div class="design-note red" style="top:-28px;left:0">Paywall 컬럼: 잠금 열 헤더 🍪badge, 셀 blur 4px+자물쇠. 클릭→업그레이드 모달. L1/L2 구분</div>
     <table class="results-table" id="resultsTable">
       <thead>
         <tr>
@@ -561,7 +561,7 @@ body.show-design-notes .design-note{display:block}
 
 <!-- ══ SLIDE-OUT PANEL (Notion-style, no overlay) ══ -->
   <div class="panel" id="panel">
-    <div class="design-note blue" style="top:60px;left:12px;z-index:10">420px fixed, 6-section: hero→grid→chart→heatmap→sankey→actions</div>
+    <div class="design-note blue" style="top:60px;left:12px;z-index:10">슬라이드 패널 420px: 6섹션(히어로→요약→차트→손익 히트맵→Sankey→액션). 스크롤 독립, 우측 고정</div>
     <div class="panel-header">
       <div class="panel-logo" id="panelLogo">HB</div>
       <div>
