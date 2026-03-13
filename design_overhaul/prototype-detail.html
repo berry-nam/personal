@@ -1822,7 +1822,8 @@ function drawWaterfallChart() {
       ctx.beginPath(); ctx.roundRect(x, y2, barW, h2, 6); ctx.fill();
       if (i < segments.length - 2) {
         ctx.strokeStyle = '#CCD2DB'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
-        ctx.beginPath(); ctx.moveTo(x + barW, y2); ctx.lineTo(x + barW + gap, y2); ctx.stroke();
+        var nextX = startX + (i + 1) * groupW + (groupW - barW) / 2;
+        ctx.beginPath(); ctx.moveTo(x + barW, y2); ctx.lineTo(nextX, y2); ctx.stroke();
         ctx.setLineDash([]);
       }
       ctx.fillStyle = '#374151'; ctx.font = 'bold 12px Pretendard Variable'; ctx.textAlign = 'center';
