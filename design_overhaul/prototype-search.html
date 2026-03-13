@@ -1197,6 +1197,31 @@ body.cb-comment-mode{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 .cb-name-prompt button:hover{background:#0340A8}
 /* Hide pins when comment mode off + show-resolved toggle */
 .cb-pin.resolved.cb-hide-resolved{display:none}
+/* ── Comment Sidebar (left panel) ── */
+#cb-sidebar{position:fixed;top:0;left:0;width:340px;height:100vh;background:#fff;border-right:1px solid #E0E4EB;box-shadow:4px 0 20px rgba(0,0,0,.06);z-index:750;transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:inherit}
+#cb-sidebar.open{transform:translateX(0)}
+.cb-sb-header{padding:16px 20px;border-bottom:1px solid #EFF1F5;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.cb-sb-title{font-size:15px;font-weight:700;color:#111827}
+.cb-sb-count{font-size:12px;color:#6B7689;background:#F1F3F5;padding:2px 8px;border-radius:10px;font-weight:600}
+.cb-sb-close{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid #E0E4EB;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6B7689;transition:all .15s}
+.cb-sb-close:hover{background:#F7F8FA;border-color:#CCD2DB}
+.cb-sb-tabs{display:flex;padding:0 20px;border-bottom:1px solid #EFF1F5;flex-shrink:0}
+.cb-sb-tab{padding:10px 0;margin-right:20px;font-size:12.5px;font-weight:500;color:#9AA3B4;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+.cb-sb-tab.active{color:#0549CC;font-weight:600;border-bottom-color:#0549CC}
+.cb-sb-list{flex:1;overflow-y:auto;padding:8px 12px}
+.cb-sb-item{display:flex;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .1s;border:1px solid transparent}
+.cb-sb-item:hover{background:#F7F8FA}
+.cb-sb-item.active{background:#EFF6FF;border-color:#BFDBFE}
+.cb-sb-item.resolved-item{opacity:.5}
+.cb-sb-pin{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.cb-sb-body{flex:1;min-width:0}
+.cb-sb-meta{display:flex;align-items:center;gap:6px;margin-bottom:2px}
+.cb-sb-author{font-size:12px;font-weight:600;color:#374151}
+.cb-sb-time{font-size:11px;color:#9AA3B4}
+.cb-sb-text{font-size:13px;color:#4B5563;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cb-sb-replies{font-size:11px;color:#6B7689;margin-top:3px}
+.cb-sb-empty{padding:40px 20px;text-align:center;color:#9AA3B4;font-size:13px}
+body.cb-sidebar-open{padding-left:340px;transition:padding-left .25s cubic-bezier(.4,0,.2,1)}
 </style>
 <script>
 (function(){
@@ -1250,6 +1275,7 @@ function subscribe(){
     Object.keys(comments).forEach(function(k){if(comments[k].pinNumber>mx)mx=comments[k].pinNumber;});
     nextPin=mx+1;
     renderPins();
+    renderSidebar();
     var cnt=Object.keys(comments).filter(function(k){return !comments[k].resolved;}).length;
     var badge=document.getElementById('cb-badge');
     if(badge)badge.textContent=cnt;
@@ -1279,7 +1305,82 @@ function toggleMode(){
   var btn=document.getElementById('cb-mode-btn');
   btn.className='cb-toggle-btn '+(commentMode?'active':'inactive');
   btn.querySelector('.cb-mode-label').textContent=commentMode?'코멘트 ON':'코멘트';
-  if(!commentMode){closeThread();var ni=document.getElementById('cb-new-input');if(ni)ni.remove();}
+  // Toggle sidebar
+  var sb=document.getElementById('cb-sidebar');
+  if(commentMode){sb.classList.add('open');document.body.classList.add('cb-sidebar-open');renderSidebar();}
+  else{sb.classList.remove('open');document.body.classList.remove('cb-sidebar-open');closeThread();var ni=document.getElementById('cb-new-input');if(ni)ni.remove();}
+}
+
+// ── SIDEBAR ──
+var sidebarFilter='all'; // 'all' | 'open' | 'resolved'
+function createSidebar(){
+  var sb=document.createElement('div');
+  sb.id='cb-sidebar';
+  sb.innerHTML='<div class="cb-sb-header">'
+    +'<span style="font-size:20px">💬</span>'
+    +'<span class="cb-sb-title">코멘트</span>'
+    +'<span class="cb-sb-count" id="cb-sb-count">0</span>'
+    +'<button class="cb-sb-close" id="cb-sb-close">✕</button>'
+    +'</div>'
+    +'<div class="cb-sb-tabs">'
+    +'<div class="cb-sb-tab active" data-filter="all">전체</div>'
+    +'<div class="cb-sb-tab" data-filter="open">미해결</div>'
+    +'<div class="cb-sb-tab" data-filter="resolved">해결됨</div>'
+    +'</div>'
+    +'<div class="cb-sb-list" id="cb-sb-list"></div>';
+  document.body.appendChild(sb);
+  sb.querySelector('#cb-sb-close').addEventListener('click',function(){toggleMode();});
+  sb.querySelectorAll('.cb-sb-tab').forEach(function(tab){
+    tab.addEventListener('click',function(){
+      sb.querySelectorAll('.cb-sb-tab').forEach(function(t){t.classList.remove('active');});
+      tab.classList.add('active');
+      sidebarFilter=tab.dataset.filter;
+      renderSidebar();
+    });
+  });
+}
+function renderSidebar(){
+  var list=document.getElementById('cb-sb-list');
+  if(!list)return;
+  var sorted=Object.keys(comments).map(function(k){return comments[k];}).sort(function(a,b){return(b.timestamp||0)-(a.timestamp||0);});
+  // Filter
+  if(sidebarFilter==='open')sorted=sorted.filter(function(c){return !c.resolved;});
+  else if(sidebarFilter==='resolved')sorted=sorted.filter(function(c){return c.resolved;});
+  // Update count
+  var countEl=document.getElementById('cb-sb-count');
+  if(countEl)countEl.textContent=Object.keys(comments).length+'개';
+  if(sorted.length===0){
+    list.innerHTML='<div class="cb-sb-empty">'+(sidebarFilter==='resolved'?'해결된 코멘트가 없습니다':sidebarFilter==='open'?'미해결 코멘트가 없습니다':'코멘트가 없습니다.<br>화면 아무 곳을 클릭하여 추가하세요.')+'</div>';
+    return;
+  }
+  list.innerHTML=sorted.map(function(c){
+    var replyCount=c.replies?Object.keys(c.replies).length:0;
+    var replyText=replyCount>0?'<div class="cb-sb-replies">💬 '+replyCount+'개 답글</div>':'';
+    var cls='cb-sb-item'+(c.resolved?' resolved-item':'')+(openThreadId===c.id?' active':'');
+    return '<div class="'+cls+'" data-cid="'+c.id+'">'
+      +'<div class="cb-sb-pin" style="background:'+c.authorColor+'">'+c.pinNumber+'</div>'
+      +'<div class="cb-sb-body">'
+      +'<div class="cb-sb-meta"><span class="cb-sb-author">'+esc(c.author)+'</span><span class="cb-sb-time">'+timeAgo(c.timestamp)+'</span></div>'
+      +'<div class="cb-sb-text">'+esc(c.text)+'</div>'
+      +replyText
+      +'</div></div>';
+  }).join('');
+  // Bind clicks
+  list.querySelectorAll('.cb-sb-item').forEach(function(item){
+    item.addEventListener('click',function(){
+      var cid=item.dataset.cid;
+      var c=comments[cid];
+      if(!c)return;
+      // Scroll to pin
+      var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
+      if(pin){
+        var pinY=parseFloat(pin.style.top);
+        window.scrollTo({top:pinY-200,behavior:'smooth'});
+      }
+      // Open thread
+      setTimeout(function(){openThread(cid);renderSidebar();},300);
+    });
+  });
 }
 
 // ── PIN LAYER ──
@@ -1463,6 +1564,7 @@ function boot(){
   loadUser();
   initFB();
   createToolbar();
+  createSidebar();
   createPinLayer();
   subscribe();
   initKeys();
