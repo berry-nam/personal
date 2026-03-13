@@ -3,18 +3,34 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "./client";
 import type {
+  AbsenteeRanking,
+  AssetAggregate,
+  AssetRanking,
   BillDetail,
   BillSummary,
+  BillTrendPoint,
   CommitteeOut,
+  ControversialVote,
+  Demographics,
   GraphData,
   NeighborOut,
   PaginatedResponse,
+  PartySeat,
   PartyOut,
   PoliticianDetail,
   PoliticianSummary,
   PoliticianVoteRecord,
+  RegionSeat,
   VoteDetail,
+  VoteParticipation,
   VoteSummary,
+  AssetSummary,
+  AssetItemDetail,
+  AssetDeclarationDetail,
+  FundRanking,
+  CompanyHolding,
+  PoliticianCompanyOut,
+  PoliticalFundSummary,
 } from "@/types/api";
 
 // ── Politicians ──────────────────────────────────────────────────────────────
@@ -22,6 +38,7 @@ import type {
 export function usePoliticians(params: {
   party?: string;
   name?: string;
+  assembly_term?: number;
   page?: number;
   size?: number;
 }) {
@@ -106,6 +123,19 @@ export function useBills(params: {
   });
 }
 
+export function useBillPipeline(assemblyTerm?: number) {
+  return useQuery({
+    queryKey: ["bill-pipeline", assemblyTerm],
+    queryFn: async () => {
+      const { data } = await api.get<{ result: string; count: number }[]>(
+        "/bills/pipeline",
+        { params: assemblyTerm ? { assembly_term: assemblyTerm } : {} },
+      );
+      return data;
+    },
+  });
+}
+
 export function useBill(billId: string) {
   return useQuery({
     queryKey: ["bill", billId],
@@ -122,6 +152,7 @@ export function useBill(billId: string) {
 export function useVotes(params: {
   bill_id?: string;
   result?: string;
+  assembly_term?: number;
   date_from?: string;
   date_to?: string;
   page?: number;
@@ -168,6 +199,22 @@ export function useCoSponsorshipGraph(params: {
   });
 }
 
+export function useUnifiedGraph(params: {
+  assembly_term?: number;
+  min_cosponsorship?: number;
+  cosponsorship_limit?: number;
+}) {
+  return useQuery({
+    queryKey: ["graph-unified", params],
+    queryFn: async () => {
+      const { data } = await api.get<GraphData>("/graph/unified", {
+        params,
+      });
+      return data;
+    },
+  });
+}
+
 export function useNeighbors(
   assemblyId: string,
   params: { min_weight?: number; limit?: number },
@@ -198,6 +245,47 @@ export function useParties() {
   });
 }
 
+// ── Assets & Companies & Funds ───────────────────────────────────────────────
+
+export function usePoliticianAssets(id: number) {
+  return useQuery({
+    queryKey: ["politician-assets", id],
+    queryFn: async () => {
+      const { data } = await api.get<AssetSummary[]>(
+        `/politicians/${id}/assets`,
+      );
+      return data;
+    },
+    enabled: id > 0,
+  });
+}
+
+export function usePoliticianCompanies(id: number) {
+  return useQuery({
+    queryKey: ["politician-companies", id],
+    queryFn: async () => {
+      const { data } = await api.get<PoliticianCompanyOut[]>(
+        `/politicians/${id}/companies`,
+      );
+      return data;
+    },
+    enabled: id > 0,
+  });
+}
+
+export function usePoliticianFunds(id: number) {
+  return useQuery({
+    queryKey: ["politician-funds", id],
+    queryFn: async () => {
+      const { data } = await api.get<PoliticalFundSummary[]>(
+        `/politicians/${id}/funds`,
+      );
+      return data;
+    },
+    enabled: id > 0,
+  });
+}
+
 export function useCommittees() {
   return useQuery({
     queryKey: ["committees"],
@@ -206,5 +294,254 @@ export function useCommittees() {
       return data;
     },
     staleTime: 30 * 60 * 1000,
+  });
+}
+
+// ── Rankings & Stats ────────────────────────────────────────────────────────
+
+export interface TopSponsor {
+  id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+  bill_count: number;
+}
+
+export function useTopSponsors(params: {
+  assembly_term?: number;
+  limit?: number;
+}) {
+  return useQuery({
+    queryKey: ["top-sponsors", params],
+    queryFn: async () => {
+      const { data } = await api.get<TopSponsor[]>(
+        "/politicians/top-sponsors",
+        { params },
+      );
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function usePartySeats(term: number = 22) {
+  return useQuery({
+    queryKey: ["party-seats", term],
+    queryFn: async () => {
+      const { data } = await api.get<PartySeat[]>("/stats/party-seats", {
+        params: { assembly_term: term },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useDemographics(term: number = 22) {
+  return useQuery({
+    queryKey: ["demographics", term],
+    queryFn: async () => {
+      const { data } = await api.get<Demographics>("/stats/demographics", {
+        params: { assembly_term: term },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useVoteParticipation(term: number = 22) {
+  return useQuery({
+    queryKey: ["vote-participation", term],
+    queryFn: async () => {
+      const { data } = await api.get<VoteParticipation>(
+        "/stats/vote-participation",
+        { params: { assembly_term: term } },
+      );
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function useBillTrend(term: number = 22) {
+  return useQuery({
+    queryKey: ["bill-trend", term],
+    queryFn: async () => {
+      const { data } = await api.get<BillTrendPoint[]>("/stats/bill-trend", {
+        params: { assembly_term: term },
+      });
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function useAssetRankings(limit: number = 20, category?: string) {
+  return useQuery({
+    queryKey: ["asset-rankings", limit, category],
+    queryFn: async () => {
+      const { data } = await api.get<AssetRanking[]>("/assets/rankings", {
+        params: { limit, category: category || undefined },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useRegionSeats(term: number = 22) {
+  return useQuery({
+    queryKey: ["region-seats", term],
+    queryFn: async () => {
+      const { data } = await api.get<RegionSeat[]>("/stats/region-seats", {
+        params: { assembly_term: term },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useControversialVotes(term: number = 22, limit: number = 10) {
+  return useQuery({
+    queryKey: ["controversial-votes", term, limit],
+    queryFn: async () => {
+      const { data } = await api.get<ControversialVote[]>(
+        "/stats/controversial-votes",
+        { params: { assembly_term: term, limit } },
+      );
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function useAbsenteeRanking(term: number = 22, limit: number = 20) {
+  return useQuery({
+    queryKey: ["absentee-ranking", term, limit],
+    queryFn: async () => {
+      const { data } = await api.get<AbsenteeRanking[]>(
+        "/stats/absentee-ranking",
+        { params: { assembly_term: term, limit } },
+      );
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+}
+
+export function useAssetItemStocks(limit: number = 20) {
+  return useQuery({
+    queryKey: ["asset-items-stocks", limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetItemDetail[]>("/assets/items/stocks", {
+        params: { limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAssetItemRealEstate(limit: number = 20) {
+  return useQuery({
+    queryKey: ["asset-items-real-estate", limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetItemDetail[]>("/assets/items/real-estate", {
+        params: { limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAssetItemCrypto(limit: number = 20) {
+  return useQuery({
+    queryKey: ["asset-items-crypto", limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetItemDetail[]>("/assets/items/crypto", {
+        params: { limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAllAssetItems(category?: string, limit: number = 50) {
+  return useQuery({
+    queryKey: ["asset-items-all", category, limit],
+    queryFn: async () => {
+      const { data } = await api.get<AssetItemDetail[]>("/assets/items/all", {
+        params: { category: category || undefined, limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useFundRankings(year?: number, limit: number = 20) {
+  return useQuery({
+    queryKey: ["fund-rankings", year, limit],
+    queryFn: async () => {
+      const { data } = await api.get<FundRanking[]>("/funds/rankings", {
+        params: { year: year || undefined, limit },
+      });
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function useAllCompanyHoldings() {
+  return useQuery({
+    queryKey: ["company-holdings-all"],
+    queryFn: async () => {
+      const { data } = await api.get<CompanyHolding[]>("/assets/companies/all");
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function usePoliticianAssetDetail(id: number, year: number) {
+  return useQuery({
+    queryKey: ["politician-asset-detail", id, year],
+    queryFn: async () => {
+      const { data } = await api.get<AssetDeclarationDetail>(
+        `/politicians/${id}/assets/${year}`,
+      );
+      return data;
+    },
+    enabled: id > 0 && year > 0,
+  });
+}
+
+export function useAssetAggregate() {
+  return useQuery({
+    queryKey: ["asset-aggregate"],
+    queryFn: async () => {
+      const { data } = await api.get<AssetAggregate[]>("/assets/aggregate");
+      return data;
+    },
+    staleTime: 30 * 60 * 1000,
+  });
+}
+
+export function usePlatformStats() {
+  return useQuery({
+    queryKey: ["platform-stats"],
+    queryFn: async () => {
+      const { data } = await api.get<{
+        politicians: number;
+        bills: number;
+        votes: number;
+      }>("/stats");
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
   });
 }

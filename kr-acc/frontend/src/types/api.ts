@@ -31,6 +31,7 @@ export interface PoliticianSummary {
   constituency: string | null;
   elected_count: number | null;
   photo_url: string | null;
+  assembly_term: number;
 }
 
 export interface PoliticianStats {
@@ -55,6 +56,11 @@ export interface PoliticianDetail {
   committees: string[] | null;
   profile_url: string | null;
   photo_url: string | null;
+  eng_name: string | null;
+  bio: string | null;
+  email: string | null;
+  homepage: string | null;
+  office_address: string | null;
   birth_date: string | null;
   gender: string | null;
   assembly_term: number;
@@ -117,12 +123,21 @@ export interface GraphNode {
   name: string;
   party: string | null;
   group: string | null;
+  node_type?: "politician" | "company" | "vote" | "asset";
+  photo_url?: string | null;
+  industry?: string | null;
+  total_assets?: number;
+  result?: string;
+  yes_count?: number;
+  no_count?: number;
 }
 
 export interface GraphEdge {
   source: string;
   target: string;
   weight: number;
+  edge_type?: "co_sponsored" | "related_company" | "voted_on" | "owns_asset" | "sponsored_vote";
+  label?: string;
 }
 
 export interface GraphData {
@@ -135,6 +150,175 @@ export interface NeighborOut {
   name: string;
   party: string | null;
   weight: number;
+}
+
+// ── Assets & Companies & Funds ───────────────────────────────────────────────
+
+export interface AssetSummary {
+  report_year: number;
+  total_assets: number | null;
+  total_real_estate: number | null;
+  total_deposits: number | null;
+  total_securities: number | null;
+  total_crypto: number | null;
+}
+
+export interface CompanyOut {
+  id: number;
+  corp_code: string | null;
+  corp_name: string;
+  stock_code: string | null;
+  industry: string | null;
+}
+
+export interface PoliticianCompanyOut {
+  company: CompanyOut;
+  relation_type: string;
+  detail: string | null;
+  value_krw: number | null;
+  source: string | null;
+  source_year: number | null;
+}
+
+export interface PoliticalFundSummary {
+  fund_year: number;
+  fund_type: string | null;
+  income_total: number | null;
+  expense_total: number | null;
+}
+
+// ── Stats & Dashboard ────────────────────────────────────────────────────────
+
+export interface PartySeat {
+  party: string;
+  count: number;
+  color_hex: string;
+}
+
+export interface Demographics {
+  gender: { gender: string; count: number }[];
+  age_brackets: { bracket: string; count: number }[];
+}
+
+export interface VoteParticipation {
+  avg_participation: number;
+  total_votes: number;
+}
+
+export interface BillTrendPoint {
+  week: string;
+  count: number;
+}
+
+export interface AssetRanking {
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+  total_assets: number;
+  total_real_estate: number | null;
+  total_deposits: number | null;
+  total_securities: number | null;
+  total_crypto: number | null;
+  report_year: number;
+}
+
+export interface RegionSeat {
+  region: string;
+  total: number;
+  parties: Record<string, number>;
+}
+
+export interface ControversialVote {
+  vote_id: string;
+  bill_name: string;
+  vote_date: string | null;
+  total_members: number;
+  yes_count: number;
+  no_count: number;
+  abstain_count: number;
+  absent_count: number;
+  result: string | null;
+  opposition_rate: number;
+}
+
+export interface AbsenteeRanking {
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+  total_votes: number;
+  absent_count: number;
+  absence_rate: number;
+}
+
+export interface AssetAggregate {
+  party: string;
+  total_assets: number;
+  total_real_estate: number;
+  total_deposits: number;
+  total_securities: number;
+  total_crypto: number;
+  count: number;
+}
+
+export interface AssetItemDetail {
+  category: string;
+  subcategory: string | null;
+  description: string | null;
+  relation: string | null;
+  value_krw: number | null;
+  change_krw?: number | null;
+  note?: string | null;
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url?: string | null;
+}
+
+export interface AssetDeclarationDetail {
+  id: number;
+  report_year: number;
+  total_assets: number | null;
+  total_real_estate: number | null;
+  total_deposits: number | null;
+  total_securities: number | null;
+  total_crypto: number | null;
+  source: string | null;
+  items: {
+    id: number;
+    category: string;
+    subcategory: string | null;
+    description: string | null;
+    relation: string | null;
+    value_krw: number | null;
+    change_krw: number | null;
+    note: string | null;
+  }[];
+}
+
+export interface FundRanking {
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
+  fund_year: number;
+  income_total: number | null;
+  expense_total: number | null;
+  balance: number | null;
+}
+
+export interface CompanyHolding {
+  relation_type: string;
+  value_krw: number | null;
+  source_year: number | null;
+  corp_name: string;
+  industry: string | null;
+  stock_code: string | null;
+  politician_id: number;
+  name: string;
+  party: string | null;
+  photo_url: string | null;
 }
 
 export interface PoliticianVoteRecord {

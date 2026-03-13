@@ -1,0 +1,3 @@
+politician_name,fund_year,fund_type,income_total,expense_total,balance,source
+김기현,2024,후원회,520000000,480000000,40000000,manual
+나경원,2024,후원회,680000000,620000000,60000000,manual

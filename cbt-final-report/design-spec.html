@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CookieDeal 기업탐색 Design Spec — Interactive</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:rgb(250,250,252);--bg-card:#fff;--bg-sidebar:#1a1a2e;--bg-sidebar-hover:rgba(255,255,255,.08);
+    --bg-badge:rgba(99,102,241,.1);--bg-badge-green:rgba(34,197,94,.1);--bg-badge-amber:rgba(245,158,11,.1);--bg-badge-red:rgba(239,68,68,.1);--bg-badge-purple:rgba(168,85,247,.1);
+    --text:#1e1e2e;--text-sub:#64748b;--text-inv:#f8fafc;--text-muted:#94a3b8;
+    --brand:#6366f1;--brand-light:#818cf8;--brand-bg:rgba(99,102,241,.06);
+    --green:#22c55e;--red:#ef4444;--amber:#f59e0b;--purple:#a855f7;
+    --border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.06);--shadow-lg:0 8px 30px rgba(0,0,0,.08);
+    --radius:10px;--radius-sm:6px;--radius-lg:16px;
+    --transition:.2s cubic-bezier(.4,0,.2,1);
+    --sidebar-w:260px;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;display:flex;min-height:100vh}
+
+  /* Sidebar */
+  .sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--bg-sidebar);padding:24px 0;overflow-y:auto;z-index:100;display:flex;flex-direction:column}
+  .sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px}
+  .sidebar-brand{padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .sidebar-brand h1{color:#fff;font-size:16px;font-weight:700;letter-spacing:-.3px}
+  .sidebar-brand p{color:rgba(255,255,255,.5);font-size:11px;margin-top:4px}
+  .sidebar nav{flex:1;padding:16px 8px}
+  .sidebar a{display:flex;align-items:center;gap:10px;padding:9px 14px;color:rgba(255,255,255,.65);text-decoration:none;font-size:13px;font-weight:500;border-radius:8px;transition:var(--transition);margin-bottom:2px}
+  .sidebar a:hover{background:var(--bg-sidebar-hover);color:#fff}
+  .sidebar a.active{background:rgba(99,102,241,.2);color:#fff}
+  .sidebar a .icon{width:20px;text-align:center;font-size:14px;flex-shrink:0}
+  .sidebar .nav-group{margin-top:20px;padding:0 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.3);margin-bottom:6px}
+
+  /* Main */
+  main{margin-left:var(--sidebar-w);flex:1;padding:40px 56px 80px;max-width:1100px}
+  section{margin-bottom:64px}
+  h2{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px;color:var(--text)}
+  h2 .badge{font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;vertical-align:middle;margin-left:8px}
+  h3{font-size:20px;font-weight:700;margin-top:36px;margin-bottom:12px;letter-spacing:-.3px}
+  h4{font-size:16px;font-weight:700;margin-top:24px;margin-bottom:8px}
+  p{margin-bottom:12px;color:var(--text-sub)}
+  .lead{font-size:17px;line-height:1.8;color:var(--text);font-weight:400;margin-bottom:24px}
+  .section-desc{font-size:14px;color:var(--text-sub);margin-bottom:24px;padding:16px 20px;background:var(--brand-bg);border-radius:var(--radius);border-left:3px solid var(--brand)}
+
+  /* Cards */
+  .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;margin-bottom:20px;box-shadow:var(--shadow);transition:var(--transition)}
+  .card:hover{box-shadow:var(--shadow-lg)}
+  .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .card-title{font-size:16px;font-weight:700}
+
+  /* Phase Roadmap */
+  .phase-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px}
+  .phase-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;position:relative;transition:var(--transition);cursor:pointer;overflow:hidden}
+  .phase-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+  .phase-card:nth-child(1)::before{background:var(--brand)}
+  .phase-card:nth-child(2)::before{background:var(--green)}
+  .phase-card:nth-child(3)::before{background:var(--amber)}
+  .phase-card:nth-child(4)::before{background:var(--purple)}
+  .phase-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .phase-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+  .phase-card:nth-child(1) .phase-tag{color:var(--brand)}
+  .phase-card:nth-child(2) .phase-tag{color:var(--green)}
+  .phase-card:nth-child(3) .phase-tag{color:var(--amber)}
+  .phase-card:nth-child(4) .phase-tag{color:var(--purple)}
+  .phase-name{font-size:15px;font-weight:700;margin-bottom:6px}
+  .phase-desc{font-size:12px;color:var(--text-sub);line-height:1.6}
+  .phase-meta{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .phase-meta .tag{font-size:10px;padding:3px 8px;border-radius:12px;font-weight:600}
+
+  /* Status badges */
+  .status-idea{background:var(--bg-badge);color:var(--brand)}
+  .status-progress{background:var(--bg-badge-amber);color:#b45309}
+  .status-low{background:var(--bg-badge-purple);color:var(--purple)}
+  .size-tag{background:var(--bg-badge-green);color:#16a34a}
+
+  /* Tabs */
+  .tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto;padding-bottom:0}
+  .tab{padding:10px 18px;font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:var(--transition);white-space:nowrap;border-radius:8px 8px 0 0}
+  .tab:hover{color:var(--text);background:rgba(0,0,0,.02)}
+  .tab.active{color:var(--brand);border-bottom-color:var(--brand);background:var(--brand-bg)}
+  .tab .count{font-size:10px;background:var(--bg-badge);color:var(--brand);padding:1px 6px;border-radius:8px;margin-left:4px}
+  .tab-content{display:none}.tab-content.active{display:block}
+
+  /* Before/After */
+  .ba-grid{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;align-items:start;margin:20px 0}
+  .ba-card{border-radius:var(--radius-lg);padding:24px;border:1px solid var(--border)}
+  .ba-card.before{background:#fef2f2;border-color:#fecaca}
+  .ba-card.after{background:#f0fdf4;border-color:#bbf7d0}
+  .ba-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+  .ba-card.before .ba-label{color:var(--red)}
+  .ba-card.after .ba-label{color:var(--green)}
+  .ba-arrow{display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text-muted);padding-top:40px}
+
+  /* Tables */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
+  table th{text-align:left;padding:10px 14px;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);border-bottom:2px solid var(--border);background:var(--bg)}
+  table td{padding:10px 14px;border-bottom:1px solid var(--border)}
+  table tr:hover td{background:rgba(99,102,241,.02)}
+
+  /* Tags/Badges */
+  .tag-row{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:16px;font-size:11px;font-weight:600}
+  .chip-brand{background:var(--bg-badge);color:var(--brand)}
+  .chip-green{background:var(--bg-badge-green);color:#16a34a}
+  .chip-amber{background:var(--bg-badge-amber);color:#b45309}
+  .chip-purple{background:var(--bg-badge-purple);color:var(--purple)}
+  .chip-red{background:var(--bg-badge-red);color:var(--red)}
+
+  /* Company Card Mock */
+  .company-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+  .company-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;transition:var(--transition);cursor:pointer}
+  .company-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--brand)}
+  .company-card .cc-name{font-size:15px;font-weight:700;margin-bottom:4px}
+  .company-card .cc-desc{font-size:12px;color:var(--text-sub);margin-bottom:12px}
+  .company-card .cc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .cc-metric{background:var(--bg);padding:8px 10px;border-radius:var(--radius-sm)}
+  .cc-metric-label{font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase}
+  .cc-metric-value{font-size:14px;font-weight:700;margin-top:2px}
+  .cc-metric-value.positive{color:var(--green)}
+  .cc-metric-value.negative{color:var(--red)}
+
+  /* Scoring formula */
+  .formula-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;font-family:'JetBrains Mono',Consolas,monospace;font-size:14px;margin:16px 0;line-height:2}
+  .formula-box .dim{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:6px;margin:4px 2px}
+  .formula-box .dim-industry{background:rgba(99,102,241,.1);color:var(--brand)}
+  .formula-box .dim-scale{background:rgba(34,197,94,.1);color:#16a34a}
+  .formula-box .dim-region{background:rgba(168,85,247,.1);color:var(--purple)}
+
+  /* Detail mockup */
+  .detail-mock{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);margin:20px 0}
+  .detail-hero{padding:28px 32px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(99,102,241,.04),rgba(168,85,247,.04))}
+  .detail-hero-top{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+  .detail-logo{width:56px;height:56px;border-radius:12px;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:800}
+  .detail-info h3{margin:0;font-size:22px}
+  .detail-info p{margin:0;font-size:13px;color:var(--text-sub)}
+  .detail-metrics{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+  .detail-metric{background:var(--bg-card);border:1px solid var(--border);padding:10px 16px;border-radius:var(--radius);min-width:140px}
+  .detail-metric .dm-label{font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase}
+  .detail-metric .dm-value{font-size:18px;font-weight:800;margin-top:2px}
+  .detail-metric .dm-change{font-size:11px;margin-top:2px}
+  .detail-tabs-bar{display:flex;gap:0;border-bottom:2px solid var(--border);padding:0 32px;overflow-x:auto}
+  .detail-tab{padding:12px 18px;font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:var(--transition);white-space:nowrap}
+  .detail-tab:hover{color:var(--text)}
+  .detail-tab.active{color:var(--brand);border-bottom-color:var(--brand)}
+  .detail-tab .badge{font-size:10px;background:var(--bg-badge);color:var(--brand);padding:1px 5px;border-radius:6px;margin-left:4px}
+  .detail-body{padding:28px 32px;min-height:200px}
+
+  /* CDS tokens visual */
+  .token-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:16px 0}
+  .token-swatch{padding:16px;border-radius:var(--radius);border:1px solid var(--border);text-align:center}
+  .token-swatch .swatch{width:100%;height:40px;border-radius:6px;margin-bottom:8px}
+  .token-swatch .name{font-size:11px;font-weight:600;color:var(--text-sub)}
+
+  /* Collapsible */
+  details{margin:12px 0}
+  details summary{cursor:pointer;font-weight:700;font-size:14px;padding:12px 16px;background:var(--bg);border-radius:var(--radius);border:1px solid var(--border);transition:var(--transition);list-style:none}
+  details summary::before{content:'▸ ';color:var(--text-muted)}
+  details[open] summary::before{content:'▾ '}
+  details[open] summary{border-radius:var(--radius) var(--radius) 0 0;border-bottom-color:transparent}
+  details .details-body{padding:16px;border:1px solid var(--border);border-top:0;border-radius:0 0 var(--radius) var(--radius);background:var(--bg-card)}
+
+  /* Metric bar */
+  .metric-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);border-radius:var(--radius);margin:8px 0}
+  .metric-bar .mb-label{font-size:12px;font-weight:600;color:var(--text-sub);width:200px;flex-shrink:0}
+  .metric-bar .mb-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+  .metric-bar .mb-fill{height:100%;border-radius:4px;transition:width .6s ease}
+  .metric-bar .mb-value{font-size:12px;font-weight:700;width:80px;text-align:right}
+
+  /* Responsive */
+  @media(max-width:1080px){
+    .sidebar{display:none}
+    main{margin-left:0;padding:24px 20px}
+    .phase-grid{grid-template-columns:repeat(2,1fr)}
+    .company-cards{grid-template-columns:1fr}
+    .ba-grid{grid-template-columns:1fr;gap:12px}
+    .ba-arrow{transform:rotate(90deg);padding:0}
+  }
+
+  /* Radar chart placeholder */
+  .radar-placeholder{width:100%;max-width:360px;aspect-ratio:1;margin:20px auto;position:relative}
+  .radar-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .radar-ring{border:1px solid var(--border);border-radius:50%;position:absolute}
+  .radar-ring:nth-child(1){width:100%;height:100%}
+  .radar-ring:nth-child(2){width:75%;height:75%}
+  .radar-ring:nth-child(3){width:50%;height:50%}
+  .radar-ring:nth-child(4){width:25%;height:25%}
+  .radar-axis{position:absolute;font-size:11px;font-weight:600;color:var(--text-sub)}
+
+  code{background:var(--bg);padding:2px 6px;border-radius:4px;font-size:13px;font-family:'JetBrains Mono',Consolas,monospace;color:var(--brand)}
+
+  .waterfall-mock{display:flex;align-items:flex-end;gap:4px;height:160px;padding:16px;background:var(--bg);border-radius:var(--radius);margin:16px 0}
+  .wf-bar{flex:1;border-radius:4px 4px 0 0;position:relative;transition:height .4s ease;cursor:pointer}
+  .wf-bar:hover{opacity:.85}
+  .wf-bar .wf-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-muted);white-space:nowrap}
+  .wf-bar .wf-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <h1>CookieDeal</h1>
+    <p>기업탐색 Design Spec v2</p>
+  </div>
+  <nav>
+    <div class="nav-group">Overview</div>
+    <a href="#hero" class="active"><span class="icon">🏠</span>Introduction</a>
+    <a href="#phases"><span class="icon">🗺️</span>Phase Roadmap</a>
+    <a href="#cds"><span class="icon">🎨</span>CDS Tokens</a>
+
+    <div class="nav-group">Phase 1</div>
+    <a href="#search"><span class="icon">🔍</span>1-A · Search Redesign</a>
+    <a href="#results"><span class="icon">📋</span>1-B · Results Table</a>
+    <a href="#detail"><span class="icon">📊</span>1-C · Company Detail</a>
+    <a href="#similar"><span class="icon">🔗</span>1-D · Similar Companies</a>
+    <a href="#mobile"><span class="icon">📱</span>Mobile Strategy</a>
+
+    <div class="nav-group">Specs</div>
+    <a href="#before-after"><span class="icon">🔄</span>Before / After</a>
+    <a href="#scoring"><span class="icon">⚙️</span>Scoring Algorithm</a>
+    <a href="#metrics"><span class="icon">📏</span>Measurement Targets</a>
+    <a href="#principles"><span class="icon">💎</span>Design Principles</a>
+
+    <div class="nav-group">Phase 2</div>
+    <a href="#phase2"><span class="icon">🤖</span>AI-Native Vision</a>
+  </nav>
+</aside>
+
+<main>
+
+<!-- Hero -->
+<section id="hero">
+  <h2>CookieDeal 기업탐색 UI/UX<br>Full Rehaul</h2>
+  <p class="lead">Legacy table → AI-native intelligence platform. 12개 벤치마크 플랫폼 분석 기반, CDS 디자인 시스템 위에 구현하는 기업탐색 전면 리디자인 사양서.</p>
+  <div class="section-desc">
+    <strong>핵심 전환:</strong> LinkedIn Sales Navigator의 layered filter + Crunchbase의 progressive disclosure + Clay의 AI-enrichment → 한국 중소기업 데이터 컨텍스트에 맞게 적용. 1M+ 비상장 SME 데이터, 200K+ 사용자 대상.
+  </div>
+  <div class="tag-row" style="margin-top:16px">
+    <span class="chip chip-brand">12 Benchmarks Analyzed</span>
+    <span class="chip chip-green">CDS Design System</span>
+    <span class="chip chip-amber">4 ICP Segments</span>
+    <span class="chip chip-purple">Phase 1 + Phase 2</span>
+  </div>
+</section>
+
+<!-- Phase Roadmap -->
+<section id="phases">
+  <h2>Phase Roadmap <span class="badge status-idea" style="font-size:12px">Interactive</span></h2>
+  <p>4개 Phase로 나뉘며, 각 Phase는 독립적으로 배포 가능. Phase 1-C가 현재 In Progress.</p>
+
+  <div class="phase-grid">
+    <div class="phase-card" onclick="showPhaseDetail('1a')">
+      <div class="phase-tag">Phase 1-A</div>
+      <div class="phase-name">📐 정보 계층 리디자인</div>
+      <div class="phase-desc">Above-the-fold 히어로, 8탭 네비게이션, CTA 배치, 모바일 반응형</div>
+      <div class="phase-meta">
+        <span class="tag status-idea">💡 Idea</span>
+        <span class="tag size-tag">M (~1주)</span>
+      </div>
+    </div>
+    <div class="phase-card" onclick="showPhaseDetail('1b')">
+      <div class="phase-tag">Phase 1-B</div>
+      <div class="phase-name">📊 데이터 시각화</div>
+      <div class="phase-desc">스파크라인, 워터폴 차트, 레이더 차트, 시간범위 선택기</div>
+      <div class="phase-meta">
+        <span class="tag status-idea">💡 Idea</span>
+        <span class="tag size-tag">S (~3일)</span>
+      </div>
+    </div>
+    <div class="phase-card" onclick="showPhaseDetail('1c')">
+      <div class="phase-tag">Phase 1-C</div>
+      <div class="phase-name">🔗 유사 기업 추천 MVP</div>
+      <div class="phase-desc">KSIC 매칭 + 매출 규모 + 지역 가중 스코어링, 카드 UI, 이벤트 트래킹</div>
+      <div class="phase-meta">
+        <span class="tag status-progress">🚀 In Progress</span>
+        <span class="tag size-tag">L (2주+)</span>
+      </div>
+    </div>
+    <div class="phase-card" onclick="showPhaseDetail('2')">
+      <div class="phase-tag">Phase 2</div>
+      <div class="phase-name">🤖 Hybrid Scoring + AI</div>
+      <div class="phase-desc">embedding 유사도, 👍/👎 피드백, AI 요약, collaborative filtering</div>
+      <div class="phase-meta">
+        <span class="tag status-low">💡 Future</span>
+        <span class="tag size-tag">L (2주+)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase dependency arrow -->
+  <div style="display:flex;align-items:center;gap:8px;margin-top:20px;padding:16px;background:var(--bg);border-radius:var(--radius);font-size:12px;color:var(--text-sub)">
+    <span class="chip chip-brand">1-A 기반 작업</span> →
+    <span class="chip chip-green">1-B 시각화</span> →
+    <span class="chip chip-amber">1-C 유사 기업</span> →
+    <span class="chip chip-purple">Phase 2 AI</span>
+    <span style="margin-left:auto;font-weight:600">의존성 순서 (권장)</span>
+  </div>
+</section>
+
+<!-- CDS Tokens -->
+<section id="cds">
+  <h2>CDS Design System Tokens</h2>
+  <p>모든 UI 사양은 <code>cookiedeal-storybook</code> repo의 <code>--cd-*</code> semantic CSS custom properties를 참조합니다.</p>
+
+  <h4>Color Tokens (semantic only, no HEX)</h4>
+  <div class="token-grid">
+    <div class="token-swatch"><div class="swatch" style="background:#6366f1"></div><div class="name">--cd-bg-brand-strong</div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#4f46e5"></div><div class="name">--cd-bg-brand-stronger</div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#3730a3"></div><div class="name">--cd-bg-brand-strongest</div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#22c55e"></div><div class="name">--cd-text-success</div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#ef4444"></div><div class="name">--cd-text-danger</div></div>
+    <div class="token-swatch"><div class="swatch" style="background:#f8fafc"></div><div class="name">--cd-bg-default-subtle</div></div>
+  </div>
+
+  <h4>Typography</h4>
+  <div class="card" style="padding:20px">
+    <div style="font-size:10px;margin-bottom:8px;color:var(--text-muted)">Pretendard Variable — 9 weights, excellent Hangul + Latin pairing</div>
+    <div style="display:grid;grid-template-columns:100px 1fr;gap:8px;font-size:13px">
+      <span style="color:var(--text-muted)">xs (10px)</span><span style="font-size:10px">기업탐색 CookieDeal</span>
+      <span style="color:var(--text-muted)">sm (12px)</span><span style="font-size:12px">기업탐색 CookieDeal</span>
+      <span style="color:var(--text-muted)">md (13px)</span><span style="font-size:13px">기업탐색 CookieDeal</span>
+      <span style="color:var(--text-muted)">base (14px)</span><span style="font-size:14px">기업탐색 CookieDeal</span>
+      <span style="color:var(--text-muted)">lg (16px)</span><span style="font-size:16px">기업탐색 CookieDeal</span>
+      <span style="color:var(--text-muted)">xl (18px)</span><span style="font-size:18px">기업탐색 CookieDeal</span>
+      <span style="color:var(--text-muted)">3xl (28px)</span><span style="font-size:28px;font-weight:700">기업탐색</span>
+    </div>
+  </div>
+
+  <h4>Spacing: 4px Grid</h4>
+  <div style="display:flex;gap:4px;align-items:flex-end;margin:16px 0">
+    <div style="width:16px;height:4px;background:var(--brand);border-radius:2px" title="4px"></div>
+    <div style="width:16px;height:8px;background:var(--brand);border-radius:2px" title="8px"></div>
+    <div style="width:16px;height:16px;background:var(--brand);border-radius:2px" title="16px"></div>
+    <div style="width:16px;height:24px;background:var(--brand);border-radius:2px" title="24px"></div>
+    <div style="width:16px;height:32px;background:var(--brand);border-radius:2px" title="32px"></div>
+    <div style="width:16px;height:48px;background:var(--brand);border-radius:2px" title="48px"></div>
+    <div style="width:16px;height:60px;background:var(--brand);border-radius:2px" title="60px"></div>
+    <span style="font-size:11px;color:var(--text-muted);margin-left:8px">4 · 8 · 16 · 24 · 32 · 48 · 60 px</span>
+  </div>
+</section>
+
+<!-- Search Redesign -->
+<section id="search">
+  <h2>Phase 1-A · Search Page Redesign</h2>
+  <p class="section-desc">Static sidebar → Hybrid horizontal filter bar + expandable advanced panel. ⌘K command palette as universal entry point.</p>
+
+  <h3>Layered Filter Architecture</h3>
+  <div class="card">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <div style="padding:8px 16px;background:var(--brand-bg);border:1px solid var(--brand);border-radius:8px;font-size:13px;font-weight:600">업종 ▾</div>
+      <div style="padding:8px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px">지역 ▾</div>
+      <div style="padding:8px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px">매출액 ▾</div>
+      <div style="padding:8px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px">기업유형 ▾</div>
+      <div style="padding:8px 16px;background:var(--bg);border:1px dashed var(--border);border-radius:8px;font-size:13px;color:var(--text-muted)">+ 고급 필터</div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="chip chip-brand">업종: 반도체/전자 ×</span>
+      <span class="chip chip-green">매출: 300억~500억 ×</span>
+      <span class="chip chip-purple">지역: 서울 ×</span>
+      <span style="font-size:13px;font-weight:700;color:var(--brand);padding:4px 8px">2,345개 기업</span>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin:0">Live-updating results without "Apply" button — Sales Navigator pattern</p>
+  </div>
+
+  <h3>⌘K Command Palette</h3>
+  <div class="card" style="background:#1a1a2e;color:#fff;padding:24px">
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,.08);border-radius:10px;border:1px solid rgba(255,255,255,.15)">
+      <span style="font-size:16px">🔍</span>
+      <span style="color:rgba(255,255,255,.5);font-size:14px">반도체 중소기업 서울...</span>
+      <span style="margin-left:auto;font-size:11px;padding:3px 8px;background:rgba(255,255,255,.1);border-radius:4px">⌘K</span>
+    </div>
+    <div style="margin-top:12px;padding:8px 0">
+      <div style="padding:8px 16px;font-size:13px;opacity:.6">최근 검색</div>
+      <div style="padding:8px 16px;border-radius:6px;background:rgba(99,102,241,.2);font-size:13px;margin:4px 0">반도체 관련 중소기업</div>
+      <div style="padding:8px 16px;font-size:13px;margin:4px 0;opacity:.8">서울 제조업 매출 100억 이상</div>
+      <div style="padding:8px 16px;font-size:13px;margin:4px 0;opacity:.8">최근 3년 매출 성장 기업</div>
+    </div>
+  </div>
+</section>
+
+<!-- Results Table -->
+<section id="results">
+  <h2>Phase 1-B · Results Table Redesign</h2>
+  <p class="section-desc">Virtual-scrolled table (TanStack Virtual) with density controls, column customization, and visually enriched quick preview panel.</p>
+
+  <h3>Three-Level Density Toggle</h3>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0">
+    <div class="card" style="text-align:center;padding:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--brand);margin-bottom:8px">컴팩트</div>
+      <div style="font-size:11px;color:var(--text-muted)">32px row · 12px font</div>
+      <div style="margin-top:8px">
+        <div style="height:20px;background:var(--bg);border-bottom:1px solid var(--border);font-size:9px;padding:4px 8px">삼성전자 | 반도체 | 209.1조</div>
+        <div style="height:20px;background:var(--bg-card);border-bottom:1px solid var(--border);font-size:9px;padding:4px 8px">LG전자 | 가전 | 84.2조</div>
+        <div style="height:20px;background:var(--bg);border-bottom:1px solid var(--border);font-size:9px;padding:4px 8px">SK하이닉스 | 반도체 | 66.3조</div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px;border-color:var(--brand)">
+      <div style="font-size:12px;font-weight:700;color:var(--brand);margin-bottom:8px">보통 (Default)</div>
+      <div style="font-size:11px;color:var(--text-muted)">40px row · 13px font</div>
+      <div style="margin-top:8px">
+        <div style="height:28px;background:var(--bg);border-bottom:1px solid var(--border);font-size:11px;padding:6px 8px">삼성전자 | 반도체 | 209.1조</div>
+        <div style="height:28px;background:var(--bg-card);border-bottom:1px solid var(--border);font-size:11px;padding:6px 8px">LG전자 | 가전 | 84.2조</div>
+        <div style="height:28px;background:var(--bg);border-bottom:1px solid var(--border);font-size:11px;padding:6px 8px">SK하이닉스 | 반도체 | 66.3조</div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--brand);margin-bottom:8px">여유</div>
+      <div style="font-size:11px;color:var(--text-muted)">52px row · 14px font + sparklines</div>
+      <div style="margin-top:8px">
+        <div style="height:36px;background:var(--bg);border-bottom:1px solid var(--border);font-size:12px;padding:8px">삼성전자 | 209.1조 📈</div>
+        <div style="height:36px;background:var(--bg-card);border-bottom:1px solid var(--border);font-size:12px;padding:8px">LG전자 | 84.2조 📉</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Company Detail -->
+<section id="detail">
+  <h2>Phase 1-C · Company Detail Page</h2>
+  <p class="section-desc">Yahoo Finance-inspired intelligence dashboard with interactive network graphs. 9 sections under 개요 tab, radar charts in 경쟁사 tab.</p>
+
+  <div class="detail-mock">
+    <div class="detail-hero">
+      <div class="detail-hero-top">
+        <div class="detail-logo">S</div>
+        <div class="detail-info">
+          <h3>삼성전자 <span style="font-size:13px;font-weight:400;color:var(--text-sub)">주식회사</span></h3>
+          <p>이동전화기 제조업 · 경기 수원시 · 유가증권시장</p>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button style="padding:8px 16px;border:1px solid var(--brand);background:var(--brand);color:#fff;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">저장</button>
+          <button style="padding:8px 16px;border:1px solid var(--border);background:#fff;color:var(--text);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">팔로우</button>
+        </div>
+      </div>
+      <div class="detail-metrics">
+        <div class="detail-metric">
+          <div class="dm-label">매출액</div>
+          <div class="dm-value">209.1조</div>
+          <div class="dm-change" style="color:var(--red)">▼ -14.3% YoY</div>
+        </div>
+        <div class="detail-metric">
+          <div class="dm-label">영업이익</div>
+          <div class="dm-value">12.4조</div>
+          <div class="dm-change" style="color:var(--green)">▲ +85.7% YoY</div>
+        </div>
+        <div class="detail-metric">
+          <div class="dm-label">직원수</div>
+          <div class="dm-value">124,988</div>
+          <div class="dm-change" style="color:var(--text-muted)">국민연금 기반</div>
+        </div>
+        <div class="detail-metric">
+          <div class="dm-label">업력</div>
+          <div class="dm-value">57년</div>
+          <div class="dm-change" style="color:var(--text-muted)">1969.01.13 설립</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-tabs-bar">
+      <div class="detail-tab active" onclick="switchDetailTab(this,'overview-content')">개요</div>
+      <div class="detail-tab" onclick="switchDetailTab(this,'finance-content')">재무 <span class="badge">3</span></div>
+      <div class="detail-tab" onclick="switchDetailTab(this,'people-content')">인물 <span class="badge">12</span></div>
+      <div class="detail-tab">기술·특허 <span class="badge">5</span></div>
+      <div class="detail-tab">뉴스 <span class="badge">7</span></div>
+      <div class="detail-tab" onclick="switchDetailTab(this,'similar-content')">유사기업 <span class="badge">5</span></div>
+      <div class="detail-tab" onclick="switchDetailTab(this,'competitor-content')">경쟁사</div>
+      <div class="detail-tab">커뮤니티</div>
+    </div>
+
+    <div class="detail-body" id="overview-content">
+      <h4 style="margin-top:0">Revenue vs Earnings (5년)</h4>
+      <div style="display:flex;gap:6px;margin-bottom:12px">
+        <span class="chip chip-brand" style="cursor:pointer">3M</span>
+        <span class="chip" style="background:var(--bg);cursor:pointer">1Y</span>
+        <span class="chip" style="background:var(--bg);cursor:pointer">2Y</span>
+        <span class="chip" style="background:var(--bg);cursor:pointer">3Y</span>
+        <span class="chip" style="background:var(--bg);cursor:pointer">5Y</span>
+        <span class="chip" style="background:var(--bg);cursor:pointer">MAX</span>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:16px;height:140px;padding:16px;background:var(--bg);border-radius:var(--radius)">
+        <div style="flex:1;text-align:center">
+          <div style="height:90px;background:rgba(99,102,241,.2);border-radius:4px 4px 0 0;position:relative"><div style="position:absolute;top:-2px;left:50%;transform:translate(-50%,-100%);font-size:10px;font-weight:700">243.7조</div></div>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2020</div>
+        </div>
+        <div style="flex:1;text-align:center">
+          <div style="height:110px;background:rgba(99,102,241,.3);border-radius:4px 4px 0 0;position:relative"><div style="position:absolute;top:-2px;left:50%;transform:translate(-50%,-100%);font-size:10px;font-weight:700">279.6조</div></div>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2021</div>
+        </div>
+        <div style="flex:1;text-align:center">
+          <div style="height:120px;background:rgba(99,102,241,.4);border-radius:4px 4px 0 0;position:relative"><div style="position:absolute;top:-2px;left:50%;transform:translate(-50%,-100%);font-size:10px;font-weight:700">302.2조</div></div>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2022</div>
+        </div>
+        <div style="flex:1;text-align:center">
+          <div style="height:100px;background:rgba(99,102,241,.35);border-radius:4px 4px 0 0;position:relative"><div style="position:absolute;top:-2px;left:50%;transform:translate(-50%,-100%);font-size:10px;font-weight:700">258.9조</div></div>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2023</div>
+        </div>
+        <div style="flex:1;text-align:center">
+          <div style="height:85px;background:rgba(99,102,241,.5);border-radius:4px 4px 0 0;position:relative"><div style="position:absolute;top:-2px;left:50%;transform:translate(-50%,-100%);font-size:10px;font-weight:700">209.1조</div></div>
+          <div style="font-size:10px;color:var(--text-muted);margin-top:4px">2024</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:8px">📊 매출액 bars (<code>--cd-bg-brand-strong</code>) + 영업이익 line overlay (accent color)</p>
+
+      <h4>매출 구성 워터폴 차트</h4>
+      <div class="waterfall-mock">
+        <div class="wf-bar" style="height:100%;background:var(--brand);flex:1.5"><span class="wf-label">반도체</span><span class="wf-val" style="color:var(--brand)">52%</span></div>
+        <div class="wf-bar" style="height:60%;background:rgba(99,102,241,.6)"><span class="wf-label">IM(모바일)</span><span class="wf-val" style="color:var(--brand)">28%</span></div>
+        <div class="wf-bar" style="height:30%;background:rgba(99,102,241,.4)"><span class="wf-label">CE(가전)</span><span class="wf-val" style="color:var(--brand)">12%</span></div>
+        <div class="wf-bar" style="height:18%;background:rgba(99,102,241,.25)"><span class="wf-label">디스플레이</span><span class="wf-val" style="color:var(--brand)">5%</span></div>
+        <div class="wf-bar" style="height:10%;background:rgba(99,102,241,.15)"><span class="wf-label">기타</span><span class="wf-val" style="color:var(--brand)">3%</span></div>
+      </div>
+      <p style="font-size:11px;color:var(--text-muted)">매출 구성 세그먼트 시각화 — 다각화 리스크 평가에 필수</p>
+    </div>
+
+    <div class="detail-body" id="finance-content" style="display:none">
+      <h4 style="margin-top:0">Financial Summary (Conditional Formatting)</h4>
+      <table>
+        <tr><th>연도</th><th>매출</th><th>영업이익</th><th>순이익</th><th>자산총계</th></tr>
+        <tr><td>2024</td><td>209.1조</td><td style="color:var(--green)">12.4조 ▲</td><td style="color:var(--green)">15.8조 ▲</td><td>426.1조</td></tr>
+        <tr><td>2023</td><td>258.9조</td><td style="color:var(--red)">6.7조 ▼</td><td style="color:var(--red)">8.1조 ▼</td><td>410.2조</td></tr>
+        <tr><td>2022</td><td>302.2조</td><td>43.4조</td><td>55.6조</td><td>448.3조</td></tr>
+      </table>
+      <p style="font-size:11px;color:var(--text-muted)">Tabular monospaced figures · 스파크라인 인라인 적용</p>
+    </div>
+
+    <div class="detail-body" id="people-content" style="display:none">
+      <h4 style="margin-top:0">경영진 현황</h4>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+        <div class="card" style="padding:16px"><div style="font-weight:700">전영현</div><div style="font-size:12px;color:var(--text-sub)">대표이사</div></div>
+        <div class="card" style="padding:16px"><div style="font-weight:700">노태문</div><div style="font-size:12px;color:var(--text-sub)">MX 사업부장</div></div>
+        <div class="card" style="padding:16px;border:1px dashed var(--border)"><div style="font-weight:700;filter:blur(3px)">연락처 보기</div><div style="font-size:12px;color:var(--amber)">15🍪 필요</div></div>
+      </div>
+    </div>
+
+    <div class="detail-body" id="similar-content" style="display:none">
+      <h4 style="margin-top:0">유사 기업 (→ Phase 1-D section 참조)</h4>
+      <p>기업 카드 캐러셀이 여기에 표시됩니다.</p>
+    </div>
+
+    <div class="detail-body" id="competitor-content" style="display:none">
+      <h4 style="margin-top:0">경쟁사 레이더 차트</h4>
+      <div style="text-align:center;padding:20px">
+        <svg viewBox="0 0 300 280" width="300" style="margin:0 auto">
+          <!-- Radar rings -->
+          <circle cx="150" cy="130" r="110" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+          <circle cx="150" cy="130" r="82" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+          <circle cx="150" cy="130" r="55" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+          <circle cx="150" cy="130" r="27" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+          <!-- Axes -->
+          <line x1="150" y1="20" x2="150" y2="240" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="45" y1="70" x2="255" y2="190" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="45" y1="190" x2="255" y2="70" stroke="#e2e8f0" stroke-width="1"/>
+          <!-- Target company polygon -->
+          <polygon points="150,35 240,85 230,190 150,230 70,190 60,85" fill="rgba(99,102,241,.15)" stroke="#6366f1" stroke-width="2"/>
+          <!-- Competitor polygon -->
+          <polygon points="150,55 210,95 200,170 150,200 100,170 90,95" fill="rgba(239,68,68,.1)" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4"/>
+          <!-- Labels -->
+          <text x="150" y="12" text-anchor="middle" font-size="10" fill="#64748b" font-weight="600">매출액</text>
+          <text x="268" y="72" text-anchor="start" font-size="10" fill="#64748b" font-weight="600">영업이익</text>
+          <text x="268" y="195" text-anchor="start" font-size="10" fill="#64748b" font-weight="600">직원수</text>
+          <text x="150" y="255" text-anchor="middle" font-size="10" fill="#64748b" font-weight="600">업력</text>
+          <text x="30" y="195" text-anchor="end" font-size="10" fill="#64748b" font-weight="600">특허 수</text>
+          <text x="30" y="72" text-anchor="end" font-size="10" fill="#64748b" font-weight="600">성장률</text>
+        </svg>
+        <div style="display:flex;justify-content:center;gap:16px;margin-top:8px;font-size:12px">
+          <span><span style="display:inline-block;width:12px;height:12px;background:rgba(99,102,241,.3);border:2px solid #6366f1;border-radius:2px;vertical-align:middle;margin-right:4px"></span>삼성전자</span>
+          <span><span style="display:inline-block;width:12px;height:12px;background:rgba(239,68,68,.15);border:2px solid #ef4444;border-radius:2px;vertical-align:middle;margin-right:4px"></span>LG전자</span>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--text-muted)">Recharts <code>&lt;RadarChart&gt;</code> — 5-6 normalized dimensions (0-100 scale)</p>
+    </div>
+  </div>
+</section>
+
+<!-- Similar Companies -->
+<section id="similar">
+  <h2>Phase 1-D · Similar Companies</h2>
+  <p class="section-desc">Card carousel with match reasoning, 영업이익 표시, 👍/👎 피드백, 3 view modes (Carousel | Grid | Comparison).</p>
+
+  <div style="background:var(--bg);padding:12px 16px;border-radius:var(--radius);margin-bottom:16px;font-size:13px">
+    <strong>삼성전자</strong> 기준 · 매출 209.1조 · 영업이익 12.4조 · 반도체/전자 · 유가증권시장
+  </div>
+
+  <div class="company-cards">
+    <div class="company-card">
+      <div class="cc-name">LG전자</div>
+      <div class="cc-desc">가전 및 전자기기 제조</div>
+      <div class="cc-metrics">
+        <div class="cc-metric"><div class="cc-metric-label">매출</div><div class="cc-metric-value">84.2조</div></div>
+        <div class="cc-metric"><div class="cc-metric-label">영업이익</div><div class="cc-metric-value positive">3.5조 ▲</div></div>
+      </div>
+      <div class="tag-row">
+        <span class="chip chip-brand">동일 업종</span>
+        <span class="chip chip-green">유사 규모</span>
+      </div>
+      <div style="display:flex;gap:4px;margin-top:10px;justify-content:flex-end">
+        <button style="border:none;background:transparent;cursor:pointer;font-size:14px;opacity:.4" title="좋아요">👍</button>
+        <button style="border:none;background:transparent;cursor:pointer;font-size:14px;opacity:.4" title="별로예요">👎</button>
+      </div>
+    </div>
+    <div class="company-card">
+      <div class="cc-name">SK하이닉스</div>
+      <div class="cc-desc">반도체 메모리 제조</div>
+      <div class="cc-metrics">
+        <div class="cc-metric"><div class="cc-metric-label">매출</div><div class="cc-metric-value">66.3조</div></div>
+        <div class="cc-metric"><div class="cc-metric-label">영업이익</div><div class="cc-metric-value positive">7.1조 ▲</div></div>
+      </div>
+      <div class="tag-row">
+        <span class="chip chip-brand">동일 업종</span>
+        <span class="chip chip-purple">같은 지역</span>
+      </div>
+      <div style="display:flex;gap:4px;margin-top:10px;justify-content:flex-end">
+        <button style="border:none;background:transparent;cursor:pointer;font-size:14px;opacity:.4">👍</button>
+        <button style="border:none;background:transparent;cursor:pointer;font-size:14px;opacity:.4">👎</button>
+      </div>
+    </div>
+    <div class="company-card">
+      <div class="cc-name">DB하이텍</div>
+      <div class="cc-desc">반도체 파운드리</div>
+      <div class="cc-metrics">
+        <div class="cc-metric"><div class="cc-metric-label">매출</div><div class="cc-metric-value">1.2조</div></div>
+        <div class="cc-metric"><div class="cc-metric-label">영업이익</div><div class="cc-metric-value negative">-120억 ▼</div></div>
+      </div>
+      <div class="tag-row">
+        <span class="chip chip-brand">동일 업종</span>
+        <span class="chip chip-amber">유사 매출</span>
+      </div>
+      <div style="display:flex;gap:4px;margin-top:10px;justify-content:flex-end">
+        <button style="border:none;background:transparent;cursor:pointer;font-size:14px;opacity:.4">👍</button>
+        <button style="border:none;background:transparent;cursor:pointer;font-size:14px;opacity:.4">👎</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile -->
+<section id="mobile">
+  <h2>Mobile Strategy</h2>
+  <div class="card">
+    <ul style="font-size:13px;color:var(--text-sub);line-height:2;list-style:none;padding:0">
+      <li>📱 Filter chips → "필터 (3)" trigger → <strong>bottom sheet</strong></li>
+      <li>📱 Tabs → <strong>horizontal scrollable tab strip</strong>, active tab centered</li>
+      <li>📱 Similar companies → <strong>swipe carousel</strong> (1 card visible)</li>
+      <li>📱 Tables → 2-3 key columns + horizontal scroll, or <strong>card view</strong></li>
+      <li>📱 Network graphs → default to <strong>list view</strong> + "그래프로 보기" toggle</li>
+      <li>📱 Density → default <strong>Comfortable</strong> (desktop: Compact)</li>
+      <li>📱 Breakpoint: <code>768px</code> threshold (CDS)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Before / After -->
+<section id="before-after">
+  <h2>Before / After</h2>
+
+  <h3>Search Bar</h3>
+  <div class="ba-grid">
+    <div class="ba-card before">
+      <div class="ba-label">Before</div>
+      <p style="font-size:13px">Simple text input labeled "키워드" with search button. Searches company names only.</p>
+    </div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-card after">
+      <div class="ba-label">After</div>
+      <p style="font-size:13px">Omnibox spanning full width. Ghost text "기업명, 업종, 또는 조건을 입력하세요..." Recent/Saved/Trending on focus. ⌘K shortcut.</p>
+    </div>
+  </div>
+
+  <h3>Filter System</h3>
+  <div class="ba-grid">
+    <div class="ba-card before">
+      <div class="ba-label">Before</div>
+      <p style="font-size:13px">Fixed left sidebar with 4 filter categories as simple dropdown selectors.</p>
+    </div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-card after">
+      <div class="ba-label">After</div>
+      <p style="font-size:13px">Horizontal primary filter bar + "고급 필터" panel with 12-15 filters. Include/Exclude toggles. Removable chips. Live count updates.</p>
+    </div>
+  </div>
+
+  <h3>Company Detail</h3>
+  <div class="ba-grid">
+    <div class="ba-card before">
+      <div class="ba-label">Before</div>
+      <p style="font-size:13px">Company name + flat list of all data fields displayed vertically without hierarchy.</p>
+    </div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-card after">
+      <div class="ba-label">After</div>
+      <p style="font-size:13px">Hero section (logo + AI summary + metric cards) → sticky 8-tab navigation with count badges → lazy-loaded content → charts, radar, network graphs.</p>
+    </div>
+  </div>
+
+  <h3>Similar Companies</h3>
+  <div class="ba-grid">
+    <div class="ba-card before">
+      <div class="ba-label">Before</div>
+      <p style="font-size:13px">No similar companies feature exists. Dead-end after viewing a company.</p>
+    </div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-card after">
+      <div class="ba-label">After</div>
+      <p style="font-size:13px">Card carousel with match reasoning chips, 영업이익, 👍/👎 feedback, 3 view modes (Carousel/Grid/Comparison). Source context bar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Scoring Algorithm -->
+<section id="scoring">
+  <h2>Scoring Algorithm</h2>
+  <p class="section-desc">KSIC 업종 매칭 + 로그 스케일 매출 유사도 + 지역 매칭. Phase 1 Simple Matching.</p>
+
+  <div class="formula-box">
+    <strong>Final Score =</strong><br>
+    <span class="dim dim-industry">업종 유사도 × <strong>0.4</strong></span> +
+    <span class="dim dim-scale">규모 유사도 × <strong>0.4</strong></span> +
+    <span class="dim dim-region">지역 유사도 × <strong>0.2</strong></span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0">
+    <div class="card">
+      <h4 style="margin-top:0;color:var(--brand)">업종 (KSIC 계층)</h4>
+      <table style="margin:0">
+        <tr><td>소분류 일치</td><td style="font-weight:700;text-align:right">1.0</td></tr>
+        <tr><td>중분류 일치</td><td style="font-weight:700;text-align:right">0.7</td></tr>
+        <tr><td>대분류 일치</td><td style="font-weight:700;text-align:right">0.4</td></tr>
+        <tr><td>Primary fallback</td><td style="font-weight:700;text-align:right">0.2</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0;color:var(--green)">규모 (Log Scale)</h4>
+      <div style="font-family:monospace;font-size:13px;background:var(--bg);padding:12px;border-radius:6px;margin-top:8px">
+        score = max(0,<br>
+        &nbsp;&nbsp;1 - |log₁₀(A) - log₁₀(B)| / 2<br>
+        )
+      </div>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:8px">+ 영업이익 보조 스코어</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0;color:var(--purple)">지역</h4>
+      <table style="margin:0">
+        <tr><td>동일 시/도</td><td style="font-weight:700;text-align:right">1.0</td></tr>
+        <tr><td>동일 광역권</td><td style="font-weight:700;text-align:right">0.5</td></tr>
+        <tr><td>다름</td><td style="font-weight:700;text-align:right">0.0</td></tr>
+      </table>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--text-muted)">Top 5 returned from MongoDB <code>CardCompany</code> aggregation pipeline · Redis cache TTL 1h · Target: &lt; 200ms</p>
+</section>
+
+<!-- Measurement Targets -->
+<section id="metrics">
+  <h2>Measurement Targets</h2>
+
+  <div class="metric-bar">
+    <span class="mb-label">유사 기업 추천 CTR</span>
+    <span class="mb-track"><span class="mb-fill" style="width:75%;background:var(--brand)"></span></span>
+    <span class="mb-value" style="color:var(--brand)">15%+</span>
+  </div>
+  <div class="metric-bar">
+    <span class="mb-label">세션당 기업 열람 수</span>
+    <span class="mb-track"><span class="mb-fill" style="width:50%;background:var(--green)"></span></span>
+    <span class="mb-value" style="color:var(--green)">+50%</span>
+  </div>
+  <div class="metric-bar">
+    <span class="mb-label">체류 시간</span>
+    <span class="mb-track"><span class="mb-fill" style="width:100%;background:var(--amber)"></span></span>
+    <span class="mb-value" style="color:var(--amber)">2× increase</span>
+  </div>
+  <div class="metric-bar">
+    <span class="mb-label">바운스율</span>
+    <span class="mb-track"><span class="mb-fill" style="width:30%;background:var(--red)"></span></span>
+    <span class="mb-value" style="color:var(--red)">-30%</span>
+  </div>
+  <div class="metric-bar">
+    <span class="mb-label">차트 인터랙션율</span>
+    <span class="mb-track"><span class="mb-fill" style="width:30%;background:var(--purple)"></span></span>
+    <span class="mb-value" style="color:var(--purple)">30%+</span>
+  </div>
+  <div class="metric-bar">
+    <span class="mb-label">CTA 클릭률</span>
+    <span class="mb-track"><span class="mb-fill" style="width:75%;background:var(--brand)"></span></span>
+    <span class="mb-value" style="color:var(--brand)">15%+</span>
+  </div>
+  <div class="metric-bar">
+    <span class="mb-label">추천 API 응답시간</span>
+    <span class="mb-track"><span class="mb-fill" style="width:20%;background:var(--green)"></span></span>
+    <span class="mb-value" style="color:var(--green)">&lt; 200ms</span>
+  </div>
+
+  <details style="margin-top:20px">
+    <summary>Full Measurement Table</summary>
+    <div class="details-body">
+      <table>
+        <tr><th>Metric</th><th>Current</th><th>Target</th><th>Phase</th><th>Tool</th></tr>
+        <tr><td>유사 기업 추천 CTR</td><td>N/A</td><td>15%+</td><td>1-D</td><td>Amplitude</td></tr>
+        <tr><td>세션당 기업 열람 수</td><td>TBD</td><td>+50%</td><td>1-D</td><td>Amplitude</td></tr>
+        <tr><td>추천 경유 쿠키 소비량</td><td>N/A</td><td>Track start</td><td>1-D</td><td>Amplitude + MongoDB</td></tr>
+        <tr><td>추천 API 응답시간</td><td>N/A</td><td>&lt; 200ms</td><td>1-D</td><td>Server Monitoring</td></tr>
+        <tr><td>기업 상세 체류 시간</td><td>TBD</td><td>2x</td><td>1-C</td><td>Amplitude</td></tr>
+        <tr><td>탭 전환 횟수/세션</td><td>N/A</td><td>2+</td><td>1-C</td><td>Amplitude</td></tr>
+        <tr><td>Above-fold CTA 클릭률</td><td>N/A</td><td>15%+</td><td>1-C</td><td>Amplitude</td></tr>
+        <tr><td>바운스율</td><td>TBD</td><td>-30%</td><td>1-C</td><td>Amplitude</td></tr>
+        <tr><td>차트 인터랙션율</td><td>N/A</td><td>30%+</td><td>1-C</td><td>Amplitude</td></tr>
+        <tr><td>재무 탭 체류 시간</td><td>TBD</td><td>2x</td><td>1-B</td><td>Amplitude</td></tr>
+        <tr><td>시간범위 변경/세션</td><td>N/A</td><td>1.5+</td><td>1-B</td><td>Amplitude</td></tr>
+      </table>
+    </div>
+  </details>
+</section>
+
+<!-- Design Principles -->
+<section id="principles">
+  <h2>Design Principles</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="card">
+      <h4 style="margin-top:0">🎯 Satisficer vs. Maximizer</h4>
+      <p style="font-size:13px"><strong>Satisficers</strong>: Top 1-2 "Best Match" 강조 카드 → 첫 번째 좋은 옵션 클릭.</p>
+      <p style="font-size:13px"><strong>Maximizers</strong>: 전체 비교 테이블, PitchBook-style side-by-side → 모든 옵션 평가 후 결정.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">📊 Intelligent Density</h4>
+      <p style="font-size:13px">High information per screen, but with clear visual hierarchy. Typography weight, spacing, strategic bolding. Korean text: weight 400, line-height 1.6-1.8x.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">🔐 Progressive Disclosure = Paywall</h4>
+      <p style="font-size:13px">Layer 0 무료 → Layer 1 기본 96🍪 → Layer 2 심화 456🍪. "Show shape, hide numbers" — structure visible, values blurred.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">🚫 Dead-End 제거</h4>
+      <p style="font-size:13px">모든 페이지에 다음 탐색 경로 제공. 결과 0건 시 "이 업종의 인기 기업" 등 대안 콘텐츠.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">💬 추천 근거 투명성</h4>
+      <p style="font-size:13px">"왜 이 기업이 추천됐는지" 사용자가 이해 가능해야 신뢰. Match reasoning chips 필수.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">🤖 AI suggests, User confirms</h4>
+      <p style="font-size:13px">Phase 2에서 AI 필터 변환 시 — 자동 적용 금지. 파싱된 chip 보여주고 "이 조건으로 검색" 확인 버튼.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Phase 2 -->
+<section id="phase2">
+  <h2>Phase 2 · AI-Native Vision</h2>
+
+  <details>
+    <summary>Phase 2-A · Conversational Search → Structured Filters</summary>
+    <div class="details-body">
+      <p>Natural language → structured filter conversion. "부산 핀테크 스타트업 직원 50명 이상 매출 100억 미만" → editable chips.</p>
+      <p><strong>5 States:</strong> Parsing → Filter confirmation → Disambiguation → Conversational refinement → Error recovery</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Phase 2-B · AI-Generated Summaries & Smart Recommendations</summary>
+    <div class="details-body">
+      <p>Perplexity-style cited summaries (Claude Sonnet 4.5). AI company fit scoring from search log data. Three recommendation types:</p>
+      <ul style="font-size:13px;line-height:2">
+        <li>"이 기업을 본 사용자들이 함께 본 기업" — collaborative filtering</li>
+        <li>"관심 업종 트렌드" — weekly digest</li>
+        <li>"네트워크 인텔리전스" — relationship signals (Harmonic.ai pattern)</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Phase 2 · Thumbs Up/Down Feedback Loop</summary>
+    <div class="details-body">
+      <p>👍/👎 on similar company cards → stored in MongoDB → feeds Phase 2 Hybrid Scoring. Personal recommendation weight adjustment per user.</p>
+    </div>
+  </details>
+</section>
+
+<div style="margin-top:64px;padding-top:32px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:12px">
+  CookieDeal 기업탐색 Design Spec v2 · Updated 2026-03-12 · Based on 12 benchmark platform analyses · CDS Design System<br>
+  <a href="https://www.notion.so/320e50796bce81559a32db06db66c14b" style="color:var(--brand);text-decoration:none;font-weight:600">→ Notion Master Page</a>
+</div>
+
+</main>
+
+<script>
+// Sidebar active state
+const links = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const id = entry.target.id;
+      const link = document.querySelector(`.sidebar a[href="#${id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+
+// Detail page tab switching
+function switchDetailTab(el, contentId) {
+  document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.detail-body').forEach(b => b.style.display = 'none');
+  document.getElementById(contentId).style.display = 'block';
+}
+
+// Phase card click
+function showPhaseDetail(phase) {
+  const sections = {'1a':'search','1b':'results','1c':'detail','2':'phase2'};
+  const target = sections[phase];
+  if (target) document.getElementById(target).scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

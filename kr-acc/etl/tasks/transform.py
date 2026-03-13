@@ -7,6 +7,7 @@ from datetime import date
 from prefect import task
 
 from assembly_client import (
+    RawAllMember,
     RawBill,
     RawCommittee,
     RawLegislator,
@@ -36,8 +37,12 @@ def _parse_date(date_str: str) -> date | None:
     return None
 
 
-def _safe_int(value: str) -> int | None:
-    """Parse string to int, returning None on failure."""
+def _safe_int(value: str | int | None) -> int | None:
+    """Parse string or int to int, returning None on failure."""
+    if value is None:
+        return None
+    if isinstance(value, int):
+        return value
     if not value or not value.strip():
         return None
     try:
@@ -79,11 +84,110 @@ def transform_legislators(raw_rows: list[dict], assembly_term: int = 22) -> list
             "committees": _parse_committees(raw.CMITS),
             "profile_url": raw.LINK_URL or None,
             "photo_url": None,
+            "eng_name": raw.ENG_NM or None,
+            "bio": raw.MEM_TITLE or None,
+            "email": raw.E_MAIL or None,
+            "homepage": raw.HOMEPAGE or None,
+            "office_address": raw.ASSEM_ADDR or None,
             "birth_date": _parse_date(raw.BTH_DATE),
             "gender": raw.SEX_GBN_NM or None,
             "assembly_term": assembly_term,
         })
     logger.info("Transformed %d/%d legislators", len(results), len(raw_rows))
+    return results
+
+
+def _parse_term_numbers(gtelt_eraco: str) -> list[int]:
+    """Parse GTELT_ERACO like '제9대, 제10대' into [9, 10]."""
+    if not gtelt_eraco:
+        return []
+    terms = []
+    for part in gtelt_eraco.split(","):
+        part = part.strip()
+        match = re.search(r"제(\d+)대", part)
+        if match:
+            terms.append(int(match.group(1)))
+    return sorted(terms)
+
+
+def _latest_party(plpt_nm: str) -> str | None:
+    """Extract the latest party from '/' separated party names."""
+    if not plpt_nm:
+        return None
+    parts = [p.strip() for p in plpt_nm.split("/") if p.strip()]
+    return parts[-1] if parts else None
+
+
+def _gender_from_ntrdiv(ntrdiv: str) -> str | None:
+    """Map NTR_DIV (남/여) to gender string."""
+    if ntrdiv == "남":
+        return "남"
+    if ntrdiv == "여":
+        return "여"
+    return None
+
+
+@task(name="transform-all-legislators")
+def transform_all_legislators(
+    raw_rows: list[dict],
+    target_terms: list[int] | None = None,
+) -> list[dict]:
+    """Transform ALLNAMEMBER API data into DB-ready politician dicts.
+
+    Args:
+        raw_rows: Raw API response rows.
+        target_terms: Only include politicians who served in these terms.
+            If None, includes all.
+
+    Returns:
+        List of politician dicts ready for upsert.
+    """
+    results = []
+    seen_ids: set[str] = set()
+    for row in raw_rows:
+        raw = RawAllMember.model_validate(row)
+        if not raw.NAAS_CD or not raw.NAAS_NM:
+            logger.warning("Skipping all-member record with missing ID or name: %s", row)
+            continue
+
+        terms = _parse_term_numbers(raw.GTELT_ERACO)
+        if target_terms and not any(t in target_terms for t in terms):
+            continue
+
+        if raw.NAAS_CD in seen_ids:
+            continue
+        seen_ids.add(raw.NAAS_CD)
+
+        # Use the highest term they served in as assembly_term
+        highest_term = max(terms) if terms else None
+
+        results.append({
+            "assembly_id": raw.NAAS_CD,
+            "name": raw.NAAS_NM,
+            "name_hanja": raw.NAAS_CH_NM or None,
+            "party": _latest_party(raw.PLPT_NM),
+            "constituency": raw.ELECD_NM or None,
+            "elected_count": _parse_elected_count(raw.RLCT_DIV_NM),
+            "committees": [c.strip() for c in raw.CMIT_NM.split(",") if c.strip()]
+            if raw.CMIT_NM
+            else [],
+            "profile_url": raw.NAAS_HP_URL or None,
+            "photo_url": raw.NAAS_PIC or None,
+            "eng_name": raw.NAAS_EN_NM or None,
+            "bio": raw.BRF_HST or None,
+            "email": raw.NAAS_EMAIL_ADDR or None,
+            "homepage": raw.NAAS_HP_URL or None,
+            "office_address": None,
+            "birth_date": _parse_date(raw.BIRDY_DT),
+            "gender": _gender_from_ntrdiv(raw.NTR_DIV),
+            "assembly_term": highest_term,
+        })
+    logger.info(
+        "Transformed %d/%d all-time legislators (target terms: %s)",
+        len(results),
+        len(raw_rows),
+        target_terms,
+    )
     return results
 
 
@@ -168,23 +272,27 @@ def transform_vote_summaries(raw_rows: list[dict], assembly_term: int = 22) -> l
     results = []
     for row in raw_rows:
         raw = RawVoteSummary.model_validate(row)
-        if not raw.BILL_ID or not raw.VOTE_DATE:
+        if not raw.BILL_ID or not raw.PROC_DT:
             continue
-        vote_date = _parse_date(raw.VOTE_DATE)
+        vote_date = _parse_date(raw.PROC_DT)
         if not vote_date:
             continue
         # Generate a vote_id from bill_id + date
-        vote_id = f"{raw.BILL_ID}_{raw.VOTE_DATE}"
+        vote_id = f"{raw.BILL_ID}_{raw.PROC_DT}"
+        # Absent = total members - voters who showed up
+        member_total = _safe_int(raw.MEMBER_TCNT)
+        vote_total = _safe_int(raw.VOTE_TCNT)
+        absent = (member_total - vote_total) if member_total and vote_total else None
         results.append({
             "vote_id": vote_id,
             "bill_id": raw.BILL_ID,
             "vote_date": vote_date,
-            "total_members": _safe_int(raw.MEMBER_TCNT),
+            "total_members": member_total,
             "yes_count": _safe_int(raw.YES_TCNT),
             "no_count": _safe_int(raw.NO_TCNT),
             "abstain_count": _safe_int(raw.BLANK_TCNT),
-            "absent_count": _safe_int(raw.ABSENT_TCNT),
-            "result": raw.RESULT or None,
+            "absent_count": absent,
+            "result": raw.PROC_RESULT_CD or None,
             "assembly_term": assembly_term,
         })
     logger.info("Transformed %d/%d vote summaries", len(results), len(raw_rows))

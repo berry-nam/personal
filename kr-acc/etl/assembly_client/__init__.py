@@ -2,6 +2,7 @@
 
 from .client import AssemblyAPIError, AssemblyClient
 from .endpoints import (
+    ALL_MEMBERS,
     BILL_REVIEW,
     BILLS,
     COMMITTEES,
@@ -10,6 +11,7 @@ from .endpoints import (
     VOTE_SUMMARY,
 )
 from .models import (
+    RawAllMember,
     RawBill,
     RawBillReview,
     RawCommittee,
@@ -21,12 +23,14 @@ from .models import (
 __all__ = [
     "AssemblyAPIError",
     "AssemblyClient",
+    "ALL_MEMBERS",
     "BILL_REVIEW",
     "BILLS",
     "COMMITTEES",
     "LEGISLATORS",
     "VOTE_PER_MEMBER",
     "VOTE_SUMMARY",
+    "RawAllMember",
     "RawBill",
     "RawBillReview",
     "RawCommittee",

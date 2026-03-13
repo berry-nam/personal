@@ -1,13 +1,24 @@
 """Pydantic models for raw API responses from 열린국회정보.
 
 Each model maps to a specific API endpoint's row fields.
-All fields default to empty string since the API may omit fields.
+All fields default to empty string since the API may omit or null fields.
 """
 
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 
 
-class RawLegislator(BaseModel):
+class NullToEmpty(BaseModel):
+    """Base model that coerces None values to empty strings."""
+
+    @model_validator(mode="before")
+    @classmethod
+    def coerce_none_to_empty(cls, data: dict) -> dict:
+        if isinstance(data, dict):
+            return {k: (v if v is not None else "") for k, v in data.items()}
+        return data
+
+
+class RawLegislator(NullToEmpty):
     """국회의원 인적사항 — legislator bio (nwvrqwxyaytdsfvhu)."""
 
     HG_NM: str = ""          # 한글 이름
@@ -20,15 +31,18 @@ class RawLegislator(BaseModel):
     LINK_URL: str = ""       # 프로필 URL
     BTH_DATE: str = ""       # 생년월일
     SEX_GBN_NM: str = ""     # 성별
+    ENG_NM: str = ""         # 영문 이름
+    MEM_TITLE: str = ""      # 이력 (career history)
     E_MAIL: str = ""         # 이메일
     TEL_NO: str = ""         # 전화번호
+    HOMEPAGE: str = ""       # 홈페이지
     ASSEM_ADDR: str = ""     # 사무실 주소
     UNITS: str = ""          # 약력
     SEC_CD: str = ""         # 비서관 코드
     JOB_RES_NM: str = ""     # 직책
 
 
-class RawBill(BaseModel):
+class RawBill(NullToEmpty):
     """의안 정보 — bill info (nzmimeepazxkubdpn)."""
 
     BILL_ID: str = ""        # 의안 ID
@@ -45,7 +59,7 @@ class RawBill(BaseModel):
     RST_PROPOSER: str = ""   # 대표발의자
 
 
-class RawBillReview(BaseModel):
+class RawBillReview(NullToEmpty):
     """법률안 심사정보 — bill review details (nojepdqqaweusdfbi)."""
 
     BILL_ID: str = ""
@@ -61,22 +75,24 @@ class RawBillReview(BaseModel):
     PLENARY_PROC_RESULT: str = ""
 
 
-class RawVoteSummary(BaseModel):
-    """본회의 표결 정보 — plenary vote summary (ncocpbgebiallbyeq)."""
+class RawVoteSummary(NullToEmpty):
+    """의안별 표결현황 — plenary vote summary (ncocpgfiaoituanbr)."""
 
     BILL_ID: str = ""
     BILL_NO: str = ""
     BILL_NAME: str = ""
-    VOTE_DATE: str = ""
-    MEMBER_TCNT: str = ""
-    YES_TCNT: str = ""
-    NO_TCNT: str = ""
-    BLANK_TCNT: str = ""
-    ABSENT_TCNT: str = ""
-    RESULT: str = ""
+    PROC_DT: str = ""           # 처리일 (vote date)
+    MEMBER_TCNT: str | int = ""  # 재적의원수
+    VOTE_TCNT: str | int = ""    # 투표의원수
+    YES_TCNT: str | int = ""     # 찬성
+    NO_TCNT: str | int = ""      # 반대
+    BLANK_TCNT: str | int = ""   # 기권
+    PROC_RESULT_CD: str = ""    # 처리결과
+    CURR_COMMITTEE: str = ""
+    LINK_URL: str = ""
 
 
-class RawVotePerMember(BaseModel):
+class RawVotePerMember(NullToEmpty):
     """본회의 표결결과 의원별 — per-member vote (nwbpacrgavhjryiph)."""
 
     BILL_ID: str = ""
@@ -87,7 +103,29 @@ class RawVotePerMember(BaseModel):
     VOTE_DATE: str = ""
 
 
-class RawCommittee(BaseModel):
+class RawAllMember(NullToEmpty):
+    """역대 국회의원 인적사항 — all-time legislator bio (ALLNAMEMBER)."""
+
+    NAAS_CD: str = ""           # 의원 코드 (assembly_id)
+    NAAS_NM: str = ""           # 한글 이름
+    NAAS_CH_NM: str = ""        # 한자 이름
+    NAAS_EN_NM: str = ""        # 영문 이름
+    PLPT_NM: str = ""           # 정당명 (may contain "/" for multi-term)
+    ELECD_NM: str = ""          # 선거구
+    ELECD_DIV_NM: str = ""      # 선거구 구분 (지역구/비례대표)
+    CMIT_NM: str = ""           # 소속 위원회
+    RLCT_DIV_NM: str = ""       # 당선 횟수 (초선, 재선, etc.)
+    GTELT_ERACO: str = ""       # 대수 목록 (e.g. "제9대, 제10대")
+    NTR_DIV: str = ""           # 성별 (남/여)
+    BIRDY_DT: str = ""          # 생년월일
+    NAAS_PIC: str = ""          # 프로필 사진 URL
+    NAAS_TEL_NO: str = ""       # 전화번호
+    NAAS_EMAIL_ADDR: str = ""   # 이메일
+    NAAS_HP_URL: str = ""       # 홈페이지
+    BRF_HST: str = ""           # 약력
+
+
+class RawCommittee(NullToEmpty):
     """위원회 현황 — committee info (nknaocmjlgzmoutew)."""
 
     CURR_COMMITTEE_ID: str = ""

@@ -18,13 +18,17 @@ async def list_bills(
     result: str | None = None,
     date_from: date | None = None,
     date_to: date | None = None,
-    assembly_term: int = 22,
+    assembly_term: int | None = None,
     page: int = 1,
     size: int = 20,
 ) -> tuple[list[Bill], int]:
     """List bills with filtering and pagination."""
-    query = select(Bill).where(Bill.assembly_term == assembly_term)
-    count_query = select(func.count(Bill.id)).where(Bill.assembly_term == assembly_term)
+    query = select(Bill)
+    count_query = select(func.count(Bill.id))
+
+    if assembly_term is not None:
+        query = query.where(Bill.assembly_term == assembly_term)
+        count_query = count_query.where(Bill.assembly_term == assembly_term)
 
     if keyword:
         filt = Bill.bill_name.ilike(f"%{keyword}%")
@@ -61,6 +65,22 @@ async def get_bill(session: AsyncSession, bill_id: str) -> Bill | None:
         .options(selectinload(Bill.sponsors).selectinload(BillSponsor.politician))
     )
     return result.scalar_one_or_none()
+
+
+async def get_pipeline_stats(
+    session: AsyncSession,
+    assembly_term: int | None = None,
+) -> list[dict]:
+    """Get bill pipeline stats — count per result/status."""
+    query = select(
+        Bill.result,
+        func.count(Bill.id).label("count"),
+    )
+    if assembly_term is not None:
+        query = query.where(Bill.assembly_term == assembly_term)
+    query = query.group_by(Bill.result).order_by(func.count(Bill.id).desc())
+    result = await session.execute(query)
+    return [{"result": r or "계류중", "count": c} for r, c in result.all()]
 
 
 async def get_bills_by_politician(

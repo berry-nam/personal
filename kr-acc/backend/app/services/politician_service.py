@@ -1,9 +1,9 @@
 """Politician query service."""
 
-from sqlalchemy import func, select
+from sqlalchemy import func, select, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import BillSponsor, Politician, VoteRecord
+from app.models import Bill, BillSponsor, Politician, Vote, VoteRecord
 
 
 async def list_politicians(
@@ -11,7 +11,7 @@ async def list_politicians(
     *,
     party: str | None = None,
     name: str | None = None,
-    assembly_term: int = 22,
+    assembly_term: int | None = None,
     page: int = 1,
     size: int = 20,
 ) -> tuple[list[Politician], int]:
@@ -20,10 +20,12 @@ async def list_politicians(
     Returns:
         Tuple of (politician list, total count).
     """
-    query = select(Politician).where(Politician.assembly_term == assembly_term)
-    count_query = select(func.count(Politician.id)).where(
-        Politician.assembly_term == assembly_term
-    )
+    query = select(Politician)
+    count_query = select(func.count(Politician.id))
+
+    if assembly_term is not None:
+        query = query.where(Politician.assembly_term == assembly_term)
+        count_query = count_query.where(Politician.assembly_term == assembly_term)
 
     if party:
         query = query.where(Politician.party == party)
@@ -89,4 +91,58 @@ async def get_politician_stats(session: AsyncSession, politician_id: int) -> dic
         "participation_rate": round(participation, 1),
         "bills_sponsored": srow.total_sponsored or 0,
         "bills_primary_sponsored": srow.primary_sponsored or 0,
+    }
+
+
+async def get_top_sponsors(
+    session: AsyncSession,
+    *,
+    assembly_term: int | None = None,
+    limit: int = 10,
+) -> list[dict]:
+    """Get politicians ranked by number of primary-sponsored bills.
+
+    Returns:
+        List of dicts with politician info and bill count.
+    """
+    query = (
+        select(
+            Politician.id,
+            Politician.name,
+            Politician.party,
+            Politician.photo_url,
+            func.count(BillSponsor.id).label("bill_count"),
+        )
+        .join(BillSponsor, BillSponsor.politician_id == Politician.id)
+        .where(BillSponsor.sponsor_type == "primary")
+    )
+    if assembly_term is not None:
+        query = query.where(Politician.assembly_term == assembly_term)
+    query = (
+        query.group_by(Politician.id, Politician.name, Politician.party, Politician.photo_url)
+        .order_by(desc("bill_count"))
+        .limit(limit)
+    )
+    result = await session.execute(query)
+    return [
+        {
+            "id": row.id,
+            "name": row.name,
+            "party": row.party,
+            "photo_url": row.photo_url,
+            "bill_count": row.bill_count,
+        }
+        for row in result.all()
+    ]
+
+
+async def get_platform_stats(session: AsyncSession) -> dict:
+    """Get overall platform statistics."""
+    pol_count = (await session.execute(select(func.count(Politician.id)))).scalar_one()
+    bill_count = (await session.execute(select(func.count(Bill.id)))).scalar_one()
+    vote_count = (await session.execute(select(func.count(Vote.id)))).scalar_one()
+    return {
+        "politicians": pol_count,
+        "bills": bill_count,
+        "votes": vote_count,
     }

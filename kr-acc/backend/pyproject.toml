@@ -13,6 +13,7 @@ dependencies = [
     "httpx>=0.28",
     "alembic>=1.14",
     "psycopg2-binary>=2.9",
+    "limits>=3.0",
 ]
 
 [project.optional-dependencies]

@@ -29,6 +29,7 @@ class TestPoliticianSchemas:
             constituency="서울 강남구갑",
             elected_count=2,
             photo_url=None,
+            assembly_term=22,
         )
         assert data.name == "김철수"
         assert data.party == "국민의힘"
@@ -45,6 +46,11 @@ class TestPoliticianSchemas:
             committees=["기획재정위원회"],
             profile_url=None,
             photo_url=None,
+            eng_name=None,
+            bio=None,
+            email=None,
+            homepage=None,
+            office_address=None,
             birth_date=date(1980, 3, 15),
             gender="남",
             assembly_term=22,

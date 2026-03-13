@@ -1,19 +1,29 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router";
-import { useBills } from "@/api/queries";
+import { useBills, useCommittees } from "@/api/queries";
+import useDocumentTitle from "@/lib/useDocumentTitle";
 import Pagination from "@/components/layout/Pagination";
 import { formatDate } from "@/lib/format";
 
+const RESULT_OPTIONS = ["원안가결", "수정가결", "부결", "폐기", "철회"];
+const PROPOSER_TYPES = ["의원", "정부", "위원장"];
+
 export default function BillList() {
+  useDocumentTitle("법안");
   const [keyword, setKeyword] = useState("");
   const [debouncedKeyword, setDebouncedKeyword] = useState("");
   const [result, setResult] = useState<string | undefined>();
+  const [proposerType, setProposerType] = useState<string | undefined>();
+  const [committeeName, setCommitteeName] = useState<string | undefined>();
   const [page, setPage] = useState(1);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const committees = useCommittees();
 
   const { data, isLoading } = useBills({
     keyword: debouncedKeyword || undefined,
     result,
+    proposer_type: proposerType,
+    committee_name: committeeName,
     page,
     size: 20,
   });
@@ -27,21 +37,23 @@ export default function BillList() {
     }, 300);
   }
 
-  const RESULT_OPTIONS = ["원안가결", "수정가결", "부결", "폐기", "철회"];
-
   return (
     <div>
       <h1 className="text-2xl font-bold">법안</h1>
 
       {/* Filters */}
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        <input
-          type="text"
-          placeholder="법안명 검색..."
-          value={keyword}
-          onChange={(e) => handleKeywordChange(e.target.value)}
-          className="rounded-md border border-gray-300 px-3 py-1.5 text-sm focus:border-gray-500 focus:outline-none"
-        />
+      <div className="mt-4 space-y-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <input
+            type="text"
+            placeholder="법안명 검색..."
+            value={keyword}
+            onChange={(e) => handleKeywordChange(e.target.value)}
+            className="rounded-md border border-gray-300 px-3 py-1.5 text-sm focus:border-gray-500 focus:outline-none"
+          />
+        </div>
+
+        {/* Result filter */}
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => {
@@ -54,7 +66,7 @@ export default function BillList() {
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
-            전체
+            전체 결과
           </button>
           {RESULT_OPTIONS.map((r) => (
             <button
@@ -73,6 +85,74 @@ export default function BillList() {
             </button>
           ))}
         </div>
+
+        {/* Proposer type filter */}
+        <div className="flex flex-wrap gap-1">
+          <button
+            onClick={() => {
+              setProposerType(undefined);
+              setPage(1);
+            }}
+            className={`rounded-full px-3 py-1 text-xs ${
+              !proposerType
+                ? "bg-gray-900 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            }`}
+          >
+            전체 발의
+          </button>
+          {PROPOSER_TYPES.map((t) => (
+            <button
+              key={t}
+              onClick={() => {
+                setProposerType(t);
+                setPage(1);
+              }}
+              className={`rounded-full px-3 py-1 text-xs ${
+                proposerType === t
+                  ? "bg-gray-900 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+
+        {/* Committee filter */}
+        {committees.data && committees.data.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            <button
+              onClick={() => {
+                setCommitteeName(undefined);
+                setPage(1);
+              }}
+              className={`rounded-full px-3 py-1 text-xs ${
+                !committeeName
+                  ? "bg-gray-900 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              전체 위원회
+            </button>
+            {committees.data.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => {
+                  setCommitteeName(c.name);
+                  setPage(1);
+                }}
+                className={`rounded-full px-3 py-1 text-xs ${
+                  committeeName === c.name
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                {c.name}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Results */}
@@ -87,7 +167,7 @@ export default function BillList() {
             {data?.items.map((bill) => (
               <Link
                 key={bill.bill_id}
-                to={`/bills/${bill.bill_id}`}
+                to={`/legislation/bills/${bill.bill_id}`}
                 className="block rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md"
               >
                 <div className="flex items-start justify-between gap-2">

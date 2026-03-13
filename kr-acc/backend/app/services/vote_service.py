@@ -16,13 +16,17 @@ async def list_votes(
     result: str | None = None,
     date_from: date | None = None,
     date_to: date | None = None,
-    assembly_term: int = 22,
+    assembly_term: int | None = None,
     page: int = 1,
     size: int = 20,
 ) -> tuple[list[Vote], int]:
     """List votes with filtering and pagination."""
-    query = select(Vote).where(Vote.assembly_term == assembly_term)
-    count_query = select(func.count(Vote.id)).where(Vote.assembly_term == assembly_term)
+    query = select(Vote)
+    count_query = select(func.count(Vote.id))
+
+    if assembly_term is not None:
+        query = query.where(Vote.assembly_term == assembly_term)
+        count_query = count_query.where(Vote.assembly_term == assembly_term)
 
     if bill_id:
         query = query.where(Vote.bill_id == bill_id)
@@ -38,7 +42,12 @@ async def list_votes(
         count_query = count_query.where(Vote.vote_date <= date_to)
 
     total = (await session.execute(count_query)).scalar_one()
-    query = query.order_by(Vote.vote_date.desc()).offset((page - 1) * size).limit(size)
+    query = (
+        query.options(selectinload(Vote.bill))
+        .order_by(Vote.vote_date.desc())
+        .offset((page - 1) * size)
+        .limit(size)
+    )
     rows = await session.execute(query)
     return list(rows.scalars().all()), total
 

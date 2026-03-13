@@ -1,0 +1,38 @@
+# Caddy reverse proxy for kr-acc
+# Automatically provisions HTTPS via Let's Encrypt
+#
+# Replace {$DOMAIN} with your actual domain (e.g., kracc.example.com)
+# Set via environment variable: DOMAIN=kracc.example.com
+
+{$DOMAIN:localhost} {
+    # Frontend (nginx serves at port 80 in prod)
+    handle {
+        reverse_proxy frontend:80
+    }
+
+    # API proxy
+    handle /api/* {
+        reverse_proxy backend:8000
+    }
+
+    # Health check
+    handle /health {
+        reverse_proxy backend:8000
+    }
+
+    # Security headers
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        Referrer-Policy strict-origin-when-cross-origin
+        -Server
+    }
+
+    # Compression
+    encode gzip zstd
+
+    log {
+        output stdout
+        format console
+    }
+}

@@ -11,11 +11,14 @@ BILLS = "nzmimeepazxkubdpn"
 # 법률안 심사정보 (bill review)
 BILL_REVIEW = "nojepdqqaweusdfbi"
 
-# 본회의 표결 정보 (plenary vote summary)
-VOTE_SUMMARY = "ncocpbgebiallbyeq"
+# 의안별 표결현황 (plenary vote summary per bill)
+VOTE_SUMMARY = "ncocpgfiaoituanbr"
 
-# 본회의 표결결과 의원별 (per-member vote)
+# 국회의원 본회의 표결정보 (bill-level vote info — requires AGE param)
 VOTE_PER_MEMBER = "nwbpacrgavhjryiph"
 
-# 위원회 현황 (committee list)
+# 위원회 현황 — NOTE: endpoint slug TBD, currently broken
 COMMITTEES = "nknaocmjlgzmoutew"
+
+# 역대 국회의원 인적사항 (all-time legislator bio across all terms)
+ALL_MEMBERS = "ALLNAMEMBER"
