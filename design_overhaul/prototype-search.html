@@ -1220,6 +1220,10 @@ body.cb-comment-mode{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 .cb-sb-time{font-size:11px;color:#9AA3B4}
 .cb-sb-text{font-size:13px;color:#4B5563;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .cb-sb-replies{font-size:11px;color:#6B7689;margin-top:3px}
+.cb-sb-page{font-size:11px;color:#9AA3B4;display:flex;align-items:center;gap:3px;margin-bottom:1px}
+.cb-sb-link-icon{font-size:10px;color:#0549CC}
+.cb-sb-item.other-page{opacity:.65}
+.cb-sb-item.other-page:hover{opacity:1}
 .cb-sb-empty{padding:40px 20px;text-align:center;color:#9AA3B4;font-size:13px}
 body.cb-sidebar-open{padding-left:340px;transition:padding-left .25s cubic-bezier(.4,0,.2,1)}
 </style>
@@ -1238,15 +1242,20 @@ var FIREBASE_CONFIG = {
   appId: "1:288688295893:web:2ac43b8a5e28ec812c375c"
 };
 var PAGE_ID = 'search';
+var PAGE_LABEL = '기업탐색';
+var PAGE_LABELS = {search:'기업탐색', detail:'에이치비테크놀로지 상세'};
+var PAGE_URLS = {search:'prototype-search.html', detail:'prototype-detail.html'};
 var COLORS = ['#0549CC','#059669','#D97706','#DC2626','#8B5CF6','#0D9488','#EA580C','#6366F1','#B45309','#14B8A6'];
 
 // ── STATE ──
 var commentMode = false;
 var comments = {};
+var allComments = {};
 var openThreadId = null;
 var currentUser = null;
 var db = null;
 var commentsRef = null;
+var allCommentsRef = null;
 var nextPin = 1;
 
 // ── HELPERS ──
@@ -1267,28 +1276,34 @@ function initFB(){
   firebase.initializeApp(FIREBASE_CONFIG);
   db=firebase.database();
   commentsRef=db.ref('comments/'+PAGE_ID);
+  allCommentsRef=db.ref('comments');
 }
 function subscribe(){
+  // Page-specific: pins + badge
   commentsRef.on('value',function(snap){
     comments=snap.val()||{};
     var mx=0;
     Object.keys(comments).forEach(function(k){if(comments[k].pinNumber>mx)mx=comments[k].pinNumber;});
     nextPin=mx+1;
     renderPins();
-    renderSidebar();
     var cnt=Object.keys(comments).filter(function(k){return !comments[k].resolved;}).length;
     var badge=document.getElementById('cb-badge');
     if(badge)badge.textContent=cnt;
-    // Auto-open sidebar when comments exist
+  });
+  // Cross-page: sidebar
+  allCommentsRef.on('value',function(snap){
+    allComments=snap.val()||{};
+    renderSidebar();
+    var total=0;
+    Object.keys(allComments).forEach(function(pid){if(allComments[pid])total+=Object.keys(allComments[pid]).length;});
     var sb=document.getElementById('cb-sidebar');
-    var hasComments=Object.keys(comments).length>0;
-    if(hasComments){sb.classList.add('open');document.body.classList.add('cb-sidebar-open');}
+    if(total>0){sb.classList.add('open');document.body.classList.add('cb-sidebar-open');}
     else{sb.classList.remove('open');document.body.classList.remove('cb-sidebar-open');}
   });
 }
 function addComment(x,y,text){
   var ref=commentsRef.push();
-  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin}).catch(function(err){alert('Firebase 저장 실패: '+err.message+'\n\nFirebase Console → Realtime Database → 규칙 에서 read/write를 true로 설정해주세요.');});
+  ref.set({id:ref.key,x:x,y:y,author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP,resolved:false,pinNumber:nextPin,pageId:PAGE_ID,pageLabel:PAGE_LABEL}).catch(function(err){alert('Firebase 저장 실패: '+err.message+'\n\nFirebase Console → Realtime Database → 규칙 에서 read/write를 true로 설정해주세요.');});
 }
 function addReply(cid,text){
   commentsRef.child(cid).child('replies').push().set({author:currentUser.name,authorColor:currentUser.color,text:text,timestamp:firebase.database.ServerValue.TIMESTAMP});
@@ -1341,16 +1356,27 @@ function createSidebar(){
     });
   });
 }
+function flattenAll(){
+  var arr=[];
+  Object.keys(allComments).forEach(function(pid){
+    if(!allComments[pid])return;
+    Object.keys(allComments[pid]).forEach(function(cid){
+      var c=allComments[pid][cid];
+      c._pageId=pid;
+      c._pageLabel=c.pageLabel||PAGE_LABELS[pid]||pid;
+      arr.push(c);
+    });
+  });
+  return arr;
+}
 function renderSidebar(){
   var list=document.getElementById('cb-sb-list');
   if(!list)return;
-  var sorted=Object.keys(comments).map(function(k){return comments[k];}).sort(function(a,b){return(b.timestamp||0)-(a.timestamp||0);});
-  // Filter
+  var sorted=flattenAll().sort(function(a,b){return(b.timestamp||0)-(a.timestamp||0);});
   if(sidebarFilter==='open')sorted=sorted.filter(function(c){return !c.resolved;});
   else if(sidebarFilter==='resolved')sorted=sorted.filter(function(c){return c.resolved;});
-  // Update count
   var countEl=document.getElementById('cb-sb-count');
-  if(countEl)countEl.textContent=Object.keys(comments).length+'개';
+  if(countEl)countEl.textContent=flattenAll().length+'개';
   if(sorted.length===0){
     list.innerHTML='<div class="cb-sb-empty">'+(sidebarFilter==='resolved'?'해결된 코멘트가 없습니다':sidebarFilter==='open'?'미해결 코멘트가 없습니다':'코멘트가 없습니다.<br>화면 아무 곳을 클릭하여 추가하세요.')+'</div>';
     return;
@@ -1358,28 +1384,27 @@ function renderSidebar(){
   list.innerHTML=sorted.map(function(c){
     var replyCount=c.replies?Object.keys(c.replies).length:0;
     var replyText=replyCount>0?'<div class="cb-sb-replies">💬 '+replyCount+'개 답글</div>':'';
-    var cls='cb-sb-item'+(c.resolved?' resolved-item':'')+(openThreadId===c.id?' active':'');
-    return '<div class="'+cls+'" data-cid="'+c.id+'">'
+    var isOther=c._pageId!==PAGE_ID;
+    var cls='cb-sb-item'+(c.resolved?' resolved-item':'')+(isOther?' other-page':'')+(openThreadId===c.id?' active':'');
+    var pageTag='<div class="cb-sb-page">'+(isOther?'<span class="cb-sb-link-icon">↗</span>':'')+esc(c._pageLabel)+'</div>';
+    return '<div class="'+cls+'" data-cid="'+c.id+'" data-page="'+c._pageId+'">'
       +'<div class="cb-sb-pin" style="background:'+c.authorColor+'">'+c.pinNumber+'</div>'
       +'<div class="cb-sb-body">'
+      +pageTag
       +'<div class="cb-sb-meta"><span class="cb-sb-author">'+esc(c.author)+'</span><span class="cb-sb-time">'+timeAgo(c.timestamp)+'</span></div>'
       +'<div class="cb-sb-text">'+esc(c.text)+'</div>'
       +replyText
       +'</div></div>';
   }).join('');
-  // Bind clicks
   list.querySelectorAll('.cb-sb-item').forEach(function(item){
     item.addEventListener('click',function(){
       var cid=item.dataset.cid;
+      var pid=item.dataset.page;
+      if(pid!==PAGE_ID){window.location.href=PAGE_URLS[pid]||('#');return;}
       var c=comments[cid];
       if(!c)return;
-      // Scroll to pin
       var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
-      if(pin){
-        var pinY=parseFloat(pin.style.top);
-        window.scrollTo({top:pinY-200,behavior:'smooth'});
-      }
-      // Open thread
+      if(pin){window.scrollTo({top:parseFloat(pin.style.top)-200,behavior:'smooth'});}
       setTimeout(function(){openThread(cid);renderSidebar();},300);
     });
   });
