@@ -1013,8 +1013,10 @@ function subscribe(){
     if(badge)badge.textContent=total;
     renderSidebar();
     var sb=document.getElementById('cb-sidebar');
-    if(total>0){sb.classList.add('open');document.body.classList.add('cb-sidebar-open');}
-    else{sb.classList.remove('open');document.body.classList.remove('cb-sidebar-open');}
+    if(!sidebarManualClose){
+      if(total>0){sb.classList.add('open');document.body.classList.add('cb-sidebar-open');}
+      else{sb.classList.remove('open');document.body.classList.remove('cb-sidebar-open');}
+    }
   });
 }
 function addComment(anchorId,xPct,yPct,text){
@@ -1041,11 +1043,16 @@ function toggleMode(){
   var btn=document.getElementById('cb-mode-btn');
   btn.className='cb-toggle-btn '+(commentMode?'active':'inactive');
   btn.querySelector('.cb-mode-label').textContent=commentMode?'코멘트 ON':'코멘트';
-  if(!commentMode){closeThread();var ni=document.getElementById('cb-new-input');if(ni)ni.remove();}
+  if(commentMode){
+    sidebarManualClose=false;
+    var sb=document.getElementById('cb-sidebar');
+    if(sb){sb.classList.add('open');document.body.classList.add('cb-sidebar-open');}
+  }else{closeThread();var ni=document.getElementById('cb-new-input');if(ni)ni.remove();}
 }
 
 // ── SIDEBAR ──
 var sidebarFilter='all';
+var sidebarManualClose=false;
 function createSidebar(){
   var sb=document.createElement('div');
   sb.id='cb-sidebar';
@@ -1062,7 +1069,11 @@ function createSidebar(){
     +'</div>'
     +'<div class="cb-sb-list" id="cb-sb-list"></div>';
   document.body.appendChild(sb);
-  sb.querySelector('#cb-sb-close').addEventListener('click',function(){toggleMode();});
+  sb.querySelector('#cb-sb-close').addEventListener('click',function(){
+    sb.classList.remove('open');document.body.classList.remove('cb-sidebar-open');
+    sidebarManualClose=true;
+    closeThread();var ni=document.getElementById('cb-new-input');if(ni)ni.remove();
+  });
   sb.querySelectorAll('.cb-sb-tab').forEach(function(tab){
     tab.addEventListener('click',function(){
       sb.querySelectorAll('.cb-sb-tab').forEach(function(t){t.classList.remove('active');});
