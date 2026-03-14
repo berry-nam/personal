@@ -165,6 +165,9 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFo
 .emp-cell{font-size:13px}
 .emp-growth{font-size:11px;font-weight:500;margin-left:4px}
 .year-cell{font-size:12.5px;color:var(--text-sub);font-variant-numeric:tabular-nums}
+.detail-meta{display:flex;gap:10px;margin-top:3px;font-size:11px;color:var(--text-muted)}
+.detail-meta span{display:flex;align-items:center;gap:3px}
+.detail-meta .meta-label{color:var(--text-sub);font-weight:500}
 .detail-rev{display:inline-flex;flex-direction:column;gap:4px;min-width:140px;text-align:left}
 .detail-rev-top{display:flex;align-items:center;gap:8px}
 .detail-rev-bar{height:6px;border-radius:3px;background:var(--slate-100);width:100%;overflow:hidden}
@@ -511,11 +514,11 @@ body.cb-sidebar-open{padding-left:340px;transition:padding-left .25s cubic-bezie
             <th>기업명</th>
             <th>업종</th>
             <th>지역</th>
-            <th style="text-align:right">매출액</th>
-            <th style="text-align:right">영업이익(영업이익률)</th>
-            <th style="text-align:right">직원수</th>
-            <th style="text-align:right">설립</th>
-            <th style="text-align:center">점수</th>
+            <th>매출액</th>
+            <th>영업이익(영업이익률)</th>
+            <th>직원수</th>
+            <th>설립</th>
+            <th>점수</th>
             <th>메모</th>
             <th class="td-actions"></th>
           </tr>
@@ -591,49 +594,49 @@ var lists = [
   {
     name:'잠재 고객 리스트', desc:'B2B 영업 타겟 리스트 — 서울/경기 반도체·전자 매출 100억 이상', color:'#0549CC', date:'2024.03.10', owner:'남승호',
     companies:[
-      {name:'에이치비테크놀로지',type:'비상장/주식회사',industry:'반도체장비',region:'서울 강남',revenue:342,trend:[280,295,310,328,342],profit:28,profitG:12.5,emp:187,empG:8,year:2012,score:85,memo:'핵심 타겟',patents:5,age:14,growth:4.3,color:'#0549CC'},
-      {name:'케이앤도체',type:'비상장/유한회사',industry:'반도체',region:'경기 화성',revenue:456,trend:[365,390,415,438,456],profit:57,profitG:15.3,emp:312,empG:6,year:2004,score:92,memo:'',patents:12,age:22,growth:8.1,color:'#059669'},
-      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'2분기 미팅 예정',patents:3,age:8,growth:5.2,color:'#D97706'},
-      {name:'프로브앤텍',type:'비상장/주식회사',industry:'반도체소재',region:'대전 유성',revenue:198,trend:[125,145,165,182,198],profit:12,profitG:22.4,emp:89,empG:15,year:2020,score:71,memo:'',patents:2,age:6,growth:12.4,color:'#DC2626'},
-      {name:'실리콘마이다스',type:'비상장/주식회사',industry:'반도체설계',region:'성남 분당',revenue:523,trend:[380,420,458,492,523],profit:80,profitG:18.1,emp:245,empG:12,year:2014,score:88,memo:'CTO 네트워크',patents:18,age:12,growth:9.7,color:'#8B5CF6'},
-      {name:'디앤에스테크',type:'비상장/주식회사',industry:'전자부품',region:'인천 남동',revenue:167,trend:[185,178,172,170,167],profit:8,profitG:-5.2,emp:134,empG:-1,year:2007,score:65,memo:'',patents:1,age:19,growth:-2.1,color:'#64748B'},
-      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'},
-      {name:'넥스트반도체',type:'비상장/주식회사',industry:'메모리',region:'경기 이천',revenue:678,trend:[480,530,580,635,678],profit:123,profitG:21.5,emp:412,empG:11,year:2006,score:95,memo:'최우선 타겟',patents:24,age:20,growth:15.3,color:'#6366F1'},
-      {name:'파인실리콘',type:'비상장/주식회사',industry:'웨이퍼',region:'충남 천안',revenue:234,trend:[190,205,215,225,234],profit:18,profitG:6.3,emp:102,empG:4,year:2016,score:72,memo:'',patents:4,age:10,growth:3.8,color:'#B45309'},
-      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'기술력 우수',patents:9,age:5,growth:22.5,color:'#14B8A6'},
-      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'',patents:6,age:11,growth:5.9,color:'#EA580C'},
-      {name:'인피니온코리아',type:'외국법인',industry:'전력반도체',region:'서울 영등포',revenue:567,trend:[450,485,515,542,567],profit:84,profitG:10.4,emp:345,empG:4,year:2001,score:90,memo:'',patents:15,age:25,growth:7.4,color:'#0549CC'}
+      {name:'에이치비테크놀로지',type:'비상장/주식회사',cat:'제조업',ceo:'김현우',products:'검사장비, 프로버',industry:'반도체장비',region:'서울 강남',revenue:342,trend:[280,295,310,328,342],profit:28,profitG:12.5,emp:187,empG:8,year:2012,score:85,memo:'핵심 타겟',patents:5,age:14,growth:4.3,color:'#0549CC'},
+      {name:'케이앤도체',type:'비상장/유한회사',cat:'제조업',ceo:'강도현',products:'웨이퍼, 메모리칩',industry:'반도체',region:'경기 화성',revenue:456,trend:[365,390,415,438,456],profit:57,profitG:15.3,emp:312,empG:6,year:2004,score:92,memo:'',patents:12,age:22,growth:8.1,color:'#059669'},
+      {name:'세미텍인스트루먼트',type:'비상장/주식회사',cat:'제조업',ceo:'이정민',products:'검사장비, 테스트소켓',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'2분기 미팅 예정',patents:3,age:8,growth:5.2,color:'#D97706'},
+      {name:'프로브앤텍',type:'비상장/주식회사',cat:'제조업',ceo:'박준혁',products:'프로브카드, 반도체소재',industry:'반도체소재',region:'대전 유성',revenue:198,trend:[125,145,165,182,198],profit:12,profitG:22.4,emp:89,empG:15,year:2020,score:71,memo:'',patents:2,age:6,growth:12.4,color:'#DC2626'},
+      {name:'실리콘마이다스',type:'비상장/주식회사',cat:'정보통신업',ceo:'최성우',products:'AP설계, SoC',industry:'반도체설계',region:'성남 분당',revenue:523,trend:[380,420,458,492,523],profit:80,profitG:18.1,emp:245,empG:12,year:2014,score:88,memo:'CTO 네트워크',patents:18,age:12,growth:9.7,color:'#8B5CF6'},
+      {name:'디앤에스테크',type:'비상장/주식회사',cat:'제조업',ceo:'정한수',products:'MLCC, 커넥터',industry:'전자부품',region:'인천 남동',revenue:167,trend:[185,178,172,170,167],profit:8,profitG:-5.2,emp:134,empG:-1,year:2007,score:65,memo:'',patents:1,age:19,growth:-2.1,color:'#64748B'},
+      {name:'코어셈텍',type:'비상장/주식회사',cat:'제조업',ceo:'윤재호',products:'패키징, 기판',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'},
+      {name:'넥스트반도체',type:'비상장/주식회사',cat:'제조업',ceo:'한승우',products:'DRAM, NAND',industry:'메모리',region:'경기 이천',revenue:678,trend:[480,530,580,635,678],profit:123,profitG:21.5,emp:412,empG:11,year:2006,score:95,memo:'최우선 타겟',patents:24,age:20,growth:15.3,color:'#6366F1'},
+      {name:'파인실리콘',type:'비상장/주식회사',cat:'제조업',ceo:'김태영',products:'실리콘 웨이퍼, SiC',industry:'웨이퍼',region:'충남 천안',revenue:234,trend:[190,205,215,225,234],profit:18,profitG:6.3,emp:102,empG:4,year:2016,score:72,memo:'',patents:4,age:10,growth:3.8,color:'#B45309'},
+      {name:'스마트칩솔루션',type:'비상장/주식회사',cat:'정보통신업',ceo:'이현수',products:'전력IC, 센서칩',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'기술력 우수',patents:9,age:5,growth:22.5,color:'#14B8A6'},
+      {name:'테라바이트시스템',type:'비상장/주식회사',cat:'제조업',ceo:'박영진',products:'식각장비, 증착장비',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'',patents:6,age:11,growth:5.9,color:'#EA580C'},
+      {name:'인피니온코리아',type:'외국법인',cat:'제조업',ceo:'마틴 슈바르츠',products:'전력반도체, IGBT',industry:'전력반도체',region:'서울 영등포',revenue:567,trend:[450,485,515,542,567],profit:84,profitG:10.4,emp:345,empG:4,year:2001,score:90,memo:'',patents:15,age:25,growth:7.4,color:'#0549CC'}
     ]
   },
   {
     name:'M&A 후보', desc:'인수합병 검토 대상 기업', color:'#D97706', date:'2024.02.28', owner:'남승호',
     companies:[
-      {name:'프로브앤텍',type:'비상장/주식회사',industry:'반도체소재',region:'대전 유성',revenue:198,trend:[125,145,165,182,198],profit:12,profitG:22.4,emp:89,empG:15,year:2020,score:71,memo:'밸류에이션 검토중',patents:2,age:6,growth:12.4,color:'#DC2626'},
-      {name:'파인실리콘',type:'비상장/주식회사',industry:'웨이퍼',region:'충남 천안',revenue:234,trend:[190,205,215,225,234],profit:18,profitG:6.3,emp:102,empG:4,year:2016,score:72,memo:'',patents:4,age:10,growth:3.8,color:'#B45309'},
-      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'',patents:9,age:5,growth:22.5,color:'#14B8A6'},
-      {name:'디앤에스테크',type:'비상장/주식회사',industry:'전자부품',region:'인천 남동',revenue:167,trend:[185,178,172,170,167],profit:8,profitG:-5.2,emp:134,empG:-1,year:2007,score:65,memo:'재무 실사 진행',patents:1,age:19,growth:-2.1,color:'#64748B'},
-      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'',patents:3,age:8,growth:5.2,color:'#D97706'}
+      {name:'프로브앤텍',type:'비상장/주식회사',cat:'제조업',ceo:'박준혁',products:'프로브카드, 반도체소재',industry:'반도체소재',region:'대전 유성',revenue:198,trend:[125,145,165,182,198],profit:12,profitG:22.4,emp:89,empG:15,year:2020,score:71,memo:'밸류에이션 검토중',patents:2,age:6,growth:12.4,color:'#DC2626'},
+      {name:'파인실리콘',type:'비상장/주식회사',cat:'제조업',ceo:'김태영',products:'실리콘 웨이퍼, SiC',industry:'웨이퍼',region:'충남 천안',revenue:234,trend:[190,205,215,225,234],profit:18,profitG:6.3,emp:102,empG:4,year:2016,score:72,memo:'',patents:4,age:10,growth:3.8,color:'#B45309'},
+      {name:'스마트칩솔루션',type:'비상장/주식회사',cat:'정보통신업',ceo:'이현수',products:'전력IC, 센서칩',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'',patents:9,age:5,growth:22.5,color:'#14B8A6'},
+      {name:'디앤에스테크',type:'비상장/주식회사',cat:'제조업',ceo:'정한수',products:'MLCC, 커넥터',industry:'전자부품',region:'인천 남동',revenue:167,trend:[185,178,172,170,167],profit:8,profitG:-5.2,emp:134,empG:-1,year:2007,score:65,memo:'재무 실사 진행',patents:1,age:19,growth:-2.1,color:'#64748B'},
+      {name:'세미텍인스트루먼트',type:'비상장/주식회사',cat:'제조업',ceo:'이정민',products:'검사장비, 테스트소켓',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'',patents:3,age:8,growth:5.2,color:'#D97706'}
     ]
   },
   {
     name:'투자 관심 기업', desc:'중장기 투자 리서치 대상', color:'#059669', date:'2024.03.05', owner:'남승호',
     companies:[
-      {name:'넥스트반도체',type:'비상장/주식회사',industry:'메모리',region:'경기 이천',revenue:678,trend:[480,530,580,635,678],profit:123,profitG:21.5,emp:412,empG:11,year:2006,score:95,memo:'',patents:24,age:20,growth:15.3,color:'#6366F1'},
-      {name:'실리콘마이다스',type:'비상장/주식회사',industry:'반도체설계',region:'성남 분당',revenue:523,trend:[380,420,458,492,523],profit:80,profitG:18.1,emp:245,empG:12,year:2014,score:88,memo:'',patents:18,age:12,growth:9.7,color:'#8B5CF6'},
-      {name:'인피니온코리아',type:'외국법인',industry:'전력반도체',region:'서울 영등포',revenue:567,trend:[450,485,515,542,567],profit:84,profitG:10.4,emp:345,empG:4,year:2001,score:90,memo:'',patents:15,age:25,growth:7.4,color:'#0549CC'},
-      {name:'케이앤도체',type:'비상장/유한회사',industry:'반도체',region:'경기 화성',revenue:456,trend:[365,390,415,438,456],profit:57,profitG:15.3,emp:312,empG:6,year:2004,score:92,memo:'',patents:12,age:22,growth:8.1,color:'#059669'},
-      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'},
-      {name:'에이치비테크놀로지',type:'비상장/주식회사',industry:'반도체장비',region:'서울 강남',revenue:342,trend:[280,295,310,328,342],profit:28,profitG:12.5,emp:187,empG:8,year:2012,score:85,memo:'',patents:5,age:14,growth:4.3,color:'#0549CC'},
-      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'',patents:9,age:5,growth:22.5,color:'#14B8A6'},
-      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'',patents:6,age:11,growth:5.9,color:'#EA580C'}
+      {name:'넥스트반도체',type:'비상장/주식회사',cat:'제조업',ceo:'한승우',products:'DRAM, NAND',industry:'메모리',region:'경기 이천',revenue:678,trend:[480,530,580,635,678],profit:123,profitG:21.5,emp:412,empG:11,year:2006,score:95,memo:'',patents:24,age:20,growth:15.3,color:'#6366F1'},
+      {name:'실리콘마이다스',type:'비상장/주식회사',cat:'정보통신업',ceo:'최성우',products:'AP설계, SoC',industry:'반도체설계',region:'성남 분당',revenue:523,trend:[380,420,458,492,523],profit:80,profitG:18.1,emp:245,empG:12,year:2014,score:88,memo:'',patents:18,age:12,growth:9.7,color:'#8B5CF6'},
+      {name:'인피니온코리아',type:'외국법인',cat:'제조업',ceo:'마틴 슈바르츠',products:'전력반도체, IGBT',industry:'전력반도체',region:'서울 영등포',revenue:567,trend:[450,485,515,542,567],profit:84,profitG:10.4,emp:345,empG:4,year:2001,score:90,memo:'',patents:15,age:25,growth:7.4,color:'#0549CC'},
+      {name:'케이앤도체',type:'비상장/유한회사',cat:'제조업',ceo:'강도현',products:'웨이퍼, 메모리칩',industry:'반도체',region:'경기 화성',revenue:456,trend:[365,390,415,438,456],profit:57,profitG:15.3,emp:312,empG:6,year:2004,score:92,memo:'',patents:12,age:22,growth:8.1,color:'#059669'},
+      {name:'코어셈텍',type:'비상장/주식회사',cat:'제조업',ceo:'윤재호',products:'패키징, 기판',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'},
+      {name:'에이치비테크놀로지',type:'비상장/주식회사',cat:'제조업',ceo:'김현우',products:'검사장비, 프로버',industry:'반도체장비',region:'서울 강남',revenue:342,trend:[280,295,310,328,342],profit:28,profitG:12.5,emp:187,empG:8,year:2012,score:85,memo:'',patents:5,age:14,growth:4.3,color:'#0549CC'},
+      {name:'스마트칩솔루션',type:'비상장/주식회사',cat:'정보통신업',ceo:'이현수',products:'전력IC, 센서칩',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'',patents:9,age:5,growth:22.5,color:'#14B8A6'},
+      {name:'테라바이트시스템',type:'비상장/주식회사',cat:'제조업',ceo:'박영진',products:'식각장비, 증착장비',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'',patents:6,age:11,growth:5.9,color:'#EA580C'}
     ]
   },
   {
     name:'경쟁사 모니터링', desc:'에이치비테크놀로지 경쟁사 추적', color:'#8B5CF6', date:'2024.03.12', owner:'남승호',
     companies:[
-      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'직접 경쟁',patents:3,age:8,growth:5.2,color:'#D97706'},
-      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'장비 시장 겹침',patents:6,age:11,growth:5.9,color:'#EA580C'},
-      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'}
+      {name:'세미텍인스트루먼트',type:'비상장/주식회사',cat:'제조업',ceo:'이정민',products:'검사장비, 테스트소켓',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'직접 경쟁',patents:3,age:8,growth:5.2,color:'#D97706'},
+      {name:'테라바이트시스템',type:'비상장/주식회사',cat:'제조업',ceo:'박영진',products:'식각장비, 증착장비',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'장비 시장 겹침',patents:6,age:11,growth:5.9,color:'#EA580C'},
+      {name:'코어셈텍',type:'비상장/주식회사',cat:'제조업',ceo:'윤재호',products:'패키징, 기판',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'}
     ]
   }
 ];
@@ -838,10 +841,10 @@ function renderTable() {
         '<td class="td-check"><input type="checkbox" ' + (checked[i] ? 'checked' : '') + ' onchange="toggleCheck(' + i + ',this.checked)"></td>' +
         '<td><div class="company-cell"><div class="company-logo" style="background:' + logoColor + '">' + c.name.substring(0, 2) + '</div><div class="company-info"><div class="company-name"><a href="prototype-detail.html">' + c.name + '</a></div></div></div></td>' +
         '<td><span class="industry-chip" style="background:' + ic[0] + ';color:' + ic[1] + '">' + c.industry + '</span></td>' +
-        '<td style="text-align:right" class="td-revenue">' + c.revenue + '억</td>' +
-        '<td style="text-align:right" class="profit-cell"><span class="profit-val ' + profitClass + '" style="font-size:12px">' + c.profit + '억</span> <span style="font-size:10.5px;color:var(--text-sub)">(' + margin + '%)</span></td>' +
-        '<td style="text-align:right" class="td-emp">' + c.emp + '명</td>' +
-        '<td style="text-align:center"><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
+        '<td class="td-revenue">' + c.revenue + '억</td>' +
+        '<td class="profit-cell"><span class="profit-val ' + profitClass + '" style="font-size:12px">' + c.profit + '억</span> <span style="font-size:10.5px;color:var(--text-sub)">(' + margin + '%)</span></td>' +
+        '<td class="td-emp">' + c.emp + '명</td>' +
+        '<td><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
         '<td class="td-actions"><button class="delete-btn" onclick="deleteRow(' + i + ')" title="리스트에서 제거">&#x2715;</button></td>';
     } else if(mode === 'spacious'){
       var spark = makeSpark(c.trend);
@@ -865,14 +868,14 @@ function renderTable() {
         '<td class="td-rank">' + (i + 1) + '</td>' +
         '<td class="td-drag" title="드래그하여 순위 변경">⠿</td>' +
         '<td class="td-check"><input type="checkbox" ' + (checked[i] ? 'checked' : '') + ' onchange="toggleCheck(' + i + ',this.checked)"></td>' +
-        '<td><div class="company-cell"><div class="company-logo" style="background:' + logoColor + '">' + c.name.substring(0, 2) + '</div><div class="company-info"><div class="company-name"><a href="prototype-detail.html">' + c.name + '</a></div><div class="company-type">' + c.type + '</div></div></div></td>' +
+        '<td><div class="company-cell" style="align-items:flex-start"><div class="company-logo" style="background:' + logoColor + ';width:40px;height:40px;font-size:15px;border-radius:8px">' + c.name.substring(0, 2) + '</div><div class="company-info"><div class="company-name" style="font-size:13.5px"><a href="prototype-detail.html">' + c.name + '</a></div><div class="company-type" style="font-size:11px">' + c.type + ' · ' + (c.cat||'') + '</div><div class="detail-meta"><span><span class="meta-label">대표</span> ' + (c.ceo||'') + '</span><span><span class="meta-label">제품</span> ' + (c.products?c.products.split(',')[0]:'') + '</span></div></div></div></td>' +
         '<td><span class="industry-chip" style="background:' + ic[0] + ';color:' + ic[1] + '">' + c.industry + '</span></td>' +
         '<td class="region-text">' + c.region + '</td>' +
         '<td><div class="detail-rev"><div class="detail-rev-top"><span class="revenue-val">' + c.revenue + '억</span>' + spark + '</div><div class="detail-rev-bar"><div class="detail-rev-bar-fill" style="width:' + revPct + '%;background:' + revBarColor + '"></div></div><div class="detail-rev-yoy ' + revGClass + '">5년 ' + (revGrowth >= 0 ? '+' : '') + revGrowth + '% 성장</div></div></td>' +
         '<td><div class="detail-profit"><div class="detail-profit-top"><span class="profit-val ' + profitClass + '">' + c.profit + '억</span></div><div class="detail-profit-rate"><div class="detail-profit-dot" style="background:' + profitDotColor + '"></div><span>영업이익률 ' + profitRate + '%</span><div class="detail-profit-bar"><div class="detail-profit-bar-fill" style="width:' + profitRatePct + '%;background:' + profitBarColor + '"></div></div></div><div style="font-size:10.5px;margin-top:2px" class="' + profitClass + '">' + profitArrow + ' ' + profitGText + '</div></div></td>' +
         '<td><div class="detail-emp"><div class="detail-emp-top"><span>' + c.emp + '명</span><span class="emp-growth ' + empGClass + '" style="font-size:11px">' + (c.empG >= 0 ? '+' : '') + c.empG + '%</span></div><div class="detail-emp-bar">' + empBars + '</div></div></td>' +
-        '<td style="text-align:right" class="year-cell">' + c.year + '</td>' +
-        '<td style="text-align:center"><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
+        '<td class="year-cell">' + c.year + '</td>' +
+        '<td><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
         '<td class="td-memo"><input class="memo-input" value="' + (c.memo || '') + '" placeholder="메모 추가..." onchange="updateMemo(' + i + ',this.value)"></td>' +
         '<td class="td-actions"><button class="delete-btn" onclick="deleteRow(' + i + ')" title="리스트에서 제거">&#x2715;</button></td>';
     } else {
@@ -881,14 +884,14 @@ function renderTable() {
         '<td class="td-rank">' + (i + 1) + '</td>' +
         '<td class="td-drag" title="드래그하여 순위 변경">⠿</td>' +
         '<td class="td-check"><input type="checkbox" ' + (checked[i] ? 'checked' : '') + ' onchange="toggleCheck(' + i + ',this.checked)"></td>' +
-        '<td><div class="company-cell"><div class="company-logo" style="background:' + logoColor + '">' + c.name.substring(0, 2) + '</div><div class="company-info"><div class="company-name"><a href="prototype-detail.html">' + c.name + '</a></div><div class="company-type">' + c.type + '</div></div></div></td>' +
+        '<td><div class="company-cell"><div class="company-logo" style="background:' + logoColor + '">' + c.name.substring(0, 2) + '</div><div class="company-info"><div class="company-name"><a href="prototype-detail.html">' + c.name + '</a></div><div class="company-type">' + c.type + ' · ' + (c.cat||'') + '</div></div></div></td>' +
         '<td><span class="industry-chip" style="background:' + ic[0] + ';color:' + ic[1] + '">' + c.industry + '</span></td>' +
         '<td class="region-text">' + c.region + '</td>' +
         '<td><div class="revenue-cell"><span class="revenue-val">' + c.revenue + '억</span>' + spark + '</div></td>' +
         '<td class="profit-cell"><span class="profit-val ' + profitClass + '">' + c.profit + '억</span> <span style="font-size:11px;color:var(--text-sub)">' + margin + '%</span> <span class="emp-growth ' + profitClass + '" style="font-size:11px">' + profitArrow + ' ' + profitGText + '</span></td>' +
         '<td class="emp-cell">' + c.emp + '명 <span class="emp-growth ' + empGClass + '">' + (c.empG >= 0 ? '+' : '') + c.empG + '%</span></td>' +
         '<td class="year-cell">' + c.year + '</td>' +
-        '<td style="text-align:center"><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
+        '<td><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
         '<td class="td-memo"><input class="memo-input" value="' + (c.memo || '') + '" placeholder="메모 추가..." onchange="updateMemo(' + i + ',this.value)"></td>' +
         '<td class="td-actions"><button class="delete-btn" onclick="deleteRow(' + i + ')" title="리스트에서 제거">&#x2715;</button></td>';
     }
