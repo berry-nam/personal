@@ -673,7 +673,8 @@ function renderSortPanel() {
     body.innerHTML = '<div class="sort-empty">정렬 조건 없음</div><button class="sort-add-btn" onclick="addSortRule()">+ 정렬 추가</button>';
   } else {
     var html = sortRules.map(function(r, idx) {
-      var colOpts = SORT_COLUMNS.map(function(c) {
+      var colOpts = '<option value=""' + (r.col === '' ? ' selected' : '') + ' disabled>칼럼 선택…</option>';
+      colOpts += SORT_COLUMNS.map(function(c) {
         return '<option value="' + c.key + '"' + (r.col === c.key ? ' selected' : '') + '>' + c.label + '</option>';
       }).join('');
       return '<div class="sort-rule">' +
@@ -687,10 +688,11 @@ function renderSortPanel() {
     html += '<button class="sort-add-btn" onclick="addSortRule()">+ 정렬 추가</button>';
     body.innerHTML = html;
   }
+  var activeCount = sortRules.filter(function(r) { return r.col !== ''; }).length;
   var badge = document.getElementById('sortBadge');
   var btn = document.getElementById('sortBtn');
-  if (sortRules.length) {
-    badge.textContent = sortRules.length;
+  if (activeCount) {
+    badge.textContent = activeCount;
     badge.style.display = '';
     btn.classList.add('has-rules');
   } else {
@@ -703,8 +705,8 @@ function addSortRule() {
   var used = sortRules.map(function(r) { return r.col; });
   var avail = SORT_COLUMNS.filter(function(c) { return used.indexOf(c.key) === -1; });
   if (!avail.length) return;
-  sortRules.push({col: avail[0].key, dir: 'desc'});
-  applySortAndRender();
+  sortRules.push({col: '', dir: 'desc'});
+  renderSortPanel();
 }
 
 function removeSortRule(idx) {
@@ -723,10 +725,11 @@ function clearSortRules() {
 }
 
 function applySortAndRender() {
-  if (sortRules.length) {
+  var active = sortRules.filter(function(r) { return r.col !== ''; });
+  if (active.length) {
     lists[currentList].companies.sort(function(a, b) {
-      for (var i = 0; i < sortRules.length; i++) {
-        var r = sortRules[i];
+      for (var i = 0; i < active.length; i++) {
+        var r = active[i];
         var va = a[r.col], vb = b[r.col];
         var diff = r.dir === 'asc' ? va - vb : vb - va;
         if (diff !== 0) return diff;
