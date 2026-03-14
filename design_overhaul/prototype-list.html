@@ -129,7 +129,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFo
 .list-table.spacious .company-type{font-size:11.5px}
 .list-table{width:100%;border-collapse:collapse}
 .list-table th{background:var(--slate-50);font-size:11.5px;font-weight:600;color:var(--text-sub);padding:10px 14px;text-align:center;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:5}
-.list-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-variant-numeric:tabular-nums}
+.list-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-variant-numeric:tabular-nums;text-align:center}
 .list-table tr{transition:var(--transition)}
 .list-table tbody tr:hover{background:var(--blue-50)}
 .list-table tbody tr.selected{background:var(--brand-bg)}
@@ -140,7 +140,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFo
 .td-drag:active{cursor:grabbing}
 .td-check{width:36px;text-align:center}
 .td-check input{accent-color:var(--brand);cursor:pointer}
-.company-cell{display:flex;align-items:center;gap:10px;min-width:180px}
+.company-cell{display:flex;align-items:center;gap:10px;min-width:180px;text-align:left}
 .company-logo{width:32px;height:32px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
 .company-info{min-width:0}
 .company-name{font-weight:600;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -159,24 +159,24 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFo
 .score-badge.low{background:var(--red-50);color:var(--red-600)}
 /* Revenue/Profit/Emp detail visualization (synced from search page) */
 .region-text{font-size:13px;color:var(--text-sub)}
-.revenue-cell{display:flex;align-items:center;gap:8px}
+.revenue-cell{display:inline-flex;align-items:center;gap:8px}
 .revenue-val{font-weight:600;font-size:13.5px;white-space:nowrap}
 .sparkline{flex-shrink:0}
 .emp-cell{font-size:13px}
 .emp-growth{font-size:11px;font-weight:500;margin-left:4px}
 .year-cell{font-size:12.5px;color:var(--text-sub);font-variant-numeric:tabular-nums}
-.detail-rev{display:flex;flex-direction:column;gap:4px;min-width:140px}
+.detail-rev{display:inline-flex;flex-direction:column;gap:4px;min-width:140px;text-align:left}
 .detail-rev-top{display:flex;align-items:center;gap:8px}
 .detail-rev-bar{height:6px;border-radius:3px;background:var(--slate-100);width:100%;overflow:hidden}
 .detail-rev-bar-fill{height:100%;border-radius:3px;transition:width .3s}
 .detail-rev-yoy{font-size:10.5px;margin-top:1px}
-.detail-profit{display:flex;flex-direction:column;gap:4px;min-width:120px}
+.detail-profit{display:inline-flex;flex-direction:column;gap:4px;min-width:120px;text-align:left}
 .detail-profit-top{display:flex;align-items:center;gap:6px}
 .detail-profit-rate{display:flex;align-items:center;gap:4px;font-size:10.5px}
 .detail-profit-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .detail-profit-bar{height:4px;border-radius:2px;background:var(--slate-100);width:80px;overflow:hidden}
 .detail-profit-bar-fill{height:100%;border-radius:2px}
-.detail-emp{display:flex;flex-direction:column;gap:4px;min-width:110px}
+.detail-emp{display:inline-flex;flex-direction:column;gap:4px;min-width:110px;text-align:left}
 .detail-emp-top{display:flex;align-items:center;gap:6px}
 .detail-emp-bar{display:flex;gap:1px;align-items:flex-end;height:18px}
 .detail-emp-bar-seg{width:6px;border-radius:1px 1px 0 0;background:var(--blue-200);transition:height .3s}
@@ -1181,6 +1181,7 @@ function showToast(msg) {
 }
 
 // ── INIT ──
+renderSortPanel();
 renderTable();
 </script>
 

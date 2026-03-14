@@ -113,7 +113,7 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .results-table{width:100%;border-collapse:collapse}
 .results-table th{background:var(--slate-50);font-size:12px;font-weight:600;color:var(--text-sub);text-transform:none;padding:10px 14px;text-align:center;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:5}
 .results-table th:first-child{width:44px;text-align:center}
-.results-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-variant-numeric:tabular-nums}
+.results-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-variant-numeric:tabular-nums;text-align:center}
 .results-table tr{cursor:pointer;transition:var(--transition)}
 .results-table tbody tr:hover{background:var(--blue-50)}
 .results-table tbody tr.selected{background:var(--brand-bg);border-left:3px solid var(--brand)}
@@ -126,32 +126,32 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .detail-meta{display:flex;gap:10px;margin-top:3px;font-size:11px;color:var(--text-muted)}
 .detail-meta span{display:flex;align-items:center;gap:3px}
 .detail-meta .meta-label{color:var(--text-sub);font-weight:500}
-.detail-rev{display:flex;flex-direction:column;gap:4px;min-width:140px}
+.detail-rev{display:inline-flex;flex-direction:column;gap:4px;min-width:140px;text-align:left}
 .detail-rev-top{display:flex;align-items:center;gap:8px}
 .detail-rev-bar{height:6px;border-radius:3px;background:var(--slate-100);width:100%;overflow:hidden}
 .detail-rev-bar-fill{height:100%;border-radius:3px;transition:width .3s}
 .detail-rev-yoy{font-size:10.5px;margin-top:1px}
-.detail-profit{display:flex;flex-direction:column;gap:4px;min-width:120px}
+.detail-profit{display:inline-flex;flex-direction:column;gap:4px;min-width:120px;text-align:left}
 .detail-profit-top{display:flex;align-items:center;gap:6px}
 .detail-profit-rate{display:flex;align-items:center;gap:4px;font-size:10.5px}
 .detail-profit-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .detail-profit-bar{height:4px;border-radius:2px;background:var(--slate-100);width:80px;overflow:hidden}
 .detail-profit-bar-fill{height:100%;border-radius:2px}
-.detail-emp{display:flex;flex-direction:column;gap:4px;min-width:110px}
+.detail-emp{display:inline-flex;flex-direction:column;gap:4px;min-width:110px;text-align:left}
 .detail-emp-top{display:flex;align-items:center;gap:6px}
 .detail-emp-bar{display:flex;gap:1px;align-items:flex-end;height:18px}
 .detail-emp-bar-seg{width:6px;border-radius:1px 1px 0 0;background:var(--blue-200);transition:height .3s}
 /* Column styles */
 .td-check{width:44px;text-align:center}
 .td-check input{accent-color:var(--brand)}
-.company-cell{display:flex;align-items:center;gap:10px;min-width:200px}
+.company-cell{display:flex;align-items:center;gap:10px;min-width:200px;text-align:left}
 .company-logo{width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
 .company-info{min-width:0}
 .company-name{font-weight:600;font-size:13.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .company-type{font-size:11px;color:var(--text-muted);margin-top:1px}
 .industry-chip{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11.5px;font-weight:500;white-space:nowrap}
 .region-text{font-size:13px;color:var(--text-sub)}
-.revenue-cell{display:flex;align-items:center;gap:8px}
+.revenue-cell{display:inline-flex;align-items:center;gap:8px}
 .revenue-val{font-weight:600;font-size:13.5px;white-space:nowrap}
 .sparkline{flex-shrink:0}
 .profit-cell{white-space:nowrap}
@@ -181,7 +181,7 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .sort-btn.has-rules{border-color:var(--brand);background:var(--brand-bg);color:var(--brand)}
 .sort-badge{background:var(--brand);color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;font-weight:700}
 /* Row actions on hover */
-.row-actions{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;gap:4px;opacity:0;transition:var(--transition);pointer-events:none}
+.row-actions{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;gap:4px;opacity:0;transition:var(--transition);pointer-events:none;z-index:4;background:linear-gradient(90deg,transparent 0%,var(--blue-50) 12px,var(--blue-50) 100%);padding:4px 8px 4px 20px;border-radius:var(--radius-sm)}
 .results-table tbody tr:hover .row-actions{opacity:1;pointer-events:all}
 .row-action-btn{padding:4px 10px;font-size:11.5px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--text-sub);cursor:pointer;font-family:inherit;white-space:nowrap;transition:var(--transition)}
 .row-action-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-bg)}
@@ -607,7 +607,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
           <th>영업이익(영업이익률)</th>
           <th>직원수</th>
           <th>설립</th>
-          <th style="width:1px"></th>
+          <th></th>
         </tr>
       </thead>
       <tbody id="tableBody"></tbody>
@@ -941,9 +941,9 @@ function renderTable(){
   if(mode === 'compact'){
     thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th>';
   } else if(mode === 'spacious'){
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th><th>설립</th><th style="width:1px"></th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th><th>설립</th><th></th>';
   } else {
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th><th>설립</th><th style="width:1px"></th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th><th>설립</th><th></th>';
   }
 
   var tbody = document.getElementById('tableBody');
@@ -959,7 +959,7 @@ function renderTable(){
       // ── COMPACT: text-only name, no logo, no sparkline, no region/year/actions ──
       return '<tr onclick="openPanel('+i+')">'
         +'<td class="td-check"><input type="checkbox" onclick="event.stopPropagation();updateBulk()" data-idx="'+i+'"></td>'
-        +'<td style="font-weight:600;font-size:12px;white-space:nowrap">'+c.name+'</td>'
+        +'<td style="font-weight:600;font-size:12px;white-space:nowrap;text-align:left">'+c.name+'</td>'
         +'<td><span class="industry-chip" style="'+chipStyle+';padding:1px 6px;font-size:10.5px">'+c.industry+'</span></td>'
         +'<td style="font-weight:600;font-size:12px;white-space:nowrap">'+c.revenue+'억</td>'
         +'<td class="profit-cell"><span class="profit-val '+profitClass+'" style="font-size:12px">'+c.profit+'억</span> <span style="font-size:10.5px;color:var(--text-sub)">('+ ((c.profit/c.revenue)*100).toFixed(1) +'%)</span></td>'
@@ -1025,7 +1025,7 @@ function renderTable(){
         +  '<div class="detail-emp-bar">'+empBars+'</div>'
         +'</div></td>'
         +'<td class="year-cell">'+c.year+'</td>'
-        +'<td style="position:relative"><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
+        +'<td><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
         +'</tr>';
     } else {
       // ── COMFORTABLE (default): logo+name, sparkline, full columns ──
@@ -1042,7 +1042,7 @@ function renderTable(){
         +'<td class="profit-cell"><span class="profit-val '+profitClass+'">'+c.profit+'억</span> <span style="font-size:11px;color:var(--text-sub)">'+((c.profit/c.revenue)*100).toFixed(1)+'%</span> <span class="emp-growth '+profitClass+'" style="font-size:11px">'+profitArrow+' '+profitGText+'</span></td>'
         +'<td class="emp-cell">'+c.emp+'명 <span class="emp-growth '+empGClass+'">+'+c.empG+'%</span></td>'
         +'<td class="year-cell">'+c.year+'</td>'
-        +'<td style="position:relative"><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
+        +'<td><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
         +'</tr>';
     }
   }).join('');
@@ -1332,6 +1332,7 @@ document.addEventListener('click',e=>{
 });
 
 // ══ INIT ══
+renderSortPanel();
 renderTable();
 </script>
 
