@@ -611,7 +611,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
       <div class="metric-sub metric-up">▲ +4.3% <span style="color:var(--text-muted);font-weight:400">YoY</span></div>
     </div>
     <div class="metric-card">
-      <div class="metric-label">영업이익</div>
+      <div class="metric-label">영업이익(영업이익률)</div>
       <div class="metric-value">28<span style="font-size:14px;font-weight:500;color:var(--text-sub)">억</span></div>
       <div class="metric-sub metric-up">▲ +12.5% <span style="color:var(--text-muted);font-weight:400">YoY</span></div>
     </div>
@@ -663,7 +663,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
     <div class="section" style="position:relative">
       <span class="design-note dn-green">5개년 데이터, 연간/분기 토글. 막대 폭 40px 간격 60px. 매출=Blue-500 영업이익=Amber-400</span>
       <span class="design-note dn-blue" style="right:auto;left:8px">차트 높이 280px. 기간 필터 5개(3M~MAX) pill 버튼. 범례 우상단. 막대 위 값 라벨 12px/600</span>
-      <div class="section-title"><span class="icon">📊</span> 매출 · 영업이익 추이</div>
+      <div class="section-title"><span class="icon">📊</span> 매출 · 영업이익(영업이익률) 추이</div>
       <div class="chart-controls">
         <div class="time-range">
           <button class="time-btn" onclick="setTimeRange(this)">3M</button>
@@ -691,7 +691,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
         <thead><tr><th>항목</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
         <tbody>
           <tr><td>매출액 (억)</td><td>280</td><td>295</td><td>310</td><td>328</td><td class="positive">342</td></tr>
-          <tr><td>영업이익 (억)</td><td>18</td><td>20</td><td>22</td><td>25</td><td class="positive">28</td></tr>
+          <tr><td>영업이익(영업이익률) (억)</td><td>18</td><td>20</td><td>22</td><td>25</td><td class="positive">28</td></tr>
           <tr><td>순이익 (억)</td><td>12</td><td>14</td><td>15</td><td>18</td><td class="positive">20</td></tr>
           <tr><td>자산총계 (억)</td><td>520</td><td>560</td><td>610</td><td>670</td><td>720</td></tr>
           <tr><td>부채비율 (%)</td><td>85</td><td>78</td><td class="positive">72</td><td class="positive">68</td><td class="positive">65</td></tr>
@@ -1028,7 +1028,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
               <div class="perf-bar-wrap"><div class="perf-bar company" style="width:58%"></div></div>
             </div>
             <div class="perf-card">
-              <div class="perf-card-period">영업이익 성장률</div>
+              <div class="perf-card-period">영업이익(영업이익률) 성장률</div>
               <div class="perf-card-row"><span class="perf-label">2024 → 2025</span><span class="perf-value positive">+12.0%</span></div>
               <div class="perf-card-row"><span class="perf-label">2023 → 2024</span><span class="perf-value positive">+13.6%</span></div>
               <div class="perf-bar-wrap"><div class="perf-bar company" style="width:60%"></div></div>
@@ -1067,7 +1067,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
               <div style="font-size:12.5px;font-weight:600;color:var(--text-sub)">매출 · 이익 추이 (3개년)</div>
               <div class="chart-toggle" id="revToggle">
                 <button class="chart-toggle-btn active" onclick="drawRevenueEarningsChart('net',this)">순이익</button>
-                <button class="chart-toggle-btn" onclick="drawRevenueEarningsChart('op',this)">영업이익</button>
+                <button class="chart-toggle-btn" onclick="drawRevenueEarningsChart('op',this)">영업이익(영업이익률)</button>
               </div>
             </div>
             <canvas id="revenueEarningsChart" style="width:100%;height:280px"></canvas>
@@ -1104,7 +1104,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
               <tr><td>매출원가</td><td>224억</td><td>235억</td><td>244억</td></tr>
               <tr><td>매출총이익</td><td>86억</td><td>93억</td><td>98억</td></tr>
               <tr><td>판매비와관리비</td><td>64억</td><td>68억</td><td>70억</td></tr>
-              <tr><td>영업이익</td><td class="positive">22억</td><td class="positive">25억</td><td class="positive">28억</td></tr>
+              <tr><td>영업이익(영업이익률)</td><td class="positive">22억</td><td class="positive">25억</td><td class="positive">28억</td></tr>
               <tr><td>당기순이익</td><td class="positive">15억</td><td class="positive">18억</td><td class="positive">20억</td></tr>
             </tbody>
           </table>
@@ -1332,7 +1332,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
             <thead><tr><th>항목</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
             <tbody>
               <tr><td>매출액</td><td>31,045</td><td>32,812</td><td>34,215</td></tr>
-              <tr><td>영업이익</td><td>2,200</td><td>2,500</td><td>2,800</td></tr>
+              <tr><td>영업이익(영업이익률)</td><td>2,200</td><td>2,500</td><td>2,800</td></tr>
               <tr><td>순이익</td><td>1,500</td><td>1,800</td><td>2,000</td></tr>
             </tbody>
           </table>
@@ -1366,7 +1366,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
             <tr class="row-header"><td>매출원가</td><td>21,432</td><td class="change-neg">+4.1%</td><td>22,312</td><td class="change-neg">+3.4%</td><td>23,067</td></tr>
             <tr class="row-bold"><td>매출총이익</td><td>9,613</td><td class="change-pos">+9.2%</td><td>10,500</td><td class="change-pos">+6.2%</td><td>11,148</td></tr>
             <tr class="row-header"><td>판관비</td><td>7,413</td><td class="change-neg">+7.9%</td><td>8,000</td><td class="change-neg">+4.4%</td><td>8,348</td></tr>
-            <tr class="row-bold"><td>영업이익</td><td>2,200</td><td class="change-pos">+13.6%</td><td>2,500</td><td class="change-pos">+12.0%</td><td>2,800</td></tr>
+            <tr class="row-bold"><td>영업이익(영업이익률)</td><td>2,200</td><td class="change-pos">+13.6%</td><td>2,500</td><td class="change-pos">+12.0%</td><td>2,800</td></tr>
             <tr class="row-header"><td>영업외수익</td><td>320</td><td></td><td>380</td><td></td><td>410</td></tr>
             <tr class="row-bold"><td>세전이익</td><td>2,020</td><td class="change-pos">+17.8%</td><td>2,380</td><td class="change-pos">+13.4%</td><td>2,700</td></tr>
             <tr class="row-header"><td>법인세</td><td>520</td><td></td><td>580</td><td></td><td>700</td></tr>
@@ -1486,7 +1486,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
           <div class="radar-legend-item"><div class="radar-legend-dot" style="background:var(--emerald-500)"></div> 세미텍인스트루먼트</div>
           <div class="radar-legend-item"><div class="radar-legend-dot" style="background:var(--amber-500)"></div> 프로브앤텍</div>
           <div style="margin-top:16px;font-size:12px;color:var(--text-muted);margin-bottom:8px">축 설명</div>
-          <div style="font-size:12.5px;color:var(--text-sub);line-height:1.8">매출액 · 영업이익 · 직원수 · 업력 · 특허수 · 매출성장률<br>(모든 축은 0-100으로 정규화)</div>
+          <div style="font-size:12.5px;color:var(--text-sub);line-height:1.8">매출액 · 영업이익(영업이익률) · 직원수 · 업력 · 특허수 · 매출성장률<br>(모든 축은 0-100으로 정규화)</div>
         </div>
       </div>
     </div>
@@ -1531,7 +1531,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
           <div class="mc-rank">2위/4개</div>
         </div>
         <div class="metric-compare-card">
-          <div class="mc-label">영업이익</div>
+          <div class="mc-label">영업이익(영업이익률)</div>
           <div class="mc-value">28억</div>
           <div class="mc-avg">산업 평균 <strong>26억</strong></div>
           <div class="mc-rank">2위/4개</div>
@@ -1573,7 +1573,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
         </thead>
         <tbody>
           <tr><td>매출액</td><td class="target">342억</td><td>287억</td><td>198억</td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">456억</span></td></tr>
-          <tr><td>영업이익</td><td class="target">28억</td><td>22억</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">15억</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">38억</span></td></tr>
+          <tr><td>영업이익(영업이익률)</td><td class="target">28억</td><td>22억</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">15억</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">38억</span></td></tr>
           <tr><td>영업이익률</td><td class="target"><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">8.2%</span></td><td>7.7%</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">7.6%</span></td><td>8.3%</td></tr>
           <tr><td>순이익</td><td class="target">20억</td><td>16억</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">11억</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">30억</span></td></tr>
           <tr><td>직원수</td><td class="target">187명</td><td>145명</td><td><span style="background:var(--red-50);color:var(--red-500);padding:2px 8px;border-radius:8px">92명</span></td><td><span style="background:var(--emerald-50);color:var(--emerald-600);padding:2px 8px;border-radius:8px;font-weight:700">310명</span></td></tr>
@@ -1911,7 +1911,7 @@ function buildCard(s) {
     '</div>' +
     '<div class="sim-card-metrics">' +
       '<div class="sim-metric"><div class="sim-metric-label">매출액</div><div class="sim-metric-value">' + s.revenue + '억</div></div>' +
-      '<div class="sim-metric"><div class="sim-metric-label">영업이익</div><div class="sim-metric-value ' + profitClass + '">' + s.profit + '억</div><div class="sim-metric-trend ' + profitClass + '">▲ +' + s.profitG + '%</div></div>' +
+      '<div class="sim-metric"><div class="sim-metric-label">영업이익(영업이익률)</div><div class="sim-metric-value ' + profitClass + '">' + s.profit + '억</div><div class="sim-metric-trend ' + profitClass + '">▲ +' + s.profitG + '%</div></div>' +
     '</div>' +
     '<div class="chips-wrap">' + s.chips.map(function(c){ return '<span class="match-chip ' + (CHIP_CLASS[c]||'') + '">' + c + '</span>'; }).join('') + '</div>' +
     '<div class="sim-card-actions">' +
@@ -2028,7 +2028,7 @@ function drawRevenueChart() {
   ctx.fillStyle = '#374151'; ctx.font = '13px Pretendard Variable'; ctx.textAlign = 'left';
   ctx.fillText('매출액', lgX + 20, 22);
   ctx.fillStyle = '#F59E0B'; ctx.fillRect(lgX + 90, 10, 14, 14);
-  ctx.fillStyle = '#374151'; ctx.fillText('영업이익', lgX + 110, 22);
+  ctx.fillStyle = '#374151'; ctx.fillText('영업이익(영업이익률)', lgX + 110, 22);
 }
 
 // ══ WATERFALL CHART ══
@@ -2190,7 +2190,7 @@ function drawRadarChart() {
   var SIZE = 440;
   var ctx = hiDPI(canvas, SIZE, SIZE);
   var cx = SIZE / 2, cy = SIZE / 2, R = 170;
-  var labels = ['매출액', '영업이익', '직원수', '업력', '특허수', '매출성장률'];
+  var labels = ['매출액', '영업이익(영업이익률)', '직원수', '업력', '특허수', '매출성장률'];
   var actualValues = [
     ['342억','287억','198억'],
     ['28억','22억','15억'],
@@ -2401,7 +2401,7 @@ function drawRevenueEarningsChart(mode, btn) {
     btn.classList.add('active');
   }
   mode = mode || 'net';
-  var label2 = mode === 'net' ? '순이익' : '영업이익';
+  var label2 = mode === 'net' ? '순이익' : '영업이익(영업이익률)';
   var el = document.getElementById('revLegendLabel');
   if (el) el.textContent = label2;
 
@@ -2520,7 +2520,7 @@ function drawFinancialBars() {
 
   // Legend
   var legendX = Math.max(W - 300, padL + 10), legendY = 12;
-  [['#10B981','매출'],['#0549CC','영업이익'],['#8B5CF6','순이익']].forEach(function(l, i) {
+  [['#10B981','매출'],['#0549CC','영업이익(영업이익률)'],['#8B5CF6','순이익']].forEach(function(l, i) {
     ctx.fillStyle = l[0]; ctx.fillRect(legendX + i * 80, legendY, 12, 12);
     ctx.fillStyle = '#374151'; ctx.font = '12px Pretendard Variable'; ctx.textAlign = 'left';
     ctx.fillText(l[1], legendX + i * 80 + 16, legendY + 10);

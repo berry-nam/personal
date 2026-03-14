@@ -157,6 +157,38 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFo
 .score-badge.high{background:var(--emerald-50);color:var(--emerald-600)}
 .score-badge.mid{background:var(--amber-50);color:var(--amber-600)}
 .score-badge.low{background:var(--red-50);color:var(--red-600)}
+/* Revenue/Profit/Emp detail visualization (synced from search page) */
+.region-text{font-size:13px;color:var(--text-sub)}
+.revenue-cell{display:flex;align-items:center;gap:8px}
+.revenue-val{font-weight:600;font-size:13.5px;white-space:nowrap}
+.sparkline{flex-shrink:0}
+.emp-cell{font-size:13px}
+.emp-growth{font-size:11px;font-weight:500;margin-left:4px}
+.year-cell{font-size:12.5px;color:var(--text-sub);font-variant-numeric:tabular-nums}
+.detail-rev{display:flex;flex-direction:column;gap:4px;min-width:140px}
+.detail-rev-top{display:flex;align-items:center;gap:8px}
+.detail-rev-bar{height:6px;border-radius:3px;background:var(--slate-100);width:100%;overflow:hidden}
+.detail-rev-bar-fill{height:100%;border-radius:3px;transition:width .3s}
+.detail-rev-yoy{font-size:10.5px;margin-top:1px}
+.detail-profit{display:flex;flex-direction:column;gap:4px;min-width:120px}
+.detail-profit-top{display:flex;align-items:center;gap:6px}
+.detail-profit-rate{display:flex;align-items:center;gap:4px;font-size:10.5px}
+.detail-profit-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.detail-profit-bar{height:4px;border-radius:2px;background:var(--slate-100);width:80px;overflow:hidden}
+.detail-profit-bar-fill{height:100%;border-radius:2px}
+.detail-emp{display:flex;flex-direction:column;gap:4px;min-width:110px}
+.detail-emp-top{display:flex;align-items:center;gap:6px}
+.detail-emp-bar{display:flex;gap:1px;align-items:flex-end;height:18px}
+.detail-emp-bar-seg{width:6px;border-radius:1px 1px 0 0;background:var(--blue-200);transition:height .3s}
+.profit-cell{white-space:nowrap}
+.profit-val{font-weight:500;font-size:13px}
+/* Sortable column headers */
+.sortable-th{cursor:pointer;user-select:none;transition:var(--transition)}
+.sortable-th:hover{color:var(--brand);background:var(--blue-50)}
+.sortable-th.sorted{color:var(--brand)}
+.sort-arrow{font-size:10px;margin-left:3px;opacity:0.4}
+.sortable-th.sorted .sort-arrow{opacity:1;color:var(--brand)}
+.sortable-th:hover .sort-arrow{opacity:0.7}
 .td-memo{min-width:120px}
 .memo-input{border:none;outline:none;font-size:12.5px;font-family:inherit;color:var(--text-sub);background:transparent;width:100%;padding:4px 6px;border-radius:var(--radius-sm);transition:var(--transition)}
 .memo-input:hover{background:var(--slate-50)}
@@ -407,12 +439,6 @@ body.cb-sidebar-open{padding-left:340px;transition:padding-left .25s cubic-bezie
           <div class="add-popup-list" id="addPopupList"></div>
         </div>
       </div>
-      <select class="sort-select" onchange="sortTable(this.value)">
-        <option value="rank">순위순</option>
-        <option value="revenue">매출 높은순</option>
-        <option value="profit">영업이익률 높은순</option>
-        <option value="score">CookieDeal 점수순</option>
-      </select>
       <div class="density-toggle">
         <button class="density-btn" onclick="setDensity('compact',this)">컴팩트</button>
         <button class="density-btn active" onclick="setDensity('comfortable',this)">기본</button>
@@ -454,9 +480,11 @@ body.cb-sidebar-open{padding-left:340px;transition:padding-left .25s cubic-bezie
             <th class="td-check"><input type="checkbox" id="checkAll" onchange="toggleAllChecks(this.checked)"></th>
             <th>기업명</th>
             <th>업종</th>
-            <th style="text-align:right">매출(억)</th>
-            <th style="text-align:right">영업이익률</th>
+            <th>지역</th>
+            <th style="text-align:right">매출액</th>
+            <th style="text-align:right">영업이익(영업이익률)</th>
             <th style="text-align:right">직원수</th>
+            <th style="text-align:right">설립</th>
             <th style="text-align:center">점수</th>
             <th>메모</th>
             <th class="td-actions"></th>
@@ -527,49 +555,49 @@ var lists = [
   {
     name:'잠재 고객 리스트', desc:'B2B 영업 타겟 리스트 — 서울/경기 반도체·전자 매출 100억 이상', color:'#0549CC', date:'2024.03.10', owner:'남승호',
     companies:[
-      {name:'에이치비테크놀로지',type:'비상장/주식회사',industry:'반도체장비',revenue:342,profit:8.2,emp:187,score:85,memo:'핵심 타겟',patents:5,age:14,growth:4.3},
-      {name:'케이앤도체',type:'비상장/유한회사',industry:'반도체',revenue:456,profit:12.5,emp:312,score:92,memo:'',patents:12,age:22,growth:8.1},
-      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',revenue:287,profit:9.8,emp:156,score:78,memo:'2분기 미팅 예정',patents:3,age:8,growth:5.2},
-      {name:'프로브앤텍',type:'비상장/주식회사',industry:'반도체소재',revenue:198,profit:6.3,emp:89,score:71,memo:'',patents:2,age:6,growth:12.4},
-      {name:'실리콘마이다스',type:'비상장/주식회사',industry:'반도체설계',revenue:523,profit:15.2,emp:245,score:88,memo:'CTO 네트워크',patents:18,age:12,growth:9.7},
-      {name:'디앤에스테크',type:'비상장/주식회사',industry:'전자부품',revenue:167,profit:4.7,emp:134,score:65,memo:'',patents:1,age:19,growth:-2.1},
-      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',revenue:412,profit:11.3,emp:278,score:83,memo:'',patents:8,age:16,growth:6.8},
-      {name:'넥스트반도체',type:'비상장/주식회사',industry:'메모리',revenue:678,profit:18.1,emp:412,score:95,memo:'최우선 타겟',patents:24,age:20,growth:15.3},
-      {name:'파인실리콘',type:'비상장/주식회사',industry:'웨이퍼',revenue:234,profit:7.9,emp:102,score:72,memo:'',patents:4,age:10,growth:3.8},
-      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',revenue:189,profit:13.4,emp:78,score:81,memo:'기술력 우수',patents:9,age:5,growth:22.5},
-      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',revenue:301,profit:10.6,emp:198,score:79,memo:'',patents:6,age:11,growth:5.9},
-      {name:'인피니온코리아',type:'외국법인',industry:'전력반도체',revenue:567,profit:14.8,emp:345,score:90,memo:'',patents:15,age:25,growth:7.4}
+      {name:'에이치비테크놀로지',type:'비상장/주식회사',industry:'반도체장비',region:'서울 강남',revenue:342,trend:[280,295,310,328,342],profit:28,profitG:12.5,emp:187,empG:8,year:2012,score:85,memo:'핵심 타겟',patents:5,age:14,growth:4.3,color:'#0549CC'},
+      {name:'케이앤도체',type:'비상장/유한회사',industry:'반도체',region:'경기 화성',revenue:456,trend:[365,390,415,438,456],profit:57,profitG:15.3,emp:312,empG:6,year:2004,score:92,memo:'',patents:12,age:22,growth:8.1,color:'#059669'},
+      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'2분기 미팅 예정',patents:3,age:8,growth:5.2,color:'#D97706'},
+      {name:'프로브앤텍',type:'비상장/주식회사',industry:'반도체소재',region:'대전 유성',revenue:198,trend:[125,145,165,182,198],profit:12,profitG:22.4,emp:89,empG:15,year:2020,score:71,memo:'',patents:2,age:6,growth:12.4,color:'#DC2626'},
+      {name:'실리콘마이다스',type:'비상장/주식회사',industry:'반도체설계',region:'성남 분당',revenue:523,trend:[380,420,458,492,523],profit:80,profitG:18.1,emp:245,empG:12,year:2014,score:88,memo:'CTO 네트워크',patents:18,age:12,growth:9.7,color:'#8B5CF6'},
+      {name:'디앤에스테크',type:'비상장/주식회사',industry:'전자부품',region:'인천 남동',revenue:167,trend:[185,178,172,170,167],profit:8,profitG:-5.2,emp:134,empG:-1,year:2007,score:65,memo:'',patents:1,age:19,growth:-2.1,color:'#64748B'},
+      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'},
+      {name:'넥스트반도체',type:'비상장/주식회사',industry:'메모리',region:'경기 이천',revenue:678,trend:[480,530,580,635,678],profit:123,profitG:21.5,emp:412,empG:11,year:2006,score:95,memo:'최우선 타겟',patents:24,age:20,growth:15.3,color:'#6366F1'},
+      {name:'파인실리콘',type:'비상장/주식회사',industry:'웨이퍼',region:'충남 천안',revenue:234,trend:[190,205,215,225,234],profit:18,profitG:6.3,emp:102,empG:4,year:2016,score:72,memo:'',patents:4,age:10,growth:3.8,color:'#B45309'},
+      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'기술력 우수',patents:9,age:5,growth:22.5,color:'#14B8A6'},
+      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'',patents:6,age:11,growth:5.9,color:'#EA580C'},
+      {name:'인피니온코리아',type:'외국법인',industry:'전력반도체',region:'서울 영등포',revenue:567,trend:[450,485,515,542,567],profit:84,profitG:10.4,emp:345,empG:4,year:2001,score:90,memo:'',patents:15,age:25,growth:7.4,color:'#0549CC'}
     ]
   },
   {
     name:'M&A 후보', desc:'인수합병 검토 대상 기업', color:'#D97706', date:'2024.02.28', owner:'남승호',
     companies:[
-      {name:'프로브앤텍',type:'비상장/주식회사',industry:'반도체소재',revenue:198,profit:6.3,emp:89,score:71,memo:'밸류에이션 검토중',patents:2,age:6,growth:12.4},
-      {name:'파인실리콘',type:'비상장/주식회사',industry:'웨이퍼',revenue:234,profit:7.9,emp:102,score:72,memo:'',patents:4,age:10,growth:3.8},
-      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',revenue:189,profit:13.4,emp:78,score:81,memo:'',patents:9,age:5,growth:22.5},
-      {name:'디앤에스테크',type:'비상장/주식회사',industry:'전자부품',revenue:167,profit:4.7,emp:134,score:65,memo:'재무 실사 진행',patents:1,age:19,growth:-2.1},
-      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',revenue:287,profit:9.8,emp:156,score:78,memo:'',patents:3,age:8,growth:5.2}
+      {name:'프로브앤텍',type:'비상장/주식회사',industry:'반도체소재',region:'대전 유성',revenue:198,trend:[125,145,165,182,198],profit:12,profitG:22.4,emp:89,empG:15,year:2020,score:71,memo:'밸류에이션 검토중',patents:2,age:6,growth:12.4,color:'#DC2626'},
+      {name:'파인실리콘',type:'비상장/주식회사',industry:'웨이퍼',region:'충남 천안',revenue:234,trend:[190,205,215,225,234],profit:18,profitG:6.3,emp:102,empG:4,year:2016,score:72,memo:'',patents:4,age:10,growth:3.8,color:'#B45309'},
+      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'',patents:9,age:5,growth:22.5,color:'#14B8A6'},
+      {name:'디앤에스테크',type:'비상장/주식회사',industry:'전자부품',region:'인천 남동',revenue:167,trend:[185,178,172,170,167],profit:8,profitG:-5.2,emp:134,empG:-1,year:2007,score:65,memo:'재무 실사 진행',patents:1,age:19,growth:-2.1,color:'#64748B'},
+      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'',patents:3,age:8,growth:5.2,color:'#D97706'}
     ]
   },
   {
     name:'투자 관심 기업', desc:'중장기 투자 리서치 대상', color:'#059669', date:'2024.03.05', owner:'남승호',
     companies:[
-      {name:'넥스트반도체',type:'비상장/주식회사',industry:'메모리',revenue:678,profit:18.1,emp:412,score:95,memo:'',patents:24,age:20,growth:15.3},
-      {name:'실리콘마이다스',type:'비상장/주식회사',industry:'반도체설계',revenue:523,profit:15.2,emp:245,score:88,memo:'',patents:18,age:12,growth:9.7},
-      {name:'인피니온코리아',type:'외국법인',industry:'전력반도체',revenue:567,profit:14.8,emp:345,score:90,memo:'',patents:15,age:25,growth:7.4},
-      {name:'케이앤도체',type:'비상장/유한회사',industry:'반도체',revenue:456,profit:12.5,emp:312,score:92,memo:'',patents:12,age:22,growth:8.1},
-      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',revenue:412,profit:11.3,emp:278,score:83,memo:'',patents:8,age:16,growth:6.8},
-      {name:'에이치비테크놀로지',type:'비상장/주식회사',industry:'반도체장비',revenue:342,profit:8.2,emp:187,score:85,memo:'',patents:5,age:14,growth:4.3},
-      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',revenue:189,profit:13.4,emp:78,score:81,memo:'',patents:9,age:5,growth:22.5},
-      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',revenue:301,profit:10.6,emp:198,score:79,memo:'',patents:6,age:11,growth:5.9}
+      {name:'넥스트반도체',type:'비상장/주식회사',industry:'메모리',region:'경기 이천',revenue:678,trend:[480,530,580,635,678],profit:123,profitG:21.5,emp:412,empG:11,year:2006,score:95,memo:'',patents:24,age:20,growth:15.3,color:'#6366F1'},
+      {name:'실리콘마이다스',type:'비상장/주식회사',industry:'반도체설계',region:'성남 분당',revenue:523,trend:[380,420,458,492,523],profit:80,profitG:18.1,emp:245,empG:12,year:2014,score:88,memo:'',patents:18,age:12,growth:9.7,color:'#8B5CF6'},
+      {name:'인피니온코리아',type:'외국법인',industry:'전력반도체',region:'서울 영등포',revenue:567,trend:[450,485,515,542,567],profit:84,profitG:10.4,emp:345,empG:4,year:2001,score:90,memo:'',patents:15,age:25,growth:7.4,color:'#0549CC'},
+      {name:'케이앤도체',type:'비상장/유한회사',industry:'반도체',region:'경기 화성',revenue:456,trend:[365,390,415,438,456],profit:57,profitG:15.3,emp:312,empG:6,year:2004,score:92,memo:'',patents:12,age:22,growth:8.1,color:'#059669'},
+      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'},
+      {name:'에이치비테크놀로지',type:'비상장/주식회사',industry:'반도체장비',region:'서울 강남',revenue:342,trend:[280,295,310,328,342],profit:28,profitG:12.5,emp:187,empG:8,year:2012,score:85,memo:'',patents:5,age:14,growth:4.3,color:'#0549CC'},
+      {name:'스마트칩솔루션',type:'비상장/주식회사',industry:'IC설계',region:'서울 서초',revenue:189,trend:[95,120,145,168,189],profit:25,profitG:28.5,emp:78,empG:20,year:2021,score:81,memo:'',patents:9,age:5,growth:22.5,color:'#14B8A6'},
+      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'',patents:6,age:11,growth:5.9,color:'#EA580C'}
     ]
   },
   {
     name:'경쟁사 모니터링', desc:'에이치비테크놀로지 경쟁사 추적', color:'#8B5CF6', date:'2024.03.12', owner:'남승호',
     companies:[
-      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',revenue:287,profit:9.8,emp:156,score:78,memo:'직접 경쟁',patents:3,age:8,growth:5.2},
-      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',revenue:301,profit:10.6,emp:198,score:79,memo:'장비 시장 겹침',patents:6,age:11,growth:5.9},
-      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',revenue:412,profit:11.3,emp:278,score:83,memo:'',patents:8,age:16,growth:6.8}
+      {name:'세미텍인스트루먼트',type:'비상장/주식회사',industry:'반도체검사',region:'경기 수원',revenue:287,trend:[220,240,255,272,287],profit:28,profitG:8.7,emp:156,empG:10,year:2018,score:78,memo:'직접 경쟁',patents:3,age:8,growth:5.2,color:'#D97706'},
+      {name:'테라바이트시스템',type:'비상장/주식회사',industry:'반도체장비',region:'경기 용인',revenue:301,trend:[240,255,272,288,301],profit:32,profitG:7.2,emp:198,empG:6,year:2015,score:79,memo:'장비 시장 겹침',patents:6,age:11,growth:5.9,color:'#EA580C'},
+      {name:'코어셈텍',type:'비상장/주식회사',industry:'반도체패키징',region:'경기 안산',revenue:412,trend:[330,350,372,392,412],profit:47,profitG:9.8,emp:278,empG:5,year:2010,score:83,memo:'',patents:8,age:16,growth:6.8,color:'#0D9488'}
     ]
   }
 ];
@@ -587,6 +615,43 @@ var checked = {};
 var compareOpen = false;
 var dragRow = null;
 var currentDensity = 'comfortable';
+var sortColumn = null;
+var sortDirection = 'desc';
+
+// ── SORT ──
+function sortableHeader(label, key, align) {
+  var arrow = '';
+  var cls = 'sortable-th';
+  if (sortColumn === key) { arrow = sortDirection === 'asc' ? ' ▲' : ' ▼'; cls += ' sorted'; }
+  var style = align ? 'text-align:' + align + ';' : '';
+  return '<th class="' + cls + '" style="cursor:pointer;user-select:none;' + style + '" onclick="handleSort(\'' + key + '\')">' + label + '<span class="sort-arrow">' + arrow + '</span></th>';
+}
+
+function handleSort(col) {
+  if (sortColumn === col) sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+  else { sortColumn = col; sortDirection = 'desc'; }
+  applySortAndRender();
+}
+
+function applySortAndRender() {
+  if (sortColumn) {
+    lists[currentList].companies.sort(function(a, b) {
+      var va = a[sortColumn], vb = b[sortColumn];
+      return sortDirection === 'asc' ? (va - vb) : (vb - va);
+    });
+  }
+  checked = {};
+  renderTable();
+  updateCompareBtn();
+}
+
+function makeSpark(data) {
+  var w = 48, h = 20, max = Math.max.apply(null, data), min = Math.min.apply(null, data), range = max - min || 1;
+  var pts = data.map(function(v, i) { return (i / (data.length - 1)) * w + ',' + (h - ((v - min) / range) * h); }).join(' ');
+  var up = data[data.length - 1] >= data[0];
+  var col = up ? 'var(--emerald-500)' : 'var(--red-500)';
+  return '<svg class="sparkline" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '"><polyline points="' + pts + '" fill="none" stroke="' + col + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
 
 // ── RENDER ──
 function setDensity(mode, btn) {
@@ -603,27 +668,29 @@ function setDensity(mode, btn) {
 function renderTable() {
   var mode = currentDensity;
   var list = lists[currentList];
-  // Update thead based on density
   var thead = document.querySelector('#listTable thead tr');
   if(mode === 'compact'){
-    thead.innerHTML = '<th class="td-rank">#</th><th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this.checked)"></th><th>기업명</th><th>업종</th><th style="text-align:right">매출(억)</th><th style="text-align:right">영업이익률</th><th style="text-align:right">직원수</th><th style="text-align:center">점수</th><th class="td-actions"></th>';
+    thead.innerHTML = '<th class="td-rank">#</th><th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this.checked)"></th><th>기업명</th><th>업종</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right') + sortableHeader('점수','score','center') + '<th class="td-actions"></th>';
   } else if(mode === 'spacious'){
-    thead.innerHTML = '<th class="td-rank">#</th><th class="td-drag"></th><th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this.checked)"></th><th>기업명</th><th>업종</th><th style="text-align:right">매출(억)</th><th style="text-align:right">성장률</th><th style="text-align:right">영업이익률</th><th style="text-align:right">직원수</th><th style="text-align:right">특허</th><th style="text-align:right">업력</th><th style="text-align:center">점수</th><th>메모</th><th class="td-actions"></th>';
+    thead.innerHTML = '<th class="td-rank">#</th><th class="td-drag"></th><th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this.checked)"></th><th>기업명</th><th>업종</th><th>지역</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right') + sortableHeader('설립','year','right') + sortableHeader('점수','score','center') + '<th>메모</th><th class="td-actions"></th>';
   } else {
-    thead.innerHTML = '<th class="td-rank">#</th><th class="td-drag"></th><th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this.checked)"></th><th>기업명</th><th>업종</th><th style="text-align:right">매출(억)</th><th style="text-align:right">영업이익률</th><th style="text-align:right">직원수</th><th style="text-align:center">점수</th><th>메모</th><th class="td-actions"></th>';
+    thead.innerHTML = '<th class="td-rank">#</th><th class="td-drag"></th><th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this.checked)"></th><th>기업명</th><th>업종</th><th>지역</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right') + sortableHeader('설립','year','right') + sortableHeader('점수','score','center') + '<th>메모</th><th class="td-actions"></th>';
   }
   var body = document.getElementById('listBody');
   body.innerHTML = '';
   list.companies.forEach(function(c, i) {
     var sc = c.score >= 80 ? 'high' : c.score >= 60 ? 'mid' : 'low';
     var ic = INDUSTRY_COLORS[c.industry] || ['var(--slate-50)','var(--slate-600)'];
-    var logoColor = COLORS[i % COLORS.length];
+    var logoColor = c.color || COLORS[i % COLORS.length];
+    var profitClass = c.profit >= 0 ? 'trend-up' : 'trend-down';
+    var profitArrow = c.profit >= 0 ? '▲' : '▼';
+    var profitGText = c.profitG === -999 ? '적자' : (c.profitG >= 0 ? '+' + c.profitG + '%' : c.profitG + '%');
+    var margin = (c.profit / c.revenue * 100).toFixed(1);
+    var empGClass = c.empG >= 0 ? 'trend-up' : 'trend-down';
     var tr = document.createElement('tr');
     tr.draggable = true;
     tr.dataset.idx = i;
     tr.className = checked[i] ? 'selected' : '';
-    var growthClass = c.growth >= 0 ? 'trend-up' : 'trend-down';
-    var growthStr = (c.growth >= 0 ? '+' : '') + c.growth + '%';
     if(mode === 'compact'){
       tr.innerHTML =
         '<td class="td-rank">' + (i + 1) + '</td>' +
@@ -631,36 +698,55 @@ function renderTable() {
         '<td><div class="company-cell"><div class="company-logo" style="background:' + logoColor + '">' + c.name.substring(0, 2) + '</div><div class="company-info"><div class="company-name"><a href="prototype-detail.html">' + c.name + '</a></div></div></div></td>' +
         '<td><span class="industry-chip" style="background:' + ic[0] + ';color:' + ic[1] + '">' + c.industry + '</span></td>' +
         '<td style="text-align:right" class="td-revenue">' + c.revenue + '억</td>' +
-        '<td style="text-align:right" class="td-profit"><span class="' + (c.profit >= 0 ? 'trend-up' : 'trend-down') + '">' + c.profit + '%</span></td>' +
+        '<td style="text-align:right" class="profit-cell"><span class="profit-val ' + profitClass + '" style="font-size:12px">' + c.profit + '억</span> <span style="font-size:10.5px;color:var(--text-sub)">(' + margin + '%)</span></td>' +
         '<td style="text-align:right" class="td-emp">' + c.emp + '명</td>' +
         '<td style="text-align:center"><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
         '<td class="td-actions"><button class="delete-btn" onclick="deleteRow(' + i + ')" title="리스트에서 제거">&#x2715;</button></td>';
     } else if(mode === 'spacious'){
+      var spark = makeSpark(c.trend);
+      var revPct = Math.round((c.revenue / 700) * 100);
+      var revGrowth = Math.round(((c.trend[4] - c.trend[0]) / c.trend[0]) * 100);
+      var revGClass = revGrowth >= 0 ? 'trend-up' : 'trend-down';
+      var revBarColor = revGrowth >= 0 ? 'var(--brand)' : 'var(--red-400)';
+      var profitRate = (c.profit / c.revenue * 100).toFixed(1);
+      var profitRatePct = Math.min(Math.abs(parseFloat(profitRate)), 20) / 20 * 100;
+      var profitDotColor = c.profit >= 0 ? 'var(--emerald-500)' : 'var(--red-500)';
+      var profitBarColor = c.profit >= 0 ? 'var(--emerald-400)' : 'var(--red-400)';
+      var empBase = Math.round(c.emp * 0.7);
+      var empSteps = [empBase, Math.round(empBase * 1.1), Math.round(empBase * 1.25), Math.round(empBase * 1.15 + c.emp * 0.15), c.emp];
+      var empMax = Math.max.apply(null, empSteps);
+      var empBars = empSteps.map(function(v, idx) {
+        var h = Math.max(3, Math.round((v / empMax) * 18));
+        var bg = idx === empSteps.length - 1 ? 'var(--brand)' : 'var(--blue-200)';
+        return '<div class="detail-emp-bar-seg" style="height:' + h + 'px;background:' + bg + '"></div>';
+      }).join('');
       tr.innerHTML =
         '<td class="td-rank">' + (i + 1) + '</td>' +
         '<td class="td-drag" title="드래그하여 순위 변경">⠿</td>' +
         '<td class="td-check"><input type="checkbox" ' + (checked[i] ? 'checked' : '') + ' onchange="toggleCheck(' + i + ',this.checked)"></td>' +
         '<td><div class="company-cell"><div class="company-logo" style="background:' + logoColor + '">' + c.name.substring(0, 2) + '</div><div class="company-info"><div class="company-name"><a href="prototype-detail.html">' + c.name + '</a></div><div class="company-type">' + c.type + '</div></div></div></td>' +
         '<td><span class="industry-chip" style="background:' + ic[0] + ';color:' + ic[1] + '">' + c.industry + '</span></td>' +
-        '<td style="text-align:right" class="td-revenue">' + c.revenue + '억</td>' +
-        '<td style="text-align:right"><span class="' + growthClass + '">' + growthStr + '</span></td>' +
-        '<td style="text-align:right" class="td-profit"><span class="' + (c.profit >= 0 ? 'trend-up' : 'trend-down') + '">' + c.profit + '%</span></td>' +
-        '<td style="text-align:right" class="td-emp">' + c.emp + '명</td>' +
-        '<td style="text-align:right">' + c.patents + '건</td>' +
-        '<td style="text-align:right">' + c.age + '년</td>' +
+        '<td class="region-text">' + c.region + '</td>' +
+        '<td><div class="detail-rev"><div class="detail-rev-top"><span class="revenue-val">' + c.revenue + '억</span>' + spark + '</div><div class="detail-rev-bar"><div class="detail-rev-bar-fill" style="width:' + revPct + '%;background:' + revBarColor + '"></div></div><div class="detail-rev-yoy ' + revGClass + '">5년 ' + (revGrowth >= 0 ? '+' : '') + revGrowth + '% 성장</div></div></td>' +
+        '<td><div class="detail-profit"><div class="detail-profit-top"><span class="profit-val ' + profitClass + '">' + c.profit + '억</span></div><div class="detail-profit-rate"><div class="detail-profit-dot" style="background:' + profitDotColor + '"></div><span>영업이익률 ' + profitRate + '%</span><div class="detail-profit-bar"><div class="detail-profit-bar-fill" style="width:' + profitRatePct + '%;background:' + profitBarColor + '"></div></div></div><div style="font-size:10.5px;margin-top:2px" class="' + profitClass + '">' + profitArrow + ' ' + profitGText + '</div></div></td>' +
+        '<td><div class="detail-emp"><div class="detail-emp-top"><span>' + c.emp + '명</span><span class="emp-growth ' + empGClass + '" style="font-size:11px">' + (c.empG >= 0 ? '+' : '') + c.empG + '%</span></div><div class="detail-emp-bar">' + empBars + '</div></div></td>' +
+        '<td style="text-align:right" class="year-cell">' + c.year + '</td>' +
         '<td style="text-align:center"><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
         '<td class="td-memo"><input class="memo-input" value="' + (c.memo || '') + '" placeholder="메모 추가..." onchange="updateMemo(' + i + ',this.value)"></td>' +
         '<td class="td-actions"><button class="delete-btn" onclick="deleteRow(' + i + ')" title="리스트에서 제거">&#x2715;</button></td>';
     } else {
+      var spark = makeSpark(c.trend);
       tr.innerHTML =
         '<td class="td-rank">' + (i + 1) + '</td>' +
         '<td class="td-drag" title="드래그하여 순위 변경">⠿</td>' +
         '<td class="td-check"><input type="checkbox" ' + (checked[i] ? 'checked' : '') + ' onchange="toggleCheck(' + i + ',this.checked)"></td>' +
         '<td><div class="company-cell"><div class="company-logo" style="background:' + logoColor + '">' + c.name.substring(0, 2) + '</div><div class="company-info"><div class="company-name"><a href="prototype-detail.html">' + c.name + '</a></div><div class="company-type">' + c.type + '</div></div></div></td>' +
         '<td><span class="industry-chip" style="background:' + ic[0] + ';color:' + ic[1] + '">' + c.industry + '</span></td>' +
-        '<td style="text-align:right" class="td-revenue">' + c.revenue + '억</td>' +
-        '<td style="text-align:right" class="td-profit"><span class="' + (c.profit >= 0 ? 'trend-up' : 'trend-down') + '">' + c.profit + '%</span></td>' +
-        '<td style="text-align:right" class="td-emp">' + c.emp + '명</td>' +
+        '<td class="region-text">' + c.region + '</td>' +
+        '<td><div class="revenue-cell"><span class="revenue-val">' + c.revenue + '억</span>' + spark + '</div></td>' +
+        '<td class="profit-cell"><span class="profit-val ' + profitClass + '">' + c.profit + '억</span> <span style="font-size:11px;color:var(--text-sub)">' + margin + '%</span> <span class="emp-growth ' + profitClass + '" style="font-size:11px">' + profitArrow + ' ' + profitGText + '</span></td>' +
+        '<td class="emp-cell">' + c.emp + '명 <span class="emp-growth ' + empGClass + '">' + (c.empG >= 0 ? '+' : '') + c.empG + '%</span></td>' +
+        '<td class="year-cell">' + c.year + '</td>' +
         '<td style="text-align:center"><span class="score-badge ' + sc + '">' + c.score + '</span></td>' +
         '<td class="td-memo"><input class="memo-input" value="' + (c.memo || '') + '" placeholder="메모 추가..." onchange="updateMemo(' + i + ',this.value)"></td>' +
         '<td class="td-actions"><button class="delete-btn" onclick="deleteRow(' + i + ')" title="리스트에서 제거">&#x2715;</button></td>';
@@ -678,7 +764,6 @@ function renderTable() {
       var arr = lists[currentList].companies;
       var item = arr.splice(from, 1)[0];
       arr.splice(to, 0, item);
-      // Reset checks
       var newChecked = {};
       Object.keys(checked).forEach(function(k) {
         var oldIdx = parseInt(k);
@@ -698,6 +783,8 @@ function renderTable() {
 function selectList(idx, el) {
   currentList = idx;
   checked = {};
+  sortColumn = null;
+  sortDirection = 'desc';
   closeComparison();
   document.querySelectorAll('.sidebar-item').forEach(function(s) { s.classList.remove('active'); });
   el.classList.add('active');
@@ -769,17 +856,6 @@ function updateSidebarCount() {
   });
 }
 
-// ── SORT ──
-function sortTable(mode) {
-  var arr = lists[currentList].companies;
-  if (mode === 'revenue') arr.sort(function(a, b) { return b.revenue - a.revenue; });
-  else if (mode === 'profit') arr.sort(function(a, b) { return b.profit - a.profit; });
-  else if (mode === 'score') arr.sort(function(a, b) { return b.score - a.score; });
-  checked = {};
-  renderTable();
-  updateCompareBtn();
-}
-
 // ── ADD COMPANY POPUP ──
 function toggleAddPopup() {
   var popup = document.getElementById('addPopup');
@@ -807,13 +883,19 @@ function filterAddPopup(q) {
 
 function addCompanyFromPopup(idx) {
   var c = addSuggestions[idx];
+  var rev = Math.floor(Math.random() * 400 + 100);
+  var marginPct = +(Math.random() * 15 + 2).toFixed(1);
+  var absProfit = Math.round(rev * marginPct / 100);
+  var age = Math.floor(Math.random() * 15 + 3);
   lists[currentList].companies.push({
     name: c.name, type: c.type, industry: c.industry,
-    revenue: Math.floor(Math.random() * 400 + 100),
-    profit: +(Math.random() * 15 + 2).toFixed(1),
-    emp: Math.floor(Math.random() * 300 + 50),
-    score: Math.floor(Math.random() * 30 + 65),
-    memo: '', patents: Math.floor(Math.random() * 10), age: Math.floor(Math.random() * 15 + 3), growth: +(Math.random() * 20 - 2).toFixed(1)
+    region: '서울', revenue: rev,
+    trend: [Math.round(rev*0.82), Math.round(rev*0.87), Math.round(rev*0.92), Math.round(rev*0.96), rev],
+    profit: absProfit, profitG: +(Math.random() * 20 + 2).toFixed(1),
+    emp: Math.floor(Math.random() * 300 + 50), empG: Math.floor(Math.random() * 15 + 1),
+    year: 2026 - age, score: Math.floor(Math.random() * 30 + 65),
+    memo: '', patents: Math.floor(Math.random() * 10), age: age,
+    growth: +(Math.random() * 20 - 2).toFixed(1), color: c.color
   });
   document.getElementById('addPopup').classList.remove('open');
   renderTable();
@@ -858,7 +940,8 @@ function drawComparison() {
   // Compare table
   var metrics = [
     { label: '매출(억)', key: 'revenue', fmt: function(v) { return v + '억'; } },
-    { label: '영업이익률', key: 'profit', fmt: function(v) { return v + '%'; } },
+    { label: '영업이익(억)', key: 'profit', fmt: function(v) { return v + '억'; } },
+    { label: '영업이익률', key: null, fmt: function(v, c) { return (c.profit / c.revenue * 100).toFixed(1) + '%'; } },
     { label: '직원수', key: 'emp', fmt: function(v) { return v + '명'; } },
     { label: '특허수', key: 'patents', fmt: function(v) { return v + '건'; } },
     { label: '업력', key: 'age', fmt: function(v) { return v + '년'; } },
@@ -872,13 +955,14 @@ function drawComparison() {
   }).join('') + '</tr></thead>';
 
   var tbody = '<tbody>' + metrics.map(function(m) {
-    var vals = comps.map(function(c) { return c[m.key]; });
+    var vals = comps.map(function(c) { return m.key ? c[m.key] : parseFloat((c.profit / c.revenue * 100).toFixed(1)); });
     var best = Math.max.apply(null, vals);
-    // For growth, higher is better except negative
     return '<tr><td style="font-weight:600;color:var(--text-sub)">' + m.label + '</td>' +
       comps.map(function(c, i) {
-        var isBest = c[m.key] === best && vals.filter(function(v) { return v === best; }).length === 1;
-        return '<td style="text-align:right"' + (isBest ? ' class="best"' : '') + '>' + m.fmt(c[m.key]) + (isBest ? '<span class="rank-badge gold">1</span>' : '') + '</td>';
+        var val = vals[i];
+        var isBest = val === best && vals.filter(function(v) { return v === best; }).length === 1;
+        var display = m.key ? m.fmt(val) : m.fmt(val, c);
+        return '<td style="text-align:right"' + (isBest ? ' class="best"' : '') + '>' + display + (isBest ? '<span class="rank-badge gold">1</span>' : '') + '</td>';
       }).join('') + '</tr>';
   }).join('') + '</tbody>';
 
@@ -895,11 +979,11 @@ function drawRadarChart(comps) {
   ctx.scale(dpr, dpr);
 
   var cx = SIZE / 2, cy = SIZE / 2, R = 140;
-  var labels = ['매출액', '영업이익', '직원수', '특허수', '업력', '매출성장률'];
+  var labels = ['매출액', '영업이익(영업이익률)', '직원수', '특허수', '업력', '매출성장률'];
   var N = labels.length;
 
   // Normalize data
-  var maxVals = { revenue: 700, profit: 20, emp: 450, patents: 25, age: 30, growth: 25 };
+  var maxVals = { revenue: 700, profit: 150, emp: 450, patents: 25, age: 30, growth: 25 };
   var keys = ['revenue', 'profit', 'emp', 'patents', 'age', 'growth'];
 
   // Grid rings

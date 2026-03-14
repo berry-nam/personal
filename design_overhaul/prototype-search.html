@@ -161,6 +161,13 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .emp-cell{font-size:13px}
 .emp-growth{font-size:11px;font-weight:500;margin-left:4px}
 .year-cell{font-size:12.5px;color:var(--text-sub);font-variant-numeric:tabular-nums}
+/* Sortable column headers */
+.sortable-th{cursor:pointer;user-select:none;transition:var(--transition)}
+.sortable-th:hover{color:var(--brand);background:var(--blue-50)}
+.sortable-th.sorted{color:var(--brand)}
+.sort-arrow{font-size:10px;margin-left:3px;opacity:0.4}
+.sortable-th.sorted .sort-arrow{opacity:1;color:var(--brand)}
+.sortable-th:hover .sort-arrow{opacity:0.7}
 /* Row actions on hover */
 .row-actions{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;gap:4px;opacity:0;transition:var(--transition);pointer-events:none}
 .results-table tbody tr:hover .row-actions{opacity:1;pointer-events:all}
@@ -575,7 +582,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
           <th>업종</th>
           <th>지역</th>
           <th>매출액</th>
-          <th>영업이익</th>
+          <th>영업이익(영업이익률)</th>
           <th>직원수</th>
           <th>설립</th>
           <th style="width:1px"></th>
@@ -812,17 +819,39 @@ const INDUSTRY_COLORS = {
 
 // ══ RENDER TABLE ══
 var currentDensity = 'comfortable';
+var sortColumn = null;
+var sortDirection = 'desc';
+
+function sortableHeader(label, key, align) {
+  var arrow = '';
+  var cls = 'sortable-th';
+  if (sortColumn === key) { arrow = sortDirection === 'asc' ? ' ▲' : ' ▼'; cls += ' sorted'; }
+  var style = align ? 'text-align:' + align + ';' : '';
+  return '<th class="' + cls + '" style="cursor:pointer;user-select:none;' + style + '" onclick="handleSort(\'' + key + '\')">' + label + '<span class="sort-arrow">' + arrow + '</span></th>';
+}
+
+function handleSort(col) {
+  if (sortColumn === col) sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+  else { sortColumn = col; sortDirection = 'desc'; }
+  if (sortColumn) {
+    COMPANIES.sort(function(a, b) {
+      var va = a[sortColumn], vb = b[sortColumn];
+      return sortDirection === 'asc' ? (va - vb) : (vb - va);
+    });
+  }
+  renderTable();
+}
 
 function renderTable(){
   var mode = currentDensity;
   // Update thead based on density
   var thead = document.querySelector('#resultsTable thead tr');
   if(mode === 'compact'){
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>매출액</th><th>영업이익</th><th>직원수</th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right');
   } else if(mode === 'spacious'){
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익</th><th>직원수</th><th>설립</th><th style="width:1px"></th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right') + sortableHeader('설립','year','right') + '<th style="width:1px"></th>';
   } else {
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익</th><th>직원수</th><th>설립</th><th style="width:1px"></th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right') + sortableHeader('설립','year','right') + '<th style="width:1px"></th>';
   }
 
   var tbody = document.getElementById('tableBody');
@@ -841,7 +870,7 @@ function renderTable(){
         +'<td style="font-weight:600;font-size:12px;white-space:nowrap">'+c.name+'</td>'
         +'<td><span class="industry-chip" style="'+chipStyle+';padding:1px 6px;font-size:10.5px">'+c.industry+'</span></td>'
         +'<td style="font-weight:600;font-size:12px;white-space:nowrap">'+c.revenue+'억</td>'
-        +'<td class="profit-cell"><span class="profit-val '+profitClass+'" style="font-size:12px">'+c.profit+'억</span></td>'
+        +'<td class="profit-cell"><span class="profit-val '+profitClass+'" style="font-size:12px">'+c.profit+'억</span> <span style="font-size:10.5px;color:var(--text-sub)">('+ ((c.profit/c.revenue)*100).toFixed(1) +'%)</span></td>'
         +'<td style="font-size:12px">'+c.emp+'명</td>'
         +'</tr>';
     } else if(mode === 'spacious'){
@@ -890,12 +919,13 @@ function renderTable(){
         +'</div></td>'
         // Profit: value + margin rate + mini bar
         +'<td><div class="detail-profit">'
-        +  '<div class="detail-profit-top"><span class="profit-val '+profitClass+'">'+c.profit+'억</span><span class="emp-growth '+profitClass+'" style="font-size:11px">'+profitArrow+' '+profitGText+'</span></div>'
+        +  '<div class="detail-profit-top"><span class="profit-val '+profitClass+'">'+c.profit+'억</span></div>'
         +  '<div class="detail-profit-rate">'
         +    '<div class="detail-profit-dot" style="background:'+profitDotColor+'"></div>'
         +    '<span>영업이익률 '+profitRate+'%</span>'
         +    '<div class="detail-profit-bar"><div class="detail-profit-bar-fill" style="width:'+profitRatePct+'%;background:'+profitBarColor+'"></div></div>'
         +  '</div>'
+        +  '<div style="font-size:10.5px;margin-top:2px" class="'+profitClass+'">'+profitArrow+' '+profitGText+'</div>'
         +'</div></td>'
         // Employee: value + growth + mini histogram
         +'<td><div class="detail-emp">'
@@ -917,7 +947,7 @@ function renderTable(){
         +'<td><span class="industry-chip" style="'+chipStyle+'">'+c.industry+'</span></td>'
         +'<td class="region-text">'+c.region+'</td>'
         +'<td><div class="revenue-cell"><span class="revenue-val">'+c.revenue+'억</span>'+spark+'</div></td>'
-        +'<td class="profit-cell"><span class="profit-val '+profitClass+'">'+c.profit+'억</span> <span class="emp-growth '+profitClass+'" style="font-size:11px">'+profitArrow+' '+profitGText+'</span></td>'
+        +'<td class="profit-cell"><span class="profit-val '+profitClass+'">'+c.profit+'억</span> <span style="font-size:11px;color:var(--text-sub)">'+((c.profit/c.revenue)*100).toFixed(1)+'%</span> <span class="emp-growth '+profitClass+'" style="font-size:11px">'+profitArrow+' '+profitGText+'</span></td>'
         +'<td class="emp-cell">'+c.emp+'명 <span class="emp-growth '+empGClass+'">+'+c.empG+'%</span></td>'
         +'<td class="year-cell">'+c.year+'</td>'
         +'<td style="position:relative"><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
