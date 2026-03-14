@@ -1118,11 +1118,7 @@ function renderSidebar(){
       var cid=item.dataset.cid;
       var pid=item.dataset.page;
       if(pid!==PAGE_ID){window.location.href=(PAGE_URLS[pid]||'#')+'?comment='+cid;return;}
-      var c=comments[cid];
-      if(!c)return;
-      var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
-      if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
-      setTimeout(function(){openThread(cid);},300);
+      openThread(cid);
     });
   });
 }
@@ -1211,27 +1207,37 @@ function openThread(cid,_retries){
   closeThread();
   openThreadId=cid;
   var c=comments[cid];if(!c){openThreadId=null;return;}
-  var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');if(!pin){openThreadId=null;return;}
-  var pinRect=pin.getBoundingClientRect();
-  if(pinRect.width===0&&pinRect.height===0){
+  var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
+  if(!pin){
     var r=(_retries||0)+1;
-    if(r<=5){setTimeout(function(){openThread(cid,r);},100);}
+    if(r<=10){setTimeout(function(){openThread(cid,r);},80);}
     else{openThreadId=null;}
     return;
   }
-  var thread=document.createElement('div');
-  thread.id='cb-open-thread';
-  thread.className='cb-thread';
-  thread.style.position='fixed';
-  thread.style.zIndex='900';
-  var left=pinRect.right+8;
-  if(left+320>window.innerWidth)left=pinRect.left-328;
-  thread.style.left=left+'px';
-  thread.style.top=Math.max(8,pinRect.top-40)+'px';
-  thread.addEventListener('click',function(e){e.stopPropagation();});
-  renderThreadHTML(thread,c);
-  document.body.appendChild(thread);
-  updateSidebarActive();
+  pin.scrollIntoView({behavior:'instant',block:'center'});
+  requestAnimationFrame(function(){
+    if(openThreadId!==cid)return;
+    var pinRect=pin.getBoundingClientRect();
+    if(pinRect.width===0&&pinRect.height===0){
+      var r=(_retries||0)+1;
+      if(r<=10){setTimeout(function(){openThread(cid,r);},80);}
+      else{openThreadId=null;}
+      return;
+    }
+    var thread=document.createElement('div');
+    thread.id='cb-open-thread';
+    thread.className='cb-thread';
+    thread.style.position='fixed';
+    thread.style.zIndex='900';
+    var left=pinRect.right+8;
+    if(left+320>window.innerWidth)left=pinRect.left-328;
+    thread.style.left=left+'px';
+    thread.style.top=Math.max(8,pinRect.top-40)+'px';
+    thread.addEventListener('click',function(e){e.stopPropagation();});
+    renderThreadHTML(thread,c);
+    document.body.appendChild(thread);
+    updateSidebarActive();
+  });
 }
 function closeThread(){
   openThreadId=null;
@@ -1327,9 +1333,7 @@ function checkDeepLink(){
     if(comments[commentId]){
       clearInterval(check);
       history.replaceState(null,'',location.pathname+location.hash);
-      var pin=document.querySelector('.cb-pin[data-id="'+commentId+'"]');
-      if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
-      setTimeout(function(){openThread(commentId);},500);
+      openThread(commentId);
     }
   },200);
   setTimeout(function(){clearInterval(check);},5000);

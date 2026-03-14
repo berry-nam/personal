@@ -485,6 +485,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .design-note{display:none;position:absolute;top:-12px;right:8px;z-index:50;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;pointer-events:none;box-shadow:var(--shadow-sm);max-width:calc(100% - 16px);line-height:1.5;white-space:normal;overflow-wrap:break-word;word-break:break-word}
 body.show-design-notes .design-note{display:block}
 body.show-design-notes .section{margin-top:18px}
+body.show-design-notes *:has(> .design-note){overflow:visible !important}
 .dn-blue{background:var(--blue-100);color:var(--blue-700)}
 .dn-green{background:var(--emerald-50);color:var(--emerald-600);border:1px solid var(--emerald-400)}
 .dn-yellow{background:var(--amber-50);color:var(--amber-600);border:1px solid var(--amber-400)}
@@ -1598,7 +1599,7 @@ body.show-design-notes .section{margin-top:18px}
       <div class="feed-header">47명이 팔로우하는 사람의 글</div>
 
       <!-- Post 1 -->
-      <div class="post-card" onclick="openThread(0)">
+      <div class="post-card" onclick="openForumThread(0)">
         <div class="post-top">
           <div class="post-avatar" style="background:var(--brand)">김</div>
           <div>
@@ -1627,7 +1628,7 @@ body.show-design-notes .section{margin-top:18px}
       </div>
 
       <!-- Post 2 -->
-      <div class="post-card" onclick="openThread(1)">
+      <div class="post-card" onclick="openForumThread(1)">
         <div class="post-top">
           <div class="post-avatar" style="background:var(--emerald-600)">박</div>
           <div>
@@ -1656,7 +1657,7 @@ body.show-design-notes .section{margin-top:18px}
       </div>
 
       <!-- Post 3 -->
-      <div class="post-card" onclick="openThread(2)">
+      <div class="post-card" onclick="openForumThread(2)">
         <div class="post-top">
           <div class="post-avatar" style="background:var(--amber-500)">이</div>
           <div>
@@ -1685,7 +1686,7 @@ body.show-design-notes .section{margin-top:18px}
       </div>
 
       <!-- Post 4 -->
-      <div class="post-card" onclick="openThread(3)">
+      <div class="post-card" onclick="openForumThread(3)">
         <div class="post-top">
           <div class="post-avatar" style="background:var(--purple-500)">최</div>
           <div>
@@ -1724,9 +1725,9 @@ body.show-design-notes .section{margin-top:18px}
 </div><!-- end .content -->
 
 <!-- Thread Modal -->
-<div class="thread-overlay" id="threadOverlay" onclick="if(event.target===this)closeThread()">
+<div class="thread-overlay" id="threadOverlay" onclick="if(event.target===this)closeForumThread()">
   <div class="thread-modal" style="position:relative" id="threadModal">
-    <button class="thread-close" onclick="closeThread()">✕</button>
+    <button class="thread-close" onclick="closeForumThread()">✕</button>
     <div id="threadContent"></div>
   </div>
 </div>
@@ -1776,7 +1777,8 @@ function hiDPI(canvas, W, H) {
 
 // ══ TAB SWITCHING ══
 var TAB_ORDER = ['overview','finance','people','similar','competitors','community'];
-function switchTab(tabId, el) {
+function switchTab(tabId, el, opts) {
+  opts = opts || {};
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
   document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
   if (!el) {
@@ -1789,17 +1791,13 @@ function switchTab(tabId, el) {
   if (panel) panel.classList.add('active');
   activeTabId = tabId;
   if (location.hash !== '#' + tabId) history.replaceState(null, '', '#' + tabId);
-  if (typeof closeThread === 'function') closeThread();
+  if (!opts.keepThread && typeof closeThread === 'function') closeThread();
   // Re-render pins (only visible anchors will show pins — automatic tab scoping)
-  if (typeof renderPins === 'function') setTimeout(renderPins, 50);
-  // Update badge count for active tab
-  if (typeof comments === 'object') {
-    var cnt = Object.keys(comments).filter(function(k){ return !comments[k].resolved && comments[k].tabId === tabId; }).length;
-    var badge = document.getElementById('cb-badge');
-    if (badge) badge.textContent = cnt;
+  if (typeof renderPins === 'function') renderPins();
+  if (!opts.skipScroll) {
+    var tabsWrap = document.querySelector('.tabs-wrap');
+    window.scrollTo({top: tabsWrap.offsetTop - 56, behavior: 'smooth'});
   }
-  var tabsWrap = document.querySelector('.tabs-wrap');
-  window.scrollTo({top: tabsWrap.offsetTop - 56, behavior: 'smooth'});
   if (tabId === 'finance') {
     setTimeout(function(){
       drawRevenueEarningsChart(); drawRevenueCompositionChart(); drawEquityDonut(); drawFinancialBars(); drawStabilityChart(); drawCashFlowChart();
@@ -2694,7 +2692,7 @@ var POSTS = [
   }
 ];
 
-function openThread(postIdx) {
+function openForumThread(postIdx) {
   var post = POSTS[postIdx];
   if (!post) return;
   var el = document.getElementById('threadContent');
@@ -2753,7 +2751,7 @@ function openThread(postIdx) {
   document.body.style.overflow = 'hidden';
 }
 
-function closeThread() {
+function closeForumThread() {
   document.getElementById('threadOverlay').classList.remove('show');
   document.body.style.overflow = '';
 }
@@ -2774,9 +2772,9 @@ drawRadarChart();
 renderSimilarCards('similarCardsPreview', 5, 'card');
 renderSimilarCards('similarCardsMain', SIMILAR.length, 'grid');
 
-// Close thread on Escape
+// Close forum thread on Escape
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeThread();
+  if (e.key === 'Escape') closeForumThread();
 });
 </script>
 
@@ -3057,10 +3055,8 @@ function renderSidebar(){
       var tid=item.dataset.tab;
       var isCurrentPage=(pid===PAGE_ID);
       if(!isCurrentPage){window.location.href=(PAGE_URLS[pid]||'#')+'?comment='+cid;return;}
-      // Same page — openThread handles tab switching + retry internally
-      var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
-      if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
-      setTimeout(function(){openThread(cid);},300);
+      // Same page — openThread handles tab switching, scrolling + positioning
+      openThread(cid);
     });
   });
 }
@@ -3161,33 +3157,40 @@ function openThread(cid,_retries){
   var c=comments[cid];if(!c){openThreadId=null;return;}
   // Auto-switch to the comment's tab if needed
   if(c.tabId && c.tabId !== activeTabId){
-    switchTab(c.tabId);
-    setTimeout(function(){ openThread(cid); }, 200);
-    return;
+    switchTab(c.tabId, null, {keepThread:true, skipScroll:true});
   }
   var pin=document.querySelector('.cb-pin[data-id="'+cid+'"]');
-  if(!pin){openThreadId=null;return;}
-  var pinRect=pin.getBoundingClientRect();
-  // Guard: if pin not yet laid out, retry up to 5 times
-  if(pinRect.width===0 && pinRect.height===0){
+  if(!pin){
     var r=(_retries||0)+1;
-    if(r<=5){setTimeout(function(){openThread(cid,r);},100);}
+    if(r<=10){setTimeout(function(){openThread(cid,r);},80);}
     else{openThreadId=null;}
     return;
   }
-  var thread=document.createElement('div');
-  thread.id='cb-open-thread';
-  thread.className='cb-thread';
-  thread.style.position='fixed';
-  thread.style.zIndex='900';
-  var left=pinRect.right+8;
-  if(left+320>window.innerWidth)left=pinRect.left-328;
-  thread.style.left=left+'px';
-  thread.style.top=Math.max(8,pinRect.top-40)+'px';
-  thread.addEventListener('click',function(e){e.stopPropagation();});
-  renderThreadHTML(thread,c);
-  document.body.appendChild(thread);
-  updateSidebarActive();
+  // Scroll to pin instantly so getBoundingClientRect returns viewport coords
+  pin.scrollIntoView({behavior:'instant',block:'center'});
+  requestAnimationFrame(function(){
+    if(openThreadId!==cid)return; // another thread was opened while waiting
+    var pinRect=pin.getBoundingClientRect();
+    if(pinRect.width===0 && pinRect.height===0){
+      var r=(_retries||0)+1;
+      if(r<=10){setTimeout(function(){openThread(cid,r);},80);}
+      else{openThreadId=null;}
+      return;
+    }
+    var thread=document.createElement('div');
+    thread.id='cb-open-thread';
+    thread.className='cb-thread';
+    thread.style.position='fixed';
+    thread.style.zIndex='900';
+    var left=pinRect.right+8;
+    if(left+320>window.innerWidth)left=pinRect.left-328;
+    thread.style.left=left+'px';
+    thread.style.top=Math.max(8,pinRect.top-40)+'px';
+    thread.addEventListener('click',function(e){e.stopPropagation();});
+    renderThreadHTML(thread,c);
+    document.body.appendChild(thread);
+    updateSidebarActive();
+  });
 }
 function closeThread(){
   openThreadId=null;
@@ -3283,9 +3286,7 @@ function checkDeepLink(){
     if(comments[commentId]){
       clearInterval(check);
       history.replaceState(null,'',location.pathname+location.hash);
-      var pin=document.querySelector('.cb-pin[data-id="'+commentId+'"]');
-      if(pin){pin.scrollIntoView({behavior:'smooth',block:'center'});}
-      setTimeout(function(){openThread(commentId);},500);
+      openThread(commentId);
     }
   },200);
   setTimeout(function(){clearInterval(check);},5000);
