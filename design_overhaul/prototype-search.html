@@ -116,7 +116,7 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .results-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-variant-numeric:tabular-nums;text-align:center}
 .results-table tr{cursor:pointer;transition:var(--transition)}
 .results-table tbody tr:hover{background:var(--blue-50)}
-.results-table tbody tr.selected{background:var(--brand-bg);border-left:3px solid var(--brand)}
+.results-table tbody tr.selected{background:var(--brand-bg);box-shadow:inset 3px 0 0 var(--brand)}
 /* Density modes */
 .results-table.compact td{padding:3px 10px;font-size:12px;line-height:1.2}
 .results-table.compact th{padding:4px 10px;font-size:11px}
@@ -181,11 +181,19 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .sort-btn.has-rules{border-color:var(--brand);background:var(--brand-bg);color:var(--brand)}
 .sort-badge{background:var(--brand);color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;font-weight:700}
 /* Row actions on hover */
-.row-actions{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;gap:4px;opacity:0;transition:var(--transition);pointer-events:none;z-index:4;background:linear-gradient(90deg,transparent 0%,var(--blue-50) 12px,var(--blue-50) 100%);padding:4px 8px 4px 20px;border-radius:var(--radius-sm)}
-.results-table tbody tr:hover .row-actions{opacity:1;pointer-events:all}
+.td-actions{white-space:nowrap;text-align:right;padding-right:12px!important}
+.row-actions{display:inline-flex;gap:4px;opacity:0;transition:var(--transition)}
+.results-table tbody tr:hover .row-actions{opacity:1}
 .row-action-btn{padding:4px 10px;font-size:11.5px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--text-sub);cursor:pointer;font-family:inherit;white-space:nowrap;transition:var(--transition)}
 .row-action-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-bg)}
-.td-actions-placeholder{width:200px}
+/* Column header sort menu */
+.th-sortable{cursor:pointer;user-select:none;position:relative}
+.th-sortable:hover{color:var(--brand)}
+.col-sort-menu{position:fixed;background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);z-index:200;display:none;padding:4px;min-width:160px}
+.col-sort-menu.open{display:block}
+.col-sort-item{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;border:none;background:none;font-size:13px;font-family:inherit;color:var(--text);cursor:pointer;border-radius:var(--radius-sm);text-align:left}
+.col-sort-item:hover{background:var(--slate-50)}
+.col-sort-item .sort-icon{font-size:14px;color:var(--text-muted)}
 
 /* ══ SLIDE-OUT PANEL (Notion-style, no blocking overlay) ══ */
 .panel{position:fixed;top:var(--nav-h);right:0;width:440px;height:calc(100vh - var(--nav-h));background:#fff;border-left:1px solid var(--border);box-shadow:-8px 0 30px rgba(17,24,39,.08);z-index:300;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column}
@@ -550,7 +558,7 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 2v10M3 12l-2-2M3 12l2-2M8 4h6M8 7h4M8 10h2"/></svg>
         정렬<span class="sort-badge" id="sortBadge" style="display:none">0</span>
       </button>
-      <div class="sort-panel" id="sortPanel">
+      <div class="sort-panel" id="sortPanel" onclick="event.stopPropagation()">
         <div class="sort-panel-header"><span>정렬</span><button class="sort-panel-reset" onclick="clearSortRules()">초기화</button></div>
         <div class="sort-panel-body" id="sortPanelBody"></div>
       </div>
@@ -626,6 +634,12 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
     <button class="page-btn">94</button>
     <button class="page-btn">›</button>
   </div>
+</div>
+
+<!-- Column sort dropdown -->
+<div class="col-sort-menu" id="colSortMenu">
+  <button class="col-sort-item" onclick="colSortPick('asc')"><span class="sort-icon">↑</span> 오름차순 정렬</button>
+  <button class="col-sort-item" onclick="colSortPick('desc')"><span class="sort-icon">↓</span> 내림차순 정렬</button>
 </div>
 
 <!-- ══ SLIDE-OUT PANEL (Notion-style, no overlay) ══ -->
@@ -924,10 +938,46 @@ function applySortRules() {
   renderTable();
 }
 
+// ── Column header sort dropdown ──
+var colSortTarget = null;
+
+function showColSort(e, colKey) {
+  e.stopPropagation();
+  colSortTarget = colKey;
+  var menu = document.getElementById('colSortMenu');
+  var rect = e.target.getBoundingClientRect();
+  menu.style.left = rect.left + 'px';
+  menu.style.top = (rect.bottom + 4) + 'px';
+  menu.classList.add('open');
+}
+
+function colSortPick(dir) {
+  if (!colSortTarget) return;
+  var existing = -1;
+  for (var i = 0; i < sortRules.length; i++) {
+    if (sortRules[i].col === colSortTarget) { existing = i; break; }
+  }
+  if (existing >= 0) {
+    sortRules[existing].dir = dir;
+  } else {
+    sortRules.push({col: colSortTarget, dir: dir});
+  }
+  closeColSort();
+  applySortRules();
+}
+
+function closeColSort() {
+  document.getElementById('colSortMenu').classList.remove('open');
+  colSortTarget = null;
+}
+
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.sort-panel-wrap')) {
     var panel = document.getElementById('sortPanel');
     if (panel) panel.classList.remove('open');
+  }
+  if (!e.target.closest('.col-sort-menu') && !e.target.closest('.th-sortable')) {
+    closeColSort();
   }
 });
 
@@ -939,11 +989,11 @@ function renderTable(){
   // Update thead based on density
   var thead = document.querySelector('#resultsTable thead tr');
   if(mode === 'compact'){
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th class="th-sortable" onclick="showColSort(event,\'revenue\')">매출액</th><th class="th-sortable" onclick="showColSort(event,\'profit\')">영업이익(영업이익률)</th><th class="th-sortable" onclick="showColSort(event,\'emp\')">직원수</th>';
   } else if(mode === 'spacious'){
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th><th>설립</th><th></th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th class="th-sortable" onclick="showColSort(event,\'revenue\')">매출액</th><th class="th-sortable" onclick="showColSort(event,\'profit\')">영업이익(영업이익률)</th><th class="th-sortable" onclick="showColSort(event,\'emp\')">직원수</th><th class="th-sortable" onclick="showColSort(event,\'year\')">설립</th><th class="td-actions"></th>';
   } else {
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th><th>설립</th><th></th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th class="th-sortable" onclick="showColSort(event,\'revenue\')">매출액</th><th class="th-sortable" onclick="showColSort(event,\'profit\')">영업이익(영업이익률)</th><th class="th-sortable" onclick="showColSort(event,\'emp\')">직원수</th><th class="th-sortable" onclick="showColSort(event,\'year\')">설립</th><th class="td-actions"></th>';
   }
 
   var tbody = document.getElementById('tableBody');
@@ -988,7 +1038,7 @@ function renderTable(){
         return '<div class="detail-emp-bar-seg" style="height:'+h+'px;background:'+bg+'"></div>';
       }).join('');
 
-      return '<tr onclick="openPanel('+i+')" style="position:relative">'
+      return '<tr onclick="openPanel('+i+')">'
         +'<td class="td-check"><input type="checkbox" onclick="event.stopPropagation();updateBulk()" data-idx="'+i+'"></td>'
         +'<td><div class="company-cell" style="align-items:flex-start">'
         +  '<div class="company-logo" style="background:'+c.color+';width:40px;height:40px;font-size:15px;border-radius:8px">'+initials+'</div>'
@@ -1025,12 +1075,12 @@ function renderTable(){
         +  '<div class="detail-emp-bar">'+empBars+'</div>'
         +'</div></td>'
         +'<td class="year-cell">'+c.year+'</td>'
-        +'<td><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
+        +'<td class="td-actions"><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
         +'</tr>';
     } else {
       // ── COMFORTABLE (default): logo+name, sparkline, full columns ──
       var spark = makeSpark(c.trend);
-      return '<tr onclick="openPanel('+i+')" style="position:relative">'
+      return '<tr onclick="openPanel('+i+')">'
         +'<td class="td-check"><input type="checkbox" onclick="event.stopPropagation();updateBulk()" data-idx="'+i+'"></td>'
         +'<td><div class="company-cell">'
         +  '<div class="company-logo" style="background:'+c.color+'">'+initials+'</div>'
@@ -1042,7 +1092,7 @@ function renderTable(){
         +'<td class="profit-cell"><span class="profit-val '+profitClass+'">'+c.profit+'억</span> <span style="font-size:11px;color:var(--text-sub)">'+((c.profit/c.revenue)*100).toFixed(1)+'%</span> <span class="emp-growth '+profitClass+'" style="font-size:11px">'+profitArrow+' '+profitGText+'</span></td>'
         +'<td class="emp-cell">'+c.emp+'명 <span class="emp-growth '+empGClass+'">+'+c.empG+'%</span></td>'
         +'<td class="year-cell">'+c.year+'</td>'
-        +'<td><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
+        +'<td class="td-actions"><div class="row-actions"><button class="row-action-btn" onclick="event.stopPropagation()">저장</button><button class="row-action-btn" onclick="event.stopPropagation();openListModal()">리스트 추가</button><button class="row-action-btn" onclick="event.stopPropagation();openPanel('+i+')">빠른 보기</button></div></td>'
         +'</tr>';
     }
   }).join('');
