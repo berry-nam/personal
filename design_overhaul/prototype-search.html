@@ -111,7 +111,7 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 /* ══ RESULTS TABLE ══ */
 .results-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:24px}
 .results-table{width:100%;border-collapse:collapse}
-.results-table th{background:var(--slate-50);font-size:12px;font-weight:600;color:var(--text-sub);text-transform:none;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:5}
+.results-table th{background:var(--slate-50);font-size:12px;font-weight:600;color:var(--text-sub);text-transform:none;padding:10px 14px;text-align:center;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:5}
 .results-table th:first-child{width:44px;text-align:center}
 .results-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-variant-numeric:tabular-nums}
 .results-table tr{cursor:pointer;transition:var(--transition)}
@@ -161,13 +161,25 @@ body.panel-open .page{margin-right:440px;transition:margin .3s cubic-bezier(.4,0
 .emp-cell{font-size:13px}
 .emp-growth{font-size:11px;font-weight:500;margin-left:4px}
 .year-cell{font-size:12.5px;color:var(--text-sub);font-variant-numeric:tabular-nums}
-/* Sortable column headers */
-.sortable-th{cursor:pointer;user-select:none;transition:var(--transition)}
-.sortable-th:hover{color:var(--brand);background:var(--blue-50)}
-.sortable-th.sorted{color:var(--brand)}
-.sort-arrow{font-size:10px;margin-left:3px;opacity:0.4}
-.sortable-th.sorted .sort-arrow{opacity:1;color:var(--brand)}
-.sortable-th:hover .sort-arrow{opacity:0.7}
+/* Sort panel */
+.sort-panel-wrap{position:relative;display:inline-block}
+.sort-panel{position:absolute;top:calc(100% + 6px);left:0;width:380px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:100;display:none}
+.sort-panel.open{display:block}
+.sort-panel-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600;color:var(--text)}
+.sort-panel-reset{border:none;background:none;cursor:pointer;font-size:12px;color:var(--text-muted);font-family:inherit}
+.sort-panel-reset:hover{color:var(--red-500)}
+.sort-panel-body{padding:8px 16px}
+.sort-rule{display:flex;align-items:center;gap:8px;padding:6px 0}
+.sort-rule select{padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12.5px;font-family:inherit;background:#fff;color:var(--text);cursor:pointer}
+.sort-remove{border:none;background:none;cursor:pointer;color:var(--text-muted);font-size:16px;padding:2px 4px;line-height:1}
+.sort-remove:hover{color:var(--red-500)}
+.sort-add-btn{display:flex;align-items:center;gap:4px;padding:8px 0;font-size:12.5px;color:var(--brand);cursor:pointer;border:none;background:none;font-family:inherit;font-weight:500}
+.sort-add-btn:hover{text-decoration:underline}
+.sort-empty{padding:12px 0;font-size:12.5px;color:var(--text-muted);text-align:center}
+.sort-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:12.5px;cursor:pointer;background:#fff;font-family:inherit;color:var(--text-sub);transition:var(--transition)}
+.sort-btn:hover{border-color:var(--blue-300);color:var(--brand)}
+.sort-btn.has-rules{border-color:var(--brand);background:var(--brand-bg);color:var(--brand)}
+.sort-badge{background:var(--brand);color:#fff;font-size:10px;padding:1px 5px;border-radius:8px;font-weight:700}
 /* Row actions on hover */
 .row-actions{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;gap:4px;opacity:0;transition:var(--transition);pointer-events:none}
 .results-table tbody tr:hover .row-actions{opacity:1;pointer-events:all}
@@ -533,6 +545,16 @@ body.show-design-notes *:has(> .design-note){overflow:visible !important}
       <button class="density-btn active" onclick="setDensity('comfortable',this)">기본</button>
       <button class="density-btn" onclick="setDensity('spacious',this)">디테일</button>
     </div>
+    <div class="sort-panel-wrap">
+      <button class="sort-btn" id="sortBtn" onclick="toggleSortPanel(event)">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 2v10M3 12l-2-2M3 12l2-2M8 4h6M8 7h4M8 10h2"/></svg>
+        정렬<span class="sort-badge" id="sortBadge" style="display:none">0</span>
+      </button>
+      <div class="sort-panel" id="sortPanel">
+        <div class="sort-panel-header"><span>정렬</span><button class="sort-panel-reset" onclick="clearSortRules()">초기화</button></div>
+        <div class="sort-panel-body" id="sortPanelBody"></div>
+      </div>
+    </div>
     <div class="table-controls-right">
       <!-- View Selector -->
       <div class="saved-views" style="position:relative">
@@ -817,41 +839,111 @@ const INDUSTRY_COLORS = {
   '태양광':'background:#FFF7ED;color:#C2410C'
 };
 
-// ══ RENDER TABLE ══
-var currentDensity = 'comfortable';
-var sortColumn = null;
-var sortDirection = 'desc';
+// ══ SORT PANEL ══
+var sortRules = [];
+var SORT_COLUMNS = [
+  {key:'revenue', label:'매출액'},
+  {key:'profit', label:'영업이익(영업이익률)'},
+  {key:'emp', label:'직원수'},
+  {key:'year', label:'설립'}
+];
 
-function sortableHeader(label, key, align) {
-  var arrow = '';
-  var cls = 'sortable-th';
-  if (sortColumn === key) { arrow = sortDirection === 'asc' ? ' ▲' : ' ▼'; cls += ' sorted'; }
-  var style = align ? 'text-align:' + align + ';' : '';
-  return '<th class="' + cls + '" style="cursor:pointer;user-select:none;' + style + '" onclick="handleSort(\'' + key + '\')">' + label + '<span class="sort-arrow">' + arrow + '</span></th>';
+function toggleSortPanel(e) {
+  e.stopPropagation();
+  document.getElementById('sortPanel').classList.toggle('open');
 }
 
-function handleSort(col) {
-  if (sortColumn === col) sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-  else { sortColumn = col; sortDirection = 'desc'; }
-  if (sortColumn) {
+function renderSortPanel() {
+  var body = document.getElementById('sortPanelBody');
+  if (!sortRules.length) {
+    body.innerHTML = '<div class="sort-empty">정렬 조건 없음</div><button class="sort-add-btn" onclick="addSortRule()">+ 정렬 추가</button>';
+  } else {
+    var html = sortRules.map(function(r, idx) {
+      var colOpts = SORT_COLUMNS.map(function(c) {
+        return '<option value="' + c.key + '"' + (r.col === c.key ? ' selected' : '') + '>' + c.label + '</option>';
+      }).join('');
+      return '<div class="sort-rule">' +
+        '<select onchange="updateSortRule(' + idx + ',\'col\',this.value)">' + colOpts + '</select>' +
+        '<select onchange="updateSortRule(' + idx + ',\'dir\',this.value)">' +
+          '<option value="desc"' + (r.dir === 'desc' ? ' selected' : '') + '>내림차순</option>' +
+          '<option value="asc"' + (r.dir === 'asc' ? ' selected' : '') + '>오름차순</option>' +
+        '</select>' +
+        '<button class="sort-remove" onclick="removeSortRule(' + idx + ')">✕</button></div>';
+    }).join('');
+    html += '<button class="sort-add-btn" onclick="addSortRule()">+ 정렬 추가</button>';
+    body.innerHTML = html;
+  }
+  var badge = document.getElementById('sortBadge');
+  var btn = document.getElementById('sortBtn');
+  if (sortRules.length) {
+    badge.textContent = sortRules.length;
+    badge.style.display = '';
+    btn.classList.add('has-rules');
+  } else {
+    badge.style.display = 'none';
+    btn.classList.remove('has-rules');
+  }
+}
+
+function addSortRule() {
+  var used = sortRules.map(function(r) { return r.col; });
+  var avail = SORT_COLUMNS.filter(function(c) { return used.indexOf(c.key) === -1; });
+  if (!avail.length) return;
+  sortRules.push({col: avail[0].key, dir: 'desc'});
+  applySortRules();
+}
+
+function removeSortRule(idx) {
+  sortRules.splice(idx, 1);
+  applySortRules();
+}
+
+function updateSortRule(idx, field, value) {
+  sortRules[idx][field] = value;
+  applySortRules();
+}
+
+function clearSortRules() {
+  sortRules = [];
+  applySortRules();
+}
+
+function applySortRules() {
+  if (sortRules.length) {
     COMPANIES.sort(function(a, b) {
-      var va = a[sortColumn], vb = b[sortColumn];
-      return sortDirection === 'asc' ? (va - vb) : (vb - va);
+      for (var i = 0; i < sortRules.length; i++) {
+        var r = sortRules[i];
+        var va = a[r.col], vb = b[r.col];
+        var diff = r.dir === 'asc' ? va - vb : vb - va;
+        if (diff !== 0) return diff;
+      }
+      return 0;
     });
   }
+  renderSortPanel();
   renderTable();
 }
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sort-panel-wrap')) {
+    var panel = document.getElementById('sortPanel');
+    if (panel) panel.classList.remove('open');
+  }
+});
+
+// ══ RENDER TABLE ══
+var currentDensity = 'comfortable';
 
 function renderTable(){
   var mode = currentDensity;
   // Update thead based on density
   var thead = document.querySelector('#resultsTable thead tr');
   if(mode === 'compact'){
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right');
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th>';
   } else if(mode === 'spacious'){
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right') + sortableHeader('설립','year','right') + '<th style="width:1px"></th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th><th>설립</th><th style="width:1px"></th>';
   } else {
-    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th>' + sortableHeader('매출액','revenue','right') + sortableHeader('영업이익(영업이익률)','profit','right') + sortableHeader('직원수','emp','right') + sortableHeader('설립','year','right') + '<th style="width:1px"></th>';
+    thead.innerHTML = '<th class="td-check"><input type="checkbox" onchange="toggleAllChecks(this)"></th><th>기업명</th><th>업종</th><th>지역</th><th>매출액</th><th>영업이익(영업이익률)</th><th>직원수</th><th>설립</th><th style="width:1px"></th>';
   }
 
   var tbody = document.getElementById('tableBody');
