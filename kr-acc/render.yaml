@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: kr-acc-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    dockerCommand: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
+    plan: free
+    region: singapore
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_URL_SYNC
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: AGE_GRAPH_NAME
+        value: kr_acc
+      - key: PORT
+        value: "8000"
