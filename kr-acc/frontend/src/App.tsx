@@ -12,6 +12,12 @@ const VoteDetail = lazy(() => import("@/pages/VoteDetail"));
 const AssetsOverview = lazy(() => import("@/pages/AssetsOverview"));
 const GraphPage = lazy(() => import("@/pages/GraphPage"));
 
+// Labeling tool (separate route tree)
+const LabelingLayout = lazy(() => import("@/components/labeling/LabelingLayout"));
+const LabelingLogin = lazy(() => import("@/pages/labeling/LabelingLogin"));
+const LabelingDashboard = lazy(() => import("@/pages/labeling/LabelingDashboard"));
+const LabelingWorkspace = lazy(() => import("@/pages/labeling/LabelingWorkspace"));
+
 function LoadingSpinner() {
   return (
     <div className="flex h-64 items-center justify-center">
@@ -95,6 +101,40 @@ export default function App() {
             <Route path="/bills/:billId" element={<Navigate to="/legislation" replace />} />
             <Route path="/votes" element={<Navigate to="/legislation?tab=votes" replace />} />
             <Route path="/votes/:voteId" element={<Navigate to="/legislation" replace />} />
+          </Route>
+
+          {/* Labeling tool — separate route tree with own layout */}
+          <Route
+            path="/labeling/login"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <LabelingLogin />
+              </Suspense>
+            }
+          />
+          <Route
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <LabelingLayout />
+              </Suspense>
+            }
+          >
+            <Route
+              path="/labeling"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <LabelingDashboard />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/labeling/tasks/:taskId"
+              element={
+                <Suspense fallback={<LoadingSpinner />}>
+                  <LabelingWorkspace />
+                </Suspense>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>

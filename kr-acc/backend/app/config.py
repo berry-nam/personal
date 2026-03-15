@@ -21,6 +21,11 @@ class Settings(BaseSettings):
     assembly_api_key: str = ""
     dart_api_key: str = ""
 
+    # Labeling tool
+    labeling_invite_code: str = "cookiedeal2026"
+    labeling_jwt_secret: str = "change-me-in-production-kr-acc-labeling"
+    labeling_jwt_expire_hours: int = 24
+
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
 

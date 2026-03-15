@@ -15,6 +15,14 @@ from app.models.models import (
     Vote,
     VoteRecord,
 )
+from app.models.labeling_models import (
+    LabelingLabel,
+    LabelingRubricCriterion,
+    LabelingRubricScore,
+    LabelingTask,
+    LabelingTaskResult,
+    LabelingUser,
+)
 
 __all__ = [
     "AssetDeclaration",
@@ -30,4 +38,11 @@ __all__ = [
     "PoliticianCompany",
     "Vote",
     "VoteRecord",
+    # Labeling
+    "LabelingLabel",
+    "LabelingRubricCriterion",
+    "LabelingRubricScore",
+    "LabelingTask",
+    "LabelingTaskResult",
+    "LabelingUser",
 ]

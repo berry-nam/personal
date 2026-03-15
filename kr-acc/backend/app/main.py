@@ -12,6 +12,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from app.api.assets import router as assets_router
 from app.api.bills import router as bills_router
 from app.api.graph import router as graph_router
+from app.api.labeling import router as labeling_router
 from app.api.parties import router as parties_router
 from app.api.politicians import router as politicians_router
 from app.api.stats import router as stats_router
@@ -104,6 +105,7 @@ def create_app() -> FastAPI:
     application.include_router(parties_router, prefix=api_prefix)
     application.include_router(stats_router, prefix=api_prefix)
     application.include_router(assets_router, prefix=api_prefix)
+    application.include_router(labeling_router, prefix=api_prefix)
 
     @application.get("/health")
     async def health_check():
