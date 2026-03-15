@@ -287,6 +287,17 @@ async def get_progress(session: AsyncSession) -> dict:
             ).limit(1)
         )).scalar_one_or_none()
 
+        # Assigned query_id range (min/max)
+        assigned_range = (await session.execute(
+            select(
+                func.min(LabelingTask.query_id),
+                func.max(LabelingTask.query_id),
+            ).where(
+                LabelingTask.assigned_to == u.id,
+                LabelingTask.status == "assigned",
+            )
+        )).one()
+
         per_labeler.append({
             "id": u.id,
             "name": u.display_name,
@@ -295,6 +306,8 @@ async def get_progress(session: AsyncSession) -> dict:
             "completed": completed,
             "assigned": assigned,
             "current_task": current,
+            "assigned_range_start": assigned_range[0],
+            "assigned_range_end": assigned_range[1],
         })
 
     return {
@@ -326,31 +339,51 @@ async def assign_task(
 
 
 async def bulk_assign_tasks(
-    session: AsyncSession, user_id: int, start_idx: int, end_idx: int
+    session: AsyncSession, user_id: int, start_num: int, end_num: int
 ) -> int:
-    """Admin: bulk assign pending tasks by position range (1-indexed).
+    """Admin: bulk assign pending tasks by task row number (1-indexed).
 
-    Assigns tasks in query_id order. start_idx and end_idx are 1-based
-    positions within the pending queue.
+    Row numbers are based on *all* tasks ordered by query_id,
+    regardless of status. This matches what the admin sees in the UI.
     """
-    # Get pending tasks ordered by query_id
-    result = await session.execute(
+    # Number tasks by query_id order, then pick rows start_num..end_num
+    # that are still pending
+    all_tasks = await session.execute(
         select(LabelingTask)
-        .where(LabelingTask.status == "pending")
         .order_by(LabelingTask.query_id)
-        .offset(start_idx - 1)
-        .limit(end_idx - start_idx + 1)
+        .offset(start_num - 1)
+        .limit(end_num - start_num + 1)
     )
-    tasks = list(result.scalars())
+    tasks = list(all_tasks.scalars())
 
     now = datetime.now(timezone.utc)
     count = 0
     for t in tasks:
-        t.status = "assigned"
-        t.assigned_to = user_id
-        t.assigned_at = now
-        count += 1
+        if t.status == "pending":
+            t.status = "assigned"
+            t.assigned_to = user_id
+            t.assigned_at = now
+            count += 1
 
+    await session.commit()
+    return count
+
+
+async def bulk_unassign_tasks(session: AsyncSession, user_id: int) -> int:
+    """Admin: unassign all 'assigned' tasks from a user back to pending."""
+    result = await session.execute(
+        select(LabelingTask).where(
+            LabelingTask.assigned_to == user_id,
+            LabelingTask.status == "assigned",
+        )
+    )
+    tasks = list(result.scalars())
+    count = 0
+    for t in tasks:
+        t.status = "pending"
+        t.assigned_to = None
+        t.assigned_at = None
+        count += 1
     await session.commit()
     return count
 

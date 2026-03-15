@@ -294,3 +294,18 @@ export function useBulkAssign() {
     },
   });
 }
+
+export function useBulkUnassign() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (userId: number) => {
+      const res = await labelingApi.post("/admin/tasks/bulk-unassign", {
+        user_id: userId,
+      });
+      return res.data as { status: string; count: number };
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["labeling"] });
+    },
+  });
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import {
   useBulkAssign,
+  useBulkUnassign,
   useImportQueries,
   useLabelers,
   useMyCurrentTask,
@@ -10,7 +11,7 @@ import {
   useTasks,
   useUcStats,
 } from "@/api/labelingQueries";
-import type { LabelingUser, LabelerStats } from "@/types/labeling";
+import type { LabelingUser, ProgressStats } from "@/types/labeling";
 
 const UC_LABELS: Record<string, string> = {
   "UC-1": "M&A 타겟 발굴",
@@ -120,8 +121,8 @@ function BulkAssignPanel({ pendingCount }: { pendingCount: number }) {
     <div className="rounded-xl border border-brand-100 bg-brand-50 p-4">
       <h3 className="mb-3 text-sm font-semibold text-brand-800">작업 일괄 배정</h3>
       <p className="mb-3 text-xs text-brand-600">
-        대기 중인 작업 {pendingCount.toLocaleString()}건 중, 범위를 지정하여 팀원에게 일괄 배정합니다.
-        (쿼리 ID 순서 기준, 1번 = 첫 번째 대기 작업)
+        전체 작업 중 번호 범위를 지정하여 팀원에게 일괄 배정합니다.
+        (쿼리 ID 순서 기준, 이미 배정/완료된 작업은 건너뜀)
       </p>
       <div className="flex flex-wrap items-end gap-3">
         <div>
@@ -142,7 +143,7 @@ function BulkAssignPanel({ pendingCount }: { pendingCount: number }) {
           <input
             type="number"
             min={1}
-            max={pendingCount}
+            max={99999}
             value={start}
             onChange={(e) => setStart(e.target.value)}
             className="w-24 rounded-lg border border-brand-200 bg-white px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
@@ -153,7 +154,7 @@ function BulkAssignPanel({ pendingCount }: { pendingCount: number }) {
           <input
             type="number"
             min={1}
-            max={pendingCount}
+            max={99999}
             value={end}
             onChange={(e) => setEnd(e.target.value)}
             className="w-24 rounded-lg border border-brand-200 bg-white px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
@@ -187,6 +188,122 @@ function BulkAssignPanel({ pendingCount }: { pendingCount: number }) {
         </div>
       )}
     </div>
+  );
+}
+
+// ── Team Table with range + unassign ────────────────────────────────────────
+
+function TeamTable({ progress }: { progress: ProgressStats }) {
+  const bulkUnassign = useBulkUnassign();
+  const [confirmId, setConfirmId] = useState<number | null>(null);
+
+  const handleUnassign = (userId: number) => {
+    bulkUnassign.mutate(userId, {
+      onSuccess: (data) => {
+        setConfirmId(null);
+        alert(`${data.count}건 배정 해제 완료`);
+      },
+    });
+  };
+
+  return (
+    <table className="w-full text-sm">
+      <thead>
+        <tr className="border-b border-t bg-gray-50 text-left text-xs text-gray-500">
+          <th className="px-6 py-2.5 font-medium">이름</th>
+          <th className="px-6 py-2.5 font-medium">역할</th>
+          <th className="px-6 py-2.5 font-medium text-center">완료</th>
+          <th className="px-6 py-2.5 font-medium text-center">배정</th>
+          <th className="px-6 py-2.5 font-medium">배정 범위</th>
+          <th className="px-6 py-2.5 font-medium">진행률</th>
+          <th className="px-6 py-2.5 font-medium text-center">관리</th>
+        </tr>
+      </thead>
+      <tbody>
+        {progress.per_labeler.map((p) => (
+          <tr key={p.id} className="border-b last:border-0 hover:bg-gray-50">
+            <td className="px-6 py-3">
+              <div className="font-medium text-gray-900">{p.name}</div>
+              <div className="text-xs text-gray-400">{p.email}</div>
+            </td>
+            <td className="px-6 py-3">
+              <span
+                className={`rounded px-1.5 py-0.5 text-xs font-medium ${
+                  p.role === "admin"
+                    ? "bg-brand-100 text-brand-700"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+              >
+                {p.role === "admin" ? "관리자" : "라벨러"}
+              </span>
+            </td>
+            <td className="px-6 py-3 text-center">
+              <span className="text-lg font-bold text-emerald-600">{p.completed}</span>
+            </td>
+            <td className="px-6 py-3 text-center">
+              <span className={`text-lg font-bold ${p.assigned > 0 ? "text-brand-500" : "text-gray-300"}`}>
+                {p.assigned}
+              </span>
+            </td>
+            <td className="px-6 py-3">
+              {p.assigned_range_start && p.assigned_range_end ? (
+                <span className="font-mono text-xs text-gray-700">
+                  {p.assigned_range_start} ~ {p.assigned_range_end}
+                </span>
+              ) : (
+                <span className="text-xs text-gray-300">-</span>
+              )}
+            </td>
+            <td className="px-6 py-3">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-24 rounded-full bg-gray-100">
+                  <div
+                    className="h-2 rounded-full bg-brand-500 transition-all"
+                    style={{
+                      width: `${Math.min(100, (p.completed / Math.max(progress.total_tasks, 1)) * 100)}%`,
+                      minWidth: p.completed > 0 ? "4px" : "0",
+                    }}
+                  />
+                </div>
+                <span className="text-[11px] text-gray-400">
+                  {((p.completed / Math.max(progress.total_tasks, 1)) * 100).toFixed(1)}%
+                </span>
+              </div>
+            </td>
+            <td className="px-6 py-3 text-center">
+              {p.assigned > 0 && (
+                <>
+                  {confirmId === p.id ? (
+                    <div className="flex items-center justify-center gap-1">
+                      <button
+                        onClick={() => handleUnassign(p.id)}
+                        disabled={bulkUnassign.isPending}
+                        className="rounded bg-red-500 px-2 py-1 text-xs font-medium text-white hover:bg-red-600 disabled:opacity-50"
+                      >
+                        확인
+                      </button>
+                      <button
+                        onClick={() => setConfirmId(null)}
+                        className="rounded bg-gray-200 px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-300"
+                      >
+                        취소
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setConfirmId(p.id)}
+                      className="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-500 hover:bg-red-50 hover:text-red-600"
+                    >
+                      배정 해제
+                    </button>
+                  )}
+                </>
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
@@ -273,72 +390,7 @@ function AdminDashboardTab() {
         {progress.per_labeler.length === 0 ? (
           <div className="px-6 pb-5 text-sm text-gray-400">아직 등록된 팀원이 없습니다.</div>
         ) : (
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-t bg-gray-50 text-left text-xs text-gray-500">
-                <th className="px-6 py-2.5 font-medium">이름</th>
-                <th className="px-6 py-2.5 font-medium">역할</th>
-                <th className="px-6 py-2.5 font-medium text-center">완료</th>
-                <th className="px-6 py-2.5 font-medium text-center">진행중</th>
-                <th className="px-6 py-2.5 font-medium">현재 작업</th>
-                <th className="px-6 py-2.5 font-medium">진행률</th>
-              </tr>
-            </thead>
-            <tbody>
-              {progress.per_labeler.map((p) => (
-                <tr key={p.id} className="border-b last:border-0 hover:bg-gray-50">
-                  <td className="px-6 py-3">
-                    <div className="font-medium text-gray-900">{p.name}</div>
-                    <div className="text-xs text-gray-400">{p.email}</div>
-                  </td>
-                  <td className="px-6 py-3">
-                    <span
-                      className={`rounded px-1.5 py-0.5 text-xs font-medium ${
-                        p.role === "admin"
-                          ? "bg-brand-100 text-brand-700"
-                          : "bg-gray-100 text-gray-600"
-                      }`}
-                    >
-                      {p.role === "admin" ? "관리자" : "라벨러"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-3 text-center">
-                    <span className="text-lg font-bold text-emerald-600">{p.completed}</span>
-                  </td>
-                  <td className="px-6 py-3 text-center">
-                    <span className={`text-lg font-bold ${p.assigned > 0 ? "text-brand-500" : "text-gray-300"}`}>
-                      {p.assigned}
-                    </span>
-                  </td>
-                  <td className="px-6 py-3">
-                    {p.current_task ? (
-                      <span className="rounded bg-brand-50 px-1.5 py-0.5 font-mono text-xs text-brand-600">
-                        {p.current_task}
-                      </span>
-                    ) : (
-                      <span className="text-xs text-gray-300">-</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-3">
-                    <div className="flex items-center gap-2">
-                      <div className="h-2 w-24 rounded-full bg-gray-100">
-                        <div
-                          className="h-2 rounded-full bg-brand-500 transition-all"
-                          style={{
-                            width: `${Math.min(100, (p.completed / Math.max(progress.total_tasks, 1)) * 100)}%`,
-                            minWidth: p.completed > 0 ? "4px" : "0",
-                          }}
-                        />
-                      </div>
-                      <span className="text-[11px] text-gray-400">
-                        {((p.completed / Math.max(progress.total_tasks, 1)) * 100).toFixed(1)}%
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <TeamTable progress={progress} />
         )}
       </div>
     </div>

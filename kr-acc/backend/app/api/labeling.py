@@ -404,7 +404,7 @@ async def bulk_assign_tasks(
     session: AsyncSession = Depends(get_session),
     user: LabelingUser = Depends(require_admin),
 ):
-    """Bulk assign pending tasks by position range to a user."""
+    """Bulk assign pending tasks by task number range (1-indexed, all tasks ordered by query_id)."""
     user_id = body.get("user_id")
     start = body.get("start", 1)
     end = body.get("end", 1)
@@ -412,6 +412,20 @@ async def bulk_assign_tasks(
         raise HTTPException(status_code=400, detail="user_id, start, end required (1-indexed)")
     count = await labeling_service.bulk_assign_tasks(session, user_id, start, end)
     return {"status": "assigned", "count": count, "assigned_to": user_id}
+
+
+@router.post("/admin/tasks/bulk-unassign")
+async def bulk_unassign_tasks(
+    body: dict,
+    session: AsyncSession = Depends(get_session),
+    user: LabelingUser = Depends(require_admin),
+):
+    """Unassign all assigned tasks from a user back to pending."""
+    user_id = body.get("user_id")
+    if not user_id:
+        raise HTTPException(status_code=400, detail="user_id required")
+    count = await labeling_service.bulk_unassign_tasks(session, user_id)
+    return {"status": "unassigned", "count": count}
 
 
 @router.get("/admin/progress", response_model=ProgressOut)
