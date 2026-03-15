@@ -257,7 +257,7 @@ function AdminDashboardTab() {
             </div>
           </div>
           <div className="mt-4 rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-400">
-            초대코드: <code className="rounded bg-gray-200 px-1 py-0.5 font-mono text-gray-600">cookiedeal2026</code>
+            초대코드는 관리자에게 문의하세요.
           </div>
         </div>
       </div>
