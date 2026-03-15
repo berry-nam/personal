@@ -78,36 +78,15 @@ async def list_tasks(
 
 
 async def get_next_task(session: AsyncSession, user_id: int) -> LabelingTask | None:
-    """Get the next unassigned task and assign it. Ordered by query_id (A-01, A-02, ...)."""
-    # First look for already-assigned task
+    """Get the next task assigned to this user. Only admin-assigned tasks can be worked on."""
     result = await session.execute(
         select(LabelingTask)
         .where(LabelingTask.assigned_to == user_id, LabelingTask.status == "assigned")
-        .options(selectinload(LabelingTask.results), selectinload(LabelingTask.labels))
-        .limit(1)
-    )
-    task = result.scalar_one_or_none()
-    if task:
-        return task
-
-    # Find next pending task, ordered by query_id (sequential: A-01, A-02, ...)
-    result = await session.execute(
-        select(LabelingTask)
-        .where(LabelingTask.status == "pending")
         .order_by(LabelingTask.query_id)
         .options(selectinload(LabelingTask.results), selectinload(LabelingTask.labels))
         .limit(1)
     )
-    task = result.scalar_one_or_none()
-    if task is None:
-        return None
-
-    task.status = "assigned"
-    task.assigned_to = user_id
-    task.assigned_at = datetime.now(timezone.utc)
-    await session.commit()
-    await session.refresh(task)
-    return task
+    return result.scalar_one_or_none()
 
 
 async def get_task_detail(session: AsyncSession, task_id: int) -> LabelingTask | None:

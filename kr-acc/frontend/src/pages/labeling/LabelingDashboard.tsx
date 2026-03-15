@@ -5,7 +5,6 @@ import {
   useImportQueries,
   useLabelers,
   useMyCurrentTask,
-  useNextTask,
   useProgress,
   useReopenTask,
   useTasks,
@@ -352,16 +351,6 @@ function LabelerDashboardTab({ userId }: { userId: number }) {
   const navigate = useNavigate();
   const { data: currentTask } = useMyCurrentTask();
   const { data: progress, isLoading } = useProgress();
-  const nextTask = useNextTask();
-
-  const handleStartNext = async () => {
-    try {
-      const task = await nextTask.mutateAsync();
-      navigate(`/labeling/tasks/${task.id}`);
-    } catch {
-      // No tasks available
-    }
-  };
 
   if (isLoading) return <LoadingState />;
 
@@ -404,21 +393,9 @@ function LabelerDashboardTab({ userId }: { userId: number }) {
         ) : (
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="mb-1 text-lg font-semibold text-gray-900">새 작업 시작</h2>
-              <p className="text-sm text-gray-500">현재 진행 중인 작업이 없습니다. 새 작업을 시작해보세요.</p>
+              <h2 className="mb-1 text-lg font-semibold text-gray-900">배정된 작업 없음</h2>
+              <p className="text-sm text-gray-500">현재 배정된 작업이 없습니다. 관리자가 작업을 배정하면 여기에 표시됩니다.</p>
             </div>
-            <button
-              onClick={handleStartNext}
-              disabled={nextTask.isPending}
-              className="rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 disabled:opacity-50"
-            >
-              {nextTask.isPending ? "할당 중..." : "다음 작업 시작"}
-            </button>
-          </div>
-        )}
-        {nextTask.isError && (
-          <div className="mt-3 rounded-lg bg-yellow-50 px-3 py-2 text-sm text-yellow-700">
-            현재 배정 가능한 작업이 없습니다.
           </div>
         )}
       </div>
@@ -479,16 +456,6 @@ function QueueTab({ isAdmin }: { isAdmin: boolean }) {
   const { data, isLoading } = useTasks(page, 20, "pending");
   const { data: currentTask } = useMyCurrentTask();
   const { data: ucStats } = useUcStats();
-  const nextTask = useNextTask();
-
-  const handleStartNext = async () => {
-    try {
-      const task = await nextTask.mutateAsync();
-      navigate(`/labeling/tasks/${task.id}`);
-    } catch {
-      // No tasks available
-    }
-  };
 
   if (isLoading) return <LoadingState />;
 
@@ -533,22 +500,10 @@ function QueueTab({ isAdmin }: { isAdmin: boolean }) {
         <h2 className="text-lg font-semibold text-gray-900">
           대기 중인 작업 ({totalPending.toLocaleString()}건)
         </h2>
-        {!currentTask && (
-          <button
-            onClick={handleStartNext}
-            disabled={nextTask.isPending}
-            className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-50"
-          >
-            {nextTask.isPending ? "할당 중..." : "다음 작업 시작"}
-          </button>
+        {!currentTask && !isAdmin && (
+          <span className="text-sm text-gray-500">배정된 작업 없음</span>
         )}
       </div>
-
-      {nextTask.isError && (
-        <div className="mb-4 rounded-lg bg-yellow-50 px-3 py-2 text-sm text-yellow-700">
-          현재 라벨링 가능한 작업이 없습니다.
-        </div>
-      )}
 
       {/* Bulk assign (admin only) */}
       {isAdmin && (
