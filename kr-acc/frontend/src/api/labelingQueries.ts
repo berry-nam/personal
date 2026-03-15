@@ -298,9 +298,19 @@ export function useBulkAssign() {
 export function useBulkUnassign() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (userId: number) => {
+    mutationFn: async ({
+      userId,
+      start,
+      end,
+    }: {
+      userId: number;
+      start?: number;
+      end?: number;
+    }) => {
       const res = await labelingApi.post("/admin/tasks/bulk-unassign", {
         user_id: userId,
+        start,
+        end,
       });
       return res.data as { status: string; count: number };
     },

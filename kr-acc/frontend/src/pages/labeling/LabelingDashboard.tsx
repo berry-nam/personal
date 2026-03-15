@@ -195,15 +195,37 @@ function BulkAssignPanel({ pendingCount }: { pendingCount: number }) {
 
 function TeamTable({ progress }: { progress: ProgressStats }) {
   const bulkUnassign = useBulkUnassign();
-  const [confirmId, setConfirmId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [unassignStart, setUnassignStart] = useState("");
+  const [unassignEnd, setUnassignEnd] = useState("");
 
-  const handleUnassign = (userId: number) => {
-    bulkUnassign.mutate(userId, {
-      onSuccess: (data) => {
-        setConfirmId(null);
-        alert(`${data.count}건 배정 해제 완료`);
+  const handleUnassignAll = (userId: number) => {
+    bulkUnassign.mutate(
+      { userId },
+      {
+        onSuccess: (data) => {
+          setExpandedId(null);
+          alert(`${data.count}건 배정 해제 완료`);
+        },
       },
-    });
+    );
+  };
+
+  const handleUnassignRange = (userId: number) => {
+    const s = parseInt(unassignStart);
+    const e = parseInt(unassignEnd);
+    if (isNaN(s) || isNaN(e) || s < 1 || e < s) return;
+    bulkUnassign.mutate(
+      { userId, start: s, end: e },
+      {
+        onSuccess: (data) => {
+          setExpandedId(null);
+          setUnassignStart("");
+          setUnassignEnd("");
+          alert(`${data.count}건 배정 해제 완료`);
+        },
+      },
+    );
   };
 
   return (
@@ -246,9 +268,9 @@ function TeamTable({ progress }: { progress: ProgressStats }) {
               </span>
             </td>
             <td className="px-6 py-3">
-              {p.assigned_range_start && p.assigned_range_end ? (
+              {p.assigned_range_start != null && p.assigned_range_end != null ? (
                 <span className="font-mono text-xs text-gray-700">
-                  {p.assigned_range_start} ~ {p.assigned_range_end}
+                  {p.assigned_range_start} ~ {p.assigned_range_end}번
                 </span>
               ) : (
                 <span className="text-xs text-gray-300">-</span>
@@ -270,28 +292,56 @@ function TeamTable({ progress }: { progress: ProgressStats }) {
                 </span>
               </div>
             </td>
-            <td className="px-6 py-3 text-center">
+            <td className="px-6 py-3">
               {p.assigned > 0 && (
                 <>
-                  {confirmId === p.id ? (
-                    <div className="flex items-center justify-center gap-1">
-                      <button
-                        onClick={() => handleUnassign(p.id)}
-                        disabled={bulkUnassign.isPending}
-                        className="rounded bg-red-500 px-2 py-1 text-xs font-medium text-white hover:bg-red-600 disabled:opacity-50"
-                      >
-                        확인
-                      </button>
-                      <button
-                        onClick={() => setConfirmId(null)}
-                        className="rounded bg-gray-200 px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-300"
-                      >
-                        취소
-                      </button>
+                  {expandedId === p.id ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1">
+                        <input
+                          type="number"
+                          min={1}
+                          placeholder="시작"
+                          value={unassignStart}
+                          onChange={(e) => setUnassignStart(e.target.value)}
+                          className="w-16 rounded border border-gray-200 px-1.5 py-1 text-xs focus:border-red-300 focus:outline-none"
+                        />
+                        <span className="text-xs text-gray-400">~</span>
+                        <input
+                          type="number"
+                          min={1}
+                          placeholder="끝"
+                          value={unassignEnd}
+                          onChange={(e) => setUnassignEnd(e.target.value)}
+                          className="w-16 rounded border border-gray-200 px-1.5 py-1 text-xs focus:border-red-300 focus:outline-none"
+                        />
+                        <button
+                          onClick={() => handleUnassignRange(p.id)}
+                          disabled={bulkUnassign.isPending || !unassignStart || !unassignEnd}
+                          className="rounded bg-red-500 px-2 py-1 text-xs font-medium text-white hover:bg-red-600 disabled:opacity-50"
+                        >
+                          해제
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleUnassignAll(p.id)}
+                          disabled={bulkUnassign.isPending}
+                          className="rounded bg-red-100 px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-200"
+                        >
+                          전체 해제 ({p.assigned}건)
+                        </button>
+                        <button
+                          onClick={() => { setExpandedId(null); setUnassignStart(""); setUnassignEnd(""); }}
+                          className="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-500 hover:bg-gray-200"
+                        >
+                          닫기
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <button
-                      onClick={() => setConfirmId(p.id)}
+                      onClick={() => { setExpandedId(p.id); setUnassignStart(""); setUnassignEnd(""); }}
                       className="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-500 hover:bg-red-50 hover:text-red-600"
                     >
                       배정 해제

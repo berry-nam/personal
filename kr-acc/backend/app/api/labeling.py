@@ -420,11 +420,13 @@ async def bulk_unassign_tasks(
     session: AsyncSession = Depends(get_session),
     user: LabelingUser = Depends(require_admin),
 ):
-    """Unassign all assigned tasks from a user back to pending."""
+    """Unassign tasks from a user. Optionally specify start/end range."""
     user_id = body.get("user_id")
     if not user_id:
         raise HTTPException(status_code=400, detail="user_id required")
-    count = await labeling_service.bulk_unassign_tasks(session, user_id)
+    start = body.get("start")
+    end = body.get("end")
+    count = await labeling_service.bulk_unassign_tasks(session, user_id, start, end)
     return {"status": "unassigned", "count": count}
 
 
