@@ -5,11 +5,12 @@ import {
   useDeleteResult,
   useRubric,
   useSaveDraft,
+  useSaveQueryAnnotation,
   useSkipTask,
   useSubmitLabels,
   useTask,
 } from "@/api/labelingQueries";
-import type { LabelInput, RubricCriterion, TaskResult } from "@/types/labeling";
+import type { LabelInput, RubricCriterion, TaskDetail, TaskResult } from "@/types/labeling";
 
 /* ─── Constants ──────────────────────────────────────────────────────────── */
 
@@ -35,6 +36,52 @@ const UC_LABELS: Record<string, string> = {
   "UC-4": "매수자 탐색",
   "UC-5": "시장 탐색",
 };
+
+/* ─── Metadata tooltips ───────────────────────────────────────────────────── */
+
+const UC_TOOLTIPS: Record<string, string> = {
+  "UC-1": "인수할 기업을 찾는 M&A 타겟 발굴 쿼리",
+  "UC-2": "특정 기업과 유사하거나 경쟁하는 기업 탐색",
+  "UC-3": "재무적/전략적 투자 대상 기업 탐색",
+  "UC-4": "본인 기업을 인수해줄 매수자 탐색",
+  "UC-5": "특정 시장/산업의 주요 기업 현황 파악",
+};
+
+const SECTOR_TOOLTIPS: Record<string, string> = {
+  "제조/화학": "제조업, 화학, 소재, 부품 등",
+  "IT/SW": "소프트웨어, SaaS, 플랫폼, AI 등",
+  "바이오/헬스": "바이오텍, 제약, 의료기기, 헬스케어",
+  "식품/F&B": "식품 제조, 음료, 외식, HMR, 프랜차이즈",
+  "금융/핀테크": "금융서비스, 결제, 보험, 자산관리",
+  "유통/물류": "유통, 이커머스, 물류, 배송",
+  "건설/부동산": "건설, 부동산, 인테리어, 건자재",
+  "에너지/환경": "에너지, 신재생, 환경, 수처리",
+  "미디어/콘텐츠": "미디어, 엔터테인먼트, 광고, 콘텐츠",
+  "교육": "교육, 에듀테크, 학원, 출판",
+};
+
+const SIZE_TOOLTIPS: Record<string, string> = {
+  "소기업": "매출 ~50억 이하",
+  "중기업": "매출 50~500억",
+  "중견기업": "매출 500~5,000억",
+  "대기업": "매출 5,000억 이상",
+};
+
+const COMPLEXITY_TOOLTIPS: Record<string, string> = {
+  Low: "단순 조건 (업종+규모 정도)",
+  Medium: "복합 조건 (업종+규모+재무+지역 등)",
+  High: "고난도 (복합 조건+특수 요구사항)",
+};
+
+/** 외감:외감 → 외감, 외감:비외감 → 비외감 */
+function formatAudit(raw: string): string {
+  if (raw === "외감") return "외감";
+  if (raw === "비외감") return "비외감";
+  // Handle "외감:외감", "외감:비외감" patterns
+  const after = raw.split(":").pop()?.trim();
+  if (after === "외감" || after === "비외감") return after;
+  return raw;
+}
 
 /* ─── Paste parser ────────────────────────────────────────────────────────── */
 
@@ -302,12 +349,12 @@ function IntroPhase({
   onStart,
   onBack,
 }: {
-  task: { query_id: string; query_text: string; query_metadata: Record<string, string>; results: TaskResult[] };
+  task: TaskDetail;
   isResume: boolean;
   onStart: () => void;
   onBack: () => void;
 }) {
-  const meta = task.query_metadata;
+  const meta = task.query_metadata as unknown as Record<string, string>;
   const hasResults = task.results.length > 0;
 
   return (
@@ -325,11 +372,11 @@ function IntroPhase({
           <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">쿼리</div>
           <p className="text-base leading-relaxed text-gray-800">{task.query_text}</p>
           <div className="mt-4 flex flex-wrap gap-2">
-            {meta.uc && <MetaBadge label={UC_LABELS[meta.uc] ?? meta.uc} color="bg-brand-100 text-brand-700" />}
-            {meta.sector && <MetaBadge label={meta.sector} color="bg-brand-100 text-brand-700" />}
-            {meta.size && <MetaBadge label={meta.size} color="bg-green-100 text-green-700" />}
-            {meta.complexity && <MetaBadge label={`복잡도: ${meta.complexity}`} color="bg-orange-100 text-orange-700" />}
-            {meta.audit && <MetaBadge label={`외감: ${meta.audit}`} color="bg-gray-200 text-gray-700" />}
+            {meta.uc && <MetaBadge label={UC_LABELS[meta.uc] ?? meta.uc} color="bg-brand-100 text-brand-700" tooltip={UC_TOOLTIPS[meta.uc]} />}
+            {meta.sector && <MetaBadge label={meta.sector} color="bg-brand-100 text-brand-700" tooltip={SECTOR_TOOLTIPS[meta.sector] ?? "쿼리의 타겟 산업/업종"} />}
+            {meta.size && <MetaBadge label={meta.size} color="bg-green-100 text-green-700" tooltip={SIZE_TOOLTIPS[meta.size] ?? "타겟 기업의 규모 기준"} />}
+            {meta.complexity && <MetaBadge label={`복잡도: ${meta.complexity}`} color="bg-orange-100 text-orange-700" tooltip={COMPLEXITY_TOOLTIPS[meta.complexity] ?? "쿼리 조건의 복잡도"} />}
+            {meta.audit && <MetaBadge label={formatAudit(meta.audit)} color="bg-gray-200 text-gray-700" tooltip="외부감사 대상 여부 (자산 500억+ 또는 매출 500억+)" />}
           </div>
         </div>
         <div className="mb-6 rounded-xl border border-brand-100 bg-brand-50 p-4">
@@ -338,16 +385,23 @@ function IntroPhase({
               이 쿼리에 <strong>{task.results.length}개</strong>의 기업 결과가 등록되어 있습니다. 각 기업을 평가하고, 추가로 기업을 찾아 추가할 수도 있습니다.
             </p>
           ) : (
-            <p className="text-sm text-brand-800">이 쿼리에 아직 등록된 기업이 없습니다. <strong>직접 기업을 찾아 추가</strong>해 주세요.</p>
+            <div className="text-sm text-brand-800">
+              <p className="mb-2">이 쿼리에 아직 등록된 기업이 없습니다. <strong>직접 기업을 찾아 추가</strong>해 주세요.</p>
+              <p className="text-xs text-brand-600">
+                <a href="https://cookiedeal.io/company-search" target="_blank" rel="noopener noreferrer" className="underline hover:text-brand-800">쿠키딜 기업탐색</a>에서
+                쿼리 조건에 맞는 기업을 검색한 뒤, 기업 상세 페이지의 정보를 복사하여 붙여넣기하면 자동으로 입력됩니다.
+              </p>
+            </div>
           )}
         </div>
         <div className="mb-8">
           <h3 className="mb-3 text-sm font-semibold text-gray-700">작업 방법</h3>
           <div className="flex flex-col gap-2">
             <InstructionStep num={1} title="쿼리 확인" desc="위 쿼리의 조건(업종, 매출, 규모 등)을 꼼꼼히 읽으세요." />
-            <InstructionStep num={2} title="기업 평가" desc="등록된 기업 결과가 있으면, 각 기업이 쿼리 조건에 얼마나 부합하는지 1~5점으로 평가하세요." />
-            <InstructionStep num={3} title="기업 추가" desc="쿠키딜 기업탐색으로 쿼리에 맞는 기업을 찾고, 근거와 함께 추가하세요." />
-            <InstructionStep num={4} title="제출" desc="모든 기업을 평가한 후 제출하세요. (자동 저장됩니다)" />
+            <InstructionStep num={2} title="쿼리 분석" desc="쿼리의 시나리오, 명시/암묵 조건, 누락 정보, 명확도를 검토하고 필요시 수정하세요." />
+            <InstructionStep num={3} title="기업 평가" desc="등록된 기업 결과가 있으면, 각 기업이 쿼리 조건에 얼마나 부합하는지 1~5점으로 평가하세요." />
+            <InstructionStep num={4} title="기업 추가" desc="쿠키딜 기업탐색에서 쿼리에 맞는 기업을 찾아 상세 정보를 복사·붙여넣기로 추가하세요." />
+            <InstructionStep num={5} title="제출" desc="모든 기업을 평가한 후 제출하세요. (자동 저장됩니다)" />
           </div>
         </div>
         <button onClick={onStart} className="w-full rounded-xl bg-gray-900 py-3 text-sm font-semibold text-white transition-colors hover:bg-gray-800">
@@ -375,7 +429,7 @@ function WorkPhase({
   draftStatus,
   missingJustification,
 }: {
-  task: { id: number; query_id: string; query_text: string; query_metadata: Record<string, string>; results: TaskResult[] };
+  task: TaskDetail;
   criteria: RubricCriterion[];
   labels: Map<number, CompanyLabelState>;
   ratedCount: number;
@@ -389,7 +443,7 @@ function WorkPhase({
   draftStatus: string;
   missingJustification: number;
 }) {
-  const meta = task.query_metadata;
+  const meta = task.query_metadata as unknown as Record<string, string>;
   const addCompanyMutation = useAddCompany();
   const deleteResultMutation = useDeleteResult();
   const [addMode, setAddMode] = useState<"" | "paste" | "form">("");
@@ -504,13 +558,18 @@ function WorkPhase({
           <div className="min-w-0 flex-1">
             <p className="text-sm leading-relaxed text-gray-800">{task.query_text}</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
-              {meta.uc && <MetaBadge label={UC_LABELS[meta.uc] ?? meta.uc} color="bg-brand-50 text-brand-600" />}
-              {meta.sector && <MetaBadge label={meta.sector} color="bg-brand-50 text-brand-600" />}
-              {meta.size && <MetaBadge label={meta.size} color="bg-green-50 text-green-600" />}
+              {meta.uc && <MetaBadge label={UC_LABELS[meta.uc] ?? meta.uc} color="bg-brand-50 text-brand-600" tooltip={UC_TOOLTIPS[meta.uc]} />}
+              {meta.sector && <MetaBadge label={meta.sector} color="bg-brand-50 text-brand-600" tooltip={SECTOR_TOOLTIPS[meta.sector]} />}
+              {meta.size && <MetaBadge label={meta.size} color="bg-green-50 text-green-600" tooltip={SIZE_TOOLTIPS[meta.size]} />}
+              {meta.complexity && <MetaBadge label={`복잡도: ${meta.complexity}`} color="bg-orange-50 text-orange-600" tooltip={COMPLEXITY_TOOLTIPS[meta.complexity]} />}
+              {meta.audit && <MetaBadge label={formatAudit(meta.audit)} color="bg-gray-100 text-gray-600" tooltip="외부감사 대상 여부" />}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Query Annotation */}
+      <QueryAnnotationPanel task={task} />
 
       {/* Progress */}
       {task.results.length > 0 && (
@@ -799,10 +858,246 @@ function CompanyEvalCard({
   );
 }
 
+/* ─── Query Annotation Panel ─────────────────────────────────────────────── */
+
+interface AnnotationState {
+  scenario: string;
+  explicit_conditions: string[];
+  implicit_conditions: string[];
+  missing_info: string;
+  clarity: "clear" | "moderate" | "ambiguous";
+}
+
+function QueryAnnotationPanel({
+  task,
+}: {
+  task: TaskDetail;
+}) {
+  const [open, setOpen] = useState(true);
+  const saveMutation = useSaveQueryAnnotation();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stateRef = useRef<AnnotationState | null>(null);
+
+  // Initialize from saved annotation or pre-generated metadata
+  const initial = useMemo<AnnotationState>(() => {
+    const ann = task.query_annotation;
+    const meta = task.query_metadata as unknown as Record<string, unknown>;
+    return {
+      scenario: ann?.scenario ?? (typeof meta.scenario === "string" ? meta.scenario : ""),
+      explicit_conditions: ann?.explicit_conditions ?? (Array.isArray(meta.explicit_conditions) ? meta.explicit_conditions : []),
+      implicit_conditions: ann?.implicit_conditions ?? (Array.isArray(meta.implicit_conditions) ? meta.implicit_conditions : []),
+      missing_info: ann?.missing_info ?? (typeof meta.missing_info === "string" ? meta.missing_info : ""),
+      clarity: ann?.clarity ?? ((meta.clarity === "clear" || meta.clarity === "moderate" || meta.clarity === "ambiguous") ? meta.clarity : "moderate"),
+    };
+  }, [task.query_annotation, task.query_metadata]);
+
+  const [state, setState] = useState<AnnotationState>(initial);
+  stateRef.current = state;
+
+  // Re-initialize when task changes
+  useEffect(() => {
+    setState(initial);
+  }, [initial]);
+
+  // Debounced autosave (3s)
+  const triggerSave = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      const s = stateRef.current;
+      if (!s || !s.scenario || s.scenario.length < 10) return;
+      saveMutation.mutate({
+        taskId: task.id,
+        data: {
+          scenario: s.scenario,
+          explicit_conditions: s.explicit_conditions,
+          implicit_conditions: s.implicit_conditions,
+          missing_info: s.missing_info || null,
+          clarity: s.clarity,
+        },
+      });
+    }, 3000);
+  }, [task.id, saveMutation]);
+
+  const update = useCallback(
+    (patch: Partial<AnnotationState>) => {
+      setState((prev) => ({ ...prev, ...patch }));
+      triggerSave();
+    },
+    [triggerSave],
+  );
+
+  // Tag input handlers
+  const [explicitInput, setExplicitInput] = useState("");
+  const [implicitInput, setImplicitInput] = useState("");
+
+  const addTag = (type: "explicit_conditions" | "implicit_conditions", value: string) => {
+    const trimmed = value.trim();
+    if (!trimmed) return;
+    update({ [type]: [...state[type], trimmed] });
+  };
+
+  const removeTag = (type: "explicit_conditions" | "implicit_conditions", idx: number) => {
+    update({ [type]: state[type].filter((_, i) => i !== idx) });
+  };
+
+  const qmeta = task.query_metadata as unknown as Record<string, unknown>;
+  const hasPreGenerated = !!(qmeta.scenario || qmeta.explicit_conditions);
+
+  return (
+    <div className="mb-6 rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-gray-700">쿼리 분석</span>
+          {hasPreGenerated && !task.query_annotation && (
+            <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">AI 생성</span>
+          )}
+          {task.query_annotation && (
+            <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700">저장됨</span>
+          )}
+          {saveMutation.isPending && (
+            <span className="text-[10px] text-gray-400">저장 중...</span>
+          )}
+        </div>
+        <span className="text-gray-400 text-xs">{open ? "접기 ▴" : "펼치기 ▾"}</span>
+      </button>
+
+      {open && (
+        <div className="border-t border-gray-100 px-4 py-4 flex flex-col gap-4">
+          {/* Scenario */}
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500">시나리오</label>
+            <textarea
+              value={state.scenario}
+              onChange={(e) => update({ scenario: e.target.value })}
+              placeholder="이 쿼리의 배경 시나리오를 작성하세요 (예: PE 심사역이 결제 인프라 bolt-on 타겟 탐색 중...)"
+              rows={3}
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 placeholder-gray-300 focus:border-brand-500 focus:outline-none"
+            />
+          </div>
+
+          {/* Explicit conditions */}
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500">명시 조건</label>
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {state.explicit_conditions.map((tag, i) => (
+                <span key={i} className="inline-flex items-center gap-1 rounded-full bg-brand-50 px-2.5 py-1 text-xs text-brand-700">
+                  {tag}
+                  <button onClick={() => removeTag("explicit_conditions", i)} className="text-brand-400 hover:text-brand-600">&times;</button>
+                </span>
+              ))}
+            </div>
+            <div className="flex gap-1.5">
+              <input
+                value={explicitInput}
+                onChange={(e) => setExplicitInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    addTag("explicit_conditions", explicitInput);
+                    setExplicitInput("");
+                  }
+                }}
+                placeholder="조건 입력 후 Enter"
+                className="flex-1 rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs focus:border-brand-500 focus:outline-none"
+              />
+              <button
+                onClick={() => { addTag("explicit_conditions", explicitInput); setExplicitInput(""); }}
+                className="rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs text-gray-500 hover:bg-gray-50"
+              >+</button>
+            </div>
+          </div>
+
+          {/* Implicit conditions */}
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500">암묵 조건</label>
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {state.implicit_conditions.map((tag, i) => (
+                <span key={i} className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-600">
+                  {tag}
+                  <button onClick={() => removeTag("implicit_conditions", i)} className="text-gray-400 hover:text-gray-600">&times;</button>
+                </span>
+              ))}
+            </div>
+            <div className="flex gap-1.5">
+              <input
+                value={implicitInput}
+                onChange={(e) => setImplicitInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    addTag("implicit_conditions", implicitInput);
+                    setImplicitInput("");
+                  }
+                }}
+                placeholder="조건 입력 후 Enter"
+                className="flex-1 rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs focus:border-brand-500 focus:outline-none"
+              />
+              <button
+                onClick={() => { addTag("implicit_conditions", implicitInput); setImplicitInput(""); }}
+                className="rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs text-gray-500 hover:bg-gray-50"
+              >+</button>
+            </div>
+          </div>
+
+          {/* Missing info */}
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500">추가 필요 정보</label>
+            <textarea
+              value={state.missing_info}
+              onChange={(e) => update({ missing_info: e.target.value })}
+              placeholder="쿼리에 누락된 정보가 있다면 기재 (예: 지역 제한 여부, 상장/비상장 선호도)"
+              rows={2}
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-xs text-gray-700 placeholder-gray-300 focus:border-brand-500 focus:outline-none"
+            />
+          </div>
+
+          {/* Clarity */}
+          <div>
+            <label className="mb-1.5 block text-xs font-medium text-gray-500">쿼리 명확도</label>
+            <div className="flex gap-3">
+              {([
+                { value: "clear" as const, label: "명확" },
+                { value: "moderate" as const, label: "보통" },
+                { value: "ambiguous" as const, label: "모호" },
+              ]).map((opt) => (
+                <label key={opt.value} className="flex items-center gap-1.5 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="clarity"
+                    checked={state.clarity === opt.value}
+                    onChange={() => update({ clarity: opt.value })}
+                    className="h-3.5 w-3.5 text-brand-600 focus:ring-brand-500"
+                  />
+                  <span className="text-xs text-gray-700">{opt.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─── Small helpers ──────────────────────────────────────────────────────── */
 
-function MetaBadge({ label, color }: { label: string; color: string }) {
-  return <span className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${color}`}>{label}</span>;
+function MetaBadge({ label, color, tooltip }: { label: string; color: string; tooltip?: string }) {
+  return (
+    <span className={`inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[11px] font-medium ${color}`}>
+      {label}
+      {tooltip && (
+        <span className="group relative cursor-help">
+          <span className="inline-flex h-3 w-3 items-center justify-center rounded-full bg-black/10 text-[9px] leading-none font-bold">?</span>
+          <span className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-1.5 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-2.5 py-1.5 text-[11px] font-normal text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+            {tooltip}
+          </span>
+        </span>
+      )}
+    </span>
+  );
 }
 
 function InstructionStep({ num, title, desc }: { num: number; title: string; desc: string }) {
