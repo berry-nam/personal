@@ -14,7 +14,10 @@ class Settings(BaseSettings):
     # API
     api_host: str = "0.0.0.0"
     api_port: int = 8000
-    cors_origins: list[str] = ["http://localhost:5173"]
+    cors_origins: list[str] = [
+        "http://localhost:5173",
+        "https://personal-snowy-six-83.vercel.app",
+    ]
     log_level: str = "INFO"
 
     # External APIs
