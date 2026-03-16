@@ -360,7 +360,9 @@ function TeamTable({ progress }: { progress: ProgressStats }) {
 // ── Admin Dashboard ─────────────────────────────────────────────────────────
 
 function AdminDashboardTab() {
+  const navigate = useNavigate();
   const { data: progress, isLoading } = useProgress();
+  const { data: currentTask } = useMyCurrentTask();
   const importMutation = useImportQueries();
 
   if (isLoading) return <LoadingState />;
@@ -373,6 +375,31 @@ function AdminDashboardTab() {
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Current task banner */}
+      {currentTask && (
+        <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="rounded-full bg-brand-100 px-2 py-0.5 text-xs font-semibold text-brand-700">진행 중</span>
+                <span className="font-mono text-xs text-gray-500">#{currentTask.id}</span>
+                <span className="font-mono text-sm font-semibold text-gray-900">{currentTask.query_id}</span>
+              </div>
+              <p className="mt-1 text-sm text-gray-600 truncate max-w-lg">{currentTask.query_text}</p>
+              {currentTask.result_count > 0 && (
+                <p className="mt-1 text-xs text-gray-500">{currentTask.label_count} / {currentTask.result_count} 평가 완료</p>
+              )}
+            </div>
+            <button
+              onClick={() => navigate(`/labeling/tasks/${currentTask.id}`)}
+              className="rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
+            >
+              계속하기
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Top row: progress ring + admin tools */}
       <div className="grid gap-6 md:grid-cols-2">
         <div className="rounded-xl bg-white p-6 shadow-sm">
