@@ -268,9 +268,9 @@ function TeamTable({ progress }: { progress: ProgressStats }) {
               </span>
             </td>
             <td className="px-6 py-3">
-              {p.assigned_range_start != null && p.assigned_range_end != null ? (
+              {p.assigned_ranges.length > 0 ? (
                 <span className="font-mono text-xs text-gray-700">
-                  {p.assigned_range_start} ~ {p.assigned_range_end}번
+                  {p.assigned_ranges.map(([s, e]) => s === e ? `${s}` : `${s}~${e}`).join(", ")}번
                 </span>
               ) : (
                 <span className="text-xs text-gray-300">-</span>

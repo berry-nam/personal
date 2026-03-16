@@ -106,8 +106,7 @@ export interface LabelerStats {
   completed: number;
   assigned: number;
   current_task: string | null;
-  assigned_range_start: number | null;
-  assigned_range_end: number | null;
+  assigned_ranges: [number, number][];
 }
 
 export interface ProgressStats {

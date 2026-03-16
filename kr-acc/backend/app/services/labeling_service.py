@@ -287,31 +287,32 @@ async def get_progress(session: AsyncSession) -> dict:
             ).limit(1)
         )).scalar_one_or_none()
 
-        # Assigned query_id range → convert to row numbers (1-indexed)
-        assigned_range = (await session.execute(
-            select(
-                func.min(LabelingTask.query_id),
-                func.max(LabelingTask.query_id),
-            ).where(
-                LabelingTask.assigned_to == u.id,
-                LabelingTask.status == "assigned",
-            )
-        )).one()
+        # Assigned row numbers via ROW_NUMBER window function
+        from sqlalchemy import text as sa_text
+        row_nums_result = await session.execute(sa_text(
+            "WITH numbered AS ("
+            "  SELECT id, assigned_to, status,"
+            "  ROW_NUMBER() OVER (ORDER BY query_id) AS rn"
+            "  FROM labeling_tasks"
+            ") SELECT rn FROM numbered"
+            " WHERE assigned_to = :uid AND status = 'assigned'"
+            " ORDER BY rn"
+        ), {"uid": u.id})
+        row_nums = [r[0] for r in row_nums_result.all()]
 
-        range_start_num = None
-        range_end_num = None
-        if assigned_range[0] and assigned_range[1]:
-            # Row number = count of tasks with query_id <= X (all tasks, query_id order)
-            range_start_num = (await session.execute(
-                select(func.count(LabelingTask.id)).where(
-                    LabelingTask.query_id < assigned_range[0]
-                )
-            )).scalar_one() + 1
-            range_end_num = (await session.execute(
-                select(func.count(LabelingTask.id)).where(
-                    LabelingTask.query_id <= assigned_range[1]
-                )
-            )).scalar_one()
+        # Group into contiguous ranges: [1,2,3,1337,1338] → [[1,3],[1337,1338]]
+        ranges: list[list[int]] = []
+        if row_nums:
+            start = row_nums[0]
+            prev = row_nums[0]
+            for n in row_nums[1:]:
+                if n == prev + 1:
+                    prev = n
+                else:
+                    ranges.append([start, prev])
+                    start = n
+                    prev = n
+            ranges.append([start, prev])
 
         per_labeler.append({
             "id": u.id,
@@ -321,8 +322,7 @@ async def get_progress(session: AsyncSession) -> dict:
             "completed": completed,
             "assigned": assigned,
             "current_task": current,
-            "assigned_range_start": range_start_num,
-            "assigned_range_end": range_end_num,
+            "assigned_ranges": ranges,
         })
 
     return {
