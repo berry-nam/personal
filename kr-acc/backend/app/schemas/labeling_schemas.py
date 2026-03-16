@@ -96,6 +96,7 @@ class TaskDetailOut(BaseModel):
     assigned_to: int | None
     results: list[TaskResultOut] = []
     labels: list[LabelOut] = []
+    query_annotation: "QueryAnnotationOut | None" = None
 
 
 class TaskListResponse(BaseModel):
@@ -187,3 +188,25 @@ class ExportEntry(BaseModel):
     query_text: str
     query_metadata: dict
     results: list[dict]
+
+
+# ── Query Annotation ─────────────────────────────────────────────────────────
+
+
+class QueryAnnotationInput(BaseModel):
+    scenario: str = Field(min_length=10)
+    explicit_conditions: list[str] = []
+    implicit_conditions: list[str] = []
+    missing_info: str | None = None
+    clarity: str = Field(pattern=r"^(clear|moderate|ambiguous)$")
+
+
+class QueryAnnotationOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    scenario: str
+    explicit_conditions: list[str]
+    implicit_conditions: list[str]
+    missing_info: str | None
+    clarity: str

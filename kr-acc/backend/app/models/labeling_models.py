@@ -141,3 +141,26 @@ class LabelingRubricScore(Base):
 
     label: Mapped["LabelingLabel"] = relationship(back_populates="rubric_scores")
     criterion: Mapped["LabelingRubricCriterion"] = relationship()
+
+
+class LabelingQueryAnnotation(Base):
+    __tablename__ = "labeling_query_annotations"
+    __table_args__ = (UniqueConstraint("task_id", "labeler_id"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    task_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("labeling_tasks.id", ondelete="CASCADE")
+    )
+    labeler_id: Mapped[int] = mapped_column(Integer, ForeignKey("labeling_users.id"))
+    scenario: Mapped[str] = mapped_column(Text)
+    explicit_conditions: Mapped[list] = mapped_column(JSONB, default=list)
+    implicit_conditions: Mapped[list] = mapped_column(JSONB, default=list)
+    missing_info: Mapped[str | None] = mapped_column(Text, nullable=True)
+    clarity: Mapped[str] = mapped_column(String(10))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default="now()"
+    )
+    updated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    task: Mapped["LabelingTask"] = relationship()
+    labeler: Mapped["LabelingUser"] = relationship()

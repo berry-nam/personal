@@ -29,6 +29,8 @@ from app.schemas.labeling_schemas import (
     LabelingUserOut,
     LoginRequest,
     ProgressOut,
+    QueryAnnotationInput,
+    QueryAnnotationOut,
     RegisterRequest,
     RubricCriterionCreate,
     RubricCriterionOut,
@@ -172,7 +174,8 @@ async def get_task(
     task = await labeling_service.get_task_detail(session, task_id)
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")
-    return _task_detail_response(task)
+    ann = await labeling_service.get_query_annotation(session, task_id, user.id)
+    return _task_detail_response(task, query_annotation=ann)
 
 
 @router.post("/tasks/{task_id}/reopen")
@@ -311,6 +314,31 @@ async def delete_result(
     await session.delete(tr_obj)
     await session.commit()
     return {"status": "deleted", "id": result_id}
+
+
+# ── Query Annotation ─────────────────────────────────────────────────────────
+
+
+@router.post("/tasks/{task_id}/query-annotation", response_model=QueryAnnotationOut)
+async def save_query_annotation(
+    task_id: int,
+    body: QueryAnnotationInput,
+    session: AsyncSession = Depends(get_session),
+    user: LabelingUser = Depends(get_current_labeler),
+):
+    """Save or update query-level annotation for a task."""
+    result = await session.execute(select(LabelingTask).where(LabelingTask.id == task_id))
+    task = result.scalar_one_or_none()
+    if task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+    if task.assigned_to != user.id and user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not assigned to this task")
+
+    ann = await labeling_service.save_query_annotation(
+        session, task_id, user.id, body.model_dump()
+    )
+    await session.commit()
+    return ann
 
 
 # ── Admin ─────────────────────────────────────────────────────────────────────
@@ -495,9 +523,9 @@ async def create_rubric_criterion(
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 
-def _task_detail_response(task: LabelingTask) -> dict:
+def _task_detail_response(task: LabelingTask, query_annotation=None) -> dict:
     """Convert a task with eagerly loaded relations to a response dict."""
-    return {
+    resp = {
         "id": task.id,
         "query_id": task.query_id,
         "query_text": task.query_text,
@@ -532,4 +560,15 @@ def _task_detail_response(task: LabelingTask) -> dict:
             }
             for l in task.labels
         ],
+        "query_annotation": None,
     }
+    if query_annotation:
+        resp["query_annotation"] = {
+            "id": query_annotation.id,
+            "scenario": query_annotation.scenario,
+            "explicit_conditions": query_annotation.explicit_conditions,
+            "implicit_conditions": query_annotation.implicit_conditions,
+            "missing_info": query_annotation.missing_info,
+            "clarity": query_annotation.clarity,
+        }
+    return resp

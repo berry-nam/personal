@@ -11,6 +11,7 @@ from sqlalchemy.orm import selectinload
 
 from app.models.labeling_models import (
     LabelingLabel,
+    LabelingQueryAnnotation,
     LabelingRubricCriterion,
     LabelingRubricScore,
     LabelingTask,
@@ -448,6 +449,51 @@ async def get_uc_stats(session: AsyncSession) -> list[dict]:
     return [{"uc": row[0], "count": row[1]} for row in result.all()]
 
 
+async def get_query_annotation(
+    session: AsyncSession, task_id: int, labeler_id: int
+) -> LabelingQueryAnnotation | None:
+    """Get the query annotation for a task by a specific labeler."""
+    result = await session.execute(
+        select(LabelingQueryAnnotation).where(
+            LabelingQueryAnnotation.task_id == task_id,
+            LabelingQueryAnnotation.labeler_id == labeler_id,
+        )
+    )
+    return result.scalar_one_or_none()
+
+
+async def save_query_annotation(
+    session: AsyncSession,
+    task_id: int,
+    labeler_id: int,
+    data: dict,
+) -> LabelingQueryAnnotation:
+    """Upsert a query annotation for a task."""
+    stmt = pg_insert(LabelingQueryAnnotation).values(
+        task_id=task_id,
+        labeler_id=labeler_id,
+        scenario=data["scenario"],
+        explicit_conditions=data.get("explicit_conditions", []),
+        implicit_conditions=data.get("implicit_conditions", []),
+        missing_info=data.get("missing_info"),
+        clarity=data["clarity"],
+    )
+    stmt = stmt.on_conflict_do_update(
+        constraint="labeling_query_annotations_task_id_labeler_id_key",
+        set_={
+            "scenario": stmt.excluded.scenario,
+            "explicit_conditions": stmt.excluded.explicit_conditions,
+            "implicit_conditions": stmt.excluded.implicit_conditions,
+            "missing_info": stmt.excluded.missing_info,
+            "clarity": stmt.excluded.clarity,
+            "updated_at": datetime.now(timezone.utc),
+        },
+    )
+    await session.execute(stmt)
+    await session.flush()
+    return await get_query_annotation(session, task_id, labeler_id)
+
+
 async def export_labels(session: AsyncSession) -> list[dict]:
     """Export all completed labels for fine-tuning."""
     tasks = await session.execute(
@@ -479,10 +525,28 @@ async def export_labels(session: AsyncSession) -> list[dict]:
                     if rs.criterion
                 },
             })
+        # Fetch query annotation if exists
+        ann = await session.execute(
+            select(LabelingQueryAnnotation).where(
+                LabelingQueryAnnotation.task_id == task.id
+            )
+        )
+        ann_obj = ann.scalar_one_or_none()
+        query_annotation = None
+        if ann_obj:
+            query_annotation = {
+                "scenario": ann_obj.scenario,
+                "explicit_conditions": ann_obj.explicit_conditions,
+                "implicit_conditions": ann_obj.implicit_conditions,
+                "missing_info": ann_obj.missing_info,
+                "clarity": ann_obj.clarity,
+            }
+
         entries.append({
             "query_id": task.query_id,
             "query_text": task.query_text,
             "query_metadata": task.query_metadata,
+            "query_annotation": query_annotation,
             "results": results,
         })
     return entries
