@@ -61,6 +61,15 @@ export interface Label {
   rubric_scores: RubricScore[];
 }
 
+export interface QueryAnnotation {
+  id: number;
+  scenario: string;
+  explicit_conditions: string[];
+  implicit_conditions: string[];
+  missing_info: string | null;
+  clarity: "clear" | "moderate" | "ambiguous";
+}
+
 export interface TaskDetail {
   id: number;
   query_id: string;
@@ -70,6 +79,7 @@ export interface TaskDetail {
   assigned_to: number | null;
   results: TaskResult[];
   labels: Label[];
+  query_annotation: QueryAnnotation | null;
 }
 
 export interface TaskListResponse {

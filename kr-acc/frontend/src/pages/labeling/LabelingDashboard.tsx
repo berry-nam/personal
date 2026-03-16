@@ -653,7 +653,8 @@ function QueueTab({ isAdmin }: { isAdmin: boolean }) {
 
       {/* Column header */}
       <div className="mb-1 flex items-center gap-3 px-4 text-[11px] font-medium text-gray-400">
-        <span className="w-12">ID</span>
+        <span className="w-10 text-center">번호</span>
+        <span className="w-14">ID</span>
         <span className="flex-1">쿼리</span>
         <span className="w-16 text-center">UC</span>
         <span className="w-20 text-center">섹터</span>
@@ -666,7 +667,8 @@ function QueueTab({ isAdmin }: { isAdmin: boolean }) {
             key={task.id}
             className="flex items-center gap-3 rounded-lg bg-white px-4 py-3 shadow-sm"
           >
-            <span className="w-12 shrink-0 font-mono text-sm text-gray-400">{task.query_id}</span>
+            <span className="w-10 shrink-0 text-center font-mono text-xs font-semibold text-gray-500">{task.id}</span>
+            <span className="w-14 shrink-0 font-mono text-sm text-gray-400">{task.query_id}</span>
             <span className="flex-1 truncate text-sm text-gray-700">{task.query_text}</span>
             <span className="w-16 shrink-0 text-center rounded bg-brand-50 px-1.5 py-0.5 text-xs text-brand-600">
               {task.query_metadata.uc ?? "-"}

@@ -203,6 +203,29 @@ export function useDeleteResult() {
   });
 }
 
+// ── Query Annotation ────────────────────────────────────────────────────────
+
+export function useSaveQueryAnnotation() {
+  return useMutation({
+    mutationFn: async ({
+      taskId,
+      data,
+    }: {
+      taskId: number;
+      data: {
+        scenario: string;
+        explicit_conditions: string[];
+        implicit_conditions: string[];
+        missing_info: string | null;
+        clarity: string;
+      };
+    }) => {
+      const res = await labelingApi.post(`/tasks/${taskId}/query-annotation`, data);
+      return res.data;
+    },
+  });
+}
+
 // ── Rubric ────────────────────────────────────────────────────────────────────
 
 export function useRubric() {
