@@ -307,6 +307,9 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 /* ═══ Z-INDEX OVERRIDE for sheet on top of add overlay ═══ */
 .sheet-overlay.above-overlay{z-index:310}
 .sheet.above-overlay{z-index:320}
+/* Toast */
+.m-toast{position:fixed;bottom:calc(var(--m-tab-bar-h) + var(--m-safe-bottom) + 16px);left:50%;transform:translateX(-50%) translateY(80px);background:var(--slate-800);color:#fff;padding:10px 20px;border-radius:var(--radius);font-size:13px;font-weight:500;box-shadow:0 10px 25px -5px rgba(17,24,39,.15);z-index:600;transition:transform .3s cubic-bezier(.4,0,.2,1);pointer-events:none;white-space:nowrap}
+.m-toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
@@ -371,6 +374,8 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
     <div class="sel-bar-spacer"></div>
     <button class="sel-bar-btn" onclick="openMoveSheet()">이동</button>
     <button class="sel-bar-btn" onclick="toggleComparison()">비교</button>
+    <button class="sel-bar-btn" onclick="bulkSaveMobile()">★ 저장</button>
+    <button class="sel-bar-btn" onclick="bulkFollowMobile()">+ 팔로우</button>
     <button class="sel-bar-btn danger" onclick="deleteSelected()">삭제</button>
     <button class="sel-bar-btn" onclick="clearSelection()" style="background:var(--slate-600)">선택 해제</button>
   </div>
@@ -1363,9 +1368,28 @@ function renderAddResults() {
 function toggleAddSelect(name){var idx=addSelected.indexOf(name);if(idx>=0)addSelected.splice(idx,1);else addSelected.push(name);renderAddResults()}
 function confirmAdd(){addSelected.forEach(function(name){if(lists[currentListIdx].companies.indexOf(name)<0)lists[currentListIdx].companies.push(name)});addSelected=[];closeAddOverlay();renderListView()}
 
+// ═══ BULK SAVE/FOLLOW ═══
+function showToast(msg){
+  var t=document.getElementById('mToast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2500);
+}
+function bulkSaveMobile(){
+  var count=Object.keys(editChecked).filter(function(k){return editChecked[k]}).length;
+  if(!count)return;
+  showToast(count+'개 기업이 저장되었습니다');
+}
+function bulkFollowMobile(){
+  var count=Object.keys(editChecked).filter(function(k){return editChecked[k]}).length;
+  if(!count)return;
+  showToast(count+'개 기업을 팔로우합니다');
+}
+
 // ═══ INIT ═══
 renderCompanyList();
 updateListBadge();
 </script>
+<div class="m-toast" id="mToast"></div>
 </body>
 </html>

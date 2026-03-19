@@ -45,6 +45,8 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
 .m-header-icon{width:32px;height:32px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:50%;transition:var(--transition)}
 .m-header-icon:active{background:var(--slate-100)}
 .m-header-icon.active{color:var(--red-500)}
+.m-header-icon.saved{color:var(--amber-500)}
+.m-header-icon.followed{color:var(--brand)}
 
 /* ── Hero ── */
 .m-hero{padding:20px 16px 16px;text-align:center}
@@ -290,8 +292,8 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
   <button class="m-header-back" onclick="history.back()">←</button>
   <div class="m-header-title">에이치비테크놀로지</div>
   <div class="m-header-actions">
-    <button class="m-header-icon" onclick="this.classList.toggle('active')" title="관심">♡</button>
-    <button class="m-header-icon" onclick="showToast('알림이 설정되었습니다')" title="알림">🔔</button>
+    <button class="m-header-icon" id="headerSaveBtn" onclick="toggleHeaderSave(this)" title="저장">★</button>
+    <button class="m-header-icon" id="headerFollowBtn" onclick="toggleHeaderFollow(this)" title="팔로우"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></button>
   </div>
 </header>
 
@@ -335,7 +337,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;backg
   <button class="m-cta-pill primary" onclick="openListSheet()">리스트에 추가</button>
   <button class="m-cta-pill" onclick="showToast('공유 링크가 복사되었습니다')">공유</button>
   <button class="m-cta-pill" onclick="showToast('PDF 다운로드 준비 중')">다운로드</button>
-  <button class="m-cta-pill">+ 팔로우</button>
+  <button class="m-cta-pill" id="ctaFollowPill" onclick="toggleCtaFollow(this)">+ 팔로우</button>
 </div>
 
 <!-- ═══ TABS ═══ -->
@@ -887,6 +889,39 @@ function showToast(msg) {
   t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(function(){ t.remove(); }, 2000);
+}
+
+// ══ HEADER SAVE/FOLLOW TOGGLES ══
+function toggleHeaderSave(btn) {
+  btn.classList.toggle('saved');
+  if (btn.classList.contains('saved')) {
+    showToast('저장되었습니다');
+  } else {
+    showToast('저장 해제되었습니다');
+  }
+}
+function toggleHeaderFollow(btn) {
+  btn.classList.toggle('followed');
+  if (btn.classList.contains('followed')) {
+    showToast('팔로우합니다');
+  } else {
+    showToast('팔로우 해제되었습니다');
+  }
+}
+function toggleCtaFollow(btn) {
+  if (btn.textContent.trim() === '+ 팔로우') {
+    btn.textContent = '팔로잉';
+    btn.classList.add('primary');
+    showToast('팔로우합니다');
+    var headerBtn = document.getElementById('headerFollowBtn');
+    if (headerBtn) headerBtn.classList.add('followed');
+  } else {
+    btn.textContent = '+ 팔로우';
+    btn.classList.remove('primary');
+    showToast('팔로우 해제되었습니다');
+    var headerBtn = document.getElementById('headerFollowBtn');
+    if (headerBtn) headerBtn.classList.remove('followed');
+  }
 }
 
 // ══ ACCORDION ══

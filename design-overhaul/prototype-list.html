@@ -75,6 +75,26 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFo
 .sidebar-footer{padding:12px;border-top:1px solid var(--border)}
 .sidebar-add-btn{width:100%;padding:8px 12px;border:1px dashed var(--border);border-radius:var(--radius);background:transparent;color:var(--text-sub);font-size:13px;font-family:inherit;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:6px}
 .sidebar-add-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-bg)}
+/* SIDEBAR GROUP EDIT */
+.sidebar-footer-row{display:flex;gap:6px}
+.sidebar-footer-row .sidebar-add-btn{flex:1}
+.sidebar-group-edit-btn{padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:transparent;color:var(--text-sub);font-size:13px;font-family:inherit;cursor:pointer;transition:var(--transition);white-space:nowrap}
+.sidebar-group-edit-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-bg)}
+.sidebar-group-edit-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.sidebar-edit-controls{display:none;align-items:center;gap:4px;flex-shrink:0}
+.group-editing .sidebar-edit-controls{display:flex}
+.group-editing .sidebar-item{padding-left:8px}
+.sidebar-edit-del{width:24px;height:24px;border-radius:50%;background:var(--red-50);color:var(--red-600);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;flex-shrink:0;border:none;transition:var(--transition)}
+.sidebar-edit-del:hover{background:var(--red-600);color:#fff}
+.sidebar-edit-rename{width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-sub);flex-shrink:0;border:none;background:none;transition:var(--transition)}
+.sidebar-edit-rename:hover{color:var(--brand)}
+.sidebar-edit-drag{width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:grab;color:var(--text-muted);font-size:16px;flex-shrink:0}
+.sidebar-edit-drag:active{cursor:grabbing}
+.sidebar-item-name input{width:100%;border:1px solid var(--brand);border-radius:4px;padding:2px 6px;font-size:13px;font-family:inherit;outline:none}
+.group-editing .sidebar-item{cursor:default}
+.group-editing .sidebar-item:hover{background:transparent}
+.sidebar-done-btn{width:100%;padding:8px 12px;border:none;border-radius:var(--radius);background:var(--brand);color:#fff;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:var(--transition)}
+.sidebar-done-btn:hover{background:var(--brand-hover)}
 /* SIDEBAR QUICK-ACCESS SECTIONS */
 .sidebar-section{border-top:1px solid var(--border-light)}
 .sidebar-section-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;transition:var(--transition);font-size:12px;font-weight:600;color:var(--text-sub);letter-spacing:.02em}
@@ -564,8 +584,15 @@ body.cb-sidebar-open{padding-left:340px;transition:padding-left .25s cubic-bezie
         </div>
       </div>
     </div>
-    <div class="sidebar-footer">
-      <button class="sidebar-add-btn" onclick="openNewListModal()">+ 새 리스트 만들기</button>
+    <div class="sidebar-footer" id="sidebarFooter">
+      <div class="sidebar-footer-row" id="sidebarFooterNormal">
+        <button class="sidebar-add-btn" onclick="openNewListModal()">+ 새 리스트 만들기</button>
+        <button class="sidebar-group-edit-btn" onclick="toggleGroupEditMode()">그룹 편집</button>
+      </div>
+      <div class="sidebar-footer-row" id="sidebarFooterEdit" style="display:none">
+        <button class="sidebar-add-btn" onclick="openNewListModal()">+ 새 리스트</button>
+        <button class="sidebar-done-btn" onclick="toggleGroupEditMode()">완료</button>
+      </div>
     </div>
     <!-- QUICK ACCESS: 열람 가능 기업 -->
     <div class="sidebar-section open" id="sectionUnlocked">
@@ -818,6 +845,8 @@ body.cb-sidebar-open{padding-left:340px;transition:padding-left .25s cubic-bezie
   <button class="bulk-bar-btn" onclick="bulkAddToList()">리스트에 추가</button>
   <button class="bulk-bar-btn" onclick="bulkExportCSV()">내보내기 (CSV)</button>
   <button class="bulk-bar-btn" onclick="showToast('태그 추가 기능 준비 중')">태그 추가</button>
+  <button class="bulk-bar-btn" onclick="bulkSave()">★ 저장</button>
+  <button class="bulk-bar-btn" onclick="bulkFollow()">+ 팔로우</button>
   <button class="bulk-bar-btn danger" onclick="bulkDelete()">삭제</button>
   <div class="bulk-bar-spacer"></div>
   <button class="bulk-bar-btn" onclick="bulkClear()" style="background:var(--slate-600)">선택 해제</button>
@@ -1257,6 +1286,26 @@ function bulkExportCSV() {
   var blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
   var a = document.createElement('a');a.href=URL.createObjectURL(blob);a.download='export_'+lists[currentList].name+'.csv';a.click();
   showToast('CSV 파일이 다운로드되었습니다');
+}
+
+function bulkSave() {
+  var count = Object.keys(checked).length;
+  if (!count) return;
+  Object.keys(checked).forEach(function(idx) {
+    var c = lists[currentList].companies[idx];
+    c.saved = !c.saved;
+  });
+  showToast(count + '개 기업이 저장되었습니다');
+}
+
+function bulkFollow() {
+  var count = Object.keys(checked).length;
+  if (!count) return;
+  Object.keys(checked).forEach(function(idx) {
+    var c = lists[currentList].companies[idx];
+    c.followed = !c.followed;
+  });
+  showToast(count + '개 기업을 팔로우합니다');
 }
 
 function bulkClear() {
@@ -2260,6 +2309,129 @@ function createNewList() {
   closeNewListModal();
   selectList(lists.length - 1, item);
   showToast('리스트 "' + name + '"이(가) 생성되었습니다');
+}
+
+// ── GROUP EDIT MODE ──
+var groupEditMode = false;
+
+function toggleGroupEditMode() {
+  groupEditMode = !groupEditMode;
+  var sidebar = document.querySelector('.sidebar');
+  var normalFooter = document.getElementById('sidebarFooterNormal');
+  var editFooter = document.getElementById('sidebarFooterEdit');
+  if (groupEditMode) {
+    sidebar.classList.add('group-editing');
+    normalFooter.style.display = 'none';
+    editFooter.style.display = 'flex';
+    renderGroupEditControls();
+  } else {
+    sidebar.classList.remove('group-editing');
+    normalFooter.style.display = 'flex';
+    editFooter.style.display = 'none';
+    removeGroupEditControls();
+  }
+}
+
+function renderGroupEditControls() {
+  var items = document.querySelectorAll('#sidebarList .sidebar-item');
+  items.forEach(function(item, i) {
+    if (item.querySelector('.sidebar-edit-controls')) return;
+    var controls = document.createElement('div');
+    controls.className = 'sidebar-edit-controls';
+    controls.innerHTML = '<button class="sidebar-edit-del" onclick="event.stopPropagation();deleteListGroup(' + i + ')" title="삭제">−</button>';
+    item.insertBefore(controls, item.firstChild);
+    var right = document.createElement('div');
+    right.className = 'sidebar-edit-controls';
+    right.innerHTML = '<button class="sidebar-edit-rename" onclick="event.stopPropagation();renameListGroup(' + i + ')" title="이름 변경"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button><div class="sidebar-edit-drag" draggable="true" ondragstart="onGroupDragStart(event,' + i + ')" ondragover="onGroupDragOver(event)" ondrop="onGroupDrop(event,' + i + ')">⠿</div>';
+    item.appendChild(right);
+    item.setAttribute('draggable', 'true');
+    item.ondragstart = function(e) { onGroupDragStart(e, i); };
+    item.ondragover = function(e) { onGroupDragOver(e); };
+    item.ondrop = function(e) { onGroupDrop(e, i); };
+  });
+}
+
+function removeGroupEditControls() {
+  document.querySelectorAll('#sidebarList .sidebar-edit-controls').forEach(function(c) { c.remove(); });
+  document.querySelectorAll('#sidebarList .sidebar-item').forEach(function(item) {
+    item.removeAttribute('draggable');
+    item.ondragstart = null;
+    item.ondragover = null;
+    item.ondrop = null;
+  });
+}
+
+function deleteListGroup(idx) {
+  if (lists.length <= 1) { showToast('최소 1개 리스트는 유지해야 합니다'); return; }
+  if (!confirm('"' + lists[idx].name + '" 리스트를 삭제하시겠습니까?')) return;
+  lists.splice(idx, 1);
+  if (currentList >= lists.length) currentList = lists.length - 1;
+  rebuildSidebar();
+  selectList(currentList, document.querySelectorAll('#sidebarList .sidebar-item')[currentList]);
+  showToast('리스트가 삭제되었습니다');
+}
+
+function renameListGroup(idx) {
+  var nameEl = document.querySelectorAll('#sidebarList .sidebar-item-name')[idx];
+  if (!nameEl) return;
+  var oldName = lists[idx].name;
+  nameEl.innerHTML = '<input type="text" value="' + oldName + '" />';
+  var input = nameEl.querySelector('input');
+  input.focus();
+  input.select();
+  function commit() {
+    var val = input.value.trim();
+    if (val) {
+      lists[idx].name = val;
+      nameEl.textContent = val;
+      if (idx === currentList) document.getElementById('listName').textContent = val;
+      showToast('이름이 변경되었습니다');
+    } else {
+      nameEl.textContent = oldName;
+    }
+  }
+  input.addEventListener('blur', commit);
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+    if (e.key === 'Escape') { input.value = oldName; input.blur(); }
+  });
+}
+
+var dragSrcIdx = null;
+function onGroupDragStart(e, idx) {
+  if (!groupEditMode) { e.preventDefault(); return; }
+  dragSrcIdx = idx;
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onGroupDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+}
+function onGroupDrop(e, targetIdx) {
+  e.preventDefault();
+  if (dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+  var moved = lists.splice(dragSrcIdx, 1)[0];
+  lists.splice(targetIdx, 0, moved);
+  if (currentList === dragSrcIdx) currentList = targetIdx;
+  else if (dragSrcIdx < currentList && targetIdx >= currentList) currentList--;
+  else if (dragSrcIdx > currentList && targetIdx <= currentList) currentList++;
+  rebuildSidebar();
+  dragSrcIdx = null;
+  showToast('순서가 변경되었습니다');
+}
+
+function rebuildSidebar() {
+  var sidebarList = document.getElementById('sidebarList');
+  sidebarList.innerHTML = '';
+  lists.forEach(function(list, i) {
+    var item = document.createElement('div');
+    item.className = 'sidebar-item' + (i === currentList ? ' active' : '');
+    item.dataset.list = i;
+    item.onclick = function() { if (!groupEditMode) selectList(i, item); };
+    item.innerHTML = '<div class="sidebar-dot" style="background:' + list.color + '"></div><div class="sidebar-item-info"><div class="sidebar-item-name">' + list.name + '</div><div class="sidebar-item-count">' + list.companies.length + '개 기업</div></div>';
+    sidebarList.appendChild(item);
+  });
+  if (groupEditMode) renderGroupEditControls();
 }
 
 // ── TOAST ──
