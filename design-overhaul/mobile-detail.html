@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>에이치비테크놀로지 — CookieDeal Mobile</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --blue-50:#EBF1FB;--blue-100:#C8D9F5;--blue-200:#9BBBEE;
+  --blue-300:#6D9DE7;--blue-400:#3A7ADF;--blue-500:#0549CC;
+  --blue-600:#043EB0;--blue-700:#033293;--blue-800:#022777;
+  --slate-50:#F7F8FA;--slate-100:#EFF1F5;--slate-200:#E0E4EB;
+  --slate-300:#CCD2DB;--slate-400:#9AA3B4;--slate-500:#6B7689;
+  --slate-600:#4A5567;--slate-700:#374151;--slate-800:#1F2937;--slate-900:#111827;
+  --amber-50:#FFFBEB;--amber-400:#FBBF24;--amber-500:#F59E0B;--amber-600:#D97706;
+  --emerald-50:#ECFDF5;--emerald-400:#34D399;--emerald-500:#10B981;--emerald-600:#059669;
+  --red-50:#FEF2F2;--red-400:#F87171;--red-500:#EF4444;--red-600:#DC2626;
+  --purple-50:#F5F3FF;--purple-400:#A78BFA;--purple-500:#8B5CF6;
+  --teal-50:#F0FDFA;--teal-500:#14B8A6;
+  --orange-50:#FFF7ED;--orange-500:#F97316;--orange-600:#EA580C;
+  --brand:var(--blue-500);--brand-hover:var(--blue-600);--brand-bg:var(--blue-50);
+  --bg:#fff;--bg-card:#fff;
+  --text:var(--slate-900);--text-sub:var(--slate-500);--text-muted:var(--slate-400);
+  --border:var(--slate-200);--border-light:var(--slate-100);
+  --shadow-sm:0 1px 2px rgba(17,24,39,.04);
+  --shadow:0 1px 3px rgba(17,24,39,.06),0 1px 2px rgba(17,24,39,.04);
+  --shadow-md:0 4px 6px -1px rgba(17,24,39,.06),0 2px 4px -2px rgba(17,24,39,.04);
+  --radius:8px;--radius-sm:6px;--radius-lg:12px;--radius-xl:16px;
+  --transition:.15s cubic-bezier(.4,0,.2,1);
+  --m-header-h:48px;
+  --m-safe-bottom:env(safe-area-inset-bottom, 0px);
+  --m-cta-h:56px;
+}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:14px;max-width:100vw;overflow-x:hidden;padding-bottom:calc(var(--m-cta-h) + var(--m-safe-bottom) + 8px)}
+
+/* ── Sticky Header ── */
+.m-header{position:sticky;top:0;z-index:200;height:var(--m-header-h);background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px}
+.m-header-back{width:32px;height:32px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:18px;flex-shrink:0;border-radius:50%;transition:var(--transition)}
+.m-header-back:active{background:var(--slate-100)}
+.m-header-title{flex:1;text-align:center;font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-header-actions{display:flex;gap:4px;flex-shrink:0}
+.m-header-icon{width:32px;height:32px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:50%;transition:var(--transition)}
+.m-header-icon:active{background:var(--slate-100)}
+.m-header-icon.active{color:var(--red-500)}
+
+/* ── Hero ── */
+.m-hero{padding:20px 16px 16px;text-align:center}
+.m-hero-logo{width:56px;height:56px;border-radius:var(--radius-lg);background:var(--brand);display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;box-shadow:var(--shadow-md);margin-bottom:10px}
+.m-hero-name{font-size:20px;font-weight:800;letter-spacing:-.3px;margin-bottom:6px}
+.m-hero-badges{display:flex;justify-content:center;gap:6px;margin-bottom:6px}
+.m-hero-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600}
+.m-hero-badge.verified{background:var(--blue-50);color:var(--brand)}
+.m-hero-badge.ai{background:var(--purple-50);color:var(--purple-500)}
+.m-hero-meta{font-size:12px;color:var(--text-sub);margin-bottom:12px}
+
+/* Metric cards - 2x2 grid */
+.m-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;padding:0 16px}
+.m-metric{background:var(--slate-50);border-radius:var(--radius);padding:12px;text-align:left}
+.m-metric-label{font-size:11px;color:var(--text-muted);font-weight:500;margin-bottom:2px}
+.m-metric-value{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.3px}
+.m-metric-sub{font-size:11px;font-weight:500;margin-top:1px}
+.m-metric-up{color:var(--emerald-600)}
+.m-metric-down{color:var(--red-600)}
+
+/* CTA pills - horizontal scroll */
+.m-cta-row{display:flex;gap:8px;padding:0 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-bottom:4px}
+.m-cta-row::-webkit-scrollbar{display:none}
+.m-cta-pill{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;transition:var(--transition);border:1px solid var(--border);background:#fff;color:var(--text-sub);display:flex;align-items:center;gap:4px;flex-shrink:0}
+.m-cta-pill:active{background:var(--slate-100)}
+.m-cta-pill.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* ── Tabs ── */
+.m-tabs-wrap{position:sticky;top:var(--m-header-h);z-index:100;background:#fff;border-bottom:1px solid var(--border)}
+.m-tabs{display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:0 16px;gap:0}
+.m-tabs::-webkit-scrollbar{display:none}
+.m-tab{padding:12px 14px;font-size:13px;font-weight:500;color:var(--text-sub);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:var(--transition);flex-shrink:0}
+.m-tab:active{background:var(--slate-50)}
+.m-tab.active{color:var(--brand);font-weight:600;border-bottom-color:var(--brand)}
+.m-tab-badge{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;border-radius:8px;font-size:10px;font-weight:600;background:var(--slate-100);color:var(--text-sub);margin-left:3px}
+.m-tab.active .m-tab-badge{background:var(--blue-50);color:var(--brand)}
+
+/* ── Content panels ── */
+.m-panel{display:none;padding:0 0 16px}
+.m-panel.active{display:block}
+.m-section{padding:16px;border-bottom:8px solid var(--slate-50)}
+.m-section:last-child{border-bottom:none}
+.m-section-title{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.m-section-title .icon{font-size:16px}
+.m-section-link{font-size:12px;color:var(--brand);font-weight:500;margin-left:auto;flex-shrink:0}
+
+/* ── Chart container ── */
+.m-chart-wrap{width:100%;overflow:hidden;margin-bottom:8px}
+.m-chart-wrap canvas{width:100%!important;display:block}
+
+/* Chart controls */
+.m-time-pills{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
+.m-time-pill{padding:4px 10px;border-radius:12px;font-size:11px;font-weight:500;border:1px solid var(--border);background:#fff;color:var(--text-sub);cursor:pointer;font-family:inherit;transition:var(--transition)}
+.m-time-pill.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.m-toggle-row{display:flex;gap:4px;margin-bottom:10px}
+.m-toggle-btn{padding:5px 12px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;border:1px solid var(--border);background:#fff;color:var(--text-sub);cursor:pointer;font-family:inherit;transition:var(--transition)}
+.m-toggle-btn.active{background:var(--slate-800);color:#fff;border-color:var(--slate-800)}
+
+/* ── Horizontal scroll table ── */
+.m-table-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px}
+.m-table{width:max-content;min-width:100%;border-collapse:collapse;font-size:12px}
+.m-table th{padding:8px 12px;background:var(--slate-50);font-weight:600;color:var(--text-sub);text-align:left;white-space:nowrap;border-bottom:1px solid var(--border);position:sticky;top:0}
+.m-table td{padding:8px 12px;border-bottom:1px solid var(--border-light);white-space:nowrap;font-variant-numeric:tabular-nums}
+.m-table td:first-child,.m-table th:first-child{position:sticky;left:0;background:#fff;z-index:1;min-width:100px;border-right:1px solid var(--border)}
+.m-table th:first-child{background:var(--slate-50);z-index:2}
+.m-table .positive{color:var(--emerald-600)}
+.m-table .negative{color:var(--red-600)}
+
+/* ── Metric grid 2x3 (Toss style) ── */
+.m-metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.m-metric-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.m-mg-item{background:var(--slate-50);border-radius:var(--radius);padding:12px;text-align:center}
+.m-mg-label{font-size:11px;color:var(--text-muted);font-weight:500;margin-bottom:2px}
+.m-mg-value{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+.m-mg-sub{font-size:10px;font-weight:500;margin-top:2px}
+
+/* ── Horizontal bar (Toss style) ── */
+.m-hbar{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border-light)}
+.m-hbar:last-child{border-bottom:none}
+.m-hbar-label{font-size:12px;font-weight:500;min-width:80px;flex-shrink:0;color:var(--text)}
+.m-hbar-track{flex:1;height:8px;background:var(--slate-100);border-radius:4px;overflow:hidden}
+.m-hbar-fill{height:100%;border-radius:4px;transition:width .3s ease}
+.m-hbar-value{font-size:12px;font-weight:600;min-width:48px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
+
+/* ── Card list ── */
+.m-card{background:#fff;border:1px solid var(--border-light);border-radius:var(--radius);padding:12px;margin-bottom:8px}
+.m-card:last-child{margin-bottom:0}
+.m-card-row{display:flex;align-items:center;gap:10px}
+.m-card-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.m-card-info{flex:1;min-width:0}
+.m-card-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-card-sub{font-size:12px;color:var(--text-sub)}
+.m-card-right{text-align:right;flex-shrink:0}
+
+/* ── Supply chain list ── */
+.m-supply-group{margin-bottom:12px}
+.m-supply-header{font-size:13px;font-weight:600;color:var(--text-sub);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.m-supply-item{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-light);gap:10px}
+.m-supply-item:last-child{border-bottom:none}
+.m-supply-name{flex:1;font-size:13px;font-weight:500}
+.m-supply-pct{font-size:13px;font-weight:600;color:var(--brand)}
+
+/* ── Donut chart ── */
+.m-donut-wrap{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.m-donut-legend{flex:1}
+.m-donut-item{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px}
+.m-donut-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.m-donut-name{flex:1;color:var(--text)}
+.m-donut-pct{font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ── News card (Toss style) ── */
+.m-news-card{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-light)}
+.m-news-card:last-child{border-bottom:none}
+.m-news-thumb{width:64px;height:64px;border-radius:var(--radius-sm);background:var(--slate-100);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px}
+.m-news-body{flex:1;min-width:0}
+.m-news-title{font-size:14px;font-weight:600;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.m-news-summary{font-size:12px;color:var(--text-sub);margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.m-news-meta{font-size:11px;color:var(--text-muted)}
+
+/* ── Timeline ── */
+.m-timeline{position:relative;padding-left:20px}
+.m-timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:var(--border)}
+.m-timeline-item{position:relative;padding-bottom:16px}
+.m-timeline-item:last-child{padding-bottom:0}
+.m-timeline-dot{position:absolute;left:-17px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 0 0 2px var(--brand)}
+.m-timeline-year{font-size:12px;font-weight:700;color:var(--brand);margin-bottom:2px}
+.m-timeline-text{font-size:13px;color:var(--text-sub);line-height:1.5}
+
+/* ── Similar company card (horizontal scroll) ── */
+.m-sim-scroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:0 0 4px}
+.m-sim-scroll::-webkit-scrollbar{display:none}
+.m-sim-card{flex:0 0 200px;border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:#fff}
+.m-sim-logo{width:32px;height:32px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;margin-bottom:6px}
+.m-sim-name{font-size:13px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-sim-desc{font-size:11px;color:var(--text-sub);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-sim-metrics{display:flex;gap:12px;font-size:11px}
+.m-sim-metric-label{color:var(--text-muted)}
+.m-sim-metric-val{font-weight:600}
+.m-sim-chips{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.m-sim-chip{padding:2px 6px;border-radius:8px;font-size:10px;font-weight:500;background:var(--blue-50);color:var(--brand)}
+
+/* ── Community post ── */
+.m-post{padding:14px 0;border-bottom:1px solid var(--border-light)}
+.m-post:last-child{border-bottom:none}
+.m-post-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.m-post-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.m-post-author{font-size:13px;font-weight:600}
+.m-post-badge{padding:1px 6px;border-radius:8px;font-size:10px;font-weight:600;background:var(--blue-50);color:var(--brand)}
+.m-post-time{font-size:11px;color:var(--text-muted);margin-left:auto}
+.m-post-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.m-post-body{font-size:13px;color:var(--text-sub);line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px}
+.m-post-footer{display:flex;gap:12px;font-size:12px;color:var(--text-muted)}
+
+/* FAB */
+/* ── Competitor: Dark Radar Card (desktop match) ── */
+.comp-radar-card{background:#0a0f1e;border:1px solid rgba(99,102,241,.15);border-radius:16px;padding:20px 16px;position:relative;overflow:hidden}
+.comp-radar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.comp-radar-header-left{display:flex;align-items:center;gap:8px}
+.comp-radar-header-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6366F1,#8B5CF6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;box-shadow:0 4px 12px rgba(99,102,241,.3)}
+.comp-radar-title{font-size:14px;font-weight:700;color:#fff}
+.comp-radar-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px}
+.comp-radar-pills{display:flex;gap:5px;flex-wrap:wrap}
+.comp-radar-pill{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:16px;font-size:10px;font-weight:600;border:1px solid;backdrop-filter:blur(8px)}
+.comp-radar-canvas-wrap{display:flex;justify-content:center;padding:4px 0 12px}
+.comp-radar-scores{display:flex;flex-direction:column;gap:6px}
+.comp-score-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:10px}
+.comp-score-icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.comp-score-info{flex:1;min-width:0}
+.comp-score-label{font-size:11px;color:rgba(255,255,255,.45);font-weight:500}
+.comp-score-row{display:flex;align-items:baseline;gap:5px;margin-top:2px}
+.comp-score-val{font-size:15px;font-weight:700;color:#fff}
+.comp-score-avg{font-size:11px;color:rgba(255,255,255,.35)}
+.comp-score-bar{width:100%;height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:4px;overflow:hidden}
+.comp-score-fill{height:100%;border-radius:2px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+/* ── Competitor: Metric grid ── */
+.comp-metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.comp-metric-card{background:var(--slate-50);border-radius:var(--radius);padding:12px;text-align:center}
+.comp-mc-label{font-size:11px;color:var(--text-muted);margin-bottom:4px}
+.comp-mc-value{font-size:16px;font-weight:700;color:var(--text)}
+.comp-mc-avg{font-size:11px;color:var(--text-sub);margin-top:2px}
+.comp-mc-rank{font-size:10px;font-weight:600;margin-top:4px;display:inline-block;padding:2px 8px;border-radius:10px}
+.comp-mc-rank.top{background:var(--emerald-50);color:var(--emerald-600)}
+.comp-mc-rank.bottom{background:var(--red-50);color:var(--red-600)}
+.comp-mc-rank.mid{background:var(--slate-100);color:var(--text-sub)}
+.m-fab{position:fixed;bottom:calc(var(--m-cta-h) + var(--m-safe-bottom) + 16px);right:16px;width:52px;height:52px;border-radius:50%;background:var(--brand);color:#fff;border:none;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(5,73,204,.35);cursor:pointer;z-index:50;transition:var(--transition)}
+.m-fab:active{transform:scale(.95)}
+
+/* ── Accordion (Patent) ── */
+.m-accordion-item{border-bottom:1px solid var(--border-light)}
+.m-accordion-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 0;background:none;border:none;font-family:inherit;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;text-align:left}
+.m-accordion-trigger .chevron{transition:transform .2s;font-size:14px;color:var(--text-muted)}
+.m-accordion-trigger.open .chevron{transform:rotate(180deg)}
+.m-accordion-body{display:none;padding:0 0 12px;font-size:12px;color:var(--text-sub);line-height:1.6}
+.m-accordion-body.show{display:block}
+
+/* ── Competitor table ── */
+.m-comp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ── Sticky Bottom CTA ── */
+.m-bottom-cta{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:1px solid var(--border);padding:8px 16px calc(8px + var(--m-safe-bottom));display:flex;gap:8px}
+.m-bottom-cta-btn{flex:1;height:44px;border-radius:var(--radius);font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:var(--transition);border:none;display:flex;align-items:center;justify-content:center;gap:6px}
+.m-bottom-cta-btn.primary{background:var(--brand);color:#fff}
+.m-bottom-cta-btn.primary:active{background:var(--brand-hover)}
+.m-bottom-cta-btn.secondary{background:var(--slate-50);color:var(--text);border:1px solid var(--border)}
+
+/* ── Bottom Sheet ── */
+.m-sheet-overlay{position:fixed;inset:0;background:rgba(17,24,39,.4);z-index:300;opacity:0;pointer-events:none;transition:opacity .2s}
+.m-sheet-overlay.show{opacity:1;pointer-events:all}
+.m-sheet{position:fixed;bottom:0;left:0;right:0;z-index:301;background:#fff;border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);max-height:75vh;overflow-y:auto;padding-bottom:var(--m-safe-bottom)}
+.m-sheet-overlay.show .m-sheet{transform:translateY(0)}
+.m-sheet-handle{width:36px;height:4px;background:var(--slate-300);border-radius:2px;margin:10px auto 12px}
+.m-sheet-title{padding:0 20px 12px;font-size:16px;font-weight:700}
+.m-sheet-body{padding:0 20px 20px}
+
+/* ── Collapsible section ── */
+.m-collapse-trigger{display:flex;align-items:center;gap:6px;padding:10px 0;font-size:13px;font-weight:600;color:var(--brand);cursor:pointer;border:none;background:none;font-family:inherit}
+.m-collapse-content{display:none;margin-bottom:8px}
+.m-collapse-content.show{display:block}
+
+/* ── AI insight card ── */
+.m-ai-card{background:linear-gradient(135deg,var(--purple-50),var(--blue-50));border:1px solid var(--blue-200);border-radius:var(--radius);padding:12px;margin-bottom:8px;font-size:12px;line-height:1.6;color:var(--text-sub)}
+.m-ai-card strong{color:var(--text)}
+
+/* ── Safety / health cards ── */
+.m-health-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.m-health-card{background:var(--slate-50);border-radius:var(--radius);padding:12px;text-align:center}
+.m-health-card .grade{font-size:22px;font-weight:700;margin-bottom:2px}
+.m-health-card .label{font-size:11px;color:var(--text-muted)}
+.m-health-card .value{font-size:13px;font-weight:600;margin-top:2px}
+
+/* Utility */
+.hidden{display:none!important}
+.text-up{color:var(--emerald-600)}
+.text-down{color:var(--red-600)}
+.text-muted{color:var(--text-muted)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- ═══ STICKY HEADER ═══ -->
+<header class="m-header">
+  <button class="m-header-back" onclick="history.back()">←</button>
+  <div class="m-header-title">에이치비테크놀로지</div>
+  <div class="m-header-actions">
+    <button class="m-header-icon" onclick="this.classList.toggle('active')" title="관심">♡</button>
+    <button class="m-header-icon" onclick="showToast('알림이 설정되었습니다')" title="알림">🔔</button>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<div class="m-hero">
+  <div class="m-hero-logo">HB</div>
+  <div class="m-hero-name">에이치비테크놀로지</div>
+  <div class="m-hero-badges">
+    <span class="m-hero-badge verified">✓ 검증됨</span>
+    <span class="m-hero-badge ai">✦ AI 분석</span>
+  </div>
+  <div class="m-hero-meta">반도체장비 · 서울 강남 · 2011 설립 · 비상장</div>
+</div>
+
+<!-- Metric Cards 2x2 -->
+<div class="m-metrics">
+  <div class="m-metric">
+    <div class="m-metric-label">매출액</div>
+    <div class="m-metric-value">342<span style="font-size:12px;font-weight:500;color:var(--text-sub)">억</span></div>
+    <div class="m-metric-sub m-metric-up">▲ +4.3% YoY</div>
+  </div>
+  <div class="m-metric">
+    <div class="m-metric-label">영업이익</div>
+    <div class="m-metric-value">28<span style="font-size:12px;font-weight:500;color:var(--text-sub)">억</span></div>
+    <div class="m-metric-sub m-metric-up">▲ +12.5% YoY</div>
+  </div>
+  <div class="m-metric">
+    <div class="m-metric-label">순이익</div>
+    <div class="m-metric-value">20<span style="font-size:12px;font-weight:500;color:var(--text-sub)">억</span></div>
+    <div class="m-metric-sub m-metric-up">▲ +11.1% YoY</div>
+  </div>
+  <div class="m-metric">
+    <div class="m-metric-label">부채비율</div>
+    <div class="m-metric-value">65<span style="font-size:12px;font-weight:500;color:var(--text-sub)">%</span></div>
+    <div class="m-metric-sub m-metric-up">▼ -3%p YoY</div>
+  </div>
+</div>
+
+<!-- CTA pills -->
+<div class="m-cta-row">
+  <button class="m-cta-pill primary" onclick="openListSheet()">리스트에 추가</button>
+  <button class="m-cta-pill" onclick="showToast('공유 링크가 복사되었습니다')">공유</button>
+  <button class="m-cta-pill" onclick="showToast('PDF 다운로드 준비 중')">다운로드</button>
+  <button class="m-cta-pill">+ 팔로우</button>
+</div>
+
+<!-- ═══ TABS ═══ -->
+<div class="m-tabs-wrap">
+  <div class="m-tabs" id="tabsContainer">
+    <div class="m-tab active" onclick="switchTab('overview',this)">개요</div>
+    <div class="m-tab" onclick="switchTab('finance',this)">재무 <span class="m-tab-badge">9</span></div>
+    <div class="m-tab" onclick="switchTab('people',this)">인물 <span class="m-tab-badge">12</span></div>
+    <div class="m-tab" onclick="switchTab('similar',this)">유사기업 <span class="m-tab-badge">18</span></div>
+    <div class="m-tab" onclick="switchTab('competitors',this)">경쟁사</div>
+    <div class="m-tab" onclick="switchTab('news',this)">뉴스</div>
+    <div class="m-tab" onclick="switchTab('community',this)">커뮤니티</div>
+  </div>
+</div>
+
+<!-- ═══════════ OVERVIEW TAB ═══════════ -->
+<div class="m-panel active" id="panel-overview">
+
+  <!-- 1. 매출·영업이익 추이 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📊</span> 매출 · 영업이익 추이</div>
+    <div class="m-time-pills">
+      <button class="m-time-pill" onclick="setTimePill(this)">3Y</button>
+      <button class="m-time-pill active" onclick="setTimePill(this)">5Y</button>
+      <button class="m-time-pill" onclick="setTimePill(this)">MAX</button>
+    </div>
+    <div class="m-chart-wrap"><canvas id="mRevenueChart" height="220"></canvas></div>
+  </div>
+
+  <!-- 2. 재무 요약 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📋</span> 재무 요약 <span class="m-section-link" onclick="switchTab('finance')">상세보기 →</span></div>
+    <div class="m-table-scroll">
+      <table class="m-table">
+        <thead><tr><th>항목</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
+        <tbody>
+          <tr><td>매출액 (억)</td><td>280</td><td>295</td><td>310</td><td>328</td><td class="positive">342</td></tr>
+          <tr><td>영업이익 (억)</td><td>18</td><td>20</td><td>22</td><td>25</td><td class="positive">28</td></tr>
+          <tr><td>순이익 (억)</td><td>12</td><td>14</td><td>15</td><td>18</td><td class="positive">20</td></tr>
+          <tr><td>자산총계 (억)</td><td>520</td><td>560</td><td>610</td><td>670</td><td>720</td></tr>
+          <tr><td>부채비율 (%)</td><td>85</td><td>78</td><td class="positive">72</td><td class="positive">68</td><td class="positive">65</td></tr>
+          <tr><td>매출 성장률 (%)</td><td>8.5</td><td>5.4</td><td>5.1</td><td>5.8</td><td class="positive">4.3</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 3. 매출 구성 워터폴 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">🏗️</span> 매출 구성</div>
+    <div class="m-toggle-row">
+      <button class="m-toggle-btn active" onclick="drawMWaterfall('2024',this)">2024</button>
+      <button class="m-toggle-btn" onclick="drawMWaterfall('2023',this)">2023</button>
+      <button class="m-toggle-btn" onclick="drawMWaterfall('2022',this)">2022</button>
+    </div>
+    <div class="m-chart-wrap"><canvas id="mWaterfallChart" height="220"></canvas></div>
+  </div>
+
+  <!-- 4. 주요 구매처·판매처 (list view instead of network graph) -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">🔗</span> 주요 구매처 · 판매처</div>
+    <div class="m-supply-group">
+      <div class="m-supply-header"><span style="color:var(--emerald-600)">●</span> 구매처</div>
+      <div class="m-supply-item"><div class="m-supply-name">도쿄정밀</div><div class="m-supply-pct">32%</div></div>
+      <div class="m-supply-item"><div class="m-supply-name">한국소재</div><div class="m-supply-pct">25%</div></div>
+      <div class="m-supply-item"><div class="m-supply-name">글로벌테크</div><div class="m-supply-pct">20%</div></div>
+    </div>
+    <div class="m-supply-group">
+      <div class="m-supply-header"><span style="color:var(--brand)">●</span> 판매처</div>
+      <div class="m-supply-item"><div class="m-supply-name">삼성전자</div><div class="m-supply-pct">35%</div></div>
+      <div class="m-supply-item"><div class="m-supply-name">SK하이닉스</div><div class="m-supply-pct">28%</div></div>
+      <div class="m-supply-item"><div class="m-supply-name">마이크론</div><div class="m-supply-pct">18%</div></div>
+    </div>
+  </div>
+
+  <!-- 5. 주주현황 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">👥</span> 주주현황</div>
+    <div class="m-donut-wrap">
+      <canvas id="mDonutChart" width="120" height="120" style="flex-shrink:0"></canvas>
+      <div class="m-donut-legend" id="mDonutLegend"></div>
+    </div>
+  </div>
+
+  <!-- 6. 경영진 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">💼</span> 경영진</div>
+    <div id="mExecCards"></div>
+  </div>
+
+  <!-- 7. 인원현황 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">👤</span> 인원현황</div>
+    <div class="m-chart-wrap"><canvas id="mEmployeeChart" height="180"></canvas></div>
+    <div class="m-metric-grid cols-3" style="margin-top:8px">
+      <div class="m-mg-item"><div class="m-mg-label">총 인원</div><div class="m-mg-value">187명</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">전년 대비</div><div class="m-mg-value text-up">+8%</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">평균 근속</div><div class="m-mg-value">4.2년</div></div>
+    </div>
+  </div>
+
+  <!-- 8. 기술·특허 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">💡</span> 기술 · 특허 <span style="font-size:12px;font-weight:500;color:var(--text-sub);margin-left:4px">5건</span></div>
+    <div id="mPatentList">
+      <div class="m-accordion-item">
+        <button class="m-accordion-trigger" onclick="toggleAccordion(this)"><span>반도체 웨이퍼 프로버 정밀 제어 방법 (2023)</span><span class="chevron">▼</span></button>
+        <div class="m-accordion-body">특허번호: 10-2023-0012345 · 웨이퍼 프로브 카드의 정밀 위치 제어 기술로, 기존 대비 측정 정확도를 30% 향상시킨 방법에 관한 특허입니다.</div>
+      </div>
+      <div class="m-accordion-item">
+        <button class="m-accordion-trigger" onclick="toggleAccordion(this)"><span>AI 기반 반도체 결함 검출 시스템 (2024)</span><span class="chevron">▼</span></button>
+        <div class="m-accordion-body">특허번호: 10-2024-0045678 · 딥러닝 기반 웨이퍼 표면 결함 자동 검출 시스템으로, HB-Vision 제품의 핵심 기술입니다.</div>
+      </div>
+      <div class="m-accordion-item">
+        <button class="m-accordion-trigger" onclick="toggleAccordion(this)"><span>테스트 핸들러 고속 이송 장치 (2022)</span><span class="chevron">▼</span></button>
+        <div class="m-accordion-body">특허번호: 10-2022-0098765 · 반도체 패키지 테스트를 위한 고속 이송 기술로, 시간당 처리량을 40% 향상시킵니다.</div>
+      </div>
+      <div class="m-accordion-item">
+        <button class="m-accordion-trigger" onclick="toggleAccordion(this)"><span>프로브카드 온도 보상 시스템 (2023)</span><span class="chevron">▼</span></button>
+        <div class="m-accordion-body">특허번호: 10-2023-0067890 · 온도 변화에 따른 프로브 카드 팽창을 실시간 보상하는 시스템입니다.</div>
+      </div>
+      <div class="m-accordion-item">
+        <button class="m-accordion-trigger" onclick="toggleAccordion(this)"><span>반도체 검사 데이터 분석 플랫폼 (2024)</span><span class="chevron">▼</span></button>
+        <div class="m-accordion-body">특허번호: 10-2024-0011223 · 검사 데이터를 실시간 수집·분석하여 공정 최적화를 지원하는 클라우드 플랫폼 기술입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 최신 뉴스 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📰</span> 최신 뉴스 <span class="m-section-link" onclick="switchTab('news')">더보기 →</span></div>
+    <div id="mNewsPreview"></div>
+  </div>
+
+  <!-- 10. 기업 연혁 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📅</span> 기업 연혁</div>
+    <div class="m-timeline">
+      <div class="m-timeline-item"><div class="m-timeline-dot"></div><div class="m-timeline-year">2024</div><div class="m-timeline-text">AI 검사 솔루션 HB-Vision 출시, Series B 투자 유치 (200억)</div></div>
+      <div class="m-timeline-item"><div class="m-timeline-dot"></div><div class="m-timeline-year">2023</div><div class="m-timeline-text">SK하이닉스 납품 개시, 직원 150명 돌파</div></div>
+      <div class="m-timeline-item"><div class="m-timeline-dot"></div><div class="m-timeline-year">2022</div><div class="m-timeline-text">본사 강남 이전, 해외 지사 설립 (중국 상하이)</div></div>
+      <div class="m-timeline-item"><div class="m-timeline-dot"></div><div class="m-timeline-year">2020</div><div class="m-timeline-text">삼성전자 반도체 사업부 납품 시작</div></div>
+      <div class="m-timeline-item"><div class="m-timeline-dot"></div><div class="m-timeline-year">2018</div><div class="m-timeline-text">Series A 투자 유치 (50억), 웨이퍼 프로버 양산 시작</div></div>
+      <div class="m-timeline-item"><div class="m-timeline-dot"></div><div class="m-timeline-year">2011</div><div class="m-timeline-text">에이치비테크놀로지 설립</div></div>
+    </div>
+  </div>
+
+  <!-- 11. 유사 기업 추천 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">🏭</span> 유사 기업 추천 <span class="m-section-link" onclick="switchTab('similar')">전체보기 →</span></div>
+    <div class="m-sim-scroll" id="mSimPreview"></div>
+  </div>
+</div>
+
+<!-- ═══════════ FINANCE TAB ═══════════ -->
+<div class="m-panel" id="panel-finance">
+
+  <!-- F1. 투자 지표 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📈</span> 투자 지표</div>
+    <div class="m-metric-grid">
+      <div class="m-mg-item"><div class="m-mg-label">시가총액(추정)</div><div class="m-mg-value">1,200억</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">배당률</div><div class="m-mg-value">1.2%</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">PBR</div><div class="m-mg-value">2.4x</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">PER</div><div class="m-mg-value">18.5x</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">ROE</div><div class="m-mg-value text-up">11.1%</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">PSR</div><div class="m-mg-value">3.5x</div></div>
+    </div>
+  </div>
+
+  <!-- F2. 핵심 재무 비율 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📊</span> 핵심 재무 비율</div>
+    <div class="m-toggle-row" id="mValToggle">
+      <button class="m-toggle-btn active" onclick="switchValuation('OPM',this)">영업이익률</button>
+      <button class="m-toggle-btn" onclick="switchValuation('NPM',this)">순이익률</button>
+      <button class="m-toggle-btn" onclick="switchValuation('DEBT',this)">부채비율</button>
+      <button class="m-toggle-btn" onclick="switchValuation('ROE',this)">ROE</button>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+      <span id="mValLabel" style="font-size:12px;color:var(--text-muted)">영업이익률 (2025)</span>
+      <span id="mValValue" style="font-size:22px;font-weight:700">8.2%</span>
+      <span id="mValDiff" class="m-metric-sub m-metric-up" style="font-size:12px">▲ +0.6%p</span>
+    </div>
+    <div id="mValBars">
+      <div class="m-hbar"><div class="m-hbar-label">2025</div><div class="m-hbar-track"><div class="m-hbar-fill" style="width:55%;background:var(--brand)"></div></div><div class="m-hbar-value" id="mValBar1">8.2%</div></div>
+      <div class="m-hbar"><div class="m-hbar-label">2024</div><div class="m-hbar-track"><div class="m-hbar-fill" style="width:51%;background:var(--blue-300)"></div></div><div class="m-hbar-value" id="mValBar2">7.6%</div></div>
+      <div class="m-hbar"><div class="m-hbar-label">2023</div><div class="m-hbar-track"><div class="m-hbar-fill" style="width:47%;background:var(--blue-200)"></div></div><div class="m-hbar-value" id="mValBar3">7.1%</div></div>
+    </div>
+    <div class="m-ai-card" id="mValInsight" style="margin-top:8px">💡 영업이익률이 3년 연속 상승 추세이며, 최근 결산년 <strong>8.2%</strong>를 기록했습니다</div>
+  </div>
+
+  <!-- F3. 손익 추이 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">💰</span> 손익 추이</div>
+    <div class="m-toggle-row" id="mRevToggle">
+      <button class="m-toggle-btn active" onclick="drawMRevenueEarnings('net',this)">순이익</button>
+      <button class="m-toggle-btn" onclick="drawMRevenueEarnings('op',this)">영업이익</button>
+    </div>
+    <div class="m-chart-wrap"><canvas id="mRevenueEarningsChart" height="220"></canvas></div>
+  </div>
+
+  <!-- F4. 재무 (Stacked Bars) -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📊</span> 재무 추이</div>
+    <div class="m-chart-wrap"><canvas id="mFinancialBars" height="200"></canvas></div>
+  </div>
+
+  <!-- F5. 공급망 상세 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">🔗</span> 공급망 상세</div>
+    <div class="m-table-scroll" style="margin-bottom:10px">
+      <table class="m-table">
+        <thead><tr><th>구매처</th><th>비중</th><th>품목</th></tr></thead>
+        <tbody>
+          <tr><td>도쿄정밀</td><td>32%</td><td>정밀부품</td></tr>
+          <tr><td>한국소재</td><td>25%</td><td>소재</td></tr>
+          <tr><td>글로벌테크</td><td>20%</td><td>부품</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="m-table-scroll">
+      <table class="m-table">
+        <thead><tr><th>판매처</th><th>비중</th><th>관계</th></tr></thead>
+        <tbody>
+          <tr><td>삼성전자</td><td>35%</td><td>주요 고객</td></tr>
+          <tr><td>SK하이닉스</td><td>28%</td><td>주요 고객</td></tr>
+          <tr><td>마이크론</td><td>18%</td><td>해외 고객</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="m-health-grid" style="margin-top:10px">
+      <div class="m-health-card"><div class="label">구매 집중도</div><div class="value">상위3사 77%</div></div>
+      <div class="m-health-card"><div class="label">판매 집중도</div><div class="value">상위3사 81%</div></div>
+    </div>
+  </div>
+
+  <!-- F6. 재무 건전성 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">🛡️</span> 재무 건전성</div>
+    <div class="m-health-grid">
+      <div class="m-health-card"><div class="grade" style="color:var(--emerald-600)">A</div><div class="label">신용평가</div><div class="value">한국기업데이터</div></div>
+      <div class="m-health-card"><div class="grade" style="color:var(--brand)">A+</div><div class="label">현금흐름등급</div><div class="value">안정적</div></div>
+      <div class="m-health-card"><div class="grade">185%</div><div class="label">유동비율</div><div class="value">양호</div></div>
+      <div class="m-health-card"><div class="grade">4.2x</div><div class="label">이자보상배율</div><div class="value">안정적</div></div>
+    </div>
+  </div>
+
+  <!-- F7. 안정성 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📉</span> 안정성</div>
+    <div class="m-chart-wrap"><canvas id="mStabilityChart" height="180"></canvas></div>
+    <div class="m-ai-card">💡 부채비율이 5년간 <strong>85% → 65%</strong>로 꾸준히 감소하여 재무 안정성이 개선되고 있습니다</div>
+  </div>
+
+  <!-- F8. 현금흐름 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">💵</span> 현금흐름</div>
+    <div class="m-health-grid" style="margin-bottom:10px">
+      <div class="m-health-card"><div class="grade" style="color:var(--brand)">A+</div><div class="label">현금흐름 등급</div></div>
+      <div class="m-health-card"><div class="grade text-up">3,600</div><div class="label">영업활동 (백만)</div></div>
+    </div>
+    <div class="m-chart-wrap"><canvas id="mCashFlowChart" height="180"></canvas></div>
+  </div>
+
+  <!-- F9. 손익계산서 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📄</span> 손익계산서</div>
+    <button class="m-collapse-trigger" onclick="toggleCollapse(this)">▶ 손익계산서 보기</button>
+    <div class="m-collapse-content">
+      <div class="m-table-scroll">
+        <table class="m-table">
+          <thead><tr><th>항목</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
+          <tbody>
+            <tr><td>매출액</td><td>31,000</td><td>32,800</td><td class="positive">34,200</td></tr>
+            <tr><td>매출원가</td><td>22,320</td><td>23,370</td><td>24,330</td></tr>
+            <tr><td>매출총이익</td><td>8,680</td><td>9,430</td><td class="positive">9,870</td></tr>
+            <tr><td>판관비</td><td>6,480</td><td>6,930</td><td>7,070</td></tr>
+            <tr><td>영업이익</td><td>2,200</td><td>2,500</td><td class="positive">2,800</td></tr>
+            <tr><td>당기순이익</td><td>1,500</td><td>1,800</td><td class="positive">2,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- F10. 재무상태표 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📄</span> 재무상태표</div>
+    <button class="m-collapse-trigger" onclick="toggleCollapse(this)">▶ 재무상태표 보기</button>
+    <div class="m-collapse-content">
+      <div class="m-table-scroll">
+        <table class="m-table">
+          <thead><tr><th>항목</th><th>2023</th><th>2024</th><th>2025</th></tr></thead>
+          <tbody>
+            <tr><td>자산총계</td><td>61,000</td><td>67,000</td><td>72,000</td></tr>
+            <tr><td>유동자산</td><td>28,000</td><td>31,000</td><td>34,000</td></tr>
+            <tr><td>비유동자산</td><td>33,000</td><td>36,000</td><td>38,000</td></tr>
+            <tr><td>부채총계</td><td>25,600</td><td>26,500</td><td>27,700</td></tr>
+            <tr><td>자본총계</td><td>35,400</td><td>40,500</td><td class="positive">44,300</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PEOPLE TAB ═══════════ -->
+<div class="m-panel" id="panel-people">
+
+  <!-- P1. 대표자 정보 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">👤</span> 대표자 정보</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="m-card-avatar" style="width:48px;height:48px;background:var(--brand);font-size:16px">김</div>
+      <div><div style="font-size:16px;font-weight:700">김현우</div><div style="font-size:12px;color:var(--text-sub)">대표이사 · CEO</div></div>
+    </div>
+    <div class="m-metric-grid cols-3">
+      <div class="m-mg-item"><div class="m-mg-label">경력</div><div class="m-mg-value" style="font-size:14px">삼성전자 출신</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">보유 주식</div><div class="m-mg-value" style="font-size:14px">42%</div></div>
+      <div class="m-mg-item"><div class="m-mg-label">취임</div><div class="m-mg-value" style="font-size:14px">2011년</div></div>
+    </div>
+  </div>
+
+  <!-- P2. 경영진 현황 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">💼</span> 경영진 현황</div>
+    <div class="m-card">
+      <div class="m-card-row"><div class="m-card-avatar" style="background:var(--brand)">김</div><div class="m-card-info"><div class="m-card-name">김현우</div><div class="m-card-sub">대표이사 · 등기</div></div></div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-row"><div class="m-card-avatar" style="background:var(--emerald-600)">박</div><div class="m-card-info"><div class="m-card-name">박진영</div><div class="m-card-sub">CTO · 등기</div></div></div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-row"><div class="m-card-avatar" style="background:var(--amber-600)">이</div><div class="m-card-info"><div class="m-card-name">이수연</div><div class="m-card-sub">CFO · 미등기</div></div></div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-row"><div class="m-card-avatar" style="background:var(--purple-500)">정</div><div class="m-card-info"><div class="m-card-name">정한수</div><div class="m-card-sub">COO · 미등기</div></div></div>
+    </div>
+  </div>
+
+  <!-- P3. 명함 열람 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📇</span> 명함 열람</div>
+    <div class="m-metric-grid">
+      <div class="m-card" style="text-align:center;padding:14px">
+        <div class="m-card-avatar" style="background:var(--brand);margin:0 auto 6px;width:36px;height:36px;font-size:13px">김</div>
+        <div style="font-size:13px;font-weight:600">김현우</div>
+        <div style="font-size:11px;color:var(--text-sub)">대표이사 · 경영</div>
+      </div>
+      <div class="m-card" style="text-align:center;padding:14px">
+        <div class="m-card-avatar" style="background:var(--emerald-600);margin:0 auto 6px;width:36px;height:36px;font-size:13px">박</div>
+        <div style="font-size:13px;font-weight:600">박진영</div>
+        <div style="font-size:11px;color:var(--text-sub)">CTO · R&D</div>
+      </div>
+      <div class="m-card" style="text-align:center;padding:14px">
+        <div class="m-card-avatar" style="background:var(--amber-600);margin:0 auto 6px;width:36px;height:36px;font-size:13px">이</div>
+        <div style="font-size:13px;font-weight:600">이수연</div>
+        <div style="font-size:11px;color:var(--text-sub)">CFO · 재무</div>
+      </div>
+      <div class="m-card" style="text-align:center;padding:14px">
+        <div class="m-card-avatar" style="background:var(--purple-500);margin:0 auto 6px;width:36px;height:36px;font-size:13px">정</div>
+        <div style="font-size:13px;font-weight:600">정한수</div>
+        <div style="font-size:11px;color:var(--text-sub)">COO · 운영</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P4. 주주현황 상세 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📊</span> 주주현황 상세</div>
+    <div class="m-donut-wrap">
+      <canvas id="mDonutPeople" width="140" height="140" style="flex-shrink:0"></canvas>
+      <div class="m-donut-legend" id="mDonutPeopleLegend"></div>
+    </div>
+  </div>
+
+  <!-- P5. 인원현황 추이 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">👤</span> 인원현황 추이</div>
+    <div class="m-chart-wrap"><canvas id="mEmployeePeople" height="180"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══════════ SIMILAR TAB ═══════════ -->
+<div class="m-panel" id="panel-similar">
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">🏭</span> 유사 기업 추천</div>
+    <div id="mSimilarList"></div>
+  </div>
+
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📊</span> 매출 규모 비교</div>
+    <div id="mSimilarBars"></div>
+  </div>
+</div>
+
+<!-- ═══════════ COMPETITORS TAB ═══════════ -->
+<div class="m-panel" id="panel-competitors">
+  <!-- A. 경쟁력 레이더 (dark card — desktop match) -->
+  <div class="m-section" style="padding:12px">
+    <div style="background:var(--amber-50);border:1px solid var(--amber-400);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--amber-600);margin-bottom:12px;display:flex;align-items:center;gap:6px">⚠ 경쟁사 분석 로직 개발 중 — 데모 데이터 기반 UX</div>
+    <div class="comp-radar-card">
+      <div class="comp-radar-header">
+        <div class="comp-radar-header-left">
+          <div class="comp-radar-header-icon">🕸</div>
+          <div><div class="comp-radar-title">경쟁력 레이더</div><div class="comp-radar-sub">6개 지표 기반 종합 비교 분석</div></div>
+        </div>
+        <div class="comp-radar-pills" id="compRadarPills"></div>
+      </div>
+      <div class="comp-radar-canvas-wrap"><canvas id="compRadarCanvas" width="280" height="280" style="width:280px;height:280px"></canvas></div>
+      <div class="comp-radar-scores" id="compRadarScores"></div>
+    </div>
+  </div>
+
+  <!-- B. 매출 규모 비교 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📊</span> 매출 규모 비교</div>
+    <div id="compRevenueBars"></div>
+  </div>
+
+  <!-- C. 핵심 지표 비교 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📈</span> 핵심 지표 비교</div>
+    <div class="comp-metric-grid" id="compMetricGrid"></div>
+  </div>
+
+  <!-- D. 경쟁사 비교 테이블 -->
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📋</span> 경쟁사 비교 테이블</div>
+    <div class="m-table-scroll">
+      <table class="m-table" id="mCompTable"></table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ NEWS TAB ═══════════ -->
+<div class="m-panel" id="panel-news">
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">📰</span> 최신 뉴스</div>
+    <div id="mNewsList"></div>
+  </div>
+</div>
+
+<!-- ═══════════ COMMUNITY TAB ═══════════ -->
+<div class="m-panel" id="panel-community">
+  <div class="m-section">
+    <div class="m-section-title"><span class="icon">💬</span> 커뮤니티</div>
+    <div id="mPostList"></div>
+  </div>
+</div>
+
+<!-- Community FAB (only visible on community tab) -->
+<button class="m-fab hidden" id="communityFab" onclick="showToast('글쓰기 기능은 준비 중입니다')">✏️</button>
+
+<!-- ═══ STICKY BOTTOM CTA ═══ -->
+<div class="m-bottom-cta">
+  <button class="m-bottom-cta-btn primary" onclick="openListSheet()">리스트에 추가</button>
+  <button class="m-bottom-cta-btn secondary" onclick="showToast('공유 링크가 복사되었습니다')">공유</button>
+</div>
+
+<!-- ═══ LIST SELECTION BOTTOM SHEET ═══ -->
+<div class="m-sheet-overlay" id="listSheetOverlay" onclick="closeListSheet()">
+  <div class="m-sheet" onclick="event.stopPropagation()">
+    <div class="m-sheet-handle"></div>
+    <div class="m-sheet-title">리스트에 추가</div>
+    <div class="m-sheet-body">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer">
+          <input type="checkbox" style="accent-color:var(--brand);width:18px;height:18px">
+          <div style="flex:1"><div style="font-size:14px;font-weight:500">반도체 타겟 리스트</div><div style="font-size:12px;color:var(--text-sub)">10개 기업</div></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--brand)"></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer">
+          <input type="checkbox" style="accent-color:var(--brand);width:18px;height:18px">
+          <div style="flex:1"><div style="font-size:14px;font-weight:500">AI 반도체 리스트</div><div style="font-size:12px;color:var(--text-sub)">5개 기업</div></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--emerald-600)"></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer">
+          <input type="checkbox" style="accent-color:var(--brand);width:18px;height:18px">
+          <div style="flex:1"><div style="font-size:14px;font-weight:500">주시 기업</div><div style="font-size:12px;color:var(--text-sub)">3개 기업</div></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--amber-500)"></div>
+        </label>
+      </div>
+      <button onclick="closeListSheet();showToast('리스트에 추가되었습니다')" style="width:100%;margin-top:16px;padding:12px;border-radius:var(--radius);background:var(--brand);color:#fff;border:none;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer">추가</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════ -->
+<script>
+// ══ UTILITY ══
+function hiDPI(canvas, W, H) {
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return ctx;
+}
+
+// ══ TAB SWITCHING ══
+var activeTabId = 'overview';
+function switchTab(tabId, el) {
+  document.querySelectorAll('.m-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.m-panel').forEach(function(p){ p.classList.remove('active'); });
+  if (!el) {
+    var tabs = document.querySelectorAll('.m-tab');
+    var ids = ['overview','finance','people','similar','competitors','news','community'];
+    var idx = ids.indexOf(tabId);
+    if (idx >= 0 && tabs[idx]) el = tabs[idx];
+  }
+  if (el) el.classList.add('active');
+  var panel = document.getElementById('panel-' + tabId);
+  if (panel) panel.classList.add('active');
+  activeTabId = tabId;
+
+  // Scroll tab into view
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+
+  // Scroll to top of tabs
+  var tabsWrap = document.querySelector('.m-tabs-wrap');
+  window.scrollTo({top: tabsWrap.offsetTop - 48, behavior:'smooth'});
+
+  // Init charts on tab switch
+  if (tabId === 'finance') {
+    setTimeout(function(){
+      drawMRevenueEarnings(); drawMFinancialBars(); drawMStabilityChart(); drawMCashFlowChart();
+    }, 100);
+  }
+  if (tabId === 'people') {
+    setTimeout(function(){ drawDonut('mDonutPeople','mDonutPeopleLegend',160); drawMEmployeePeople(); }, 100);
+  }
+
+  if (tabId === 'competitors') {
+    setTimeout(function(){ renderCompetitorTab(); }, 100);
+  }
+
+  // Community FAB
+  document.getElementById('communityFab').classList.toggle('hidden', tabId !== 'community');
+}
+
+// ══ TOAST ══
+function showToast(msg) {
+  var t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--slate-800);color:#fff;padding:10px 24px;border-radius:var(--radius-lg);font-size:13px;z-index:999;box-shadow:0 8px 24px rgba(17,24,39,.2);animation:fadeIn .2s;white-space:nowrap';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 2000);
+}
+
+// ══ ACCORDION ══
+function toggleAccordion(trigger) {
+  trigger.classList.toggle('open');
+  var body = trigger.nextElementSibling;
+  body.classList.toggle('show');
+}
+
+// ══ COLLAPSE ══
+function toggleCollapse(trigger) {
+  var content = trigger.nextElementSibling;
+  content.classList.toggle('show');
+  trigger.textContent = content.classList.contains('show') ? '▼ 접기' : '▶ ' + (trigger.textContent.includes('손익') ? '손익계산서 보기' : '재무상태표 보기');
+}
+
+// ══ TIME PILL ══
+function setTimePill(btn) {
+  btn.parentElement.querySelectorAll('.m-time-pill').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+// ══ LIST SHEET ══
+function openListSheet() {
+  document.getElementById('listSheetOverlay').classList.add('show');
+}
+function closeListSheet() {
+  document.getElementById('listSheetOverlay').classList.remove('show');
+}
+
+// ══ DATA ══
+var SHAREHOLDERS = [
+  {label:'김현우',pct:42,color:'#0549CC'},
+  {label:'미래에셋벤처투자',pct:25,color:'#3A7ADF'},
+  {label:'박진영',pct:15,color:'#6D9DE7'},
+  {label:'기타 주주',pct:10,color:'#9BBBEE'},
+  {label:'자사주',pct:8,color:'#C8D9F5'}
+];
+
+var EXECS = [
+  {name:'김현우',role:'대표이사',dept:'경영',since:'2011',color:'var(--brand)'},
+  {name:'박진영',role:'CTO',dept:'R&D',since:'2012',color:'var(--emerald-600)'},
+  {name:'이수연',role:'CFO',dept:'재무',since:'2018',color:'var(--amber-600)'},
+  {name:'정한수',role:'COO',dept:'운영',since:'2019',color:'var(--purple-500)'}
+];
+
+var SIMILAR = [
+  {name:'세미텍인스트루먼트',desc:'반도체 테스트 솔루션',revenue:287,profit:22,profitG:6.8,color:'#059669',chips:['동일 업종','유사 규모']},
+  {name:'프로브앤텍',desc:'프로브카드·소켓 제조',revenue:198,profit:15,profitG:8.7,color:'#D97706',chips:['동일 업종','같은 지역']},
+  {name:'케이반도체장비',desc:'반도체 후공정 장비',revenue:456,profit:38,profitG:3.2,color:'#0549CC',chips:['동일 업종','유사 매출']},
+  {name:'테크윈시스템즈',desc:'전자부품 검사장비',revenue:312,profit:26,profitG:5.4,color:'#8B5CF6',chips:['유사 규모','같은 지역']},
+  {name:'나노프리시전',desc:'웨이퍼 정밀측정장비',revenue:234,profit:19,profitG:11.2,color:'#DC2626',chips:['동일 업종','유사 규모']},
+  {name:'에이엠테크놀로지',desc:'반도체 패키징 장비',revenue:380,profit:32,profitG:4.1,color:'#0549CC',chips:['동일 업종','유사 매출']},
+  {name:'한일정밀기기',desc:'정밀 검사·측정장비',revenue:165,profit:12,profitG:7.3,color:'#14B8A6',chips:['동일 업종','유사 규모']},
+  {name:'디에스이',desc:'반도체 디스플레이 검사',revenue:290,profit:24,profitG:6.1,color:'#EA580C',chips:['동일 업종','같은 지역']}
+];
+
+var NEWS = [
+  {title:'에이치비테크놀로지, AI 검사장비 HB-Vision 2.0 출시',summary:'딥러닝 기반 불량 검출율 기존 대비 30% 향상... 반도체 후공정 시장 점유율 확대 기대',source:'전자신문',time:'2시간 전',emoji:'🔬'},
+  {title:'반도체 장비 국산화율 70% 돌파... 에이치비테크 등 선도',summary:'정부 반도체 소부장 육성 정책과 맞물려 국내 장비 업체 실적 호조세',source:'매일경제',time:'5시간 전',emoji:'📈'},
+  {title:'에이치비테크, Series B 투자 200억원 유치',summary:'미래에셋벤처투자 주도, 기업가치 1,200억원 평가... 해외 진출 가속화',source:'한국경제',time:'1일 전',emoji:'💰'},
+  {title:'삼성전자, 반도체 검사장비 국산화 확대... 에이치비테크 수혜',summary:'삼성전자 파운드리 사업부, 국내 장비 업체 납품 비율 30%→45% 목표',source:'조선비즈',time:'2일 전',emoji:'🏭'},
+  {title:'에이치비테크놀로지, 일본 세미콘 재팬 참가',summary:'웨이퍼 프로버 신제품 전시... 일본 고객사 미팅 10건 이상',source:'디일렉',time:'3일 전',emoji:'🌏'}
+];
+
+var POSTS = [
+  {username:'김영호',avatar:'김',avatarColor:'var(--brand)',badge:'주주',title:'에이치비테크 장비 실사용 후기',body:'에이치비테크 장비 실제로 써봤는데 퀄리티가 상당합니다. 일본 경쟁사 대비 가성비가 훨씬 좋고 A/S도 빠릅니다.',likes:24,comments:8,time:'3시간 전'},
+  {username:'박지현',avatar:'박',avatarColor:'var(--emerald-600)',badge:'',title:'HB-Vision 데모 인상적이었습니다',body:'AI 검사 솔루션 HB-Vision 데모를 봤는데 인상적이었어요. 정확도가 기존 룰 베이스 대비 확실히 높더라고요.',likes:12,comments:3,time:'6시간 전'},
+  {username:'이준서',avatar:'이',avatarColor:'var(--amber-500)',badge:'주주',title:'Series B 이후 성장세 분석',body:'Series B 받고 나서 성장세가 더 가팔라진 것 같습니다. 반도체 장비 국산화 트렌드에 잘 올라탄 기업이라고 생각해요.',likes:18,comments:5,time:'1일 전'},
+  {username:'최서윤',avatar:'최',avatarColor:'var(--purple-500)',badge:'',title:'반도체 후공정 장비 시장 전망',body:'에이치비테크를 포함해 국내 반도체 후공정 장비 업체들의 전망이 밝아 보입니다. AI 반도체 수요 증가로 테스트/검사 장비 수요 증가.',likes:9,comments:4,time:'2일 전'}
+];
+
+var WATERFALL_DATA = {
+  '2024':[{label:'상품매출',value:142,type:'pos'},{label:'제품매출',value:118,type:'pos'},{label:'용역매출',value:52,type:'pos'},{label:'수출매출',value:22,type:'pos'},{label:'기타',value:8,type:'pos'},{label:'총 매출',value:342,type:'total'}],
+  '2023':[{label:'상품매출',value:128,type:'pos'},{label:'제품매출',value:112,type:'pos'},{label:'용역매출',value:46,type:'pos'},{label:'수출매출',value:18,type:'pos'},{label:'기타',value:6,type:'pos'},{label:'총 매출',value:310,type:'total'}],
+  '2022':[{label:'상품매출',value:118,type:'pos'},{label:'제품매출',value:105,type:'pos'},{label:'용역매출',value:42,type:'pos'},{label:'수출매출',value:15,type:'pos'},{label:'기타',value:15,type:'pos'},{label:'총 매출',value:295,type:'total'}]
+};
+
+var valuationData = {
+  OPM:{label:'영업이익률',unit:'%',years:['2023','2024','2025'],vals:[7.1,7.6,8.2],maxScale:15,trend:'up',insight:'영업이익률이 3년 연속 상승 추세이며, 최근 결산년 <strong>8.2%</strong>를 기록했습니다'},
+  NPM:{label:'순이익률',unit:'%',years:['2023','2024','2025'],vals:[4.8,5.5,5.8],maxScale:10,trend:'up',insight:'순이익률이 안정적으로 개선 중이며, 최근 <strong>5.8%</strong>를 기록했습니다'},
+  DEBT:{label:'부채비율',unit:'%',years:['2023','2024','2025'],vals:[72,68,65],maxScale:100,trend:'down',insight:'부채비율이 꾸준히 감소하여 재무 안정성이 <strong>개선</strong>되고 있습니다'},
+  ROE:{label:'ROE',unit:'%',years:['2023','2024','2025'],vals:[8.5,10.2,11.1],maxScale:20,trend:'up',insight:'자기자본이익률(ROE)이 <strong>11.1%</strong>로 높은 수익성을 보여줍니다'}
+};
+
+// ══ CHART: Revenue + Profit Bar ══
+function drawMRevenueChart() {
+  var canvas = document.getElementById('mRevenueChart');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 340, H = 220;
+  var ctx = hiDPI(canvas, W, H);
+  var years = ['2021','2022','2023','2024','2025'];
+  var revenue = [280,295,310,328,342];
+  var profit = [18,20,22,25,28];
+  var maxR = 400, padL = 45, padR = 10, baseY = H - 30, topY = 20;
+  var chartH = baseY - topY;
+  var groupW = (W - padL - padR) / years.length;
+  var barW = Math.min(24, groupW * 0.35);
+
+  // Grid
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var i = 0; i <= 4; i++) {
+    var y = baseY - (i / 4) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+    ctx.fillStyle = '#9AA3B4'; ctx.font = '10px Pretendard Variable'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxR * i / 4) + '억', padL - 4, y + 3);
+  }
+
+  years.forEach(function(yr, i) {
+    var x = padL + i * groupW + (groupW - barW * 2 - 4) / 2;
+    var rH = (revenue[i] / maxR) * chartH;
+    ctx.fillStyle = '#0549CC';
+    ctx.beginPath(); ctx.roundRect(x, baseY - rH, barW, rH, 3); ctx.fill();
+    ctx.fillStyle = '#0549CC'; ctx.font = 'bold 10px Pretendard Variable'; ctx.textAlign = 'center';
+    ctx.fillText(revenue[i], x + barW / 2, baseY - rH - 5);
+
+    var pX = x + barW + 4;
+    var pH = (profit[i] / maxR) * chartH;
+    ctx.fillStyle = '#F59E0B';
+    ctx.beginPath(); ctx.roundRect(pX, baseY - pH, barW, pH, 3); ctx.fill();
+    ctx.fillStyle = '#D97706'; ctx.font = 'bold 10px Pretendard Variable';
+    ctx.fillText(profit[i], pX + barW / 2, baseY - pH - 5);
+
+    ctx.fillStyle = '#6B7689'; ctx.font = '10px Pretendard Variable';
+    ctx.fillText(yr, x + barW + 2, baseY + 14);
+  });
+
+  // Legend
+  ctx.fillStyle = '#0549CC'; ctx.fillRect(padL, 4, 10, 10);
+  ctx.fillStyle = '#374151'; ctx.font = '10px Pretendard Variable'; ctx.textAlign = 'left';
+  ctx.fillText('매출액', padL + 14, 12);
+  ctx.fillStyle = '#F59E0B'; ctx.fillRect(padL + 60, 4, 10, 10);
+  ctx.fillStyle = '#374151'; ctx.fillText('영업이익', padL + 74, 12);
+}
+
+// ══ CHART: Waterfall ══
+function drawMWaterfall(year, btn) {
+  year = year || '2024';
+  if (btn) {
+    btn.parentElement.querySelectorAll('.m-toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  var canvas = document.getElementById('mWaterfallChart');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 340, H = 220;
+  var ctx = hiDPI(canvas, W, H);
+  var segments = WATERFALL_DATA[year] || WATERFALL_DATA['2024'];
+  var totalVal = segments[segments.length - 1].value;
+  var max = Math.ceil(totalVal * 1.15 / 50) * 50;
+  var padL = 40, padR = 10, baseY = H - 36, topY = 16;
+  var chartH = baseY - topY;
+  var groupW = (W - padL - padR) / segments.length;
+  var barW = Math.min(32, groupW * 0.65);
+  var running = 0;
+  var colors = ['#0549CC','#3A7ADF','#6D9DE7','#9BBBEE','#C8D9F5'];
+
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var i = 0; i <= 4; i++) {
+    var y = baseY - (i / 4) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+    ctx.fillStyle = '#9AA3B4'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(max * i / 4) + '억', padL - 4, y + 3);
+  }
+
+  segments.forEach(function(s, i) {
+    var x = padL + i * groupW + (groupW - barW) / 2;
+    if (s.type === 'total') {
+      var h = (s.value / max) * chartH;
+      ctx.fillStyle = '#033293';
+      ctx.beginPath(); ctx.roundRect(x, baseY - h, barW, h, 3); ctx.fill();
+      ctx.fillStyle = '#0549CC'; ctx.font = 'bold 10px Pretendard Variable'; ctx.textAlign = 'center';
+      ctx.fillText(s.value + '억', x + barW / 2, baseY - h - 5);
+    } else {
+      var h2 = (s.value / max) * chartH;
+      var y2 = baseY - (running / max) * chartH - h2;
+      ctx.fillStyle = colors[i] || '#0549CC';
+      ctx.beginPath(); ctx.roundRect(x, y2, barW, h2, 3); ctx.fill();
+      ctx.fillStyle = '#374151'; ctx.font = 'bold 9px Pretendard Variable'; ctx.textAlign = 'center';
+      ctx.fillText(s.value + '억', x + barW / 2, y2 - 4);
+      running += s.value;
+    }
+    ctx.fillStyle = '#6B7689'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'center';
+    ctx.fillText(s.label, x + barW / 2, baseY + 12);
+  });
+}
+
+// ══ CHART: Donut ══
+function drawDonut(canvasId, legendId, size) {
+  size = size || 120;
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  var ctx = hiDPI(canvas, size, size);
+  var cx = size / 2, cy = size / 2, r = size * 0.42, inner = size * 0.27;
+  var angle = -Math.PI / 2;
+  SHAREHOLDERS.forEach(function(d) {
+    var sweep = (d.pct / 100) * Math.PI * 2;
+    ctx.beginPath(); ctx.arc(cx, cy, r, angle, angle + sweep);
+    ctx.arc(cx, cy, inner, angle + sweep, angle, true);
+    ctx.closePath(); ctx.fillStyle = d.color; ctx.fill();
+    angle += sweep;
+  });
+  ctx.fillStyle = '#111827'; ctx.font = 'bold 14px Pretendard Variable'; ctx.textAlign = 'center';
+  ctx.fillText('주주', cx, cy - 1);
+  ctx.fillStyle = '#9AA3B4'; ctx.font = '9px Pretendard Variable';
+  ctx.fillText('구성', cx, cy + 11);
+
+  var legend = document.getElementById(legendId);
+  if (legend) {
+    legend.innerHTML = SHAREHOLDERS.map(function(d) {
+      return '<div class="m-donut-item"><div class="m-donut-dot" style="background:' + d.color + '"></div><div class="m-donut-name">' + d.label + '</div><div class="m-donut-pct">' + d.pct + '%</div></div>';
+    }).join('');
+  }
+}
+
+// ══ CHART: Employee area ══
+function drawMEmployeeChart() {
+  drawAreaChart('mEmployeeChart', ['2021','2022','2023','2024','2025'], [120,138,155,172,187], 220, '명');
+}
+function drawMEmployeePeople() {
+  drawAreaChart('mEmployeePeople', ['2021','2022','2023','2024','2025'], [108,128,145,165,186], 220, '명');
+}
+
+function drawAreaChart(canvasId, years, vals, max, unit) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 340, H = 180;
+  var ctx = hiDPI(canvas, W, H);
+  var padL = 40, padR = 10, padT = 16, padB = 24;
+  var chartW = W - padL - padR, chartH = H - padT - padB;
+
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var i = 0; i <= 4; i++) {
+    var y = padT + (i / 4) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+    ctx.fillStyle = '#9AA3B4'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(max - (max * i / 4)) + unit, padL - 4, y + 3);
+  }
+
+  var pts = vals.map(function(v, i) { return {x: padL + (i / (vals.length - 1)) * chartW, y: padT + ((max - v) / max) * chartH}; });
+
+  // Area fill
+  ctx.beginPath(); ctx.moveTo(pts[0].x, padT + chartH);
+  pts.forEach(function(p) { ctx.lineTo(p.x, p.y); });
+  ctx.lineTo(pts[pts.length - 1].x, padT + chartH); ctx.closePath();
+  var grad = ctx.createLinearGradient(0, padT, 0, padT + chartH);
+  grad.addColorStop(0, 'rgba(5,73,204,.15)'); grad.addColorStop(1, 'rgba(5,73,204,.02)');
+  ctx.fillStyle = grad; ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  pts.forEach(function(p, i) { i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); });
+  ctx.strokeStyle = '#0549CC'; ctx.lineWidth = 2; ctx.stroke();
+
+  // Points + labels
+  pts.forEach(function(p, i) {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff'; ctx.fill(); ctx.strokeStyle = '#0549CC'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = '#374151'; ctx.font = 'bold 10px Pretendard Variable'; ctx.textAlign = 'center';
+    ctx.fillText(vals[i] + unit, p.x, p.y - 8);
+    ctx.fillStyle = '#6B7689'; ctx.font = '9px Pretendard Variable';
+    ctx.fillText(years[i], p.x, padT + chartH + 14);
+  });
+}
+
+// ══ CHART: Revenue vs Earnings ══
+function drawMRevenueEarnings(mode, btn) {
+  if (btn) {
+    document.querySelectorAll('#mRevToggle .m-toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  mode = mode || 'net';
+  var canvas = document.getElementById('mRevenueEarningsChart');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 340, H = 220;
+  var ctx = hiDPI(canvas, W, H);
+  var years = ['2022','2023','2024','2025'];
+  var revenue = [295,310,328,342];
+  var earnings = mode === 'net' ? [14,15,18,20] : [20,22,25,28];
+  var maxV = 400, padL = 40, padR = 10, padT = 16, padB = 30;
+  var chartW = W - padL - padR, chartH = H - padT - padB;
+  var groupW = chartW / years.length;
+  var barW = Math.min(20, groupW * 0.3);
+
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var g = 0; g <= 4; g++) {
+    var gv = maxV * g / 4;
+    var gy = padT + chartH * (1 - gv / maxV);
+    ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(W - padR, gy); ctx.stroke();
+    ctx.fillStyle = '#9AA3B4'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'right';
+    ctx.fillText(gv + '억', padL - 4, gy + 3);
+  }
+
+  var baseY = padT + chartH;
+  for (var i = 0; i < years.length; i++) {
+    var cx2 = padL + groupW * i + groupW / 2;
+    var rH = (revenue[i] / maxV) * chartH;
+    ctx.fillStyle = '#0549CC';
+    ctx.beginPath(); ctx.roundRect(cx2 - barW - 2, baseY - rH, barW, rH, [3,3,0,0]); ctx.fill();
+    ctx.fillStyle = '#0549CC'; ctx.font = 'bold 9px Pretendard Variable'; ctx.textAlign = 'center';
+    ctx.fillText(revenue[i], cx2 - barW / 2 - 2, baseY - rH - 4);
+
+    var eH = (earnings[i] / maxV) * chartH;
+    ctx.fillStyle = '#F59E0B';
+    ctx.beginPath(); ctx.roundRect(cx2 + 2, baseY - eH, barW, eH, [3,3,0,0]); ctx.fill();
+    ctx.fillStyle = '#D97706'; ctx.font = 'bold 9px Pretendard Variable';
+    ctx.fillText(earnings[i], cx2 + barW / 2 + 2, baseY - eH - 4);
+
+    ctx.fillStyle = '#6B7689'; ctx.font = '10px Pretendard Variable';
+    ctx.fillText(years[i], cx2, H - 8);
+  }
+}
+
+// ══ CHART: Financial Bars (Stacked) ══
+function drawMFinancialBars() {
+  var canvas = document.getElementById('mFinancialBars');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 340, H = 200;
+  var ctx = hiDPI(canvas, W, H);
+  var years = ['2021','2022','2023','2024','2025'];
+  var revenue = [280,295,310,328,342];
+  var opProfit = [18,20,22,25,28];
+  var netProfit = [12,14,15,18,20];
+  var maxV = 400, padL = 45, padR = 10, baseY = H - 28, topY = 16;
+  var chartH = baseY - topY;
+  var gap = Math.floor((W - padL - padR) / years.length);
+  var barW = Math.min(28, gap * 0.55);
+
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var i = 0; i <= 4; i++) {
+    var y = baseY - (i / 4) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+    ctx.fillStyle = '#9AA3B4'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxV * i / 4) + '억', padL - 4, y + 3);
+  }
+
+  years.forEach(function(yr, i) {
+    var x = padL + i * gap + Math.floor((gap - barW) / 2);
+    var rH = (revenue[i] / maxV) * chartH;
+    ctx.fillStyle = '#10B981'; ctx.beginPath(); ctx.roundRect(x, baseY - rH, barW, rH, [0,0,3,3]); ctx.fill();
+    var oH = (opProfit[i] / maxV) * chartH;
+    ctx.fillStyle = '#0549CC'; ctx.beginPath(); ctx.roundRect(x, baseY - rH, barW, oH, [3,3,0,0]); ctx.fill();
+    var nH = (netProfit[i] / maxV) * chartH;
+    ctx.fillStyle = '#8B5CF6'; ctx.beginPath(); ctx.roundRect(x, baseY - rH, barW, nH, [3,3,0,0]); ctx.fill();
+
+    ctx.fillStyle = '#6B7689'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'center';
+    ctx.fillText(yr, x + barW / 2, baseY + 12);
+    ctx.fillStyle = '#374151'; ctx.font = 'bold 9px Pretendard Variable';
+    ctx.fillText(revenue[i], x + barW / 2, baseY - rH - 5);
+  });
+
+  // Legend
+  var lx = padL;
+  [['#10B981','매출'],['#0549CC','영업이익'],['#8B5CF6','순이익']].forEach(function(l, i) {
+    ctx.fillStyle = l[0]; ctx.fillRect(lx + i * 56, 4, 8, 8);
+    ctx.fillStyle = '#374151'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'left';
+    ctx.fillText(l[1], lx + i * 56 + 10, 11);
+  });
+}
+
+// ══ CHART: Stability ══
+function drawMStabilityChart() {
+  var canvas = document.getElementById('mStabilityChart');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 340, H = 180;
+  var ctx = hiDPI(canvas, W, H);
+  var years = ['2021','2022','2023','2024','2025'];
+  var debtRatio = [85,78,72,68,65];
+  var maxV = 100, padL = 40, padR = 10, baseY = H - 28, topY = 16;
+  var chartH = baseY - topY;
+  var stepX = (W - padL - padR) / (years.length - 1);
+
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var i = 0; i <= 4; i++) {
+    var y = baseY - (i / 4) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+    ctx.fillStyle = '#9AA3B4'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxV * i / 4) + '%', padL - 4, y + 3);
+  }
+
+  ctx.beginPath(); ctx.strokeStyle = '#0549CC'; ctx.lineWidth = 2;
+  debtRatio.forEach(function(v, i) {
+    var x = padL + i * stepX, y = baseY - (v / maxV) * chartH;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  debtRatio.forEach(function(v, i) {
+    var x = padL + i * stepX, y = baseY - (v / maxV) * chartH;
+    ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff'; ctx.fill(); ctx.strokeStyle = '#0549CC'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = '#0549CC'; ctx.font = 'bold 10px Pretendard Variable'; ctx.textAlign = 'center';
+    ctx.fillText(v + '%', x, y - 10);
+    ctx.fillStyle = '#6B7689'; ctx.font = '9px Pretendard Variable';
+    ctx.fillText(years[i], x, baseY + 12);
+  });
+}
+
+// ══ CHART: Cash Flow ══
+function drawMCashFlowChart() {
+  var canvas = document.getElementById('mCashFlowChart');
+  if (!canvas) return;
+  var W = canvas.parentElement.offsetWidth || 340, H = 180;
+  var ctx = hiDPI(canvas, W, H);
+  var years = ['2021','2022','2023','2024','2025'];
+  var operating = [2100,2400,2800,3200,3600];
+  var investing = [-1200,-1500,-1800,-2000,-2200];
+  var financing = [500,-200,-300,-400,-500];
+  var maxV = 4000, padL = 40, padR = 10, baseY = H - 28, topY = 16;
+  var chartH = baseY - topY;
+  var stepX = (W - padL - padR) / (years.length - 1);
+
+  ctx.strokeStyle = '#E0E4EB'; ctx.lineWidth = 0.5;
+  for (var i = 0; i <= 4; i++) {
+    var y = baseY - (i / 4) * chartH;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+  }
+
+  // Operating
+  ctx.beginPath(); ctx.strokeStyle = '#10B981'; ctx.lineWidth = 2;
+  operating.forEach(function(v, i) {
+    var x = padL + i * stepX, y = baseY - (v / maxV) * chartH;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }); ctx.stroke();
+
+  // Year labels
+  years.forEach(function(yr, i) {
+    ctx.fillStyle = '#6B7689'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'center';
+    ctx.fillText(yr, padL + i * stepX, baseY + 12);
+  });
+
+  // Legend
+  [['#10B981','영업'],['#DC2626','투자'],['#F59E0B','재무']].forEach(function(l, i) {
+    ctx.fillStyle = l[0]; ctx.fillRect(padL + i * 50, 4, 8, 3);
+    ctx.fillStyle = '#374151'; ctx.font = '9px Pretendard Variable'; ctx.textAlign = 'left';
+    ctx.fillText(l[1], padL + i * 50 + 10, 9);
+  });
+}
+
+// ══ VALUATION SWITCHER ══
+function switchValuation(metric, btn) {
+  document.querySelectorAll('#mValToggle .m-toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  var d = valuationData[metric];
+  var latest = d.vals[d.vals.length - 1];
+  var prev = d.vals[d.vals.length - 2];
+  var diff = (latest - prev).toFixed(1);
+  var isGood = (d.trend === 'up' && latest > prev) || (d.trend === 'down' && latest < prev);
+  var arrow = latest > prev ? '▲' : '▼';
+
+  document.getElementById('mValLabel').textContent = d.label + ' (' + d.years[d.years.length - 1] + ')';
+  document.getElementById('mValValue').textContent = latest + d.unit;
+  var diffEl = document.getElementById('mValDiff');
+  diffEl.className = 'm-metric-sub ' + (isGood ? 'm-metric-up' : 'm-metric-down');
+  diffEl.textContent = arrow + ' ' + (latest > prev ? '+' : '') + diff + '%p';
+
+  for (var i = 0; i < d.vals.length; i++) {
+    var pct = Math.round((d.vals[d.vals.length - 1 - i] / d.maxScale) * 100);
+    var bar = document.getElementById('mValBars').querySelectorAll('.m-hbar-fill')[i];
+    var val = document.getElementById('mValBar' + (i + 1));
+    if (bar) bar.style.width = pct + '%';
+    if (val) val.textContent = d.vals[d.vals.length - 1 - i] + d.unit;
+  }
+  document.getElementById('mValInsight').innerHTML = '💡 ' + d.insight;
+}
+
+// ══ RENDER: Exec cards ══
+function renderExecs() {
+  var el = document.getElementById('mExecCards');
+  el.innerHTML = EXECS.map(function(e) {
+    return '<div class="m-card"><div class="m-card-row">' +
+      '<div class="m-card-avatar" style="background:' + e.color + '">' + e.name.charAt(0) + '</div>' +
+      '<div class="m-card-info"><div class="m-card-name">' + e.name + '</div><div class="m-card-sub">' + e.role + ' · ' + e.dept + ' · ' + e.since + '~</div></div>' +
+    '</div></div>';
+  }).join('');
+}
+
+// ══ RENDER: News ══
+function renderNews(containerId, count) {
+  var el = document.getElementById(containerId);
+  el.innerHTML = NEWS.slice(0, count || NEWS.length).map(function(n) {
+    return '<div class="m-news-card">' +
+      '<div class="m-news-thumb">' + n.emoji + '</div>' +
+      '<div class="m-news-body">' +
+        '<div class="m-news-title">' + n.title + '</div>' +
+        '<div class="m-news-summary">' + n.summary + '</div>' +
+        '<div class="m-news-meta">' + n.source + ' · ' + n.time + '</div>' +
+      '</div></div>';
+  }).join('');
+}
+
+// ══ RENDER: Similar companies ══
+function renderSimPreview() {
+  var el = document.getElementById('mSimPreview');
+  el.innerHTML = SIMILAR.slice(0, 5).map(function(s) {
+    return '<div class="m-sim-card">' +
+      '<div class="m-sim-logo" style="background:' + s.color + '">' + s.name.substring(0, 2) + '</div>' +
+      '<div class="m-sim-name">' + s.name + '</div>' +
+      '<div class="m-sim-desc">' + s.desc + '</div>' +
+      '<div class="m-sim-metrics"><div><div class="m-sim-metric-label">매출</div><div class="m-sim-metric-val">' + s.revenue + '억</div></div><div><div class="m-sim-metric-label">이익</div><div class="m-sim-metric-val">' + s.profit + '억</div></div></div>' +
+      '<div class="m-sim-chips">' + s.chips.map(function(c) { return '<span class="m-sim-chip">' + c + '</span>'; }).join('') + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderSimilarFull() {
+  var el = document.getElementById('mSimilarList');
+  el.innerHTML = SIMILAR.map(function(s) {
+    return '<div class="m-card" style="margin-bottom:8px"><div class="m-card-row">' +
+      '<div class="m-card-avatar" style="background:' + s.color + ';border-radius:var(--radius-sm)">' + s.name.substring(0, 2) + '</div>' +
+      '<div class="m-card-info"><div class="m-card-name">' + s.name + '</div><div class="m-card-sub">' + s.desc + '</div></div>' +
+      '<div class="m-card-right"><div style="font-size:13px;font-weight:600">' + s.revenue + '억</div><div style="font-size:11px" class="text-up">+' + s.profitG + '%</div></div>' +
+    '</div>' +
+    '<div class="m-sim-chips" style="margin-top:6px">' + s.chips.map(function(c) { return '<span class="m-sim-chip">' + c + '</span>'; }).join('') + '</div>' +
+    '</div>';
+  }).join('');
+
+  // Revenue comparison bars
+  var barsEl = document.getElementById('mSimilarBars');
+  var maxRev = Math.max.apply(null, SIMILAR.map(function(s) { return s.revenue; }));
+  barsEl.innerHTML = '<div class="m-hbar" style="border-bottom:2px solid var(--brand)"><div class="m-hbar-label" style="font-weight:600;color:var(--brand)">에이치비테크</div><div class="m-hbar-track"><div class="m-hbar-fill" style="width:' + Math.round(342 / maxRev * 100) + '%;background:var(--brand)"></div></div><div class="m-hbar-value" style="color:var(--brand)">342억</div></div>' +
+    SIMILAR.slice(0, 5).map(function(s) {
+      return '<div class="m-hbar"><div class="m-hbar-label">' + s.name.substring(0, 6) + '</div><div class="m-hbar-track"><div class="m-hbar-fill" style="width:' + Math.round(s.revenue / maxRev * 100) + '%;background:var(--slate-400)"></div></div><div class="m-hbar-value">' + s.revenue + '억</div></div>';
+    }).join('');
+}
+
+// ══ RENDER: Community posts ══
+function renderPosts() {
+  var el = document.getElementById('mPostList');
+  el.innerHTML = POSTS.map(function(p) {
+    var badgeHtml = p.badge ? '<span class="m-post-badge">' + p.badge + '</span>' : '';
+    return '<div class="m-post">' +
+      '<div class="m-post-header">' +
+        '<div class="m-post-avatar" style="background:' + p.avatarColor + '">' + p.avatar + '</div>' +
+        '<span class="m-post-author">' + p.username + '</span>' + badgeHtml +
+        '<span class="m-post-time">' + p.time + '</span>' +
+      '</div>' +
+      '<div class="m-post-title">' + p.title + '</div>' +
+      '<div class="m-post-body">' + p.body + '</div>' +
+      '<div class="m-post-footer"><span>❤️ ' + p.likes + '</span><span>💬 ' + p.comments + '</span></div>' +
+    '</div>';
+  }).join('');
+}
+
+// ══ RENDER: Competitor Tab ══
+var COMPETITORS = [
+  {name:'에이치비테크놀로지',revenue:342,profit:28,profitR:8.2,emp:187,growth:4.3,debt:65,year:2011,color:'#6395ff',isTarget:true},
+  {name:'세미텍인스트루먼트',revenue:287,profit:22,profitR:7.7,emp:145,growth:5.2,debt:72,year:2008,color:'#34d399'},
+  {name:'프로브앤텍',revenue:198,profit:15,profitR:7.6,emp:92,growth:12.4,debt:85,year:2015,color:'#fbbf24'},
+  {name:'케이반도체장비',revenue:456,profit:38,profitR:8.3,emp:310,growth:3.2,debt:58,year:2003,color:'#f87171'},
+  {name:'테크윈시스템즈',revenue:312,profit:26,profitR:8.3,emp:178,growth:5.4,debt:68,year:2006,color:'#a78bfa'}
+];
+
+var compTabRendered = false;
+function renderCompetitorTab() {
+  if (compTabRendered) return;
+  compTabRendered = true;
+
+  // A. Radar pills (dark theme)
+  var pillData = COMPETITORS.slice(0,3);
+  document.getElementById('compRadarPills').innerHTML = pillData.map(function(c){
+    var bg=c.color+'1F',bdr=c.color+'40',clr=c.color;
+    return '<div class="comp-radar-pill" style="background:'+bg+';border-color:'+bdr+';color:'+clr+'"><span style="width:7px;height:7px;border-radius:50%;background:'+c.color+';display:block"></span>'+c.name.substring(0,8)+'</div>';
+  }).join('');
+
+  // A. Radar chart (dark bg)
+  drawCompRadar();
+
+  // A. Score cards (dark, desktop-matching)
+  var labels=['매출액','영업이익률','직원수','업력','특허수','매출성장률'];
+  var icons=['💰','📊','👥','🗓','💡','📈'];
+  var scoreColors=['#6395ff','#34d399','#6395ff','#fbbf24','#f472b6','#34d399'];
+  var target=COMPETITORS[0];
+  var avg=COMPETITORS.slice(1);
+  var targetVals=['342억','8.2%','187명','14년','5건','+4.3%'];
+  var avgVals=['287억','7.7%','145명','17년','3건','+2.1%'];
+  var barPcts=[68,55,53,47,60,72];
+  document.getElementById('compRadarScores').innerHTML = labels.map(function(l,i){
+    return '<div class="comp-score-item">' +
+      '<div class="comp-score-icon">'+icons[i]+'</div>' +
+      '<div class="comp-score-info">' +
+        '<div class="comp-score-label">'+l+'</div>' +
+        '<div class="comp-score-row"><span class="comp-score-val" style="color:'+scoreColors[i]+'">'+targetVals[i]+'</span><span class="comp-score-avg">vs 경쟁사 평균 '+avgVals[i]+'</span></div>' +
+        '<div class="comp-score-bar"><div class="comp-score-fill" style="width:0%;background:'+scoreColors[i]+'" data-target="'+barPcts[i]+'"></div></div>' +
+      '</div></div>';
+  }).join('');
+  // Animate score bars
+  setTimeout(function(){
+    document.querySelectorAll('.comp-score-fill[data-target]').forEach(function(el){
+      el.style.width = el.getAttribute('data-target')+'%';
+    });
+  }, 200);
+
+  // B. Revenue comparison bars
+  var maxRev=Math.max.apply(null,COMPETITORS.map(function(c){return c.revenue}));
+  var sorted=COMPETITORS.slice().sort(function(a,b){return b.revenue-a.revenue});
+  document.getElementById('compRevenueBars').innerHTML = sorted.map(function(c){
+    var isTgt=c.isTarget;
+    return '<div class="m-hbar"'+(isTgt?' style="border-bottom:2px solid var(--brand)"':'')+'><div class="m-hbar-label" style="'+(isTgt?'font-weight:600;color:var(--brand)':'')+'">'+c.name.substring(0,7)+'</div><div class="m-hbar-track"><div class="m-hbar-fill" style="width:'+Math.round(c.revenue/maxRev*100)+'%;background:'+(isTgt?'var(--brand)':'var(--slate-400)')+'"></div></div><div class="m-hbar-value"'+(isTgt?' style="color:var(--brand)"':'')+'>'+c.revenue+'억</div></div>';
+  }).join('');
+
+  // C. Metric cards
+  var mMetrics=[
+    {label:'매출액',val:target.revenue+'억',avg:avgVals[0]+'억',rank:getRank(COMPETITORS,'revenue',target,false)},
+    {label:'영업이익',val:target.profit+'억',avg:avgVals[1]+'억',rank:getRank(COMPETITORS,'profit',target,false)},
+    {label:'영업이익률',val:target.profitR+'%',avg:avgVals[2]+'%',rank:getRank(COMPETITORS,'profitR',target,false)},
+    {label:'직원수',val:target.emp+'명',avg:avgVals[3]+'명',rank:getRank(COMPETITORS,'emp',target,false)},
+    {label:'매출성장률',val:'+'+target.growth+'%',avg:'+'+avgVals[4]+'%',rank:getRank(COMPETITORS,'growth',target,false)},
+    {label:'업력',val:(2026-target.year)+'년',avg:avgVals[5]+'년',rank:getRank(COMPETITORS,'year',target,true)}
+  ];
+  document.getElementById('compMetricGrid').innerHTML = mMetrics.map(function(m){
+    var rankCls=m.rank===1?'top':(m.rank>=COMPETITORS.length?'bottom':'mid');
+    return '<div class="comp-metric-card"><div class="comp-mc-label">'+m.label+'</div><div class="comp-mc-value">'+m.val+'</div><div class="comp-mc-avg">산업 평균 <strong>'+m.avg+'</strong></div><div class="comp-mc-rank '+rankCls+'">'+m.rank+'위/'+COMPETITORS.length+'개</div></div>';
+  }).join('');
+
+  // D. Comparison table
+  var tMetrics=[
+    {label:'매출액',key:'revenue',fmt:function(v){return v+'억'}},
+    {label:'영업이익',key:'profit',fmt:function(v){return v+'억'}},
+    {label:'영업이익률',key:'profitR',fmt:function(v){return v+'%'}},
+    {label:'순이익(추정)',key:'profit',fmt:function(v){return Math.round(v*0.7)+'억'}},
+    {label:'직원수',key:'emp',fmt:function(v){return v+'명'}},
+    {label:'매출 성장률',key:'growth',fmt:function(v){return (v>0?'+':'')+v+'%'}},
+    {label:'부채비율',key:'debt',fmt:function(v){return v+'%'},lower:true},
+    {label:'설립연도',key:'year',fmt:function(v){return v}}
+  ];
+  var header='<thead><tr><th></th>'+COMPETITORS.map(function(c){return '<th style="text-align:right;'+(c.isTarget?'background:var(--blue-50);color:var(--brand);font-weight:700':'')+'">'+c.name.substring(0,5)+'</th>'}).join('')+'</tr></thead>';
+  var tbody='<tbody>'+tMetrics.map(function(m){
+    var vals=COMPETITORS.map(function(c){return c[m.key]});
+    var best=m.lower?Math.min.apply(null,vals):Math.max.apply(null,vals);
+    var worst=m.lower?Math.max.apply(null,vals):Math.min.apply(null,vals);
+    return '<tr><td style="font-weight:600;color:var(--text-sub)">'+m.label+'</td>'+COMPETITORS.map(function(c,i){
+      var val=vals[i],display=m.fmt(val);
+      var cls=c.isTarget?'target':'';
+      if(val===best&&vals.filter(function(v){return v===best}).length===1)cls+=' best';
+      if(val===worst&&vals.filter(function(v){return v===worst}).length===1)cls+=' worst';
+      return '<td style="text-align:right" class="'+cls.trim()+'">'+display+'</td>';
+    }).join('')+'</tr>';
+  }).join('')+'</tbody>';
+  document.getElementById('mCompTable').innerHTML=header+tbody;
+}
+
+function getRank(arr,key,target,lowerBetter){
+  var sorted=arr.slice().sort(function(a,b){return lowerBetter?a[key]-b[key]:b[key]-a[key]});
+  for(var i=0;i<sorted.length;i++){if(sorted[i].name===target.name)return i+1}return arr.length;
+}
+
+function drawCompRadar(){
+  var canvas=document.getElementById('compRadarCanvas');
+  var SIZE=280,dpr=window.devicePixelRatio||1;
+  canvas.width=SIZE*dpr;canvas.height=SIZE*dpr;
+  canvas.style.width=SIZE+'px';canvas.style.height=SIZE+'px';
+  var ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  var cx=SIZE/2,cy=SIZE/2,R=90;
+  var labels=['매출액','영업이익률','직원수','업력','특허수','매출성장률'];
+  var N=labels.length;
+  // Values per company (normalized 0-100)
+  var compData=[
+    [68,55,53,47,60,72], // 에이치비테크
+    [57,52,41,60,40,35], // 세미텍
+    [40,51,26,37,30,83]  // 프로브앤텍
+  ];
+  var actualLabels=[
+    ['342억','8.2%','187명','14년','5건','+4.3%'],
+    ['287억','7.7%','145명','17년','3건','+5.2%'],
+    ['198억','7.6%','92명','10년','2건','+12.4%']
+  ];
+
+  // Grid rings (dark theme)
+  for(var ring=5;ring>=1;ring--){
+    var r=(ring/5)*R;ctx.beginPath();
+    for(var j=0;j<=N;j++){var a=(j/N)*Math.PI*2-Math.PI/2;var x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;j===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+    ctx.closePath();
+    if(ring===5){ctx.fillStyle='rgba(255,255,255,.03)';ctx.fill()}
+    ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=0.8;ctx.stroke();
+  }
+
+  // Axes + labels with value
+  var targetData=compData[0];
+  labels.forEach(function(l,i){
+    var a=(i/N)*Math.PI*2-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);
+    ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=0.5;ctx.stroke();
+    var lx=cx+Math.cos(a)*(R+24),ly=cy+Math.sin(a)*(R+24);
+    ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='10px Pretendard Variable';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(l,lx,ly);
+    // Value label (bold)
+    ctx.fillStyle='#fff';ctx.font='bold 11px Pretendard Variable';
+    ctx.fillText(actualLabels[0][i],lx,ly+13);
+  });
+
+  // Data polygons (first 3)
+  var colors=['#6395ff','#34d399','#fbbf24'];
+  compData.forEach(function(data,ci){
+    if(ci>=3)return;
+    var color=colors[ci];
+    ctx.beginPath();
+    data.forEach(function(v,i){var a=(i/N)*Math.PI*2-Math.PI/2;var r2=(v/100)*R;var x=cx+Math.cos(a)*r2,y=cy+Math.sin(a)*r2;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+    ctx.closePath();
+    var grd=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
+    grd.addColorStop(0,color+'35');grd.addColorStop(1,color+'10');
+    ctx.fillStyle=grd;ctx.fill();
+    ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();
+    data.forEach(function(v,i){var a=(i/N)*Math.PI*2-Math.PI/2;var r2=(v/100)*R;ctx.beginPath();ctx.arc(cx+Math.cos(a)*r2,cy+Math.sin(a)*r2,3,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='rgba(10,15,30,.8)';ctx.lineWidth=1.5;ctx.stroke()});
+  });
+}
+
+// ══ INIT ══
+drawMRevenueChart();
+drawMWaterfall();
+drawDonut('mDonutChart', 'mDonutLegend', 120);
+drawMEmployeeChart();
+renderExecs();
+renderNews('mNewsPreview', 3);
+renderNews('mNewsList', NEWS.length);
+renderSimPreview();
+renderSimilarFull();
+renderPosts();
+
+// Handle hash navigation
+var hash = location.hash.replace('#', '');
+if (hash && document.getElementById('panel-' + hash)) {
+  switchTab(hash);
+}
+</script>
+</body>
+</html>
