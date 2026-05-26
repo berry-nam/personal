@@ -21,13 +21,13 @@ function confClass(conf: number | null, styles: typeof s) {
   return styles.confBad;
 }
 
-function ItemDecisionBadge({ decision, styles }: { decision: Decision | undefined; styles: typeof s }) {
+function ItemStatus({ decision }: { decision: Decision | undefined }) {
   if (!decision) return null;
   if (decision.action === "approved")
-    return <span className={styles.decisionApproved}>✓ 승인</span>;
+    return <span className={s.decisionApproved}>✓ 승인</span>;
   if (decision.action === "overridden")
-    return <span className={styles.decisionOverride}>✎ {decision.canonical_id.replace(/^(ifrs-full_|dart_)/, "")}</span>;
-  return <span className={styles.decisionSkipped}>— 건너뜀</span>;
+    return <span className={s.decisionOverride}>✎ {decision.canonical_id.replace(/^(ifrs-full_|dart_)/, "")}</span>;
+  return <span className={s.decisionSkipped}>건너뜀</span>;
 }
 
 export default function ClusterCard({ cluster, decisions, onDecisions, isActive }: Props) {
@@ -50,6 +50,16 @@ export default function ClusterCard({ cluster, decisions, onDecisions, isActive 
       };
     }
     onDecisions(updates);
+  }
+
+  function approveItem(it: ReviewItem) {
+    onDecisions({
+      [itemKey(it.norm, it.sj)]: {
+        action: "approved",
+        canonical_id: cluster.canonical_id,
+        original_canonical: cluster.canonical_id,
+      },
+    });
   }
 
   function skipAll() {
@@ -90,15 +100,13 @@ export default function ClusterCard({ cluster, decisions, onDecisions, isActive 
     setOverrideItem(null);
   }
 
-  const cardCls = [
-    s.card,
-    isActive ? s.cardActive : "",
-    allDecided ? s.cardDone : "",
-  ].filter(Boolean).join(" ");
+  const cardCls = [s.card, isActive ? s.cardActive : "", allDecided ? s.cardDone : ""]
+    .filter(Boolean).join(" ");
 
   return (
     <>
       <div className={cardCls}>
+        {/* Header */}
         <div className={s.cardHeader}>
           <div className={s.headerRow}>
             <div className={s.headerLeft}>
@@ -113,9 +121,9 @@ export default function ClusterCard({ cluster, decisions, onDecisions, isActive 
               <p className={s.canonicalId}>{cluster.canonical_id}</p>
               <p className={s.canonicalLabel}>{getCanonicalLabel(cluster.canonical_id)}</p>
             </div>
-            <div className={s.headerRight}>
+            <div className={s.headerMeta}>
               <div className={s.companyCount}>{cluster.total_cw.toLocaleString()}</div>
-              <div className={s.companyLabel}>기업수</div>
+              <div className={s.companyLabel}>기업</div>
             </div>
           </div>
 
@@ -132,42 +140,66 @@ export default function ClusterCard({ cluster, decisions, onDecisions, isActive 
           )}
         </div>
 
+        {/* Actions */}
         <div className={s.actions}>
-          <button onClick={approveAll} className={s.btnApprove}>✓ 모두 승인</button>
-          <button onClick={() => setOverrideAll(true)} className={s.btnOverride}>✎ 수정</button>
-          <button onClick={skipAll} className={s.btnSkip}>건너뛰기</button>
-          <button onClick={() => setExpanded((e) => !e)} className={s.btnExpand}>
-            {expanded ? "▲" : "▼"} ({total})
+          <button
+            onClick={() => setExpanded((e) => !e)}
+            className={s.btnExpand}
+          >
+            {expanded ? "▲" : "▼"} {total}개 항목
           </button>
+          <div className={s.actionsSec}>
+            <button onClick={skipAll} className={s.btnSkip}>건너뛰기</button>
+            <button onClick={() => setOverrideAll(true)} className={s.btnOverride}>✎ 수정</button>
+            <button onClick={approveAll} className={s.btnApprove}>✓ 모두 승인</button>
+          </div>
         </div>
 
+        {/* Expanded item list */}
         {expanded && (
           <div className={s.itemList}>
+            <div className={s.itemListHeader}>
+              <span className={s.colSj}>구분</span>
+              <span className={s.colName}>계정명</span>
+              <span className={s.colN}>기업수</span>
+              <span className={s.colConf}>유사도</span>
+              <span className={s.colDecision}>결정</span>
+              <span className={s.colActions} />
+            </div>
             {cluster.items.map((it) => {
               const dec = decisions[itemKey(it.norm, it.sj)];
               return (
                 <div key={`${it.norm}||${it.sj}`} className={s.itemRow}>
-                  <SjBadge sj={it.sj} />
-                  <div className={s.itemInfo}>
+                  <span className={s.colSj}><SjBadge sj={it.sj} /></span>
+                  <div className={s.colName}>
                     <span className={s.itemName}>{it.norm}</span>
                     {it.top3.length > 1 && (
-                      <div className={s.itemAlt}>
-                        alt: {it.top3.slice(1).map((c) => c.replace(/^(ifrs-full_|dart_)/, "")).join(" · ")}
-                      </div>
+                      <span className={s.itemAlt}>
+                        {it.top3.slice(1).map((c) => c.replace(/^(ifrs-full_|dart_)/, "")).join(" · ")}
+                      </span>
                     )}
                   </div>
-                  <span className={s.itemCount}>{it.n.toLocaleString()}</span>
-                  <span className={`${s.itemConf} ${confClass(it.conf, s)}`}>
-                    {it.conf ? it.conf.toFixed(2) : "—"}
+                  <span className={`${s.colN} ${s.mono}`}>{it.n.toLocaleString()}</span>
+                  <span className={`${s.colConf} ${s.mono} ${confClass(it.conf, s)}`}>
+                    {it.conf !== null ? it.conf.toFixed(2) : "—"}
                   </span>
-                  <ItemDecisionBadge decision={dec} styles={s} />
-                  <button
-                    onClick={() => setOverrideItem(it)}
-                    className={s.btnItemOverride}
-                    title="이 항목만 수정"
-                  >
-                    ✎
-                  </button>
+                  <span className={s.colDecision}>
+                    <ItemStatus decision={dec} />
+                  </span>
+                  <span className={s.colActions}>
+                    {!dec && (
+                      <button
+                        onClick={() => approveItem(it)}
+                        className={s.btnItemApprove}
+                        title="승인"
+                      >✓</button>
+                    )}
+                    <button
+                      onClick={() => setOverrideItem(it)}
+                      className={s.btnItemOverride}
+                      title="수정"
+                    >✎</button>
+                  </span>
                 </div>
               );
             })}

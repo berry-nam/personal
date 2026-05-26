@@ -159,13 +159,18 @@ export default function ReviewPage() {
               <div className={s.progressStatNum}>
                 {clustersDone}<span>/{data.stats.clusters}</span>
               </div>
-              <div className={s.progressStatLabel}>클러스터</div>
+              <div className={s.progressStatLabel}>클러스터 완료</div>
             </div>
-            <div className={s.progressBar}>
-              <div
-                className={s.progressFill}
-                style={{ width: `${totalItems > 0 ? (decidedItems / totalItems) * 100 : 0}%` }}
-              />
+            <div className={s.progressBlock}>
+              <div className={s.progressBar}>
+                <div
+                  className={s.progressFill}
+                  style={{ width: `${totalItems > 0 ? (decidedItems / totalItems) * 100 : 0}%` }}
+                />
+              </div>
+              <span className={s.progressPct}>
+                {totalItems > 0 ? Math.round((decidedItems / totalItems) * 100) : 0}%
+              </span>
             </div>
             <div className={s.progressStat}>
               <div className={s.progressStatNum}>{approvedItems.toLocaleString()}</div>
@@ -185,9 +190,9 @@ export default function ReviewPage() {
         </div>
 
         <div className={s.kbdHints}>
-          <span><kbd>A</kbd> 승인</span>
-          <span><kbd>S</kbd> 건너뛰기</span>
-          <span><kbd>↑↓</kbd> 이동</span>
+          <span className={s.kbdHint}><kbd>A</kbd> 모두 승인</span>
+          <span className={s.kbdHint}><kbd>S</kbd> 건너뛰기</span>
+          <span className={s.kbdHint}><kbd>↑</kbd><kbd>↓</kbd> 이동</span>
         </div>
       </header>
 
@@ -231,20 +236,20 @@ export default function ReviewPage() {
             <div className={s.statsRow}><span>클러스터</span><span className={s.statsVal}>{data.stats.clusters}</span></div>
             <div className={s.statsRow}><span>flagged</span><span className={s.statsVal}>{data.stats.flagged.toLocaleString()}</span></div>
             <div className={s.statsRow}><span>미해결</span><span className={s.statsVal}>{data.stats.needs_review.toLocaleString()}</span></div>
-            <div className={s.statsRow}><span>총 기업수</span><span className={s.statsVal}>{data.stats.total_cw.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>기업×계정 합산</span><span className={s.statsVal}>{data.stats.total_cw.toLocaleString()}</span></div>
           </div>
         </aside>
 
         <main className={s.main}>
           <div className={s.tabs}>
-            <button onClick={() => setTab("clusters")} className={tab === "clusters" ? s.tabActive : s.tab}>
-              클러스터 ({filteredClusters.length})
+            <button onClick={() => setTab("clusters")} className={tab === "clusters" ? `${s.tab} ${s.tabActive}` : s.tab}>
+              클러스터 <span className={s.tabBadge}>{filteredClusters.length}</span>
             </button>
-            <button onClick={() => setTab("unresolved")} className={tab === "unresolved" ? s.tabActive : s.tab}>
-              미해결 항목 ({data.unresolved.length})
+            <button onClick={() => setTab("unresolved")} className={tab === "unresolved" ? `${s.tab} ${s.tabActive}` : s.tab}>
+              미해결 항목 <span className={s.tabBadge}>{data.unresolved.length}</span>
             </button>
-            <button onClick={() => setTab("seeds")} className={tab === "seeds" ? s.tabActive : s.tab}>
-              Seed 사전 ({seedsData?.count ?? "…"})
+            <button onClick={() => setTab("seeds")} className={tab === "seeds" ? `${s.tab} ${s.tabActive}` : s.tab}>
+              Seed 사전 <span className={s.tabBadge}>{seedsData?.count ?? "…"}</span>
             </button>
           </div>
 

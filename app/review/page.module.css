@@ -19,8 +19,6 @@
 }
 
 .headerInner {
-  max-width: 960px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: var(--cd-space-gap-lg);
@@ -58,9 +56,15 @@
 
 .progressStatLabel { font-size: var(--cd-font-size-sm); color: rgba(255,255,255,0.45); margin-top: 2px; }
 
+.progressBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
 .progressBar {
   width: 96px;
-  height: 5px;
+  height: 6px;
   background: rgba(255,255,255,0.2);
   border-radius: var(--cd-radius-full);
   overflow: hidden;
@@ -70,6 +74,12 @@
   background: var(--cd-bg-success-normal);
   border-radius: var(--cd-radius-full);
   transition: width var(--cd-duration-slow) var(--cd-easing-default);
+}
+.progressPct {
+  font-size: var(--cd-font-size-sm);
+  font-weight: var(--cd-font-weight-bold);
+  color: rgba(255,255,255,0.7);
+  font-variant-numeric: tabular-nums;
 }
 
 .headerActions { display: flex; align-items: center; gap: var(--cd-space-gap-md); }
@@ -107,25 +117,35 @@
 .btnHelp:hover { color: var(--cd-text-default-onColor); background: rgba(255,255,255,0.12); }
 
 .kbdHints {
-  max-width: 960px;
-  margin: var(--cd-space-stack-sm) auto 0;
   display: flex;
-  gap: var(--cd-space-gap-base);
+  gap: var(--cd-space-gap-md);
+  padding-top: var(--cd-space-stack-sm);
+}
+.kbdHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px 3px 6px;
+  background: rgba(255,255,255,0.12);
+  border-radius: var(--cd-radius-full);
   font-size: var(--cd-font-size-sm);
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.8);
+  border: 1px solid rgba(255,255,255,0.18);
 }
 .kbdHints kbd {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.25);
   border-radius: var(--cd-radius-sm);
-  padding: 1px 5px;
+  padding: 1px 6px;
   font-size: var(--cd-font-size-xs);
   font-family: ui-monospace, Menlo, monospace;
+  font-weight: var(--cd-font-weight-bold);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-bottom-width: 2px;
 }
 
 /* ── Layout ──────────────────────────────────────────── */
 .layout {
-  max-width: 960px;
-  margin: 0 auto;
   padding: var(--cd-space-inset-lg);
   display: flex;
   gap: var(--cd-space-gap-lg);
@@ -229,6 +249,25 @@
   color: var(--cd-text-brand-normal);
   font-weight: var(--cd-font-weight-bold);
   border-bottom-color: var(--cd-bg-brand-strong);
+}
+
+.tabBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--cd-bg-default-weak);
+  border-radius: var(--cd-radius-full);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--cd-font-weight-regular);
+  color: var(--cd-text-default-weak);
+}
+.tabActive .tabBadge {
+  background: var(--cd-bg-brand-weaker);
+  color: var(--cd-text-brand-normal);
 }
 
 /* ── Cluster list ────────────────────────────────────── */
