@@ -39,3 +39,15 @@ export interface Decision {
 
 // key: `${norm}||${sj}`
 export type DecisionMap = Record<string, Decision>;
+
+export interface SeedEntry {
+  norm: string;
+  canonical_id: string;
+  sj: "BS" | "IS" | "CFS" | "CIS";
+}
+
+export interface SeedsData {
+  generated_at: string;
+  count: number;
+  seeds: SeedEntry[];
+}

@@ -1,0 +1,2671 @@
+{
+  "generated_at": "2026-05-26",
+  "count": 533,
+  "seeds": [
+    {
+      "norm": "자산총계",
+      "canonical_id": "ifrs-full_Assets",
+      "sj": "BS"
+    },
+    {
+      "norm": "부채총계",
+      "canonical_id": "ifrs-full_Liabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "자본총계",
+      "canonical_id": "ifrs-full_Equity",
+      "sj": "BS"
+    },
+    {
+      "norm": "유동자산",
+      "canonical_id": "ifrs-full_CurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "현금및현금성자산",
+      "canonical_id": "ifrs-full_CashAndCashEquivalents",
+      "sj": "BS"
+    },
+    {
+      "norm": "단기금융상품",
+      "canonical_id": "ifrs-full_ShorttermInvestments",
+      "sj": "BS"
+    },
+    {
+      "norm": "장기금융상품",
+      "canonical_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "매출채권",
+      "canonical_id": "ifrs-full_TradeAndOtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "외상매출금",
+      "canonical_id": "ifrs-full_TradeAndOtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "받을어음",
+      "canonical_id": "ifrs-full_TradeAndOtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "미수금",
+      "canonical_id": "ifrs-full_OtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "미수수익",
+      "canonical_id": "ifrs-full_OtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "선급금",
+      "canonical_id": "ifrs-full_CurrentPrepayments",
+      "sj": "BS"
+    },
+    {
+      "norm": "선급비용",
+      "canonical_id": "ifrs-full_CurrentPrepayments",
+      "sj": "BS"
+    },
+    {
+      "norm": "재고자산",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "상품",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "제품",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "원재료",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "재공품",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "당좌자산",
+      "canonical_id": "ifrs-full_CurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "비유동자산",
+      "canonical_id": "ifrs-full_NoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "유형자산",
+      "canonical_id": "ifrs-full_PropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "토지",
+      "canonical_id": "ifrs-full_Land",
+      "sj": "BS"
+    },
+    {
+      "norm": "건물",
+      "canonical_id": "ifrs-full_Buildings",
+      "sj": "BS"
+    },
+    {
+      "norm": "구축물",
+      "canonical_id": "ifrs-full_OtherPropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "기계장치",
+      "canonical_id": "ifrs-full_Machinery",
+      "sj": "BS"
+    },
+    {
+      "norm": "차량운반구",
+      "canonical_id": "ifrs-full_MotorVehicles",
+      "sj": "BS"
+    },
+    {
+      "norm": "비품",
+      "canonical_id": "ifrs-full_FixturesAndFittings",
+      "sj": "BS"
+    },
+    {
+      "norm": "집기비품",
+      "canonical_id": "ifrs-full_FixturesAndFittings",
+      "sj": "BS"
+    },
+    {
+      "norm": "공구와기구",
+      "canonical_id": "ifrs-full_FixturesAndFittings",
+      "sj": "BS"
+    },
+    {
+      "norm": "공기구비품",
+      "canonical_id": "ifrs-full_FixturesAndFittings",
+      "sj": "BS"
+    },
+    {
+      "norm": "시설장치",
+      "canonical_id": "ifrs-full_OtherPropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "건설중인자산",
+      "canonical_id": "ifrs-full_ConstructionInProgress",
+      "sj": "BS"
+    },
+    {
+      "norm": "감가상각누계액",
+      "canonical_id": "dart_AccumulatedDepreciation",
+      "sj": "BS"
+    },
+    {
+      "norm": "무형자산",
+      "canonical_id": "ifrs-full_IntangibleAssetsAndGoodwill",
+      "sj": "BS"
+    },
+    {
+      "norm": "소프트웨어",
+      "canonical_id": "ifrs-full_ComputerSoftware",
+      "sj": "BS"
+    },
+    {
+      "norm": "개발비",
+      "canonical_id": "ifrs-full_DevelopmentAndRelatedExpenditure",
+      "sj": "BS"
+    },
+    {
+      "norm": "산업재산권",
+      "canonical_id": "ifrs-full_OtherIntangibleAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "영업권",
+      "canonical_id": "ifrs-full_Goodwill",
+      "sj": "BS"
+    },
+    {
+      "norm": "투자부동산",
+      "canonical_id": "ifrs-full_InvestmentProperty",
+      "sj": "BS"
+    },
+    {
+      "norm": "관계기업투자",
+      "canonical_id": "ifrs-full_InvestmentsAccountedForUsingEquityMethod",
+      "sj": "BS"
+    },
+    {
+      "norm": "관계기업투자주식",
+      "canonical_id": "ifrs-full_InvestmentsAccountedForUsingEquityMethod",
+      "sj": "BS"
+    },
+    {
+      "norm": "장기투자증권",
+      "canonical_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "매도가능증권",
+      "canonical_id": "ifrs-full_FinancialAssetsAtFairValueThroughOtherComprehensiveIncome",
+      "sj": "BS"
+    },
+    {
+      "norm": "당기손익공정가치측정금융자산",
+      "canonical_id": "ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLoss",
+      "sj": "BS"
+    },
+    {
+      "norm": "파생상품자산",
+      "canonical_id": "ifrs-full_DerivativeFinancialAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "순확정급여자산",
+      "canonical_id": "ifrs-full_NetDefinedBenefitAssetLiability",
+      "sj": "BS"
+    },
+    {
+      "norm": "투자자산",
+      "canonical_id": "ifrs-full_NoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "보증금",
+      "canonical_id": "ifrs-full_OtherNoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "이연법인세자산",
+      "canonical_id": "ifrs-full_DeferredTaxAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "대손충당금",
+      "canonical_id": "dart_AllowanceForDoubtfulAccounts",
+      "sj": "BS"
+    },
+    {
+      "norm": "저장품",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "반제품",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "미착품",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "부재료",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "정부보조금",
+      "canonical_id": "ifrs-full_GovernmentGrants",
+      "sj": "BS"
+    },
+    {
+      "norm": "국고보조금",
+      "canonical_id": "ifrs-full_GovernmentGrants",
+      "sj": "BS"
+    },
+    {
+      "norm": "종합통장대출",
+      "canonical_id": "ifrs-full_CurrentBorrowings",
+      "sj": "BS"
+    },
+    {
+      "norm": "일반자금대출",
+      "canonical_id": "ifrs-full_CurrentBorrowings",
+      "sj": "BS"
+    },
+    {
+      "norm": "예적금담보대출",
+      "canonical_id": "ifrs-full_CurrentBorrowings",
+      "sj": "BS"
+    },
+    {
+      "norm": "금융기관예치금",
+      "canonical_id": "ifrs-full_ShorttermInvestments",
+      "sj": "BS"
+    },
+    {
+      "norm": "회원권",
+      "canonical_id": "ifrs-full_OtherIntangibleAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "전신전화가입권",
+      "canonical_id": "ifrs-full_OtherIntangibleAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "금형",
+      "canonical_id": "ifrs-full_Machinery",
+      "sj": "BS"
+    },
+    {
+      "norm": "용지",
+      "canonical_id": "ifrs-full_Land",
+      "sj": "BS"
+    },
+    {
+      "norm": "출자금",
+      "canonical_id": "ifrs-full_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+      "sj": "BS"
+    },
+    {
+      "norm": "부가가치세예수금",
+      "canonical_id": "ifrs-full_OtherCurrentLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "부가세예수금",
+      "canonical_id": "ifrs-full_OtherCurrentLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "전환권대가",
+      "canonical_id": "ifrs-full_OtherEquityInterest",
+      "sj": "BS"
+    },
+    {
+      "norm": "감자차손",
+      "canonical_id": "ifrs-full_OtherEquityInterest",
+      "sj": "BS"
+    },
+    {
+      "norm": "유동부채",
+      "canonical_id": "ifrs-full_CurrentLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "매입채무",
+      "canonical_id": "ifrs-full_TradeAndOtherCurrentPayables",
+      "sj": "BS"
+    },
+    {
+      "norm": "외상매입금",
+      "canonical_id": "ifrs-full_TradeAndOtherCurrentPayables",
+      "sj": "BS"
+    },
+    {
+      "norm": "지급어음",
+      "canonical_id": "ifrs-full_TradeAndOtherCurrentPayables",
+      "sj": "BS"
+    },
+    {
+      "norm": "미지급금",
+      "canonical_id": "ifrs-full_OtherCurrentPayables",
+      "sj": "BS"
+    },
+    {
+      "norm": "미지급비용",
+      "canonical_id": "ifrs-full_OtherCurrentPayables",
+      "sj": "BS"
+    },
+    {
+      "norm": "미지급법인세",
+      "canonical_id": "ifrs-full_CurrentTaxLiabilitiesCurrent",
+      "sj": "BS"
+    },
+    {
+      "norm": "당기법인세부채",
+      "canonical_id": "ifrs-full_CurrentTaxLiabilitiesCurrent",
+      "sj": "BS"
+    },
+    {
+      "norm": "선수금",
+      "canonical_id": "ifrs-full_CurrentAdvancesFromCustomers",
+      "sj": "BS"
+    },
+    {
+      "norm": "선수수익",
+      "canonical_id": "ifrs-full_CurrentAdvancesFromCustomers",
+      "sj": "BS"
+    },
+    {
+      "norm": "단기차입금",
+      "canonical_id": "ifrs-full_CurrentBorrowings",
+      "sj": "BS"
+    },
+    {
+      "norm": "예수금",
+      "canonical_id": "dart_DepositsReceived",
+      "sj": "BS"
+    },
+    {
+      "norm": "비유동부채",
+      "canonical_id": "ifrs-full_NoncurrentLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "장기차입금",
+      "canonical_id": "ifrs-full_NoncurrentBorrowings",
+      "sj": "BS"
+    },
+    {
+      "norm": "사채",
+      "canonical_id": "ifrs-full_NoncurrentBorrowings",
+      "sj": "BS"
+    },
+    {
+      "norm": "퇴직급여충당부채",
+      "canonical_id": "ifrs-full_DefinedBenefitLiability",
+      "sj": "BS"
+    },
+    {
+      "norm": "확정급여채무",
+      "canonical_id": "ifrs-full_DefinedBenefitLiability",
+      "sj": "BS"
+    },
+    {
+      "norm": "이연법인세부채",
+      "canonical_id": "ifrs-full_DeferredTaxLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "충당부채",
+      "canonical_id": "ifrs-full_NoncurrentProvisions",
+      "sj": "BS"
+    },
+    {
+      "norm": "파생상품부채",
+      "canonical_id": "ifrs-full_DerivativeFinancialLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "자본금",
+      "canonical_id": "ifrs-full_IssuedCapital",
+      "sj": "BS"
+    },
+    {
+      "norm": "보통주자본금",
+      "canonical_id": "ifrs-full_IssuedCapital",
+      "sj": "BS"
+    },
+    {
+      "norm": "주식발행초과금",
+      "canonical_id": "ifrs-full_SharePremium",
+      "sj": "BS"
+    },
+    {
+      "norm": "이익잉여금",
+      "canonical_id": "ifrs-full_RetainedEarnings",
+      "sj": "BS"
+    },
+    {
+      "norm": "결손금",
+      "canonical_id": "ifrs-full_RetainedEarnings",
+      "sj": "BS"
+    },
+    {
+      "norm": "기타포괄손익누계액",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncome",
+      "sj": "BS"
+    },
+    {
+      "norm": "자기주식",
+      "canonical_id": "ifrs-full_TreasuryShares",
+      "sj": "BS"
+    },
+    {
+      "norm": "기타자본잉여금",
+      "canonical_id": "ifrs-full_OtherEquityInterest",
+      "sj": "BS"
+    },
+    {
+      "norm": "기타자본",
+      "canonical_id": "ifrs-full_OtherEquityInterest",
+      "sj": "BS"
+    },
+    {
+      "norm": "감자차익",
+      "canonical_id": "ifrs-full_OtherEquityInterest",
+      "sj": "BS"
+    },
+    {
+      "norm": "법정적립금",
+      "canonical_id": "ifrs-full_OtherReserves",
+      "sj": "BS"
+    },
+    {
+      "norm": "임의적립금",
+      "canonical_id": "ifrs-full_OtherReserves",
+      "sj": "BS"
+    },
+    {
+      "norm": "재평가적립금",
+      "canonical_id": "ifrs-full_RevaluationSurplus",
+      "sj": "BS"
+    },
+    {
+      "norm": "기업합리화적립금",
+      "canonical_id": "ifrs-full_OtherReserves",
+      "sj": "BS"
+    },
+    {
+      "norm": "해외사업환산손익",
+      "canonical_id": "ifrs-full_ReserveOfExchangeDifferencesOnTranslation",
+      "sj": "BS"
+    },
+    {
+      "norm": "연결자본조정",
+      "canonical_id": "ifrs-full_OtherEquityInterest",
+      "sj": "BS"
+    },
+    {
+      "norm": "비지배지분",
+      "canonical_id": "ifrs-full_NoncontrollingInterests",
+      "sj": "BS"
+    },
+    {
+      "norm": "지배기업의 소유주에게 귀속되는 자본",
+      "canonical_id": "ifrs-full_EquityAttributableToOwnersOfParent",
+      "sj": "BS"
+    },
+    {
+      "norm": "지배기업지분",
+      "canonical_id": "ifrs-full_EquityAttributableToOwnersOfParent",
+      "sj": "BS"
+    },
+    {
+      "norm": "지배기업소유주지분",
+      "canonical_id": "ifrs-full_EquityAttributableToOwnersOfParent",
+      "sj": "BS"
+    },
+    {
+      "norm": "지배기업 소유주지분",
+      "canonical_id": "ifrs-full_EquityAttributableToOwnersOfParent",
+      "sj": "BS"
+    },
+    {
+      "norm": "지배기업의 소유지분",
+      "canonical_id": "ifrs-full_EquityAttributableToOwnersOfParent",
+      "sj": "BS"
+    },
+    {
+      "norm": "국민연금전환금",
+      "canonical_id": "ifrs-full_OtherNoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "주임종단기대여금",
+      "canonical_id": "ifrs-full_OtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "주주임원종업원단기대여금",
+      "canonical_id": "ifrs-full_OtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "주임종단기채무",
+      "canonical_id": "ifrs-full_OtherCurrentPayables",
+      "sj": "BS"
+    },
+    {
+      "norm": "금융리스채권",
+      "canonical_id": "ifrs-full_TradeAndOtherNoncurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "선박",
+      "canonical_id": "ifrs-full_OtherPropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "건설용장비",
+      "canonical_id": "ifrs-full_Machinery",
+      "sj": "BS"
+    },
+    {
+      "norm": "임차자산개량권",
+      "canonical_id": "ifrs-full_OtherPropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "완성주택",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "완성공사",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "가설재",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "BS"
+    },
+    {
+      "norm": "코스",
+      "canonical_id": "ifrs-full_OtherPropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "조경",
+      "canonical_id": "ifrs-full_OtherPropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "보통예금",
+      "canonical_id": "ifrs-full_CashAndCashEquivalents",
+      "sj": "BS"
+    },
+    {
+      "norm": "임차시설물",
+      "canonical_id": "ifrs-full_OtherPropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "장기매출채권 및 기타비유동채권, 총액",
+      "canonical_id": "ifrs-full_TradeAndOtherNoncurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "토지재평가차액",
+      "canonical_id": "ifrs-full_RevaluationSurplus",
+      "sj": "BS"
+    },
+    {
+      "norm": "전도금",
+      "canonical_id": "ifrs-full_CurrentPrepayments",
+      "sj": "BS"
+    },
+    {
+      "norm": "부도어음",
+      "canonical_id": "ifrs-full_OtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "공구기구비품",
+      "canonical_id": "ifrs-full_FixturesAndFittings",
+      "sj": "BS"
+    },
+    {
+      "norm": "공구와 기구",
+      "canonical_id": "ifrs-full_FixturesAndFittings",
+      "sj": "BS"
+    },
+    {
+      "norm": "수목",
+      "canonical_id": "ifrs-full_BiologicalAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "임목",
+      "canonical_id": "ifrs-full_BiologicalAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "디자인권",
+      "canonical_id": "ifrs-full_OtherIntangibleAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "미술품",
+      "canonical_id": "ifrs-full_OtherNoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "예수부채",
+      "canonical_id": "ifrs-full_OtherCurrentLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "주임종단기채권",
+      "canonical_id": "ifrs-full_OtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "주임종장기채권",
+      "canonical_id": "ifrs-full_OtherNoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "부도어음과수표",
+      "canonical_id": "ifrs-full_OtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "공사미수금",
+      "canonical_id": "ifrs-full_TradeAndOtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "공사선수금",
+      "canonical_id": "ifrs-full_CurrentAdvancesFromCustomers",
+      "sj": "BS"
+    },
+    {
+      "norm": "선급공사비",
+      "canonical_id": "ifrs-full_CurrentPrepayments",
+      "sj": "BS"
+    },
+    {
+      "norm": "단기대여금",
+      "canonical_id": "ifrs-full_OtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "장기대여금",
+      "canonical_id": "ifrs-full_OtherNoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "임차보증금",
+      "canonical_id": "ifrs-full_OtherNoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "전세권",
+      "canonical_id": "ifrs-full_OtherIntangibleAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "특허권",
+      "canonical_id": "ifrs-full_OtherIntangibleAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "상표권",
+      "canonical_id": "ifrs-full_OtherIntangibleAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "실용신안권",
+      "canonical_id": "ifrs-full_OtherIntangibleAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "입목",
+      "canonical_id": "ifrs-full_BiologicalAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "건물부속설비",
+      "canonical_id": "ifrs-full_OtherPropertyPlantAndEquipment",
+      "sj": "BS"
+    },
+    {
+      "norm": "분양미수금",
+      "canonical_id": "ifrs-full_TradeAndOtherCurrentReceivables",
+      "sj": "BS"
+    },
+    {
+      "norm": "재고자산평가충당금",
+      "canonical_id": "dart_AllowanceForDoubtfulAccounts",
+      "sj": "BS"
+    },
+    {
+      "norm": "기타비유동자산",
+      "canonical_id": "ifrs-full_OtherNoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "기타유동자산",
+      "canonical_id": "ifrs-full_OtherCurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "미처분이익잉여금",
+      "canonical_id": "ifrs-full_RetainedEarnings",
+      "sj": "BS"
+    },
+    {
+      "norm": "미처리결손금",
+      "canonical_id": "ifrs-full_RetainedEarnings",
+      "sj": "BS"
+    },
+    {
+      "norm": "부채및자본총계",
+      "canonical_id": "ifrs-full_EquityAndLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "부채와자본총계",
+      "canonical_id": "ifrs-full_EquityAndLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "당기법인세자산",
+      "canonical_id": "ifrs-full_CurrentTaxAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "자본잉여금",
+      "canonical_id": "ifrs-full_SharePremium",
+      "sj": "BS"
+    },
+    {
+      "norm": "이익준비금",
+      "canonical_id": "ifrs-full_StatutoryReserve",
+      "sj": "BS"
+    },
+    {
+      "norm": "자본조정",
+      "canonical_id": "ifrs-full_OtherEquityInterest",
+      "sj": "BS"
+    },
+    {
+      "norm": "유동성장기부채",
+      "canonical_id": "dart_CurrentPortionOfLongTermBorrowings",
+      "sj": "BS"
+    },
+    {
+      "norm": "퇴직연금운용자산",
+      "canonical_id": "dart_RetirementBenefitPlanAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "기타보증금",
+      "canonical_id": "ifrs-full_OtherNoncurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "임대보증금",
+      "canonical_id": "ifrs-full_OtherNoncurrentLiabilities",
+      "sj": "BS"
+    },
+    {
+      "norm": "부가세대급금",
+      "canonical_id": "ifrs-full_OtherCurrentAssets",
+      "sj": "BS"
+    },
+    {
+      "norm": "매출액",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "수익",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "수익(매출액)",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "영업수익",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "매출",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "매출원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "제조원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "매출총이익",
+      "canonical_id": "ifrs-full_GrossProfit",
+      "sj": "IS"
+    },
+    {
+      "norm": "매출총손실",
+      "canonical_id": "ifrs-full_GrossProfit",
+      "sj": "IS"
+    },
+    {
+      "norm": "판매비",
+      "canonical_id": "ifrs-full_DistributionCosts",
+      "sj": "IS"
+    },
+    {
+      "norm": "관리비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "일반관리비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "영업이익",
+      "canonical_id": "dart_OperatingIncomeLoss",
+      "sj": "IS"
+    },
+    {
+      "norm": "영업이익(손실)",
+      "canonical_id": "dart_OperatingIncomeLoss",
+      "sj": "IS"
+    },
+    {
+      "norm": "영업손익",
+      "canonical_id": "dart_OperatingIncomeLoss",
+      "sj": "IS"
+    },
+    {
+      "norm": "영업손실",
+      "canonical_id": "dart_OperatingIncomeLoss",
+      "sj": "IS"
+    },
+    {
+      "norm": "기타수익",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "기타비용",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "기타영업외수익",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "기타영업외비용",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "영업외수익",
+      "canonical_id": "dart_NonOperatingRevenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "영업외비용",
+      "canonical_id": "dart_NonOperatingExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "금융수익",
+      "canonical_id": "ifrs-full_FinanceIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "이자수익",
+      "canonical_id": "ifrs-full_InterestRevenueExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "배당금수익",
+      "canonical_id": "ifrs-full_DividendIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "금융비용",
+      "canonical_id": "ifrs-full_FinanceCosts",
+      "sj": "IS"
+    },
+    {
+      "norm": "이자비용",
+      "canonical_id": "ifrs-full_FinanceCosts",
+      "sj": "IS"
+    },
+    {
+      "norm": "지분법이익",
+      "canonical_id": "ifrs-full_ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+      "sj": "IS"
+    },
+    {
+      "norm": "지분법손실",
+      "canonical_id": "ifrs-full_ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+      "sj": "IS"
+    },
+    {
+      "norm": "법인세비용차감전순이익",
+      "canonical_id": "ifrs-full_ProfitLossBeforeTax",
+      "sj": "IS"
+    },
+    {
+      "norm": "법인세비용차감전순손실",
+      "canonical_id": "ifrs-full_ProfitLossBeforeTax",
+      "sj": "IS"
+    },
+    {
+      "norm": "세전이익",
+      "canonical_id": "ifrs-full_ProfitLossBeforeTax",
+      "sj": "IS"
+    },
+    {
+      "norm": "세전순이익",
+      "canonical_id": "ifrs-full_ProfitLossBeforeTax",
+      "sj": "IS"
+    },
+    {
+      "norm": "법인세비용",
+      "canonical_id": "ifrs-full_IncomeTaxExpenseContinuingOperations",
+      "sj": "IS"
+    },
+    {
+      "norm": "당기순이익",
+      "canonical_id": "ifrs-full_ProfitLoss",
+      "sj": "IS"
+    },
+    {
+      "norm": "당기순손실",
+      "canonical_id": "ifrs-full_ProfitLoss",
+      "sj": "IS"
+    },
+    {
+      "norm": "당기순이익(손실)",
+      "canonical_id": "ifrs-full_ProfitLoss",
+      "sj": "IS"
+    },
+    {
+      "norm": "당기순손익",
+      "canonical_id": "ifrs-full_ProfitLoss",
+      "sj": "IS"
+    },
+    {
+      "norm": "기타포괄손익",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "총포괄이익",
+      "canonical_id": "ifrs-full_ComprehensiveIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "총포괄손실",
+      "canonical_id": "ifrs-full_ComprehensiveIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "기본주당이익",
+      "canonical_id": "ifrs-full_BasicEarningsLossPerShare",
+      "sj": "IS"
+    },
+    {
+      "norm": "기본주당손익",
+      "canonical_id": "ifrs-full_BasicEarningsLossPerShare",
+      "sj": "IS"
+    },
+    {
+      "norm": "기본주당순이익",
+      "canonical_id": "ifrs-full_BasicEarningsLossPerShare",
+      "sj": "IS"
+    },
+    {
+      "norm": "기본주당손실",
+      "canonical_id": "ifrs-full_BasicEarningsLossPerShare",
+      "sj": "IS"
+    },
+    {
+      "norm": "희석주당이익",
+      "canonical_id": "ifrs-full_DilutedEarningsLossPerShare",
+      "sj": "IS"
+    },
+    {
+      "norm": "희석주당손익",
+      "canonical_id": "ifrs-full_DilutedEarningsLossPerShare",
+      "sj": "IS"
+    },
+    {
+      "norm": "희석주당손실",
+      "canonical_id": "ifrs-full_DilutedEarningsLossPerShare",
+      "sj": "IS"
+    },
+    {
+      "norm": "계속영업희석주당이익",
+      "canonical_id": "ifrs-full_DilutedEarningsLossPerShareFromContinuingOperations",
+      "sj": "IS"
+    },
+    {
+      "norm": "계속영업기본주당이익",
+      "canonical_id": "ifrs-full_BasicEarningsLossPerShareFromContinuingOperations",
+      "sj": "IS"
+    },
+    {
+      "norm": "후속적으로 당기손익으로 재분류되지 않는 항목",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "IS"
+    },
+    {
+      "norm": "후속적으로 당기손익으로 재분류 되지 않는 항목",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "IS"
+    },
+    {
+      "norm": "후속적으로 당기손익으로 재분류될 수 있는 항목",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "IS"
+    },
+    {
+      "norm": "후속적으로 당기손익으로 재분류될 수 있는 항목합계",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "IS"
+    },
+    {
+      "norm": "지분법 적용대상 관계기업과 공동기업의 기타포괄손익에 대한 지분",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+      "sj": "IS"
+    },
+    {
+      "norm": "리스료",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "임차료",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "지급임차료",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "수입임대료",
+      "canonical_id": "ifrs-full_RentalIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "수입수수료",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "잡급",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "하자보수비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "업무추진비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "당기완성건물제조원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "전기오류수정이익",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "전기오류수정손실",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "복리후생비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "여비교통비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "접대비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "기업업무추진비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "소모품비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "수도광열비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "수선비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "교육훈련비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "통신비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "사무용품비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "회의비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "보험료",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "도서인쇄비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "전력비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "용역비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "협회비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "세금과공과",
+      "canonical_id": "ifrs-full_TaxExpenseOtherThanIncomeTaxExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "세금과공과금",
+      "canonical_id": "ifrs-full_TaxExpenseOtherThanIncomeTaxExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "제세공과금",
+      "canonical_id": "ifrs-full_TaxExpenseOtherThanIncomeTaxExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "잡비",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "잡손실",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "잡이익",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "기부금",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "외환차손",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "외환차익",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "광고선전비",
+      "canonical_id": "ifrs-full_SellingExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "운반비",
+      "canonical_id": "ifrs-full_SellingExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "포장비",
+      "canonical_id": "ifrs-full_SellingExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "견본비",
+      "canonical_id": "ifrs-full_SellingExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "경상개발비",
+      "canonical_id": "ifrs-full_ResearchAndDevelopmentExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "당기제품제조원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "기타의대손상각비",
+      "canonical_id": "dart_AllowanceForDoubtfulAccounts",
+      "sj": "IS"
+    },
+    {
+      "norm": "운송수입",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "임가공매출",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "부산물매출",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "완성건물매출",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "용역수수료",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "자산보관수수료",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "분양수수료",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "사무수탁수수료",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "식음료매출",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "상여",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "제수당",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "출장비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "분양대행수수료",
+      "canonical_id": "ifrs-full_SellingExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "보험차손",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "당기매입액",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "공사수입금",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "용역수입",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "분양수입금",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "분양수입",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "공사수익",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "용역매출",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "상품매출",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "제품매출",
+      "canonical_id": "ifrs-full_Revenue",
+      "sj": "IS"
+    },
+    {
+      "norm": "해외출장비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "사무비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "판매수수료",
+      "canonical_id": "ifrs-full_SellingExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "연구개발비",
+      "canonical_id": "ifrs-full_ResearchAndDevelopmentExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "사채이자",
+      "canonical_id": "ifrs-full_FinanceCosts",
+      "sj": "IS"
+    },
+    {
+      "norm": "대손충당금환입",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "재고자산평가손실",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "재고자산평가손실환입",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "재고자산처분손실",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "분양원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "공사원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "도급원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "하도급비",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "현재가치할인차금상각",
+      "canonical_id": "ifrs-full_FinanceCosts",
+      "sj": "IS"
+    },
+    {
+      "norm": "판매비와관리비",
+      "canonical_id": "dart_SellingGeneralAndAdministrativeExpenses",
+      "sj": "IS"
+    },
+    {
+      "norm": "지급수수료",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "급여",
+      "canonical_id": "ifrs-full_WagesAndSalaries",
+      "sj": "IS"
+    },
+    {
+      "norm": "차량유지비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "건물관리비",
+      "canonical_id": "ifrs-full_AdministrativeExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "법인세등",
+      "canonical_id": "ifrs-full_IncomeTaxExpenseContinuingOperations",
+      "sj": "IS"
+    },
+    {
+      "norm": "제품매출원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "상품매출원가",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "임대료수입",
+      "canonical_id": "ifrs-full_RentalIncome",
+      "sj": "IS"
+    },
+    {
+      "norm": "경상연구개발비",
+      "canonical_id": "ifrs-full_ResearchAndDevelopmentExpense",
+      "sj": "IS"
+    },
+    {
+      "norm": "기초제품재고액",
+      "canonical_id": "ifrs-full_FinishedGoods",
+      "sj": "IS"
+    },
+    {
+      "norm": "기말제품재고액",
+      "canonical_id": "ifrs-full_FinishedGoods",
+      "sj": "IS"
+    },
+    {
+      "norm": "기초상품재고액",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "IS"
+    },
+    {
+      "norm": "기말상품재고액",
+      "canonical_id": "ifrs-full_Inventories",
+      "sj": "IS"
+    },
+    {
+      "norm": "당기상품매입액",
+      "canonical_id": "ifrs-full_CostOfSales",
+      "sj": "IS"
+    },
+    {
+      "norm": "타계정으로대체액",
+      "canonical_id": "dart_OtherAdjustments",
+      "sj": "IS"
+    },
+    {
+      "norm": "타계정대체액",
+      "canonical_id": "dart_OtherAdjustments",
+      "sj": "IS"
+    },
+    {
+      "norm": "타계정에서대체액",
+      "canonical_id": "dart_OtherAdjustments",
+      "sj": "IS"
+    },
+    {
+      "norm": "타계정대체",
+      "canonical_id": "dart_OtherAdjustments",
+      "sj": "IS"
+    },
+    {
+      "norm": "타계정으로 대체액",
+      "canonical_id": "dart_OtherAdjustments",
+      "sj": "IS"
+    },
+    {
+      "norm": "타계정으로대체",
+      "canonical_id": "dart_OtherAdjustments",
+      "sj": "IS"
+    },
+    {
+      "norm": "타계정에서 대체액",
+      "canonical_id": "dart_OtherAdjustments",
+      "sj": "IS"
+    },
+    {
+      "norm": "타계정에서대체",
+      "canonical_id": "dart_OtherAdjustments",
+      "sj": "IS"
+    },
+    {
+      "norm": "영업활동현금흐름",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "영업활동으로인한현금흐름",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "투자활동현금흐름",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInInvestingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "투자활동으로인한현금흐름",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInInvestingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "재무활동현금흐름",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInFinancingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "재무활동으로인한현금흐름",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInFinancingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기초현금및현금성자산",
+      "canonical_id": "ifrs-full_CashAndCashEquivalentsAtBeginningOfPeriod",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기말현금및현금성자산",
+      "canonical_id": "ifrs-full_CashAndCashEquivalents",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의증가",
+      "canonical_id": "dart_NetIncreaseDecreaseInCash",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의감소",
+      "canonical_id": "dart_NetIncreaseDecreaseInCash",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금및현금성자산의증가",
+      "canonical_id": "dart_NetIncreaseDecreaseInCash",
+      "sj": "CFS"
+    },
+    {
+      "norm": "1. 영업활동으로 인한 현금유입액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "2. 영업활동으로 인한 현금유출액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "1. 투자활동으로 인한 현금유입액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInInvestingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "2. 투자활동으로 인한 현금유출액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInInvestingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "1. 재무활동으로 인한 현금유입액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInFinancingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "2. 재무활동으로 인한 현금유출액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInFinancingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "운전자본의 변동",
+      "canonical_id": "ifrs-full_AdjustmentsForChangesInWorkingCapital",
+      "sj": "CFS"
+    },
+    {
+      "norm": "비현금항목의 조정",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "영업활동으로 인한 자산부채의 변동",
+      "canonical_id": "ifrs-full_AdjustmentsForChangesInWorkingCapital",
+      "sj": "CFS"
+    },
+    {
+      "norm": "영업활동으로인한자산부채의변동",
+      "canonical_id": "ifrs-full_AdjustmentsForChangesInWorkingCapital",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의 유출이 없는 비용등의 가산",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의유출이없는비용등의가산",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의 유출이 없는 비용 등의 가산",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의 유입이 없는 수익등의 차감",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의유입이없는수익등의차감",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의 유입이 없는 수익 등의 차감",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기말의현금",
+      "canonical_id": "ifrs-full_CashAndCashEquivalents",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기초의현금",
+      "canonical_id": "ifrs-full_CashAndCashEquivalentsAtBeginningOfPeriod",
+      "sj": "CFS"
+    },
+    {
+      "norm": "당기순이익",
+      "canonical_id": "ifrs-full_ProfitLoss",
+      "sj": "CFS"
+    },
+    {
+      "norm": "감가상각비",
+      "canonical_id": "dart_DepreciationExpense",
+      "sj": "CFS"
+    },
+    {
+      "norm": "무형자산상각비",
+      "canonical_id": "dart_AmortisationExpense",
+      "sj": "CFS"
+    },
+    {
+      "norm": "퇴직급여",
+      "canonical_id": "dart_RetirementBenefitExpense",
+      "sj": "CFS"
+    },
+    {
+      "norm": "대손상각비",
+      "canonical_id": "dart_AllowanceForDoubtfulAccounts",
+      "sj": "CFS"
+    },
+    {
+      "norm": "유형자산처분이익",
+      "canonical_id": "dart_GainOnDisposalOfTangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "유형자산처분손실",
+      "canonical_id": "dart_LossOnDisposalOfTangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "이자비용",
+      "canonical_id": "ifrs-full_FinanceCosts",
+      "sj": "CFS"
+    },
+    {
+      "norm": "이자수익",
+      "canonical_id": "ifrs-full_InterestRevenueExpense",
+      "sj": "CFS"
+    },
+    {
+      "norm": "법인세비용",
+      "canonical_id": "ifrs-full_IncomeTaxExpenseContinuingOperations",
+      "sj": "CFS"
+    },
+    {
+      "norm": "매출채권의 감소",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "매출채권의 증가",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "매출채권의 감소(증가)",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "매출채권의 증가(감소)",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "재고자산의 감소",
+      "canonical_id": "dart_ChangeInInventories",
+      "sj": "CFS"
+    },
+    {
+      "norm": "재고자산의 증가",
+      "canonical_id": "dart_ChangeInInventories",
+      "sj": "CFS"
+    },
+    {
+      "norm": "재고자산의 감소(증가)",
+      "canonical_id": "dart_ChangeInInventories",
+      "sj": "CFS"
+    },
+    {
+      "norm": "매입채무의 증가",
+      "canonical_id": "dart_ChangeInTradePayables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "매입채무의 감소",
+      "canonical_id": "dart_ChangeInTradePayables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "매입채무의 증가(감소)",
+      "canonical_id": "dart_ChangeInTradePayables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "유형자산의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "유형자산 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "유형자산의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "유형자산 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "무형자산의 취득",
+      "canonical_id": "dart_AcquisitionOfIntangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "무형자산 취득",
+      "canonical_id": "dart_AcquisitionOfIntangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기금융상품의 감소",
+      "canonical_id": "dart_ProceedsFromShorttermFinancialInstruments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기금융상품의 증가",
+      "canonical_id": "dart_AcquisitionOfShorttermFinancialInstruments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기금융상품의 감소(증가)",
+      "canonical_id": "dart_ChangeInShorttermFinancialInstruments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기차입금의 차입",
+      "canonical_id": "dart_ProceedsFromShorttermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기차입금의 상환",
+      "canonical_id": "dart_RepaymentOfShorttermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기차입금 차입",
+      "canonical_id": "dart_ProceedsFromShorttermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기차입금 상환",
+      "canonical_id": "dart_RepaymentOfShorttermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "장기차입금의 차입",
+      "canonical_id": "dart_ProceedsFromLongtermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "장기차입금의 상환",
+      "canonical_id": "dart_RepaymentOfLongtermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "장기차입금 차입",
+      "canonical_id": "dart_ProceedsFromLongtermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "장기차입금 상환",
+      "canonical_id": "dart_RepaymentOfLongtermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "배당금의 지급",
+      "canonical_id": "ifrs-full_DividendsPaid",
+      "sj": "CFS"
+    },
+    {
+      "norm": "배당금 지급",
+      "canonical_id": "ifrs-full_DividendsPaid",
+      "sj": "CFS"
+    },
+    {
+      "norm": "유상증자",
+      "canonical_id": "dart_ProceedsFromIssuanceOfCapital",
+      "sj": "CFS"
+    },
+    {
+      "norm": "사채의 발행",
+      "canonical_id": "dart_ProceedsFromIssuanceOfBonds",
+      "sj": "CFS"
+    },
+    {
+      "norm": "사채의 상환",
+      "canonical_id": "dart_RepaymentOfBonds",
+      "sj": "CFS"
+    },
+    {
+      "norm": "잡손실 조정",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "주식보상비용(환입) 조정",
+      "canonical_id": "ifrs-full_AdjustmentsForSharebasedPayments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기타의대손상각비환입",
+      "canonical_id": "dart_AllowanceForDoubtfulAccounts",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기타의 대손상각비",
+      "canonical_id": "dart_AllowanceForDoubtfulAccounts",
+      "sj": "CFS"
+    },
+    {
+      "norm": "염가매수차익",
+      "canonical_id": "ifrs-full_GainsOnBargainPurchase",
+      "sj": "CFS"
+    },
+    {
+      "norm": "예수보증금의 증가",
+      "canonical_id": "dart_ChangeInDepositsReceived",
+      "sj": "CFS"
+    },
+    {
+      "norm": "예수보증금의 감소",
+      "canonical_id": "dart_ChangeInDepositsReceived",
+      "sj": "CFS"
+    },
+    {
+      "norm": "퇴직연금운용자산의 증감",
+      "canonical_id": "dart_RetirementBenefitExpense",
+      "sj": "CFS"
+    },
+    {
+      "norm": "퇴직연금운용자산의 증가",
+      "canonical_id": "dart_RetirementBenefitExpense",
+      "sj": "CFS"
+    },
+    {
+      "norm": "퇴직연금운용자산의 감소",
+      "canonical_id": "dart_RetirementBenefitExpense",
+      "sj": "CFS"
+    },
+    {
+      "norm": "부가세대급금의감소",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "부가세대급금의 감소",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "부가세대급금의증가",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "부가세예수금의 증감",
+      "canonical_id": "ifrs-full_AdjustmentsForChangesInWorkingCapital",
+      "sj": "CFS"
+    },
+    {
+      "norm": "회원권의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfIntangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "회원권의 취득",
+      "canonical_id": "dart_AcquisitionOfIntangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "공구와기구의취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "공구와기구의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "공구와기구의처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "공구와기구의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "비품의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "비품의취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "비품의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "차량운반구의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "차량운반구의취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "차량운반구의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "주식선택권의 행사",
+      "canonical_id": "dart_ProceedsFromExerciseOfStockOptions",
+      "sj": "CFS"
+    },
+    {
+      "norm": "주식매수선택권의 행사",
+      "canonical_id": "dart_ProceedsFromExerciseOfStockOptions",
+      "sj": "CFS"
+    },
+    {
+      "norm": "환율변동효과",
+      "canonical_id": "ifrs-full_EffectOfExchangeRateChangesOnCashAndCashEquivalents",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기타대손상각비",
+      "canonical_id": "dart_AllowanceForDoubtfulAccounts",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기타의 대손상각비 조정",
+      "canonical_id": "dart_AllowanceForDoubtfulAccounts",
+      "sj": "CFS"
+    },
+    {
+      "norm": "공구와기구의 증가",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "통화선도평가이익",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "통화선도평가손실",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "주임종단기채권의감소",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "주임종단기채권의 감소",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "주임종단기채권의증가",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "주임종단기채권의 증가",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "재무활동으로 분류된 리스부채의 지급",
+      "canonical_id": "ifrs-full_RepaymentsOfLeaseLiabilities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "리스부채의 상환",
+      "canonical_id": "ifrs-full_RepaymentsOfLeaseLiabilities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "사용권자산의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "현금의유출이 없는 비용등의 가산",
+      "canonical_id": "ifrs-full_AdjustmentsForNoncashItems",
+      "sj": "CFS"
+    },
+    {
+      "norm": "건물의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "건물의취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "건물의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "건물의처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "토지의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "토지의취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "토지의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "토지의처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "구축물의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "구축물의취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "구축물의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "구축물의처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기계장치의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기계장치의취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기계장치의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기계장치의처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "시설장치의 취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "시설장치의취득",
+      "canonical_id": "dart_AcquisitionOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "시설장치의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfPropertyPlantEquipment",
+      "sj": "CFS"
+    },
+    {
+      "norm": "소프트웨어의 취득",
+      "canonical_id": "dart_AcquisitionOfIntangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "소프트웨어의취득",
+      "canonical_id": "dart_AcquisitionOfIntangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "개발비의 지출",
+      "canonical_id": "dart_AcquisitionOfIntangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "개발비지출",
+      "canonical_id": "dart_AcquisitionOfIntangibleAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "투자부동산의 취득",
+      "canonical_id": "dart_AcquisitionOfInvestmentProperty",
+      "sj": "CFS"
+    },
+    {
+      "norm": "투자부동산의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfInvestmentProperty",
+      "sj": "CFS"
+    },
+    {
+      "norm": "관계기업투자주식의 취득",
+      "canonical_id": "dart_AcquisitionOfInvestmentsInAssociates",
+      "sj": "CFS"
+    },
+    {
+      "norm": "관계기업투자주식의 처분",
+      "canonical_id": "dart_ProceedsFromDisposalOfInvestmentsInAssociates",
+      "sj": "CFS"
+    },
+    {
+      "norm": "임대보증금의 증가",
+      "canonical_id": "dart_ChangeInDepositsReceived",
+      "sj": "CFS"
+    },
+    {
+      "norm": "임대보증금의 감소",
+      "canonical_id": "dart_ChangeInDepositsReceived",
+      "sj": "CFS"
+    },
+    {
+      "norm": "전환사채의 발행",
+      "canonical_id": "dart_ProceedsFromIssuanceOfBonds",
+      "sj": "CFS"
+    },
+    {
+      "norm": "전환사채의 상환",
+      "canonical_id": "dart_RepaymentOfBonds",
+      "sj": "CFS"
+    },
+    {
+      "norm": "신주발행비",
+      "canonical_id": "dart_ProceedsFromIssuanceOfCapital",
+      "sj": "CFS"
+    },
+    {
+      "norm": "미수금의 감소",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "미수금의 증가",
+      "canonical_id": "dart_ChangeInTradeReceivables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "미지급금의 증가",
+      "canonical_id": "dart_ChangeInTradePayables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "미지급금의 감소",
+      "canonical_id": "dart_ChangeInTradePayables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "선급금의 감소",
+      "canonical_id": "dart_ChangeInPrepayments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "선급금의 증가",
+      "canonical_id": "dart_ChangeInPrepayments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "선수금의 증가",
+      "canonical_id": "dart_ChangeInAdvancesFromCustomers",
+      "sj": "CFS"
+    },
+    {
+      "norm": "선수금의 감소",
+      "canonical_id": "dart_ChangeInAdvancesFromCustomers",
+      "sj": "CFS"
+    },
+    {
+      "norm": "미지급비용의 증가",
+      "canonical_id": "dart_ChangeInTradePayables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "미지급비용의 감소",
+      "canonical_id": "dart_ChangeInTradePayables",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기초의 현금",
+      "canonical_id": "ifrs-full_CashAndCashEquivalentsAtBeginningOfPeriod",
+      "sj": "CFS"
+    },
+    {
+      "norm": "기말의 현금",
+      "canonical_id": "ifrs-full_CashAndCashEquivalents",
+      "sj": "CFS"
+    },
+    {
+      "norm": "예수금의 증가",
+      "canonical_id": "dart_ChangeInDepositsReceived",
+      "sj": "CFS"
+    },
+    {
+      "norm": "외화환산이익",
+      "canonical_id": "ifrs-full_AdjustmentsForForeignExchangeGainsLosses",
+      "sj": "CFS"
+    },
+    {
+      "norm": "외화환산손실",
+      "canonical_id": "ifrs-full_AdjustmentsForForeignExchangeGainsLosses",
+      "sj": "CFS"
+    },
+    {
+      "norm": "선급비용의 감소",
+      "canonical_id": "dart_ChangeInPrepayments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "선급비용의 증가",
+      "canonical_id": "dart_ChangeInPrepayments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기대여금의 증가",
+      "canonical_id": "dart_LoansGranted",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기대여금의 감소",
+      "canonical_id": "dart_LoansRepaid",
+      "sj": "CFS"
+    },
+    {
+      "norm": "미수수익의 감소",
+      "canonical_id": "dart_ChangeInAccruedIncome",
+      "sj": "CFS"
+    },
+    {
+      "norm": "미수수익의 증가",
+      "canonical_id": "dart_ChangeInAccruedIncome",
+      "sj": "CFS"
+    },
+    {
+      "norm": "부가세예수금의 증가",
+      "canonical_id": "ifrs-full_AdjustmentsForChangesInWorkingCapital",
+      "sj": "CFS"
+    },
+    {
+      "norm": "장기금융상품의 증가",
+      "canonical_id": "dart_AcquisitionOfLongtermFinancialInstruments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "장기금융상품의 감소",
+      "canonical_id": "dart_ProceedsFromDisposalOfLongtermFinancialInstruments",
+      "sj": "CFS"
+    },
+    {
+      "norm": "보증금의 증가",
+      "canonical_id": "dart_AcquisitionOfDeposits",
+      "sj": "CFS"
+    },
+    {
+      "norm": "보증금의 감소",
+      "canonical_id": "dart_ProceedsFromDisposalOfDeposits",
+      "sj": "CFS"
+    },
+    {
+      "norm": "단기차입금의 증가",
+      "canonical_id": "dart_ProceedsFromShorttermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "장기차입금의 증가",
+      "canonical_id": "dart_ProceedsFromLongtermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "유동성장기부채의 상환",
+      "canonical_id": "dart_RepaymentOfLongtermBorrowings",
+      "sj": "CFS"
+    },
+    {
+      "norm": "임차보증금의 증가",
+      "canonical_id": "dart_AcquisitionOfDeposits",
+      "sj": "CFS"
+    },
+    {
+      "norm": "임차보증금의 감소",
+      "canonical_id": "dart_ProceedsFromDisposalOfDeposits",
+      "sj": "CFS"
+    },
+    {
+      "norm": "당기법인세부채의 증가",
+      "canonical_id": "dart_ChangeInCurrentTaxLiabilities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "당기법인세자산의 감소",
+      "canonical_id": "dart_ChangeInCurrentTaxAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "당기법인세자산의 증가",
+      "canonical_id": "dart_ChangeInCurrentTaxAssets",
+      "sj": "CFS"
+    },
+    {
+      "norm": "퇴직금의 지급",
+      "canonical_id": "dart_SeverancePay",
+      "sj": "CFS"
+    },
+    {
+      "norm": "투자활동으로 인한 현금유출액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInInvestingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "투자활동으로 인한 현금유입액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInInvestingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "재무활동으로 인한 현금유출액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInFinancingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "재무활동으로 인한 현금유입액",
+      "canonical_id": "ifrs-full_CashFlowsFromUsedInFinancingActivities",
+      "sj": "CFS"
+    },
+    {
+      "norm": "확정급여부채의 재측정요소",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "확정급여채무의 재측정요소",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "확정급여채무재측정요소",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "확정급여부채 재측정요소",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "순확정급여부채의재측정요소",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "세전기타포괄손익, 확정급여제도의 재측정차익",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "세후기타포괄손익, 지분상품에 대한 투자자산",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "세후기타포괄손익, 자산재평가차익",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "토지재평가손익",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "세후기타포괄손익, 현금흐름위험회피",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "현금흐름위험회피의 세후차익",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+      "sj": "CIS"
+    },
+    {
+      "norm": "(부의)지분법자본변동",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+      "sj": "CIS"
+    },
+    {
+      "norm": "지분법자본변동",
+      "canonical_id": "ifrs-full_OtherComprehensiveIncomeShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+      "sj": "CIS"
+    },
+    {
+      "norm": "지배기업 소유주지분 총포괄이익",
+      "canonical_id": "ifrs-full_ComprehensiveIncomeAttributableToOwnersOfParent",
+      "sj": "CIS"
+    },
+    {
+      "norm": "지배기업소유주지분 총포괄이익",
+      "canonical_id": "ifrs-full_ComprehensiveIncomeAttributableToOwnersOfParent",
+      "sj": "CIS"
+    },
+    {
+      "norm": "비지배지분 총포괄이익",
+      "canonical_id": "ifrs-full_ComprehensiveIncomeAttributableToNoncontrollingInterests",
+      "sj": "CIS"
+    },
+    {
+      "norm": "총포괄손실",
+      "canonical_id": "ifrs-full_ComprehensiveIncome",
+      "sj": "CIS"
+    },
+    {
+      "norm": "신용손실충당금 환입액",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "CIS"
+    },
+    {
+      "norm": "순외환차손",
+      "canonical_id": "ifrs-full_OtherExpense",
+      "sj": "CIS"
+    },
+    {
+      "norm": "순외환차익",
+      "canonical_id": "ifrs-full_OtherIncome",
+      "sj": "CIS"
+    },
+    {
+      "norm": "중단영업",
+      "canonical_id": "ifrs-full_ProfitLossFromDiscontinuedOperations",
+      "sj": "CIS"
+    }
+  ]
+}

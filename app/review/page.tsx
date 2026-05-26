@@ -1,22 +1,24 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
-import type { ReviewData, DecisionMap, ReviewItem } from "@/lib/types";
+import type { ReviewData, DecisionMap, ReviewItem, SeedsData } from "@/lib/types";
 import { loadDecisions, saveDecisions, exportCsv, itemKey } from "@/lib/storage";
 import { getCanonicalLabel, getCanonicalShortLabel } from "@/lib/canonicalLabels";
 import ClusterCard from "@/components/ClusterCard";
 import Onboarding from "@/components/Onboarding";
 import OverrideModal from "@/components/OverrideModal";
 import SjBadge from "@/components/SjBadge";
+import SeedTable from "@/components/SeedTable";
 import s from "./page.module.css";
 
 export default function ReviewPage() {
   const [data, setData] = useState<ReviewData | null>(null);
+  const [seedsData, setSeedsData] = useState<SeedsData | null>(null);
   const [decisions, setDecisions] = useState<DecisionMap>({});
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
   const [filterSj, setFilterSj] = useState<Set<string>>(new Set(["BS", "IS", "CFS", "CIS"]));
   const [filterDone, setFilterDone] = useState<"all" | "pending" | "done">("all");
-  const [tab, setTab] = useState<"clusters" | "unresolved">("clusters");
+  const [tab, setTab] = useState<"clusters" | "unresolved" | "seeds">("clusters");
   const [unresolvedOverride, setUnresolvedOverride] = useState<ReviewItem | null>(null);
   const [saving, setSaving] = useState(false);
   const activeCardRef = useRef<HTMLDivElement>(null);
@@ -26,6 +28,10 @@ export default function ReviewPage() {
     fetch("/data/review_data.json")
       .then((r) => r.json())
       .then((d: ReviewData) => setData(d));
+
+    fetch("/data/seeds.json")
+      .then((r) => r.json())
+      .then((d: SeedsData) => setSeedsData(d));
 
     loadDecisions().then(setDecisions);
 
@@ -231,17 +237,15 @@ export default function ReviewPage() {
 
         <main className={s.main}>
           <div className={s.tabs}>
-            {(["clusters", "unresolved"] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={tab === t ? s.tabActive : s.tab}
-              >
-                {t === "clusters"
-                  ? `클러스터 (${filteredClusters.length})`
-                  : `미해결 항목 (${data.unresolved.length})`}
-              </button>
-            ))}
+            <button onClick={() => setTab("clusters")} className={tab === "clusters" ? s.tabActive : s.tab}>
+              클러스터 ({filteredClusters.length})
+            </button>
+            <button onClick={() => setTab("unresolved")} className={tab === "unresolved" ? s.tabActive : s.tab}>
+              미해결 항목 ({data.unresolved.length})
+            </button>
+            <button onClick={() => setTab("seeds")} className={tab === "seeds" ? s.tabActive : s.tab}>
+              Seed 사전 ({seedsData?.count ?? "…"})
+            </button>
           </div>
 
           {tab === "clusters" && (
@@ -264,6 +268,14 @@ export default function ReviewPage() {
                 </div>
               ))}
             </div>
+          )}
+
+          {tab === "seeds" && seedsData && (
+            <SeedTable
+              seeds={seedsData.seeds}
+              decisions={decisions}
+              onDecisions={handleDecisions}
+            />
           )}
 
           {tab === "unresolved" && (

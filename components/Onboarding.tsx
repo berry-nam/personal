@@ -27,8 +27,8 @@ const STEPS = [
         <div className={s.infoBox}>
           <p className={s.infoBoxTitle}>자동 매칭은 두 단계로 작동합니다:</p>
           <div className={s.infoBoxRow}>
-            <span className={s.infoBoxLabel}>① 씨드 사전</span>
-            <span>회계사가 직접 작성한 한글 계정명 → canonical ID 대응표 (~530개). 씨드에 있으면 100% 확도로 자동 확정됩니다.</span>
+            <span className={s.infoBoxLabel}>① Seed 사전</span>
+            <span>K-IFRS/K-GAAP 기준으로 사전 정의된 계정명 → canonical ID 매핑표 (533개). Seed에 있으면 100% 확도로 자동 확정됩니다. <strong>"Seed 사전" 탭에서 직접 확인·수정 가능합니다.</strong></span>
           </div>
           <div className={s.infoBoxRow}>
             <span className={s.infoBoxLabel}>② AI 임베딩</span>
