@@ -32,13 +32,24 @@ const STEPS = [
           </div>
           <div className={s.infoBoxRow}>
             <span className={s.infoBoxLabel}>② AI 임베딩</span>
-            <span>씨드에 없는 계정명은 AI(bge-m3)가 의미적 유사도를 계산해 가장 가까운 canonical을 제안합니다. 신뢰도 점수(0~1)로 표시됩니다.</span>
+            <span>Seed에 없는 계정명은 AI(bge-m3)가 의미적 유사도를 계산해 가장 가까운 canonical을 제안합니다. 신뢰도 점수(0~1)로 표시됩니다.</span>
           </div>
         </div>
-        <p>
-          두 방법 합산으로 전체의 <strong style={{ color: "var(--cd-text-success-normal)" }}>83.6%</strong>가
-          자동 처리됐습니다. 나머지 <strong style={{ color: "var(--cd-text-warning-normal)" }}>16.4%</strong>를 지금 검토합니다.
-        </p>
+        <div className={s.infoBox} style={{ marginTop: 0 }}>
+          <p className={s.infoBoxTitle}>자동 처리 vs 검토 필요 기준</p>
+          <div className={s.infoBoxRow}>
+            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-success-normal)" }}>✅ 자동 확정</span>
+            <span>① Seed 사전 정확 매칭 <strong>또는</strong> ② AI 유사도 <strong>≥ 0.92</strong> → 전체의 83.6%</span>
+          </div>
+          <div className={s.infoBoxRow}>
+            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-warning-normal)" }}>⚠️ 검토 필요</span>
+            <span>AI 유사도 <strong>0.65 ~ 0.92</strong> — 제안은 있지만 확신 부족 → 클러스터 탭</span>
+          </div>
+          <div className={s.infoBoxRow} style={{ marginBottom: 0 }}>
+            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-danger-normal)" }}>❓ 직접 지정</span>
+            <span>AI 유사도 <strong>{"< 0.65"}</strong> — 제안 자체를 못 함 → 미해결 항목 탭</span>
+          </div>
+        </div>
       </div>
     ),
   },
@@ -49,7 +60,7 @@ const STEPS = [
       <div className={s.contentBlock}>
         <div className={`${s.statusRow} ${s.statusAuto}`}>
           <span className={`${s.statusLabel} ${s.autoLabel}`}>✅ auto</span>
-          <span className={s.autoBody}>씨드 사전 또는 고신뢰도 AI 매칭으로 자동 확정된 항목. <strong>검토 불필요.</strong></span>
+          <span className={s.autoBody}>Seed 사전 정확 매칭 또는 AI 유사도 ≥ 0.92로 자동 확정된 항목. <strong>검토 불필요.</strong></span>
         </div>
         <div className={`${s.statusRow} ${s.statusFlagged}`}>
           <span className={`${s.statusLabel} ${s.flagLabel}`}>⚠️ flagged</span>
