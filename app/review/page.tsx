@@ -4,6 +4,7 @@ import type { ReviewData, DecisionMap, ReviewItem, SeedsData } from "@/lib/types
 import { loadDecisions, saveDecisions, exportCsv, itemKey } from "@/lib/storage";
 import { getCanonicalLabel, getCanonicalShortLabel } from "@/lib/canonicalLabels";
 import ClusterCard from "@/components/ClusterCard";
+import ClusterDetail from "@/components/ClusterDetail";
 import Onboarding from "@/components/Onboarding";
 import OverrideModal from "@/components/OverrideModal";
 import SjBadge from "@/components/SjBadge";
@@ -190,8 +191,8 @@ export default function ReviewPage() {
         </div>
 
         <div className={s.kbdHints}>
-          <span className={s.kbdHint}><kbd>A</kbd> 모두 승인</span>
-          <span className={s.kbdHint}><kbd>S</kbd> 건너뛰기</span>
+          <span className={`${s.kbdHint} ${s.kbdHintApprove}`}><kbd>A</kbd> 모두 승인</span>
+          <span className={`${s.kbdHint} ${s.kbdHintSkip}`}><kbd>S</kbd> 건너뛰기</span>
           <span className={s.kbdHint}><kbd>↑</kbd><kbd>↓</kbd> 이동</span>
         </div>
       </header>
@@ -254,24 +255,40 @@ export default function ReviewPage() {
           </div>
 
           {tab === "clusters" && (
-            <div className={s.clusterList}>
-              {filteredClusters.length === 0 && (
-                <div className={s.emptyState}>조건에 맞는 클러스터가 없습니다</div>
-              )}
-              {filteredClusters.map((cluster, idx) => (
-                <div
-                  key={cluster.canonical_id}
-                  ref={idx === activeIdx ? activeCardRef : null}
-                  onClick={() => setActiveIdx(idx)}
-                >
-                  <ClusterCard
-                    cluster={cluster}
+            <div className={s.clusterSplit}>
+              {/* Left: scrollable compact list */}
+              <div className={s.clusterListPane}>
+                {filteredClusters.length === 0 && (
+                  <div className={s.emptyState}>조건에 맞는 클러스터가 없습니다</div>
+                )}
+                {filteredClusters.map((cluster, idx) => (
+                  <div
+                    key={cluster.canonical_id}
+                    ref={idx === activeIdx ? activeCardRef : null}
+                    onClick={() => setActiveIdx(idx)}
+                  >
+                    <ClusterCard
+                      cluster={cluster}
+                      decisions={decisions}
+                      onDecisions={handleDecisions}
+                      isActive={idx === activeIdx}
+                      compact
+                    />
+                  </div>
+                ))}
+              </div>
+              {/* Right: detail panel for selected cluster */}
+              <div className={s.clusterDetailPane}>
+                {filteredClusters[activeIdx] ? (
+                  <ClusterDetail
+                    cluster={filteredClusters[activeIdx]}
                     decisions={decisions}
                     onDecisions={handleDecisions}
-                    isActive={idx === activeIdx}
                   />
-                </div>
-              ))}
+                ) : (
+                  <div className={s.emptyState}>클러스터를 선택하세요</div>
+                )}
+              </div>
             </div>
           )}
 

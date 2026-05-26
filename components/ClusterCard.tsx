@@ -12,6 +12,7 @@ interface Props {
   decisions: DecisionMap;
   onDecisions: (updates: DecisionMap) => void;
   isActive: boolean;
+  compact?: boolean;
 }
 
 function confClass(conf: number | null, styles: typeof s) {
@@ -30,7 +31,7 @@ function ItemStatus({ decision }: { decision: Decision | undefined }) {
   return <span className={s.decisionSkipped}>건너뜀</span>;
 }
 
-export default function ClusterCard({ cluster, decisions, onDecisions, isActive }: Props) {
+export default function ClusterCard({ cluster, decisions, onDecisions, isActive, compact = false }: Props) {
   const [expanded, setExpanded] = useState(false);
   const [overrideItem, setOverrideItem] = useState<ReviewItem | null>(null);
   const [overrideAll, setOverrideAll] = useState(false);
@@ -142,21 +143,20 @@ export default function ClusterCard({ cluster, decisions, onDecisions, isActive 
 
         {/* Actions */}
         <div className={s.actions}>
-          <button
-            onClick={() => setExpanded((e) => !e)}
-            className={s.btnExpand}
-          >
-            {expanded ? "▲" : "▼"} {total}개 항목
-          </button>
-          <div className={s.actionsSec}>
+          {!compact && (
+            <button onClick={() => setExpanded((e) => !e)} className={s.btnExpand}>
+              {expanded ? "▲" : "▼"} {total}개 항목
+            </button>
+          )}
+          <div className={s.actionsSec} style={compact ? { marginLeft: "auto" } : {}}>
             <button onClick={skipAll} className={s.btnSkip}>건너뛰기</button>
             <button onClick={() => setOverrideAll(true)} className={s.btnOverride}>✎ 수정</button>
             <button onClick={approveAll} className={s.btnApprove}>✓ 모두 승인</button>
           </div>
         </div>
 
-        {/* Expanded item list */}
-        {expanded && (
+        {/* Expanded item list — only in non-compact mode */}
+        {!compact && expanded && (
           <div className={s.itemList}>
             <div className={s.itemListHeader}>
               <span className={s.colSj}>구분</span>

@@ -70,10 +70,11 @@
   transition: width var(--cd-duration-slow) var(--cd-easing-default);
 }
 
-/* Content */
+/* Content — fixed height so all steps are the same modal size */
 .content {
   padding: var(--cd-space-inset-xl);
-  min-height: 200px;
+  height: 340px;
+  overflow-y: auto;
   font-size: var(--cd-font-size-base);
   color: var(--cd-text-default-normal);
   line-height: var(--cd-line-height-normal);
