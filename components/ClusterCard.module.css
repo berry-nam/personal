@@ -63,9 +63,11 @@
   font-size: var(--cd-font-size-base);
   font-weight: var(--cd-font-weight-bold);
   color: var(--cd-text-default-strong);
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: keep-all;
 }
 
 .canonicalId {

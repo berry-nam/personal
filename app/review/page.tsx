@@ -19,7 +19,7 @@ export default function ReviewPage() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [filterSj, setFilterSj] = useState<Set<string>>(new Set(["BS", "IS", "CFS", "CIS"]));
   const [filterDone, setFilterDone] = useState<"all" | "pending" | "done">("all");
-  const [tab, setTab] = useState<"clusters" | "unresolved" | "seeds">("clusters");
+  const [tab, setTab] = useState<"clusters" | "unresolved" | "seeds">("seeds");
   const [unresolvedOverride, setUnresolvedOverride] = useState<ReviewItem | null>(null);
   const [saving, setSaving] = useState(false);
   const activeCardRef = useRef<HTMLDivElement>(null);
@@ -118,10 +118,18 @@ export default function ReviewPage() {
     return <div className={s.loading}>데이터 로딩 중…</div>;
   }
 
-  // Progress stats
+  // Progress stats — exclude seed decisions (keyed "seed||…") from review progress
   const totalItems = data.stats.flagged + data.stats.needs_review;
-  const decidedItems = Object.keys(decisions).length;
-  const approvedItems = Object.values(decisions).filter((d) => d.action === "approved").length;
+  const nonSeedEntries = Object.entries(decisions).filter(([k]) => !k.startsWith("seed||"));
+  const decidedItems = nonSeedEntries.length;
+  const approvedItems  = nonSeedEntries.filter(([, d]) => d.action === "approved").length;
+  const skippedItems   = nonSeedEntries.filter(([, d]) => d.action === "skipped").length;
+  const overriddenItems = nonSeedEntries.filter(([, d]) => d.action === "overridden").length;
+  const pendingItems   = totalItems - decidedItems;
+  const seedEntries = Object.entries(decisions).filter(([k]) => k.startsWith("seed||"));
+  const seedConfirmed  = seedEntries.filter(([, d]) => d.action === "approved").length;
+  const seedModified   = seedEntries.filter(([, d]) => d.action === "overridden").length;
+  const seedPending    = (seedsData?.count ?? 0) - seedConfirmed - seedModified;
   const clustersDone = (data?.clusters ?? []).filter((c) =>
     c.items.every((it) => !!decisions[itemKey(it.norm, it.sj)])
   ).length;
@@ -233,24 +241,41 @@ export default function ReviewPage() {
           </div>
 
           <div className={s.statsCard}>
-            <p className={s.statsTitle}>전체 통계</p>
+            <p className={s.statsTitle}>데이터 현황</p>
             <div className={s.statsRow}><span>클러스터</span><span className={s.statsVal}>{data.stats.clusters}</span></div>
-            <div className={s.statsRow}><span>flagged</span><span className={s.statsVal}>{data.stats.flagged.toLocaleString()}</span></div>
-            <div className={s.statsRow}><span>미해결</span><span className={s.statsVal}>{data.stats.needs_review.toLocaleString()}</span></div>
-            <div className={s.statsRow}><span>기업×계정 합산</span><span className={s.statsVal}>{data.stats.total_cw.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>flagged 항목</span><span className={s.statsVal}>{data.stats.flagged.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>미해결 항목</span><span className={s.statsVal}>{data.stats.needs_review.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>Seed 사전</span><span className={s.statsVal}>{seedsData?.count ?? "…"}</span></div>
+            <div className={s.statsDivider} />
+            <p className={s.statsSubtitle}>기업×계정 합산</p>
+            <div className={s.statsRow}><span>— 클러스터</span><span className={s.statsVal}>{data.stats.flagged_cw.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>— 미해결</span><span className={s.statsVal}>{data.stats.nr_cw.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>— 합계</span><span className={s.statsVal}>{data.stats.total_cw.toLocaleString()}</span></div>
+            <div className={s.statsDivider} />
+            <p className={s.statsSubtitle}>검토 진행 ({Math.round(decidedItems/totalItems*100)||0}%)</p>
+            <div className={s.statsRow}><span>✓ 승인됨</span><span className={`${s.statsVal} ${s.statsGreen}`}>{approvedItems.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>✎ 수정됨</span><span className={`${s.statsVal} ${s.statsWarning}`}>{overriddenItems.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>→ 건너뜀</span><span className={s.statsVal}>{skippedItems.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>• 미결</span><span className={`${s.statsVal} ${s.statsMuted}`}>{pendingItems.toLocaleString()}</span></div>
+            <div className={s.statsRow}><span>클러스터 완료</span><span className={s.statsVal}>{clustersDone}/{data.stats.clusters}</span></div>
+            <div className={s.statsDivider} />
+            <p className={s.statsSubtitle}>Seed 검토</p>
+            <div className={s.statsRow}><span>✓ 확인됨</span><span className={`${s.statsVal} ${s.statsGreen}`}>{seedConfirmed}</span></div>
+            <div className={s.statsRow}><span>✎ 수정됨</span><span className={`${s.statsVal} ${s.statsWarning}`}>{seedModified}</span></div>
+            <div className={s.statsRow}><span>• 미검토</span><span className={`${s.statsVal} ${s.statsMuted}`}>{seedPending}</span></div>
           </div>
         </aside>
 
         <main className={s.main}>
           <div className={s.tabs}>
+            <button onClick={() => setTab("seeds")} className={tab === "seeds" ? `${s.tab} ${s.tabActive}` : s.tab}>
+              Seed 사전 <span className={s.tabBadge}>{seedsData?.count ?? "…"}</span>
+            </button>
             <button onClick={() => setTab("clusters")} className={tab === "clusters" ? `${s.tab} ${s.tabActive}` : s.tab}>
               클러스터 <span className={s.tabBadge}>{filteredClusters.length}</span>
             </button>
             <button onClick={() => setTab("unresolved")} className={tab === "unresolved" ? `${s.tab} ${s.tabActive}` : s.tab}>
               미해결 항목 <span className={s.tabBadge}>{data.unresolved.length}</span>
-            </button>
-            <button onClick={() => setTab("seeds")} className={tab === "seeds" ? `${s.tab} ${s.tabActive}` : s.tab}>
-              Seed 사전 <span className={s.tabBadge}>{seedsData?.count ?? "…"}</span>
             </button>
           </div>
 
@@ -304,35 +329,44 @@ export default function ReviewPage() {
             <div className={s.unresolvedPanel}>
               <div className={s.unresolvedHeader}>
                 <p className={s.unresolvedHeaderTitle}>미해결 항목 (needs_review)</p>
-                <p className={s.unresolvedHeaderSub}>AI 신뢰도 &lt; 0.65 — 직접 canonical ID를 지정하세요.</p>
+                <p className={s.unresolvedHeaderSub}>AI 신뢰도 &lt; 0.65 — 직접 표준 계정 식별자를 지정하세요.</p>
+              </div>
+              {/* Column headers */}
+              <div className={s.unresolvedTableHeader}>
+                <span>구분</span>
+                <span>계정명 / AI 제안 후보</span>
+                <span className={s.unresolvedColRight}>기업수</span>
+                <span>처리</span>
               </div>
               <div>
                 {data.unresolved.map((it) => {
                   const dec = decisions[itemKey(it.norm, it.sj)];
                   return (
                     <div key={`${it.norm}||${it.sj}`} className={s.unresolvedItem}>
-                      <SjBadge sj={it.sj} />
+                      <span className={s.unresolvedColSj}><SjBadge sj={it.sj} /></span>
                       <div className={s.unresolvedInfo}>
                         <div className={s.unresolvedName}>{it.norm}</div>
                         {it.top3.length > 0 && (
                           <div className={s.unresolvedSuggests}>
-                            제안: {it.top3.map((c) => c.replace(/^(ifrs-full_|dart_)/, "")).join(" · ")}
+                            {it.top3.map((c) => c.replace(/^(ifrs-full_|dart_)/, "")).join(" · ")}
                           </div>
                         )}
                       </div>
-                      <span className={s.unresolvedCount}>{it.n.toLocaleString()}</span>
-                      {dec ? (
-                        <span className={s.unresolvedDecided}>
-                          ✓ {dec.canonical_id.replace(/^(ifrs-full_|dart_)/, "")}
-                        </span>
-                      ) : (
-                        <button
-                          onClick={() => setUnresolvedOverride(it)}
-                          className={s.btnAssign}
-                        >
-                          지정
-                        </button>
-                      )}
+                      <span className={`${s.unresolvedCount} ${s.unresolvedColRight}`}>{it.n.toLocaleString()}</span>
+                      <span className={s.unresolvedAction}>
+                        {dec ? (
+                          <span className={s.unresolvedDecided}>
+                            ✓ {dec.canonical_id.replace(/^(ifrs-full_|dart_)/, "")}
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => setUnresolvedOverride(it)}
+                            className={s.btnAssign}
+                          >
+                            지정
+                          </button>
+                        )}
+                      </span>
                     </div>
                   );
                 })}
