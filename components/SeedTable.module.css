@@ -32,18 +32,20 @@
 
 .searchInput {
   border: 1px solid var(--cd-border-default-weaker);
-  border-radius: var(--cd-radius-lg);
+  border-radius: var(--cd-radius-md);
   padding: 6px var(--cd-space-inset-base);
   font-size: var(--cd-font-size-sm);
   color: var(--cd-text-default-strong);
   background: var(--cd-bg-surface);
   outline: none;
   width: 200px;
-  transition: border-color var(--cd-duration-fast);
+  transition: border-color var(--cd-duration-fast), box-shadow var(--cd-duration-fast);
 }
-
 .searchInput::placeholder { color: var(--cd-text-default-placeholder); }
-.searchInput:focus { border-color: var(--cd-border-brand-normal); }
+.searchInput:focus {
+  border-color: var(--cd-border-brand-normal);
+  box-shadow: 0 0 0 3px var(--cd-bg-brand-weaker);
+}
 
 .filterGroup {
   display: flex;
@@ -51,21 +53,27 @@
 }
 
 .filterBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 var(--cd-space-inset-md);
   font-size: var(--cd-font-size-sm);
-  padding: 4px var(--cd-space-inset-md);
   border-radius: var(--cd-radius-md);
   border: 1px solid var(--cd-border-default-weaker);
   color: var(--cd-text-default-weak);
-  transition: all var(--cd-duration-fast);
+  white-space: nowrap;
+  transition: background var(--cd-duration-fast), color var(--cd-duration-fast), border-color var(--cd-duration-fast);
 }
-
 .filterBtn:hover { background: var(--cd-bg-default-weak); }
+.filterBtn:focus-visible { outline: 2px solid var(--cd-border-brand-normal); outline-offset: 2px; }
 
 .filterBtnActive {
   background: var(--cd-bg-brand-strong);
   color: var(--cd-text-default-onColor);
   border-color: var(--cd-bg-brand-strong);
 }
+.filterBtnActive:hover { background: var(--cd-bg-brand-stronger); }
 
 .statsBar {
   display: flex;
@@ -189,33 +197,43 @@
   vertical-align: middle;
 }
 
-/* Action buttons */
+/* Action buttons — CDS xsmall (height 24px, radius-md) */
 .btnConfirm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 var(--cd-space-inset-md);
   font-size: var(--cd-font-size-xs);
   font-weight: var(--cd-font-weight-medium);
   color: var(--cd-text-success-normal);
-  padding: 3px 8px;
   border: 1px solid var(--cd-border-success-normal);
   border-radius: var(--cd-radius-md);
   background: var(--cd-bg-success-weaker);
   transition: background var(--cd-duration-fast);
   margin-right: 4px;
+  white-space: nowrap;
 }
-
 .btnConfirm:hover { background: var(--cd-bg-success-weak); }
+.btnConfirm:focus-visible { outline: 2px solid var(--cd-border-brand-normal); outline-offset: 2px; }
 
 .btnOverride {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 var(--cd-space-inset-md);
   font-size: var(--cd-font-size-xs);
   font-weight: var(--cd-font-weight-medium);
   color: var(--cd-text-warning-normal);
-  padding: 3px 8px;
   border: 1px solid var(--cd-border-warning-normal);
   border-radius: var(--cd-radius-md);
   background: var(--cd-bg-warning-weaker);
   transition: background var(--cd-duration-fast);
+  white-space: nowrap;
 }
-
 .btnOverride:hover { background: var(--cd-bg-warning-weak); }
+.btnOverride:focus-visible { outline: 2px solid var(--cd-border-brand-normal); outline-offset: 2px; }
 
 .empty {
   padding: 48px var(--cd-space-inset-lg);
@@ -240,16 +258,21 @@
 }
 
 .pageBtn {
-  padding: 4px var(--cd-space-inset-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  min-width: 28px;
+  padding: 0 var(--cd-space-inset-sm);
   border: 1px solid var(--cd-border-default-weaker);
   border-radius: var(--cd-radius-md);
   font-size: var(--cd-font-size-sm);
   color: var(--cd-text-default-normal);
   transition: background var(--cd-duration-fast);
 }
-
 .pageBtn:hover:not(:disabled) { background: var(--cd-bg-default-weak); }
 .pageBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pageBtn:focus-visible { outline: 2px solid var(--cd-border-brand-normal); outline-offset: 2px; }
 
 .pageBtnActive {
   background: var(--cd-bg-brand-strong);

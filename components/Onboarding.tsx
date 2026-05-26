@@ -19,8 +19,8 @@ const STEPS = [
         </p>
         <p>
           이 프로젝트의 목표는 39,000여 개 기업의 다양한 계정명을{" "}
-          <strong>IFRS 표준 canonical ID (표준 계정 식별자)</strong>로 매핑하는 것입니다.
-          Canonical ID란 국제 회계 기준(IFRS)이 각 계정 개념에 부여한 고유한 영문 식별자입니다.
+          <strong>표준 계정 식별자 (Canonical ID)</strong>로 매핑하는 것입니다.
+          IFRS 국제 회계 기준이 각 계정 개념에 부여한 고유한 영문 코드입니다.
           <br />
           예: <code>매출액 → ifrs-full_Revenue (수익)</code>
         </p>
@@ -28,11 +28,11 @@ const STEPS = [
           <p className={s.infoBoxTitle}>자동 매칭은 두 단계로 작동합니다:</p>
           <div className={s.infoBoxRow}>
             <span className={s.infoBoxLabel}>① Seed 사전</span>
-            <span>K-IFRS/K-GAAP 기준으로 사전 정의된 계정명 → canonical ID 매핑표 (533개). Seed에 있으면 100% 확도로 자동 확정됩니다. <strong>"Seed 사전" 탭에서 직접 확인·수정 가능합니다.</strong></span>
+            <span>K-IFRS/K-GAAP 기준으로 사전 정의된 계정명 → 표준 계정 식별자 매핑표 (533개). Seed에 있으면 100% 확도로 자동 확정됩니다. <strong>"Seed 사전" 탭에서 직접 확인·수정 가능합니다.</strong></span>
           </div>
           <div className={s.infoBoxRow}>
             <span className={s.infoBoxLabel}>② AI 임베딩</span>
-            <span>Seed에 없는 계정명은 AI(bge-m3)가 의미적 유사도를 계산해 가장 가까운 canonical을 제안합니다. 신뢰도 점수(0~1)로 표시됩니다.</span>
+            <span>Seed에 없는 계정명은 AI(bge-m3)가 의미적 유사도를 계산해 가장 가까운 표준 계정을 제안합니다. 신뢰도 점수(0~1)로 표시됩니다.</span>
           </div>
         </div>
         <div className={s.infoBox} style={{ marginTop: 0 }}>
@@ -68,7 +68,7 @@ const STEPS = [
         </div>
         <div className={`${s.statusRow} ${s.statusNeedsReview}`}>
           <span className={`${s.statusLabel} ${s.reviewLabel}`}>❓ needs_review</span>
-          <span className={s.reviewBody}>AI가 신뢰도 있는 제안을 못 함 (&lt;0.65). 검토자가 직접 canonical ID를 지정해야 함.</span>
+          <span className={s.reviewBody}>AI가 신뢰도 있는 제안을 못 함 (&lt;0.65). 검토자가 직접 표준 계정 식별자를 지정해야 함.</span>
         </div>
         <p style={{ fontSize: "var(--cd-font-size-sm)", color: "var(--cd-text-default-weakest)" }}>
           n_companies = 해당 계정명을 사용하는 기업 수 (많을수록 중요)
@@ -82,7 +82,7 @@ const STEPS = [
     content: (
       <div className={s.contentBlock}>
         <p>
-          AI가 각 계정명에 대해 <strong>"이 canonical ID에 속할 것 같다"</strong>고 제안했습니다.
+          AI가 각 계정명에 대해 <strong>"이 표준 계정 식별자에 속할 것 같다"</strong>고 제안했습니다.
           검토자의 역할은 <strong>그 제안이 맞는지 틀린지 확인</strong>하는 것입니다.
         </p>
         <div className={s.exampleBox}>
@@ -108,8 +108,8 @@ const STEPS = [
           <strong>일부만 틀리면</strong> → 해당 항목만 펼쳐서 <strong style={{ color: "var(--cd-text-warning-normal)" }}>수정(Override)</strong>.
         </p>
         <div className={s.dangerBox}>
-          <strong>미해결 항목 (1,952개)</strong>: AI가 어느 canonical에 속하는지 판단 자체를 못 한 계정명입니다.
-          "이 계정은 어떤 canonical ID에 해당하는가"를 검토자가 직접 찾아서 입력해야 합니다.
+          <strong>미해결 항목 (1,952개)</strong>: AI가 어느 표준 계정에 속하는지 판단 자체를 못 한 계정명입니다.
+          "이 계정은 어떤 표준 계정 식별자에 해당하는가"를 검토자가 직접 찾아서 입력해야 합니다.
         </div>
       </div>
     ),
@@ -122,7 +122,7 @@ const STEPS = [
         <div>
           <div className={s.kbdRow}>
             <kbd>A</kbd>
-            <span>또는 <strong style={{ color: "var(--cd-text-success-normal)" }}>모두 승인</strong> — 클러스터 전체를 현재 canonical ID로 확정</span>
+            <span>또는 <strong style={{ color: "var(--cd-text-success-normal)" }}>모두 승인</strong> — 클러스터 전체를 현재 표준 계정 식별자로 확정</span>
           </div>
           <div className={s.kbdRow}>
             <kbd>S</kbd>
@@ -130,7 +130,7 @@ const STEPS = [
           </div>
           <div className={s.kbdRow}>
             <kbd>O</kbd>
-            <span>또는 <strong style={{ color: "var(--cd-text-warning-normal)" }}>수정(Override)</strong> — 다른 canonical ID로 변경</span>
+            <span>또는 <strong style={{ color: "var(--cd-text-warning-normal)" }}>수정(Override)</strong> — 다른 표준 계정 식별자로 변경</span>
           </div>
         </div>
         <div className={s.divider} />
@@ -153,15 +153,15 @@ const STEPS = [
         <ul className={s.checkList}>
           <li className={s.checkItem}>
             <span className={s.checkIcon} style={{ color: "var(--cd-text-success-normal)" }}>✓</span>
-            <span>계정의 <strong>경제적 성격</strong>이 canonical ID의 정의와 일치하는가?</span>
+            <span>계정의 <strong>경제적 성격</strong>이 표준 계정 식별자의 정의와 일치하는가?</span>
           </li>
           <li className={s.checkItem}>
             <span className={s.checkIcon} style={{ color: "var(--cd-text-success-normal)" }}>✓</span>
-            <span>같은 클러스터의 다른 계정들도 동일 canonical이 맞는가?</span>
+            <span>같은 클러스터의 다른 계정들도 동일한 표준 계정으로 분류하는 게 맞는가?</span>
           </li>
           <li className={s.checkItem}>
             <span className={s.checkIcon} style={{ color: "var(--cd-text-warning-normal)" }}>△</span>
-            <span>sj_div (BS/IS/CFS)가 canonical ID의 재무제표 위치와 일치하는가?</span>
+            <span>재무제표 유형 배지(BS=재무상태표, IS=손익계산서, CFS=현금흐름표, CIS=포괄손익)가 계정의 성격과 맞는가?</span>
           </li>
           <li className={s.checkItem}>
             <span className={s.checkIcon} style={{ color: "var(--cd-text-danger-normal)" }}>✗</span>

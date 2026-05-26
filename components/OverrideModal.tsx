@@ -34,7 +34,7 @@ export default function OverrideModal({ currentCanonical, itemLabel, onConfirm, 
     <div className={s.overlay}>
       <div className={s.modal}>
         <div className={s.modalHeader}>
-          <h3 className={s.modalTitle}>Canonical ID 수정</h3>
+          <h3 className={s.modalTitle}>표준 계정 식별자 (Canonical ID) 수정</h3>
           <p className={s.modalSubtitle}>항목: <strong>{itemLabel}</strong></p>
         </div>
 
@@ -44,7 +44,7 @@ export default function OverrideModal({ currentCanonical, itemLabel, onConfirm, 
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="canonical ID 또는 설명 검색..."
+            placeholder="표준 계정 식별자(Canonical ID) 또는 한글 설명 검색..."
             className={s.searchInput}
           />
 
