@@ -1,0 +1,141 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
+/* CDS theme variables (from @cookiedeal-tech/design-system v2.15) */
+:root,
+[data-theme="light"] {
+  --cd-text-default-weakest: #878c9b;
+  --cd-text-default-weak: #5d6376;
+  --cd-text-default-normal: #1b2030;
+  --cd-text-default-strong: #1b2030;
+  --cd-text-default-onColor: #FFFFFF;
+  --cd-text-default-placeholder: #878c9b;
+  --cd-text-brand-normal: #0549CC;
+  --cd-text-brand-strong: #033190;
+  --cd-text-danger-normal: #B82630;
+  --cd-text-warning-normal: #B37B09;
+  --cd-text-success-normal: #0A7E4E;
+  --cd-text-highlight-normal: #4D1D9A;
+  --cd-text-info-normal: #0C6D88;
+  --cd-border-default-weakest: #dddfe8;
+  --cd-border-default-weaker: #d5d8e2;
+  --cd-border-default-weak: #b4b8c6;
+  --cd-border-default-normal: #5d6376;
+  --cd-border-brand-normal: #0549CC;
+  --cd-border-danger-normal: #D93B42;
+  --cd-border-success-normal: #15A366;
+  --cd-border-warning-normal: #B37B09;
+  --cd-bg-surface: #FFFFFF;
+  --cd-bg-default-weaker: #f7f8fc;
+  --cd-bg-default-weak: #eff1f6;
+  --cd-bg-default-normal: #dddfe8;
+  --cd-bg-default-strong: #d5d8e2;
+  --cd-bg-default-inverse: #1b2030;
+  --cd-bg-brand-weaker: #f2f6ff;
+  --cd-bg-brand-weak: #e3ecff;
+  --cd-bg-brand-normal: #bdd0ff;
+  --cd-bg-brand-strong: #0549CC;
+  --cd-bg-brand-stronger: #043EB0;
+  --cd-bg-brand-strongest: #033190;
+  --cd-bg-disabled-button: #878c9b;
+  --cd-bg-disabled-input: #eff1f6;
+  --cd-bg-danger-weaker: #fff7f7;
+  --cd-bg-danger-weak: #ffe9eb;
+  --cd-bg-danger-normal: #fac7cc;
+  --cd-bg-danger-strong: #D93B42;
+  --cd-bg-success-weaker: #f0faf5;
+  --cd-bg-success-weak: #def5ea;
+  --cd-bg-success-normal: #b4e8cd;
+  --cd-bg-success-strong: #15A366;
+  --cd-bg-success-stronger: #0F955D;
+  --cd-bg-warning-weaker: #fdf9e6;
+  --cd-bg-warning-weak: #fcf3ba;
+  --cd-bg-warning-normal: #f5de65;
+  --cd-bg-warning-strong: #E9A115;
+  --cd-bg-highlight-weaker: #faf5ff;
+  --cd-bg-highlight-weak: #f3eaff;
+  --cd-bg-highlight-strong: #6920DF;
+  --cd-bg-info-weaker: #f0fafb;
+  --cd-bg-info-weak: #ddf6f9;
+  --cd-bg-info-strong: #0891B2;
+  --cd-bg-overlay-normal: rgba(0, 0, 0, 0.4);
+  --cd-shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --cd-shadow-md: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  --cd-shadow-lg: 0px 10px 15px rgba(0, 0, 0, 0.1);
+  --cd-shadow-xl: 0px 20px 25px rgba(0, 0, 0, 0.15);
+  --cd-z-sticky: 10;
+  --cd-z-modal: 50;
+  --cd-radius-sm: 4px;
+  --cd-radius-md: 6px;
+  --cd-radius-lg: 8px;
+  --cd-radius-xl: 12px;
+  --cd-radius-full: 9999px;
+  --cd-duration-fast: 100ms;
+  --cd-duration-normal: 150ms;
+  --cd-duration-slow: 200ms;
+  --cd-easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --cd-font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --cd-font-weight-regular: 400;
+  --cd-font-weight-medium: 500;
+  --cd-font-weight-bold: 700;
+  --cd-font-size-xs: 11px;
+  --cd-font-size-sm: 12px;
+  --cd-font-size-md: 13px;
+  --cd-font-size-base: 14px;
+  --cd-font-size-lg: 16px;
+  --cd-font-size-xl: 18px;
+  --cd-font-size-2xl: 20px;
+  --cd-line-height-tight: 1.2;
+  --cd-line-height-snug: 1.35;
+  --cd-line-height-normal: 1.5;
+  --cd-space-inset-xs: 4px;
+  --cd-space-inset-sm: 6px;
+  --cd-space-inset-md: 8px;
+  --cd-space-inset-base: 12px;
+  --cd-space-inset-lg: 16px;
+  --cd-space-inset-xl: 24px;
+  --cd-space-inset-2xl: 32px;
+  --cd-space-gap-xs: 4px;
+  --cd-space-gap-sm: 6px;
+  --cd-space-gap-md: 8px;
+  --cd-space-gap-base: 12px;
+  --cd-space-gap-lg: 16px;
+  --cd-space-gap-xl: 24px;
+  --cd-space-stack-xs: 4px;
+  --cd-space-stack-sm: 6px;
+  --cd-space-stack-md: 8px;
+  --cd-space-stack-base: 12px;
+  --cd-space-stack-lg: 16px;
+  --cd-space-stack-xl: 24px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--cd-font-family);
+  font-size: var(--cd-font-size-base);
+  line-height: var(--cd-line-height-normal);
+  color: var(--cd-text-default-strong);
+  background: var(--cd-bg-default-weaker);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input {
+  font-family: inherit;
+}
+
+code, kbd {
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
+}
