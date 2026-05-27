@@ -28,7 +28,6 @@ export default function OverrideModal({ currentCanonical, itemLabel, onConfirm, 
       ).slice(0, 12)
     : [];
 
-  const isCustomQuery = query.trim() && !ALL_CANONICALS.find((c) => c.id === query.trim());
 
   return (
     <div className={s.overlay}>
@@ -65,7 +64,7 @@ export default function OverrideModal({ currentCanonical, itemLabel, onConfirm, 
             {query.trim().length === 0 && (
               <div className={s.emptyOption}>검색어를 입력하면 표준 계정 목록이 나타납니다</div>
             )}
-            {query.trim().length > 0 && filtered.length === 0 && !isCustomQuery && (
+            {query.trim().length > 0 && filtered.length === 0 && (
               <div className={s.emptyOption}>일치하는 결과 없음</div>
             )}
             {filtered.map((c) => (
@@ -84,15 +83,6 @@ export default function OverrideModal({ currentCanonical, itemLabel, onConfirm, 
               </button>
             ))}
           </div>
-
-          {isCustomQuery && (
-            <button
-              onClick={() => setSelected(query.trim())}
-              className={selected === query.trim() ? `${s.customInput} ${s.customInputSelected}` : s.customInput}
-            >
-              직접 입력: <code>{query.trim()}</code>
-            </button>
-          )}
 
           <input
             type="text"
