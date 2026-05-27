@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import type { ReviewData, DecisionMap, ReviewItem, SeedsData } from "@/lib/types";
-import { loadDecisions, saveDecisions, exportCsv, itemKey } from "@/lib/storage";
+import { loadDecisions, saveDecisions, deleteDecisions, exportCsv, itemKey } from "@/lib/storage";
 import { getCanonicalLabel, getCanonicalShortLabel } from "@/lib/canonicalLabels";
 import ClusterCard from "@/components/ClusterCard";
 import ClusterDetail from "@/components/ClusterDetail";
@@ -9,6 +9,8 @@ import Onboarding from "@/components/Onboarding";
 import OverrideModal from "@/components/OverrideModal";
 import SjBadge from "@/components/SjBadge";
 import SeedTable from "@/components/SeedTable";
+import TaxonomyTree from "@/components/TaxonomyTree";
+import { TAXONOMY_SECTIONS } from "@/lib/taxonomyData";
 import s from "./page.module.css";
 
 export default function ReviewPage() {
@@ -24,27 +26,58 @@ export default function ReviewPage() {
   const [saving, setSaving] = useState(false);
   const activeCardRef = useRef<HTMLDivElement>(null);
 
-  // Load data + decisions from server
+  // Load data + decisions, then purge orphaned decision keys
   useEffect(() => {
-    fetch("/data/review_data.json")
-      .then((r) => r.json())
-      .then((d: ReviewData) => setData(d));
+    Promise.all([
+      fetch("/data/review_data.json").then((r) => r.json()) as Promise<ReviewData>,
+      fetch("/data/seeds.json").then((r) => r.json()) as Promise<SeedsData>,
+      loadDecisions(),
+    ]).then(([reviewData, seedsJson, loaded]) => {
+      setData(reviewData);
+      setSeedsData(seedsJson);
 
-    fetch("/data/seeds.json")
-      .then((r) => r.json())
-      .then((d: SeedsData) => setSeedsData(d));
+      // Build set of all valid keys from current data
+      const validKeys = new Set<string>();
+      for (const c of reviewData.clusters)
+        for (const it of c.items) validKeys.add(itemKey(it.norm, it.sj));
+      for (const it of reviewData.unresolved) validKeys.add(itemKey(it.norm, it.sj));
+      for (const sd of seedsJson.seeds) validKeys.add(`seed||${itemKey(sd.norm, sd.sj)}`);
 
-    loadDecisions().then(setDecisions);
+      const orphans = Object.keys(loaded).filter((k) => !validKeys.has(k));
+      if (orphans.length > 0) {
+        deleteDecisions(orphans).then(setDecisions);
+      } else {
+        setDecisions(loaded);
+      }
+    });
 
     const seen = localStorage.getItem("taxonomy_onboarding_seen");
     if (!seen) setShowOnboarding(true);
   }, []);
 
   async function handleDecisions(updates: DecisionMap) {
-    // Optimistic update
     setDecisions((prev) => ({ ...prev, ...updates }));
     setSaving(true);
     const next = await saveDecisions(updates);
+    setDecisions(next);
+    setSaving(false);
+  }
+
+  async function handleDeleteDecision(key: string) {
+    setDecisions((prev) => { const next = { ...prev }; delete next[key]; return next; });
+    setSaving(true);
+    const next = await deleteDecisions([key]);
+    setDecisions(next);
+    setSaving(false);
+  }
+
+  async function handleResetAll() {
+    if (!window.confirm("모든 결정을 초기화하시겠습니까? 되돌릴 수 없습니다.")) return;
+    const allKeys = Object.keys(decisions);
+    if (allKeys.length === 0) return;
+    setDecisions({});
+    setSaving(true);
+    const next = await deleteDecisions(allKeys);
     setDecisions(next);
     setSaving(false);
   }
@@ -53,6 +86,11 @@ export default function ReviewPage() {
     localStorage.setItem("taxonomy_onboarding_seen", "1");
     setShowOnboarding(false);
   }
+
+  const clusterCanonicalIds = useMemo(
+    () => new Set((data?.clusters ?? []).map((c) => c.canonical_id)),
+    [data]
+  );
 
   // Filtered clusters
   const filteredClusters = (data?.clusters ?? []).filter((c) => {
@@ -192,6 +230,9 @@ export default function ReviewPage() {
             <button onClick={() => exportCsv(decisions)} className={s.btnExport}>
               CSV 내보내기
             </button>
+            <button onClick={handleResetAll} className={s.btnReset} title="모든 결정 초기화">
+              초기화
+            </button>
             <button onClick={() => setShowOnboarding(true)} className={s.btnHelp} title="도움말">
               ?
             </button>
@@ -209,7 +250,12 @@ export default function ReviewPage() {
         <aside className={s.sidebar}>
           <div className={s.filterCard}>
             <p className={s.filterTitle}>재무제표</p>
-            {["BS", "IS", "CFS", "CIS"].map((sj) => (
+            {([
+              ["BS",  "재무상태표"],
+              ["IS",  "손익계산서"],
+              ["CFS", "현금흐름표"],
+              ["CIS", "포괄손익계산서"],
+            ] as const).map(([sj, label]) => (
               <label key={sj} className={s.filterRow}>
                 <input
                   type="checkbox"
@@ -221,6 +267,7 @@ export default function ReviewPage() {
                   }}
                 />
                 <SjBadge sj={sj} />
+                <span className={s.filterLabel}>{label}</span>
               </label>
             ))}
           </div>
@@ -280,6 +327,25 @@ export default function ReviewPage() {
           </div>
 
           {tab === "clusters" && (
+            <>
+            <div className={s.tabDesc}>
+              <div className={s.tabDescMain}>
+                <p className={s.tabDescTitle}>클러스터 — AI 분류 제안 묶음</p>
+                <p className={s.tabDescSub}>
+                  AI(bge-m3)가 의미적으로 유사하다고 판단해 같은 Canonical ID로 묶은 계정명 그룹입니다.
+                  각 카드 상단의 Canonical ID가 <strong>분류 목적지</strong>이고, 그 안의 계정명들이 해당 Canonical에 맞는지 확인 후 승인 또는 수정하세요.
+                  AI 유사도 0.65~0.92 범위의 <strong>flagged</strong> 항목들만 여기에 표시됩니다.
+                </p>
+              </div>
+              <div className={s.tabDescChips}>
+                <span className={`${s.tabDescChip} ${s.chipFlagged}`}>
+                  ⚠️ flagged <span className={s.chipCount}>{data.stats.flagged.toLocaleString()}개</span>
+                </span>
+                <span className={`${s.tabDescChip} ${s.chipFlagged}`}>
+                  클러스터 <span className={s.chipCount}>{data.stats.clusters}개</span>
+                </span>
+              </div>
+            </div>
             <div className={s.clusterSplit}>
               {/* Left: scrollable compact list */}
               <div className={s.clusterListPane}>
@@ -303,18 +369,20 @@ export default function ReviewPage() {
                 ))}
               </div>
               {/* Right: detail panel for selected cluster */}
-              <div className={s.clusterDetailPane}>
+              <div key={filteredClusters[activeIdx]?.canonical_id} className={s.clusterDetailPane}>
                 {filteredClusters[activeIdx] ? (
                   <ClusterDetail
                     cluster={filteredClusters[activeIdx]}
                     decisions={decisions}
                     onDecisions={handleDecisions}
+                    onDelete={handleDeleteDecision}
                   />
                 ) : (
                   <div className={s.emptyState}>클러스터를 선택하세요</div>
                 )}
               </div>
             </div>
+            </>
           )}
 
           {tab === "seeds" && seedsData && (
@@ -326,6 +394,22 @@ export default function ReviewPage() {
           )}
 
           {tab === "unresolved" && (
+            <>
+            <div className={s.tabDesc}>
+              <div className={s.tabDescMain}>
+                <p className={s.tabDescTitle}>미해결 항목 — AI 분류 불가</p>
+                <p className={s.tabDescSub}>
+                  AI 유사도가 0.65 미만(<strong>needs_review</strong>)이라 어떤 Canonical에 속하는지 제안하지 못한 항목들입니다.
+                  검토자가 각 계정명을 보고 적합한 Canonical ID를 직접 찾아 지정해야 합니다.
+                  "AI 제안 후보" 열은 참고용이며 신뢰도가 낮습니다.
+                </p>
+              </div>
+              <div className={s.tabDescChips}>
+                <span className={`${s.tabDescChip} ${s.chipNR}`}>
+                  ❓ needs_review <span className={s.chipCount}>{data.unresolved.length.toLocaleString()}개</span>
+                </span>
+              </div>
+            </div>
             <div className={s.unresolvedPanel}>
               <div className={s.unresolvedHeader}>
                 <p className={s.unresolvedHeaderTitle}>미해결 항목 (needs_review)</p>
@@ -372,8 +456,19 @@ export default function ReviewPage() {
                 })}
               </div>
             </div>
+            </>
           )}
         </main>
+
+        {tab === "clusters" && (
+          <div className={s.treePane}>
+            <TaxonomyTree
+              sections={TAXONOMY_SECTIONS}
+              activeCanonicalId={filteredClusters[activeIdx]?.canonical_id}
+              clusterIds={clusterCanonicalIds}
+            />
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,0 +1,181 @@
+.tree {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--cd-bg-surface);
+  border: 1px solid var(--cd-border-default-weakest);
+  border-radius: var(--cd-radius-xl);
+  box-shadow: var(--cd-shadow-sm);
+  overflow: hidden;
+}
+
+/* ── Header ─────────────────────────────────── */
+.treeHeader {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 10px 12px 8px;
+  background: var(--cd-bg-default-weaker);
+  border-bottom: 1px solid var(--cd-border-default-weakest);
+}
+
+.treeHeaderTitle {
+  font-size: 11px;
+  font-weight: var(--cd-font-weight-bold);
+  color: var(--cd-text-default-strong);
+}
+
+.treeHeaderSub {
+  font-size: 10px;
+  color: var(--cd-text-default-weakest);
+}
+
+/* ── Scrollable body ─────────────────────────── */
+.treeBody {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ── Section ─────────────────────────────────── */
+.section {
+  border-bottom: 1px solid var(--cd-border-default-weakest);
+}
+.section:last-child {
+  border-bottom: none;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  cursor: pointer;
+  background: var(--cd-bg-default-weaker);
+  user-select: none;
+  transition: background var(--cd-duration-fast);
+}
+.sectionHeader:hover {
+  background: var(--cd-bg-default-weak);
+}
+.sectionHeader:focus-visible {
+  outline: 2px solid var(--cd-border-brand-normal);
+  outline-offset: -2px;
+}
+
+.sjBadge {
+  font-size: 10px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-weight: var(--cd-font-weight-bold);
+  padding: 1px 5px;
+  border-radius: var(--cd-radius-full);
+  border: 1px solid;
+  flex-shrink: 0;
+}
+
+.sjBS  { background: var(--cd-bg-brand-weak);    color: var(--cd-text-brand-normal);    border-color: var(--cd-bg-brand-normal); }
+.sjIS  { background: var(--cd-bg-success-weak);  color: var(--cd-text-success-normal);  border-color: var(--cd-bg-success-normal); }
+.sjCFS { background: var(--cd-bg-warning-weak);  color: var(--cd-text-warning-normal);  border-color: var(--cd-bg-warning-normal); }
+.sjCIS { background: var(--cd-bg-danger-weak);   color: var(--cd-text-danger-normal);   border-color: var(--cd-bg-danger-normal); }
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: var(--cd-font-weight-bold);
+  color: var(--cd-text-default-strong);
+  flex: 1;
+}
+
+.sectionSublabel {
+  font-size: 10px;
+  color: var(--cd-text-default-weakest);
+  flex-shrink: 0;
+}
+
+.sectionChevron {
+  font-size: 10px;
+  color: var(--cd-text-default-weakest);
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+/* ── Tree node ───────────────────────────────── */
+.sectionBody {
+  padding: 3px 0;
+}
+
+.treeNode {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 8px;
+  cursor: default;
+  border-radius: 0;
+  transition: background var(--cd-duration-fast);
+  min-width: 0;
+}
+.treeNode[role="button"] {
+  cursor: pointer;
+}
+.treeNode:hover {
+  background: var(--cd-bg-default-weaker);
+}
+.treeNode:focus-visible {
+  outline: 2px solid var(--cd-border-brand-normal);
+  outline-offset: -2px;
+}
+
+.treeNodeActive {
+  background: var(--cd-bg-brand-weaker) !important;
+  outline: 1px solid var(--cd-border-brand-normal);
+  outline-offset: -1px;
+  border-radius: 3px;
+}
+
+.nodeChevron {
+  font-size: 9px;
+  color: var(--cd-text-default-weakest);
+  width: 10px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.nodeLabel {
+  font-size: 11px;
+  color: var(--cd-text-default-normal);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.treeNodeActive .nodeLabel {
+  color: var(--cd-text-brand-normal);
+  font-weight: var(--cd-font-weight-medium);
+}
+
+/* DART badge */
+.dartBadge {
+  font-size: 9px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-weight: var(--cd-font-weight-bold);
+  padding: 0 3px;
+  border-radius: var(--cd-radius-sm);
+  background: var(--cd-bg-warning-weaker);
+  color: var(--cd-text-warning-normal);
+  border: 1px solid var(--cd-border-warning-normal);
+  flex-shrink: 0;
+  line-height: 14px;
+}
+
+/* Cluster dot */
+.clusterDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cd-bg-brand-normal);
+  flex-shrink: 0;
+}
