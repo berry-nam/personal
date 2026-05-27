@@ -36,6 +36,24 @@ export async function loadDecisions(): Promise<DecisionMap> {
   }
 }
 
+export async function deleteDecisions(keys: string[]): Promise<DecisionMap> {
+  const local = lsLoad();
+  for (const k of keys) delete local[k];
+  lsSave(local);
+  try {
+    const res = await fetch("/api/decisions", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ keys }),
+    });
+    const { decisions } = (await res.json()) as { decisions: DecisionMap };
+    lsSave(decisions);
+    return decisions;
+  } catch {
+    return local;
+  }
+}
+
 export async function saveDecisions(updates: DecisionMap): Promise<DecisionMap> {
   // Optimistic local save
   const local = lsLoad();
