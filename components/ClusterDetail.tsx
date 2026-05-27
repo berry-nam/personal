@@ -11,6 +11,7 @@ interface Props {
   cluster: Cluster;
   decisions: DecisionMap;
   onDecisions: (updates: DecisionMap) => void;
+  onDelete: (key: string) => void;
 }
 
 function confClass(conf: number | null, styles: typeof s) {
@@ -29,13 +30,22 @@ function ItemStatus({ decision, styles }: { decision: Decision | undefined; styl
   return <span className={styles.decisionSkipped}>건너뜀</span>;
 }
 
-export default function ClusterDetail({ cluster, decisions, onDecisions }: Props) {
+export default function ClusterDetail({ cluster, decisions, onDecisions, onDelete }: Props) {
   const [overrideItem, setOverrideItem] = useState<ReviewItem | null>(null);
   const [overrideAll, setOverrideAll] = useState(false);
+  const [itemFilter, setItemFilter] = useState<"all" | "pending" | "decided">("all");
 
   const isDart = canonicalSource(cluster.canonical_id) === "dart";
   const decidedCount = cluster.items.filter((it) => decisions[itemKey(it.norm, it.sj)]).length;
   const total = cluster.items.length;
+  const pendingCount = total - decidedCount;
+
+  const visibleItems = cluster.items.filter((it) => {
+    const dec = decisions[itemKey(it.norm, it.sj)];
+    if (itemFilter === "pending") return !dec;
+    if (itemFilter === "decided") return !!dec;
+    return true;
+  });
 
   function approveAll() {
     const updates: DecisionMap = {};
@@ -81,6 +91,7 @@ export default function ClusterDetail({ cluster, decisions, onDecisions }: Props
               </div>
               <p className={s.canonicalId}>{cluster.canonical_id}</p>
               <p className={s.canonicalLabel}>{getCanonicalLabel(cluster.canonical_id)}</p>
+              <p className={s.mappingHint}>↓ 아래 계정들의 분류 목적지</p>
             </div>
             <div className={s.titleRight}>
               <div className={s.companyCount}>{cluster.total_cw.toLocaleString()}</div>
@@ -95,6 +106,24 @@ export default function ClusterDetail({ cluster, decisions, onDecisions }: Props
           </div>
         </div>
 
+        {/* Item filter */}
+        <div className={s.itemFilter}>
+          {([
+            ["all",     "전체",  total],
+            ["pending", "미결",  pendingCount],
+            ["decided", "완료",  decidedCount],
+          ] as const).map(([v, label, count]) => (
+            <button
+              key={v}
+              onClick={() => setItemFilter(v)}
+              className={itemFilter === v ? `${s.filterBtn} ${s.filterBtnActive}` : s.filterBtn}
+            >
+              {label}
+              <span className={s.filterCount}>{count}</span>
+            </button>
+          ))}
+        </div>
+
         {/* Column headers */}
         <div className={s.tableHeader}>
           <span>구분</span>
@@ -106,7 +135,7 @@ export default function ClusterDetail({ cluster, decisions, onDecisions }: Props
         </div>
 
         {/* Items */}
-        {cluster.items.map((it) => {
+        {visibleItems.map((it) => {
           const dec = decisions[itemKey(it.norm, it.sj)];
           return (
             <div key={`${it.norm}||${it.sj}`} className={s.itemRow}>
@@ -125,7 +154,9 @@ export default function ClusterDetail({ cluster, decisions, onDecisions }: Props
               </span>
               <span className={s.colDecision}><ItemStatus decision={dec} styles={s} /></span>
               <span className={s.colActions}>
-                {!dec && (
+                {dec ? (
+                  <button onClick={() => onDelete(itemKey(it.norm, it.sj))} className={s.btnItemUndo} title="결정 취소">↩</button>
+                ) : (
                   <button onClick={() => approveItem(it)} className={s.btnItemApprove} title="승인">✓</button>
                 )}
                 <button onClick={() => setOverrideItem(it)} className={s.btnItemOverride} title="수정">✎</button>

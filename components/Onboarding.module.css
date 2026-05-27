@@ -14,7 +14,10 @@
   border-radius: 16px;
   box-shadow: var(--cd-shadow-xl);
   width: 100%;
-  max-width: 500px;
+  max-width: 560px;
+  height: 680px;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
@@ -70,11 +73,12 @@
   transition: width var(--cd-duration-slow) var(--cd-easing-default);
 }
 
-/* Content — fixed height so all steps are the same modal size */
+/* Content — fills space between header and footer; no scroll ever */
 .content {
+  flex: 1;
+  min-height: 0;
   padding: var(--cd-space-inset-xl);
-  height: 340px;
-  overflow-y: auto;
+  overflow: hidden;
   font-size: var(--cd-font-size-base);
   color: var(--cd-text-default-normal);
   line-height: var(--cd-line-height-normal);

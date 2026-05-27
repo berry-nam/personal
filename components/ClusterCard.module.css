@@ -7,6 +7,7 @@
 }
 
 .cardActive {
+  background: var(--cd-bg-brand-weaker);
   outline: 2px solid var(--cd-border-brand-normal);
   outline-offset: 0;
   box-shadow: var(--cd-shadow-md);
@@ -81,6 +82,13 @@
   font-size: var(--cd-font-size-sm);
   color: var(--cd-text-default-weak);
   margin-top: 2px;
+}
+
+.mappingHint {
+  font-size: var(--cd-font-size-xs);
+  color: var(--cd-text-brand-normal);
+  margin-top: 4px;
+  font-weight: var(--cd-font-weight-medium);
 }
 
 .headerMeta {
@@ -338,10 +346,9 @@
   height: 24px;
   border-radius: var(--cd-radius-sm);
   font-size: 12px;
-  color: var(--cd-text-default-weakest);
-  transition: color var(--cd-duration-fast), background var(--cd-duration-fast);
-}
-.btnItemOverride:hover {
   color: var(--cd-text-warning-normal);
   background: var(--cd-bg-warning-weaker);
+  border: 1px solid var(--cd-border-warning-normal);
+  transition: background var(--cd-duration-fast);
 }
+.btnItemOverride:hover { background: var(--cd-bg-warning-weak); }

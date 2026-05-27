@@ -26,15 +26,47 @@
   font-size: var(--cd-font-size-base);
   font-weight: var(--cd-font-weight-bold);
   color: var(--cd-text-default-strong);
+  display: flex;
+  align-items: center;
+  gap: var(--cd-space-gap-sm);
+  flex-wrap: wrap;
+}
+
+.modalItemName {
+  color: var(--cd-text-default-strong);
+}
+
+.modalArrow {
+  color: var(--cd-text-default-weakest);
+  font-weight: var(--cd-font-weight-regular);
+}
+
+.modalDestLabel {
+  color: var(--cd-text-brand-normal);
 }
 
 .modalSubtitle {
   font-size: var(--cd-font-size-sm);
   color: var(--cd-text-default-weak);
-  margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-top: 6px;
+}
+
+.currentCid {
+  font-family: ui-monospace, Menlo, monospace;
+  background: var(--cd-bg-default-weak);
+  padding: 1px 4px;
+  border-radius: var(--cd-radius-sm);
+  color: var(--cd-text-default-normal);
+}
+
+.currentCidLabel {
+  color: var(--cd-text-default-weakest);
+}
+
+.modalHint {
+  font-size: var(--cd-font-size-xs);
+  color: var(--cd-text-default-weakest);
+  margin-top: 4px;
 }
 
 .modalBody {

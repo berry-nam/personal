@@ -121,6 +121,7 @@ export default function ClusterCard({ cluster, decisions, onDecisions, isActive,
               </div>
               <p className={s.canonicalId}>{cluster.canonical_id}</p>
               <p className={s.canonicalLabel}>{getCanonicalLabel(cluster.canonical_id)}</p>
+              <p className={s.mappingHint}>↓ 아래 계정들의 분류 목적지</p>
             </div>
             <div className={s.headerMeta}>
               <div className={s.companyCount}>{cluster.total_cw.toLocaleString()}</div>

@@ -73,6 +73,13 @@
   margin-top: 2px;
 }
 
+.mappingHint {
+  font-size: var(--cd-font-size-xs);
+  color: var(--cd-text-brand-normal);
+  margin-top: 4px;
+  font-weight: var(--cd-font-weight-medium);
+}
+
 .titleRight { text-align: right; flex-shrink: 0; }
 
 .companyCount {
@@ -134,6 +141,52 @@
   transition: background var(--cd-duration-fast);
 }
 .btnApprove:hover { background: var(--cd-bg-success-stronger); }
+
+/* ── Item filter bar ─────────────────────────── */
+.itemFilter {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: var(--cd-space-inset-sm) var(--cd-space-inset-lg);
+  border-bottom: 1px solid var(--cd-border-default-weakest);
+  background: var(--cd-bg-default-weaker);
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 10px;
+  font-size: var(--cd-font-size-xs);
+  font-weight: var(--cd-font-weight-medium);
+  color: var(--cd-text-default-weak);
+  border-radius: var(--cd-radius-md);
+  transition: background var(--cd-duration-fast), color var(--cd-duration-fast);
+}
+.filterBtn:hover { background: var(--cd-bg-default-weak); }
+
+.filterBtnActive {
+  background: var(--cd-bg-surface);
+  color: var(--cd-text-default-strong);
+  box-shadow: var(--cd-shadow-sm);
+  border: 1px solid var(--cd-border-default-weakest);
+}
+
+.filterCount {
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  background: var(--cd-bg-default-weak);
+  border-radius: var(--cd-radius-full);
+  padding: 0 5px;
+  min-width: 16px;
+  text-align: center;
+  color: var(--cd-text-default-weakest);
+}
+.filterBtnActive .filterCount {
+  background: var(--cd-bg-brand-weaker);
+  color: var(--cd-text-brand-normal);
+}
 
 /* ── Items table ──────────────────────────────── */
 .tableHeader {
@@ -226,7 +279,18 @@
   display: inline-flex; align-items: center; justify-content: center;
   width: 26px; height: 26px;
   border-radius: var(--cd-radius-sm); font-size: 13px;
+  color: var(--cd-text-warning-normal);
+  background: var(--cd-bg-warning-weaker);
+  border: 1px solid var(--cd-border-warning-normal);
+  transition: background var(--cd-duration-fast);
+}
+.btnItemOverride:hover { background: var(--cd-bg-warning-weak); }
+
+.btnItemUndo {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: var(--cd-radius-sm); font-size: 13px;
   color: var(--cd-text-default-weakest);
   transition: color var(--cd-duration-fast), background var(--cd-duration-fast);
 }
-.btnItemOverride:hover { color: var(--cd-text-warning-normal); background: var(--cd-bg-warning-weaker); }
+.btnItemUndo:hover { color: var(--cd-text-danger-normal); background: var(--cd-bg-danger-weaker); }

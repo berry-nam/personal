@@ -13,66 +13,69 @@ const STEPS = [
     content: (
       <div className={s.contentBlock}>
         <p>
-          한국 기업들은 DART에 재무제표를 공시할 때 계정명을 자유롭게 기재합니다.
-          <br />
-          <strong>"매출액"</strong>, <strong>"수익(매출액)"</strong>, <strong>"영업수익"</strong>… 이 모두가 동일한 개념입니다.
-        </p>
-        <p>
-          이 프로젝트의 목표는 39,000여 개 기업의 다양한 계정명을{" "}
-          <strong>표준 계정 식별자 (Canonical ID)</strong>로 매핑하는 것입니다.
-          IFRS 국제 회계 기준이 각 계정 개념에 부여한 고유한 영문 코드입니다.
-          <br />
-          예: <code>매출액 → ifrs-full_Revenue (수익)</code>
+          한국 기업들은 DART 공시 시 계정명을 자유롭게 기재합니다.{" "}
+          <strong>"매출액"</strong>, <strong>"수익(매출액)"</strong>, <strong>"영업수익"</strong>은 같은 개념이지만 다르게 표기됩니다.
+          이 프로젝트는 39,000여 기업의 계정명을 <strong>IFRS 표준 Canonical ID</strong>로 매핑합니다.
         </p>
         <div className={s.infoBox}>
-          <p className={s.infoBoxTitle}>자동 매칭은 두 단계로 작동합니다:</p>
+          <p className={s.infoBoxTitle}>자동 처리 기준 (전체의 약 83.6% 자동 확정)</p>
           <div className={s.infoBoxRow}>
-            <span className={s.infoBoxLabel}>① Seed 사전</span>
-            <span>K-IFRS/K-GAAP 기준으로 사전 정의된 계정명 → 표준 계정 식별자 매핑표 (533개). Seed에 있으면 100% 확도로 자동 확정됩니다. <strong>"Seed 사전" 탭에서 직접 확인·수정 가능합니다.</strong></span>
+            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-success-normal)" }}>✅ auto</span>
+            <span>Seed 사전 정확 매칭 또는 AI 유사도 ≥ 0.92 → 검토 불필요</span>
           </div>
           <div className={s.infoBoxRow}>
-            <span className={s.infoBoxLabel}>② AI 임베딩</span>
-            <span>Seed에 없는 계정명은 AI(bge-m3)가 의미적 유사도를 계산해 가장 가까운 표준 계정을 제안합니다. 신뢰도 점수(0~1)로 표시됩니다.</span>
-          </div>
-        </div>
-        <div className={s.infoBox} style={{ marginTop: 0 }}>
-          <p className={s.infoBoxTitle}>자동 처리 vs 검토 필요 기준</p>
-          <div className={s.infoBoxRow}>
-            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-success-normal)" }}>✅ 자동 확정</span>
-            <span>① Seed 사전 정확 매칭 <strong>또는</strong> ② AI 유사도 <strong>≥ 0.92</strong> → 전체의 83.6%</span>
-          </div>
-          <div className={s.infoBoxRow}>
-            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-warning-normal)" }}>⚠️ 검토 필요</span>
-            <span>AI 유사도 <strong>0.65 ~ 0.92</strong> — 제안은 있지만 확신 부족 → 클러스터 탭</span>
+            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-warning-normal)" }}>⚠️ flagged</span>
+            <span>AI 유사도 0.65~0.92 → <strong>클러스터 탭</strong>에서 확인 필요</span>
           </div>
           <div className={s.infoBoxRow} style={{ marginBottom: 0 }}>
-            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-danger-normal)" }}>❓ 직접 지정</span>
-            <span>AI 유사도 <strong>{"< 0.65"}</strong> — 제안 자체를 못 함 → 미해결 항목 탭</span>
+            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-danger-normal)" }}>❓ needs_review</span>
+            <span>AI 유사도 {"<"} 0.65 → <strong>미해결 탭</strong>에서 직접 지정</span>
           </div>
+        </div>
+        <div className={s.tipBox}>
+          <strong>예시:</strong> 매출액 → <code>ifrs-full_Revenue</code> · 임차료 → <code>ifrs-full_AdministrativeExpense</code>
         </div>
       </div>
     ),
   },
   {
-    icon: "🏷️",
-    title: "Status 종류",
+    icon: "📖",
+    title: "Seed 사전 & 검토 순서",
     content: (
       <div className={s.contentBlock}>
-        <div className={`${s.statusRow} ${s.statusAuto}`}>
-          <span className={`${s.statusLabel} ${s.autoLabel}`}>✅ auto</span>
-          <span className={s.autoBody}>Seed 사전 정확 매칭 또는 AI 유사도 ≥ 0.92로 자동 확정된 항목. <strong>검토 불필요.</strong></span>
+        <div className={s.infoBox}>
+          <p className={s.infoBoxTitle}>권장 검토 순서</p>
+          <div className={s.infoBoxRow}>
+            <span className={s.infoBoxLabel}>① Seed 사전 탭</span>
+            <span>533개의 공인된 계정명→Canonical 매핑 사전. 이미 확립된 목록이므로 빠르게 훑고 잘못된 것만 수정하세요.</span>
+          </div>
+          <div className={s.infoBoxRow}>
+            <span className={s.infoBoxLabel}>② 클러스터 탭</span>
+            <span>AI가 같은 Canonical로 묶은 계정명들. 각 클러스터의 헤더(분류 목적지)가 맞는지 확인 → 승인/수정.</span>
+          </div>
+          <div className={s.infoBoxRow} style={{ marginBottom: 0 }}>
+            <span className={s.infoBoxLabel}>③ 미해결 탭</span>
+            <span>AI가 분류하지 못한 항목들. 검토자가 직접 Canonical ID를 찾아 지정해야 합니다.</span>
+          </div>
         </div>
-        <div className={`${s.statusRow} ${s.statusFlagged}`}>
-          <span className={`${s.statusLabel} ${s.flagLabel}`}>⚠️ flagged</span>
-          <span className={s.flagBody}>AI가 제안은 했지만 신뢰도가 <strong>0.65~0.92</strong> 사이. 제안이 맞는지 확인 필요.</span>
+        <div className={s.tipBox}>
+          <strong>Seed ↔ 클러스터는 서로 다른 계정명 집합입니다.</strong>{" "}
+          Seed에 있는 계정명(예: "자산총계")은 파이프라인에서 <code>auto</code>로 처리되어 클러스터에 진입하지 않습니다.
+          클러스터에는 Seed에 없는 변형 계정명들("총자산", "자산합계" 등)만 존재합니다.
+          따라서 Seed를 수정해도 클러스터에 캐스케이드할 동일 계정명 자체가 없습니다.
+          단, Seed 수정이 의미상 관련된 클러스터 항목들을 재검토해야 한다는 신호가 될 수 있습니다.
         </div>
-        <div className={`${s.statusRow} ${s.statusNeedsReview}`}>
-          <span className={`${s.statusLabel} ${s.reviewLabel}`}>❓ needs_review</span>
-          <span className={s.reviewBody}>AI가 신뢰도 있는 제안을 못 함 (&lt;0.65). 검토자가 직접 표준 계정 식별자를 지정해야 함.</span>
+        <div className={s.infoBox}>
+          <p className={s.infoBoxTitle}>Canonical ID 앞의 IFRS / DART 뱃지란?</p>
+          <div className={s.infoBoxRow}>
+            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-brand-normal)" }}>IFRS</span>
+            <span><code>ifrs-full_*</code> — IASB 국제 표준 taxonomy. K-IFRS(한국채택국제회계기준)가 이 기준을 채택하므로, 대부분의 계정은 여기 해당합니다.</span>
+          </div>
+          <div className={s.infoBoxRow} style={{ marginBottom: 0 }}>
+            <span className={s.infoBoxLabel} style={{ color: "var(--cd-text-warning-normal)" }}>DART</span>
+            <span><code>dart_*</code> — 금융감독원(FSS)이 DART 공시용으로 별도 정의한 개념. IFRS에 존재하지 않는 한국 특유 항목(예: 판매비와관리비 합산)에 사용합니다.</span>
+          </div>
         </div>
-        <p style={{ fontSize: "var(--cd-font-size-sm)", color: "var(--cd-text-default-weakest)" }}>
-          n_companies = 해당 계정명을 사용하는 기업 수 (많을수록 중요)
-        </p>
       </div>
     ),
   },

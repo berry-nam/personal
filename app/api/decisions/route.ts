@@ -36,3 +36,22 @@ export async function POST(req: Request) {
     return Response.json({ error: "Failed to save" }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const { keys } = (await req.json()) as { keys: string[] };
+    let decisions: DecisionMap;
+    if (redis) {
+      const existing = (await redis.get<DecisionMap>(KV_KEY)) ?? {};
+      for (const k of keys) delete existing[k];
+      await redis.set(KV_KEY, existing);
+      decisions = existing;
+    } else {
+      for (const k of keys) delete localStore[k];
+      decisions = { ...localStore };
+    }
+    return Response.json({ decisions });
+  } catch {
+    return Response.json({ error: "Failed to delete" }, { status: 500 });
+  }
+}
