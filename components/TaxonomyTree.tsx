@@ -38,7 +38,6 @@ interface NodeProps {
   activeCanonicalId?: string;
   clusterIds?: Set<string>;
   onToggle: (key: string) => void;
-  onActiveMount: (el: HTMLElement) => void;
 }
 
 function TreeNode({
@@ -49,7 +48,6 @@ function TreeNode({
   activeCanonicalId,
   clusterIds,
   onToggle,
-  onActiveMount,
 }: NodeProps) {
   const key = nodeKey(node, parentKey);
   const hasChildren = !!(node.children && node.children.length > 0);
@@ -58,18 +56,9 @@ function TreeNode({
   const hasCluster = !!(node.id && clusterIds?.has(node.id));
   const isDart = !!(node.id && node.id.startsWith("dart_"));
 
-  const callbackRef = useCallback(
-    (el: HTMLElement | null) => {
-      if (el && isActive) onActiveMount(el);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isActive, activeCanonicalId]
-  );
-
   return (
     <div>
       <div
-        ref={callbackRef}
         className={`${s.treeNode} ${isActive ? s.treeNodeActive : ""}`}
         style={{ paddingLeft: `${6 + depth * 10}px` }}
         onClick={() => hasChildren && onToggle(key)}
@@ -102,7 +91,6 @@ function TreeNode({
               activeCanonicalId={activeCanonicalId}
               clusterIds={clusterIds}
               onToggle={onToggle}
-              onActiveMount={onActiveMount}
             />
           ))}
         </div>
@@ -116,30 +104,24 @@ export default function TaxonomyTree({ sections, activeCanonicalId, clusterIds }
     return new Set(sections.map((sec) => sec.sj));
   });
 
-  const bodyRef = useRef<HTMLDivElement>(null);
+  const sectionEls = useRef<Map<string, HTMLElement>>(new Map());
 
   useEffect(() => {
     if (!activeCanonicalId) return;
-    const keysToAdd: string[] = [];
     for (const sec of sections) {
       const ancestors = findAncestorKeys(sec.children, activeCanonicalId, sec.sj);
       if (ancestors !== null) {
-        keysToAdd.push(sec.sj, ...ancestors);
+        setExpandedKeys((prev) => {
+          const next = new Set(prev);
+          [sec.sj, ...ancestors].forEach((k) => next.add(k));
+          return next;
+        });
+        // Scroll the section header to the top so the active node is visible in context
+        sectionEls.current.get(sec.sj)?.scrollIntoView({ block: "start", behavior: "smooth" });
         break;
       }
     }
-    if (keysToAdd.length > 0) {
-      setExpandedKeys((prev) => {
-        const next = new Set(prev);
-        keysToAdd.forEach((k) => next.add(k));
-        return next;
-      });
-    }
   }, [activeCanonicalId, sections]);
-
-  const handleActiveMount = useCallback((el: HTMLElement) => {
-    el.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  }, []);
 
   const toggleKey = useCallback((key: string) => {
     setExpandedKeys((prev) => {
@@ -156,11 +138,15 @@ export default function TaxonomyTree({ sections, activeCanonicalId, clusterIds }
         <span className={s.treeHeaderTitle}>IFRS / DART 분류 체계</span>
         <span className={s.treeHeaderSub}>Taxonomy Reference</span>
       </div>
-      <div ref={bodyRef} className={s.treeBody}>
+      <div className={s.treeBody}>
         {sections.map((sec) => {
           const secExpanded = expandedKeys.has(sec.sj);
           return (
-            <div key={sec.sj} className={s.section}>
+            <div
+              key={sec.sj}
+              className={s.section}
+              ref={(el) => { if (el) sectionEls.current.set(sec.sj, el); else sectionEls.current.delete(sec.sj); }}
+            >
               <div
                 className={s.sectionHeader}
                 onClick={() => toggleKey(sec.sj)}
@@ -191,7 +177,6 @@ export default function TaxonomyTree({ sections, activeCanonicalId, clusterIds }
                       activeCanonicalId={activeCanonicalId}
                       clusterIds={clusterIds}
                       onToggle={toggleKey}
-                      onActiveMount={handleActiveMount}
                     />
                   ))}
                 </div>
