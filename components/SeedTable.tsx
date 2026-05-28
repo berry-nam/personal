@@ -38,7 +38,7 @@ export default function SeedTable({ seeds, decisions, onDecisions }: Props) {
       const dec = decisions[seedKey(e)];
       if (filterStatus === "unreviewed") return !dec;
       if (filterStatus === "confirmed") return dec?.action === "approved";
-      if (filterStatus === "overridden") return dec?.action === "overridden";
+      if (filterStatus === "overridden") return dec?.action === "overridden" && dec.canonical_id !== e.canonical_id;
       return true;
     });
   }, [seeds, decisions, query, filterSj, filterStatus]);
@@ -53,7 +53,7 @@ export default function SeedTable({ seeds, decisions, onDecisions }: Props) {
   function resetPage() { setPage(0); }
 
   const confirmed  = seeds.filter((e) => decisions[seedKey(e)]?.action === "approved").length;
-  const overridden = seeds.filter((e) => decisions[seedKey(e)]?.action === "overridden").length;
+  const overridden = seeds.filter((e) => { const dec = decisions[seedKey(e)]; return dec?.action === "overridden" && dec.canonical_id !== e.canonical_id; }).length;
   const unreviewed = seeds.length - confirmed - overridden;
 
   return (
@@ -148,7 +148,7 @@ export default function SeedTable({ seeds, decisions, onDecisions }: Props) {
               )}
               {pageItems.map((e) => {
                 const dec = decisions[seedKey(e)];
-                const isOverridden = dec?.action === "overridden";
+                const isOverridden = dec?.action === "overridden" && dec.canonical_id !== e.canonical_id;
                 const isConfirmed = dec?.action === "approved";
                 const displayCid = isOverridden ? dec.canonical_id : e.canonical_id;
                 return (

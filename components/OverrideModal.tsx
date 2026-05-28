@@ -92,19 +92,22 @@ export default function OverrideModal({ currentCanonical, itemLabel, onConfirm, 
             className={s.noteInput}
           />
 
-          {selected && (
+          {selected && selected !== currentCanonical && (
             <p className={s.selectedPreview}>
               선택: <code>{selected}</code>
               <span> — {getCanonicalLabel(selected)}</span>
             </p>
+          )}
+          {selected && selected === currentCanonical && (
+            <p className={s.selectedSame}>현재 canonical과 동일합니다. 다른 항목을 선택하세요.</p>
           )}
         </div>
 
         <div className={s.modalFooter}>
           <button onClick={onCancel} className={s.btnCancel}>취소</button>
           <button
-            onClick={() => selected && onConfirm(selected, note)}
-            disabled={!selected}
+            onClick={() => selected && selected !== currentCanonical && onConfirm(selected, note)}
+            disabled={!selected || selected === currentCanonical}
             className={s.btnConfirm}
           >
             변경 확정

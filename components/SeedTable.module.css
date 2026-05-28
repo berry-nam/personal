@@ -26,7 +26,7 @@
 
 .toolbarSub {
   font-size: var(--cd-font-size-sm);
-  color: var(--cd-text-default-weak);
+  color: var(--cd-text-danger-normal);
   margin-top: 2px;
 }
 

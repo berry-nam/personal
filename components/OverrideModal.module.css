@@ -212,6 +212,12 @@
   font-family: ui-monospace, Menlo, monospace;
 }
 
+.selectedSame {
+  font-size: var(--cd-font-size-sm);
+  color: var(--cd-text-danger-normal);
+  font-weight: var(--cd-font-weight-medium);
+}
+
 .modalFooter {
   display: flex;
   gap: var(--cd-space-gap-md);
