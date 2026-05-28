@@ -176,7 +176,7 @@ export default function ClusterDetail({ cluster, decisions, onDecisions, onDelet
       )}
       {overrideItem && (
         <OverrideModal
-          currentCanonical={overrideItem.top3[0] ?? ""}
+          currentCanonical={cluster.canonical_id}
           itemLabel={overrideItem.norm}
           onConfirm={(cid, note) => handleOverrideItem(overrideItem, cid, note)}
           onCancel={() => setOverrideItem(null)}
